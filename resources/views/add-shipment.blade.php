@@ -3,73 +3,12 @@
 
 @section('content')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
-        integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<style>
-    .readonly .input-group-prepend span {
-        background: none;
-        border: 0;
-        padding-right: 0;
-    }
-    .readonly .form-control[readonly] {
-        border: 0px;
-    }
-    .table-bordered tr td:first-child {
-        width: 200px;
-        font-weight: bold;
-    }
-    .map_canvas {
-        height: 350px;
-    }
-    .filter-option-inner br {
-        display: none;
-    }
-    .select2 {
-        width: 100% !important;
-    }
-    .select2-selection {
-        min-height: 36px !important;
-    }
-    #addnewsender,#addnewsenderaddress,#addnewreceiver,#addnewreceiveraddress{
-        box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.3);
-    }
-    .kt-portlet .kt-portlet__head .kt-portlet__head-label .kt-portlet__head-title {
-        font-weight: 700;
-    }
-    .panel-title {
-        position: relative;
-        cursor: pointer;
-    }
-        
-    .panel-title::after {
-        content: "\f107";
-        color: #48465b;
-        top: 13px;
-        font-size: 22px;
-        right: 17px;
-        position: absolute;
-        font-family: "FontAwesome"
-    }
-    .panel-title[aria-expanded="true"]::after {
-        content: "\f106";
-    }
-    .make_radio_slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-    }
-</style>
-       
+   integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
+   integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+
 <div class="kt-subheader   kt-grid__item" id="kt_subheader">
    <div class="kt-container  kt-container--fluid  ">
       <div class="kt-subheader__main">
@@ -95,7 +34,6 @@
       </div>
    </div>
 </div>
-
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
    <form method="POST" action="" accept-charset="UTF-8" data-request="onSave" class="kt_form" data-request-success="created successfully!" data-request-flash="1" novalidate="novalidate">
       <input name="_session_key" type="hidden" value="h5dotw6pDDMINp5E6GvamcXt1wA9guaPxsUTKrlc"><input name="_token" type="hidden" value="AFbPzQUzku0H5bLkZ65qy0TojdCs5eY0YP9sAr5h">
@@ -203,108 +141,106 @@
                                     <input type="time" class="form-control ship_time" name="ship_time" required="">
                                  </div>
                               </div>
-                                <div class="col-lg-6">
-                                  <div class="row">
-                                        <div class="col-lg-6">
-                                            <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                Delivery Type&nbsp;<span class="kt-badge  "></span>
-                                            </h3>
-                                            <label class="kt-option">
-                                            <span class="kt-option__control">
-                                            <span class="kt-radio kt-radio--state-brand">
-                                            <input type="radio" name="dilivery_typ" class="dilivery_typ" value="2" required="" checked="">
-                                            <span></span>
-                                            </span>
-                                            </span>
-                                            <span class="kt-option__label">
-                                            <span class="kt-option__head">
-                                            <span class="kt-option__title">
-                                            Vehicle
-                                            </span>
-                                            <span class="kt-option__focus"></span>
-                                            </span>
-                                            <span class="kt-option__body">
-                                            </span>
-                                            </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                &nbsp;<span class=""></span>
-                                            </h3>
-                                            <label class="kt-option">
-                                            <span class="kt-option__control">
-                                            <span class="kt-radio kt-radio--state-brand">
-                                            <input type="radio" name="dilivery_typ" class="dilivery_typ" value="1" required="">
-                                            <span></span>
-                                            </span>
-                                            </span>
-                                            <span class="kt-option__label">
-                                            <span class="kt-option__head">
-                                            <span class="kt-option__title">
-                                            Package
-                                            </span>
-                                            <span class="kt-option__focus"></span>
-                                            </span>
-                                            <span class="kt-option__body">
-                                            </span>
-                                            </span>
-                                            </label>
-                                        </div>
-                                   </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <h3 class="kt-section__title kt-margin-b-5 pt-1 ">
-                                                Wants to avail Insurance?&nbsp;<span class="kt-badge  "></span>
-                                            </h3>
-                                            <label class="kt-option">
-                                            <span class="kt-option__control">
-                                            <span class="kt-radio kt-radio--state-brand">
-                                            <input type="radio" name="is_insured" class="is_insured" value="1" required="">
-                                            <span></span>
-                                            </span>
-                                            </span>
-                                            <span class="kt-option__label">
-                                            <span class="kt-option__head">
-                                            <span class="kt-option__title">
-                                            Yes
-                                            </span>
-                                            <span class="kt-option__focus"></span>
-                                            </span>
-                                            <span class="kt-option__body">
-                                            </span>
-                                            </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                &nbsp;<span class=""></span>
-                                            </h3>
-                                            <label class="kt-option">
-                                            <span class="kt-option__control">
-                                            <span class="kt-radio kt-radio--state-brand">
-                                            <input type="radio" name="is_insured" class="is_insured" value="0" required="" checked="">
-                                            <span></span>
-                                            </span>
-                                            </span>
-                                            <span class="kt-option__label">
-                                            <span class="kt-option__head">
-                                            <span class="kt-option__title">
-                                            No
-                                            </span>
-                                            <span class="kt-option__focus"></span>
-                                            </span>
-                                            <span class="kt-option__body">
-                                            </span>
-                                            </span>
-                                            </label>
-                                        </div>
+                              <div class="col-lg-6">
+                                 <div class="row">
+                                    <div class="col-lg-6">
+                                       <h3 class="kt-section__title kt-margin-b-5 pt-1">
+                                          Delivery Type&nbsp;<span class="kt-badge  "></span>
+                                       </h3>
+                                       <label class="kt-option">
+                                       <span class="kt-option__control">
+                                       <span class="kt-radio kt-radio--state-brand">
+                                       <input type="radio" name="dilivery_typ" class="dilivery_typ" value="2" required="" checked="">
+                                       <span></span>
+                                       </span>
+                                       </span>
+                                       <span class="kt-option__label">
+                                       <span class="kt-option__head">
+                                       <span class="kt-option__title">
+                                       Vehicle
+                                       </span>
+                                       <span class="kt-option__focus"></span>
+                                       </span>
+                                       <span class="kt-option__body">
+                                       </span>
+                                       </span>
+                                       </label>
                                     </div>
-                                </div>
-                              
-                              
+                                    <div class="col-lg-6">
+                                       <h3 class="kt-section__title kt-margin-b-5 pt-1">
+                                          &nbsp;<span class=""></span>
+                                       </h3>
+                                       <label class="kt-option">
+                                       <span class="kt-option__control">
+                                       <span class="kt-radio kt-radio--state-brand">
+                                       <input type="radio" name="dilivery_typ" class="dilivery_typ" value="1" required="">
+                                       <span></span>
+                                       </span>
+                                       </span>
+                                       <span class="kt-option__label">
+                                       <span class="kt-option__head">
+                                       <span class="kt-option__title">
+                                       Package
+                                       </span>
+                                       <span class="kt-option__focus"></span>
+                                       </span>
+                                       <span class="kt-option__body">
+                                       </span>
+                                       </span>
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-lg-6">
+                                 <div class="row">
+                                    <div class="col-lg-6">
+                                       <h3 class="kt-section__title kt-margin-b-5 pt-1 ">
+                                          Wants to avail Insurance?&nbsp;<span class="kt-badge  "></span>
+                                       </h3>
+                                       <label class="kt-option">
+                                       <span class="kt-option__control">
+                                       <span class="kt-radio kt-radio--state-brand">
+                                       <input type="radio" name="is_insured" class="is_insured" value="1" required="">
+                                       <span></span>
+                                       </span>
+                                       </span>
+                                       <span class="kt-option__label">
+                                       <span class="kt-option__head">
+                                       <span class="kt-option__title">
+                                       Yes
+                                       </span>
+                                       <span class="kt-option__focus"></span>
+                                       </span>
+                                       <span class="kt-option__body">
+                                       </span>
+                                       </span>
+                                       </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                       <h3 class="kt-section__title kt-margin-b-5 pt-1">
+                                          &nbsp;<span class=""></span>
+                                       </h3>
+                                       <label class="kt-option">
+                                       <span class="kt-option__control">
+                                       <span class="kt-radio kt-radio--state-brand">
+                                       <input type="radio" name="is_insured" class="is_insured" value="0" required="" checked="">
+                                       <span></span>
+                                       </span>
+                                       </span>
+                                       <span class="kt-option__label">
+                                       <span class="kt-option__head">
+                                       <span class="kt-option__title">
+                                       No
+                                       </span>
+                                       <span class="kt-option__focus"></span>
+                                       </span>
+                                       <span class="kt-option__body">
+                                       </span>
+                                       </span>
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -340,57 +276,55 @@
                            </div>
                         </div>
                         <div class="base_sender ">
-                            <div class="row">
-                                <div class="form-group  col-md-6 pl-0">
-                                    <label>Sender/Client&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                    <span class="dev1 col-12 p-0">
-                                    <input name="sender_id" id="sender_id" value="1" type="hidden">
-                                    <input value="System Administration" type="text" class="form-control">
-                                    </span>
-                                    <div class="dev2 kt-hidden col-12">
-                                        <div class="dropdown bootstrap-select form-control clients select2-hidden-accessible">
-                                            <select class="form-control clients select2-hidden-accessible" name="sender_id" id="sender_id" required="" data-select2-id="sender_id" tabindex="-98" aria-hidden="true">
-                                            <option data-hidden="true" data-select2-id="2"></option>
-                                            <option value="new" data-icon="flaticon2-add" data-select2-id="3">Add New</option>
-                                            </select>
-                                            <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="sender_id" tabindex="-1" title="Nothing selected">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">Nothing selected</div>
-                                                </div>
-                                            </div>
-                                            </button>
-                                            <div class="dropdown-menu ">
-                                            <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-sender_id-container"><span class="select2-selection__rendered" id="select2-sender_id-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Search for client</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                        <span class="text-muted">Choose or add a new client that will send the package</span>
+                           <div class="row">
+                              <div class="form-group  col-md-6 pl-0">
+                                 <label>Sender/Client&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                 <span class="dev1 col-12 p-0">
+                                 <input name="sender_id" id="sender_id" value="1" type="hidden">
+                                 <input value="System Administration" type="text" class="form-control">
+                                 </span>
+                                 <div class="dev2 kt-hidden col-12">
+                                    <div class="dropdown bootstrap-select form-control clients select2-hidden-accessible">
+                                       <select class="form-control clients select2-hidden-accessible" name="sender_id" id="sender_id" required="" data-select2-id="sender_id" tabindex="-98" aria-hidden="true">
+                                          <option data-hidden="true" data-select2-id="2"></option>
+                                          <option value="new" data-icon="flaticon2-add" data-select2-id="3">Add New</option>
+                                       </select>
+                                       <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="sender_id" tabindex="-1" title="Nothing selected">
+                                          <div class="filter-option">
+                                             <div class="filter-option-inner">
+                                                <div class="filter-option-inner-inner">Nothing selected</div>
+                                             </div>
+                                          </div>
+                                       </button>
+                                       <div class="dropdown-menu ">
+                                          <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1">
+                                             <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                          </div>
+                                       </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sender Address/Client Address&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        <div class="dropdown bootstrap-select form-control sender_address_id">
-                                            <select class="form-control sender_address_id" name="sender_address_id" id="sender_address_id" data-live-search="true" title="Sender City" required="" tabindex="-98">
-                                                <option class="bs-title-option" value=""></option>
-                                                <option value="" class="rem" disabled="">Please Choose sender</option>
-                                                <option value="new" data-icon="flaticon2-add">Add New</option>
-                                            </select>
-                                            <div class="dropdown-menu ">
-                                                <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div>
-                                                <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-sender_id-container"><span class="select2-selection__rendered" id="select2-sender_id-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Search for client</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    <span class="text-muted">Choose or add a new client that will send the package</span>
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label>Sender Address/Client Address&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                    <div class="dropdown bootstrap-select form-control sender_address_id">
+                                       <select class="form-control sender_address_id" name="sender_address_id" id="sender_address_id" data-live-search="true" title="Sender City" required="" tabindex="-98">
+                                          <option class="bs-title-option" value=""></option>
+                                          <option value="" class="rem" disabled="">Please Choose sender</option>
+                                          <option value="new" data-icon="flaticon2-add">Add New</option>
+                                       </select>
+                                       <div class="dropdown-menu ">
+                                          <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div>
+                                          <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
+                                             <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                          </div>
+                                       </div>
                                     </div>
-                                </div>
-                            </div>
-                           
-                           
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                         <div class="row kt-hidden" id="addnewsender">
                            <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
@@ -1294,60 +1228,58 @@
                      </div>
                      <div id="collapseThree" class="panel-collapse collapse">
                         <div class="kt-portlet__body">
-                            <div class="row m-0">
-                                <div class="col-md-6">
-                                    <div class="form-group ">
-                                        <label>Receiver/Client&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        <span class="dev21 col-12 kt-hidden ">
-                                        <input name="receiver_id" id="receiver_id" value="1" type="hidden">
-                                        <input value="System Administration" type="text" class="form-control">
-                                        </span>
-                                        <div class="dev31 col-12 p-0">
-                                            <div class="dropdown bootstrap-select form-control clients select2-hidden-accessible">
-                                                <select class="form-control clients select2-hidden-accessible" name="receiver_id" id="receiver_id" required="" data-select2-id="receiver_id" tabindex="-98" aria-hidden="true">
-                                                <option data-hidden="true" data-select2-id="5"></option>
-                                                <option value="new" data-icon="flaticon2-add" data-select2-id="6">Add New</option>
-                                                </select>
-                                                <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-12" aria-haspopup="listbox" aria-expanded="false" data-id="receiver_id" tabindex="-1" title="Nothing selected">
-                                                <div class="filter-option">
-                                                    <div class="filter-option-inner">
-                                                        <div class="filter-option-inner-inner">Nothing selected</div>
-                                                    </div>
+                           <div class="row m-0">
+                              <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label>Receiver/Client&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                    <span class="dev21 col-12 kt-hidden ">
+                                    <input name="receiver_id" id="receiver_id" value="1" type="hidden">
+                                    <input value="System Administration" type="text" class="form-control">
+                                    </span>
+                                    <div class="dev31 col-12 p-0">
+                                       <div class="dropdown bootstrap-select form-control clients select2-hidden-accessible">
+                                          <select class="form-control clients select2-hidden-accessible" name="receiver_id" id="receiver_id" required="" data-select2-id="receiver_id" tabindex="-98" aria-hidden="true">
+                                             <option data-hidden="true" data-select2-id="5"></option>
+                                             <option value="new" data-icon="flaticon2-add" data-select2-id="6">Add New</option>
+                                          </select>
+                                          <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-12" aria-haspopup="listbox" aria-expanded="false" data-id="receiver_id" tabindex="-1" title="Nothing selected">
+                                             <div class="filter-option">
+                                                <div class="filter-option-inner">
+                                                   <div class="filter-option-inner-inner">Nothing selected</div>
                                                 </div>
-                                                </button>
-                                                <div class="dropdown-menu ">
-                                                <div class="inner show" role="listbox" id="bs-select-12" tabindex="-1">
-                                                    <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="4" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-receiver_id-container"><span class="select2-selection__rendered" id="select2-receiver_id-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Search for client</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                            <span class="text-muted">Choose or add a new client that will receive the package</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group ">
-                                        <label>Receiver Address/Client Address&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        <div class="dropdown bootstrap-select form-control receiver_address_id">
-                                            <select class="form-control receiver_address_id" name="receiver_address_id" id="receiver_address_id" data-live-search="true" title="Address" required="" tabindex="-98">
-                                                <option class="bs-title-option" value=""></option>
-                                                <option data-hidden="true"></option>
-                                                <option value="new" data-icon="flaticon2-add">Add New</option>
-                                                <option class="rem1" selected="" disabled="">Choose address</option>
-                                            </select>
-                                            <div class="dropdown-menu ">
-                                                <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-13" aria-autocomplete="list"></div>
-                                                <div class="inner show" role="listbox" id="bs-select-13" tabindex="-1">
+                                             </div>
+                                          </button>
+                                          <div class="dropdown-menu ">
+                                             <div class="inner show" role="listbox" id="bs-select-12" tabindex="-1">
                                                 <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="4" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-receiver_id-container"><span class="select2-selection__rendered" id="select2-receiver_id-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Search for client</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                       <span class="text-muted">Choose or add a new client that will receive the package</span>
                                     </div>
-                                </div>
-                            </div>
-                           
-                           
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label>Receiver Address/Client Address&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                    <div class="dropdown bootstrap-select form-control receiver_address_id">
+                                       <select class="form-control receiver_address_id" name="receiver_address_id" id="receiver_address_id" data-live-search="true" title="Address" required="" tabindex="-98">
+                                          <option class="bs-title-option" value=""></option>
+                                          <option data-hidden="true"></option>
+                                          <option value="new" data-icon="flaticon2-add">Add New</option>
+                                          <option class="rem1" selected="" disabled="">Choose address</option>
+                                       </select>
+                                       <div class="dropdown-menu ">
+                                          <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-13" aria-autocomplete="list"></div>
+                                          <div class="inner show" role="listbox" id="bs-select-13" tabindex="-1">
+                                             <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                            <div class="row kt-hidden" id="addnewreceiver">
                               <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
                                  <div class="kt-portlet__head">

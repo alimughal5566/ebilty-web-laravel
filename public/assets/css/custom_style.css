@@ -2,6 +2,67 @@ body {
     overflow-x: hidden;
 }
 
+.readonly .input-group-prepend span {
+    background: none;
+    border: 0;
+    padding-right: 0;
+}
+.readonly .form-control[readonly] {
+    border: 0px;
+}
+.table-bordered tr td:first-child {
+    width: 200px;
+    font-weight: bold;
+}
+.map_canvas {
+    height: 350px;
+}
+.filter-option-inner br {
+    display: none;
+}
+.select2 {
+    width: 100% !important;
+}
+.select2-selection {
+    min-height: 36px !important;
+}
+#addnewsender,#addnewsenderaddress,#addnewreceiver,#addnewreceiveraddress{
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.3);
+}
+.kt-portlet .kt-portlet__head .kt-portlet__head-label .kt-portlet__head-title {
+    font-weight: 700;
+}
+.panel-title {
+    position: relative;
+    cursor: pointer;
+}
+    
+.panel-title::after {
+    content: "\f107";
+    color: #48465b;
+    top: 13px;
+    font-size: 22px;
+    right: 17px;
+    position: absolute;
+    font-family: "FontAwesome"
+}
+.panel-title[aria-expanded="true"]::after {
+    content: "\f106";
+}
+.make_radio_slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
 .form-control::-webkit-input-placeholder {
     color: #0D539B !important;
     font-weight: bold;

@@ -1,5 +1,12 @@
 "use strict";
 
+
+$(document).ready(function() {
+    $('select').selectpicker({
+       size: 4
+    });
+ });
+
 /**
  * @class KApp
  */
