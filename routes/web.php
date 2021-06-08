@@ -20,9 +20,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
+
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
