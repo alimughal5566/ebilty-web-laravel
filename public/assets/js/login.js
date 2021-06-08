@@ -23,6 +23,7 @@ $(document).ready(function() {
                     });
                     html += "<option value='' selected disabled>Choose type</option>";
                     $('#vehicle_category_list').empty().append(html);
+                    
                     $('#vehicle_category_list').selectpicker('refresh');
                 }
             });
