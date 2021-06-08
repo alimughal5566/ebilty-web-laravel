@@ -97,7 +97,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/20/2021 08:49:14
@@ -188,7 +188,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 08:23:34
@@ -201,7 +201,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 08:23:23
@@ -214,7 +214,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 08:23:01
@@ -227,7 +227,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 08:22:33
@@ -240,7 +240,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 06:32:25
@@ -253,7 +253,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 06:31:58
@@ -266,7 +266,7 @@
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it                                                            
+                           The shipment has been assigned, please check it
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
                            05/12/2021 06:31:35
@@ -380,7 +380,7 @@
                    }
                });
             }
-         </script>                            
+         </script>
       </div>
       <!--end: Notifications -->
       <!--begin: Language bar -->
@@ -500,7 +500,11 @@
                   </div>
                </a>
                <div class="kt-notification__custom kt-space-between">
-                  <a class="btn btn-danger btn-block btn-bold kt-font-light" data-request="onLogout" data-request-data="redirect: '/'">Sign Out</a>
+                   <a href="{{route('logout')}}" class="btn btn-danger btn-block btn-bold kt-font-light"
+                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                   <form id="logout-form"  class="btn btn-danger btn-block btn-bold kt-font-light"  action="{{ route('logout') }}" method="POST" class="d-none">
+                       @csrf
+                   </form>
                   <a href="#" target="_blank" class="btn btn-clean btn-sm btn-bold kt-hidden">Upgrade Plan</a>
                </div>
             </div>

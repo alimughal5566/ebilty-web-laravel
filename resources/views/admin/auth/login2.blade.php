@@ -72,7 +72,8 @@
                             <div class="kt-login__subtitle text-white font-weight-bold">Enter your credentials to log in </div>
                         </div>
                         <div class="kt-login__form mt-3">
-                            <form class="kt-form mb-3" action="{{route('login')}}">
+                            <form class="kt-form mb-3" method="POST" action="{{route('login')}}">
+                                @csrf
                                 <div class="kt-alert kt-alert--outline alert alert-success alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                                 <span>You have been successfully logged out!</span>
