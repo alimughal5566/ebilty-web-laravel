@@ -129,9 +129,6 @@ class AuthController extends Controller
     }
 
     public function records() {
-
-
-
         return response()->json(auth()->user());
     }
 
