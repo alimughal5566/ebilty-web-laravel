@@ -76,3 +76,11 @@ Route::prefix('admin')->group(function() {
         Route::get('/make_status_active_qas', 'GeneralSettingController@make_status_active_qas')->name('admin.setting.make_status_active_qas');
     });
 });
+
+
+
+
+Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
+        Route::get('/shipment/create', 'DriverController@create')->name('create.shippment');
+        Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
+    });

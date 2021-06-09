@@ -26707,6 +26707,7 @@ strong {
 	font-size: 1.2rem;
 	font-weight: 500;
 	color: #48465b;
+    font-weight: bold !important
 }
 
 .kt-portlet .kt-portlet__head .kt-portlet__head-label .kt-portlet__head-title small {
