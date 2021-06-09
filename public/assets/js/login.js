@@ -2,6 +2,40 @@ $(document).ready(function() {
     $('select').selectpicker({
        size: 4
     });
+
+
+
+    $( "#user_role_id" ).change(function() {
+        var text=$("#user_role_id option:selected").text();
+        var url = '/get_vehicle_cat'
+        if(text=="Driver"){
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function( response ) {
+                    $('.vehicle_category2').show('2000');
+                    console.log(response)
+                    var html='';
+                    html += "<option value='' selected disabled>Choose Vehicle Category</option>";
+                    $.each(response.cats,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                        // $("#truck_used").append('<option value=1>My option</option>');
+                        console.log(value);
+                    });
+
+                    $('#vehicle_category_list').empty().append(html);
+
+                    $('#vehicle_category_list').selectpicker('refresh');
+                }
+            });
+        }else{
+            $('.vehicle_category').hide('2000');
+            $('.vehicle_type').hide('2000');
+        }
+    });
+
+
+
  });
 
  "use strict";
@@ -74,15 +108,6 @@ $(document).ready(function() {
             });
         }
 
-        $(document).on('change', '#user_role_id', function(){
-            var text=$("#user_role_id option:selected").text();
-            if(text=="Service Provider"){
-                $('.vehicle_category').show('2000');
-            }else{
-                $('.vehicle_category').hide('2000');
-                $('.vehicle_type').hide('2000');
-            }
-        });
         $(document).on('change', '#vehicle_category', function(){
                 $('.veh').show('2000');
         });
@@ -103,7 +128,7 @@ $(document).ready(function() {
                                     </select>
                                     <div class="option_min_add">
                                         <span class="fa fa-minus-circle minus text-dark " data-id="${counter}"  ></span>&nbsp
-                                       
+
                                     </div>
                                 </div>
                                 <div class="input-group vehicle_type" style="display: none"  id="type_${counter}">
@@ -274,7 +299,7 @@ $(document).ready(function() {
 //  return ;
 
                 $.request('onRegister', {
-                    
+
                         data: {
                         name: $('#registerName').val(),
                                 email: $('#registerEmail').val(),
@@ -291,7 +316,7 @@ $(document).ready(function() {
                                 ,vehicles:arr
                         },
 
-                    
+
                     error: function(e,response) {
                         btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
                         if(typeof e.responseJSON !== 'undefined'){

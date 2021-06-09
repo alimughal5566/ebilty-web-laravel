@@ -72,8 +72,7 @@
                             <div class="kt-login__subtitle text-white font-weight-bold">Enter your credentials to log in </div>
                         </div>
                         <div class="kt-login__form mt-3">
-                            <form class="kt-form mb-3" method="POST" action="{{route('login')}}">
-                                @csrf
+                            <form class="kt-form mb-3" action="{{route('login')}}">
                                 <div class="kt-alert kt-alert--outline alert alert-success alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                                 <span>You have been successfully logged out!</span>
@@ -179,8 +178,8 @@
                                 <div class="dropdown bootstrap-select form-control">
                                 <select name="user_role_id" class="form-control " data-dropup-auto="false" id="user_role_id" autocomplete="off" required="" tabindex="-98">
                                     <option value="" selected="" disabled="">Register As</option>
-                                    <option value="1" class="individual">Vendor</option>
-                                    <option value="2" class="company">Driver</option>
+                                    <option value="5" class="individual">Vendor</option>
+                                    <option value="12" class="company">Service Provider</option>
                                 </select>
                                 <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="user_role_id" title="Register As">
                                     <div class="filter-option">
@@ -196,27 +195,35 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="input-group vehicle_category2" style="display: none">
+                            <div class="input-group vehicle_category" style="display:none">
                                 <label for="vehicle_category" class="sr-only"></label>
-{{--                                <div class="dropdown bootstrap-select form-control">--}}
-                                    <select name="vehicle_category[]" class="form-control"  id="vehicle_category_list">
-                                        <option value="" selected="" disabled="">Vehicle category</option>
-                                    </select>
-{{--                                    <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="vehicle_category" title="Vehicle category">--}}
-{{--                                        <div class="filter-option">--}}
-{{--                                            <div class="filter-option-inner">--}}
-{{--                                                <div class="filter-option-inner-inner">Vehicle category</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </button>--}}
-{{--                                    <div class="dropdown-menu ">--}}
-{{--                                        <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">--}}
-{{--                                            <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                <div class="dropdown bootstrap-select form-control">
+                                <select name="vehicle_category[]" class="form-control " data-dropup-auto="false" id="vehicle_category" autocomplete="off" tabindex="-98">
+                                    <option value="1">category 1</option>
+                                    <option value="2">category 2</option>
+                                    <option value="3">category 3</option>
+                                    <option value="4">category 4</option>
+                                    <option value="5">category 1</option>
+                                    <option value="6">category 5</option>
+                                    <option value="7">category 6</option>
+                                    <option value="8">category 7</option>
+                                    <option value="" selected="" disabled="">Vehicle category</option>
+                                </select>
+                                <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="vehicle_category" title="Vehicle category">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-inner-inner">Vehicle category</div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown-menu ">
+                                    <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
+                                        <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                    </div>
+                                </div>
+                                </div>
                                 <div class="option_min_add sec_min">
-                                    <span class="fa fa-plus-circle plos text-dark " id="first" data-placement="top" data-toggle="kt-tooltip" data-skin="dark" data-original-title="Add More Vehincle"></span>
+                                <span class="fa fa-plus-circle plos text-dark " id="first" data-placement="top" data-toggle="kt-tooltip" data-skin="dark" data-original-title="Add More Vehincle"></span>
                                 </div>
                             </div>
                             <div class="input-group vehicle_type veh" style="display:none">
@@ -300,10 +307,5 @@
    <script src="assets/js/login.js" type="text/javascript"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.3.8/js/ajax-bootstrap-select.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script>
-
-
-</script>
-
  </body>
 </html>
