@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
 Route::get('/home', 'HomeController@index')->name('home');
