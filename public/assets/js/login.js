@@ -16,14 +16,15 @@ $(document).ready(function() {
                     $('.vehicle_category2').show('2000');
                     console.log(response)
                     var html='';
+                    html += "<option value='' selected disabled>Choose Vehicle Category</option>";
                     $.each(response.cats,function (key,value) {
                         html += '<option value="'+value.id+'">'+value.name+'</option>';
                         // $("#truck_used").append('<option value=1>My option</option>');
                         console.log(value);
                     });
-                    html += "<option value='' selected disabled>Choose type</option>";
+
                     $('#vehicle_category_list').empty().append(html);
-                    
+
                     $('#vehicle_category_list').selectpicker('refresh');
                 }
             });
