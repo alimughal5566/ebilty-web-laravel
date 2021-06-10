@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\front\signup\SignupOtp;
 use App\Patient;
+use App\UserAddress;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             'name' => $request->full_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'dob' => $request->dob,
+//            'dob' => $request->dob,
             'phone' => $request->phone,
         ]);
 
@@ -44,6 +45,48 @@ class AuthController extends Controller
         $user->save();
         event(new Registered($user));
         return $this->login($request);
+//        dd('dd');
+//        return response()->json([
+//            'message' => 'Successfully created user!'
+//        ], 201);
+    }
+
+
+    public function createUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:4'],
+            'full_name' => ['required', 'min:3'],
+            'phone' => ['required', 'unique:users,phone']
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()]);
+        }
+        $user = new User([
+            'name' => $request->full_name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+        ]);
+        $user->save();
+        $address=new UserAddress;
+        $address->user_id = $user->id;
+        $address->created_by = auth()->user()->id;
+        $address->address=$request->address;
+        $address->area_id=$request->area;
+        $address->state_id=$request->state;
+        $address->city_id=$request->city;
+        $address->country_id=$request->country;
+        $address->zip=$request->zip;
+        $address->form=$request->form;
+        $address->save();
+
+
+//        $user->assignRole('Patient');
+
+        event(new Registered($user));
+        return response()->json(['success' => 'User registered successfully','user_id'=>$user->id,'address_id'=>$address->id]);;
 //        dd('dd');
 //        return response()->json([
 //            'message' => 'Successfully created user!'

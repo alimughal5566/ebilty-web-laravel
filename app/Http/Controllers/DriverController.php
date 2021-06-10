@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\Driver;
 use App\Models\Admin\Setting\PackageType;
 use App\Models\Admin\Setting\VehicleCategory;
+use App\ShipmentArea;
+use App\User;
+use App\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,10 +38,15 @@ class DriverController extends Controller
      */
     public function create()
     {
-//        dd(auth()->user()->id);
          $vehicle_types=VehicleCategory::all();
          $shipment_packages=PackageType::all();
-        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages'));
+         $countries=Country::wherehas('states')->get();
+//         $senders= ShipmentArea::where('created_by',Auth::user()->id)->with('user')->get();
+
+       $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
+       $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
+//        dd($senders);
+        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','senders','receivers'));
 
     }
 
@@ -49,7 +58,11 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request);
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'name1' => ['required', 'string', 'max:255'],
+        ]);
     }
 
     /**

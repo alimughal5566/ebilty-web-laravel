@@ -86,5 +86,11 @@ Route::prefix('admin')->group(function() {
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/shipment/create', 'DriverController@create')->name('create.shippment');
+        Route::post('/shipment/create', 'DriverController@store')->name('create.shipment');
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
-    });
+});
+Route::get('/getStates', 'HomeController@getStates')->name('getStates');
+Route::get('/getCities', 'HomeController@getCities')->name('getCities');
+Route::get('/getArea', 'HomeController@getArea')->name('getArea');
+Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
+Route::post('/createUser', 'AuthController@createUser')->name('createUser');
