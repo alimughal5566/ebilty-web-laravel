@@ -112,6 +112,54 @@ class GeneralSettingSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
+        DB::table('vehicle_categories')->insert([
+            'id'=> 1,
+            'name' => 'Suvs',
+            'status' => 1,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+
+        ]);
+        DB::table('vehicle_categories')->insert([
+            'id'=> 2,
+            'name' => 'Truck',
+            'status' => 1,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+
+        ]);
+        DB::table('vehicles')->insert([
+            'id'=> 1,
+            'vehicle_category_id' => 1,
+            'status' => 1,
+            'name' => 'Audi',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+        DB::table('vehicles')->insert([
+            'id'=> 2,
+            'vehicle_category_id' => 1,
+            'status' => 1,
+            'name' => 'Kia',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+        DB::table('vehicles')->insert([
+            'id'=> 3,
+            'vehicle_category_id' => 2,
+            'status' => 1,
+            'name' => 'Hilux',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+        DB::table('vehicles')->insert([
+            'id'=> 4,
+            'vehicle_category_id' => 2,
+            'status' => 1,
+            'name' => 'Ford',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
 
         Role::create(['name' => 'customer']);
         Role::create(['name' => 'admin']);
@@ -146,13 +194,7 @@ class GeneralSettingSeeder extends Seeder
         $user->assignRole('admin');
 
 
-        DB::table('shipment_package_types')->insert([
-            'name' => 'Medium Package',
-        ]);
 
-        DB::table('shipment_package_types')->insert([
-            'name' => 'Large Package',
-        ]);
 
 
 

@@ -200,7 +200,7 @@
                             <div class="input-group vehicle_category2" style="display: none">
                                 <label for="vehicle_category" class="sr-only"></label>
 {{--                                <div class="dropdown bootstrap-select form-control">--}}
-                                    <select name="vehicle_category[]" class="form-control" required  id="vehicle_category_list0">
+                                    <select name="vehicle_category[]" class="form-control"   id="vehicle_category_list0">
                                         <option value="" selected="" disabled="">Vehicle category</option>
                                     </select>
 {{--                                    <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="vehicle_category" title="Vehicle category">--}}

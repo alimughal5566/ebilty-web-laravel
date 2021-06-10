@@ -15,6 +15,9 @@ class AddPhoneToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable();
+            $table->string('cnic_image')->nullable();
+            $table->string('bussiness_type')->nullable();
+            $table->string('postal_code')->nullable();
         });
     }
 
