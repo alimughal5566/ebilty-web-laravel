@@ -100,7 +100,7 @@
                                 Don't have an account yet? No need to worry
                                 </span>
                                 &nbsp;&nbsp;
-                                <a href="javascript:void(0);" id="kt_login_signup" class="kt-login__account-link btn-gradient btn-gradient-orange btn-block w-100">Sign Up!</a>
+                                <button type="submit"  id="kt_login_signup" class="kt-login__account-link btn-gradient btn-gradient-orange btn-block w-100">Sign Up!</button>
                                 </div>
                                 <div class="kt-login__actions my-4">
                                 <span class="kt-login__account-msg text-white font-weight-bold">
@@ -139,7 +139,8 @@
                             </div>
                             <div class="kt-login__subtitle text-white font-weight-bold">Enter your details to create your account</div>
                         </div>
-                        <form class="kt-form" action="" enctype="multipart/form-data">
+                        <form class="kt-form" action="{{route('register_user')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="input-group">
                                 <label for="registerName" class="sr-only"></label>
                                 <input class="form-control" type="text" id="registerName" placeholder="Full Name" name="name" required="">
@@ -199,7 +200,7 @@
                             <div class="input-group vehicle_category2" style="display: none">
                                 <label for="vehicle_category" class="sr-only"></label>
 {{--                                <div class="dropdown bootstrap-select form-control">--}}
-                                    <select name="vehicle_category[]" class="form-control"  id="vehicle_category_list">
+                                    <select name="vehicle_category[]" class="form-control" required  id="vehicle_category_list0">
                                         <option value="" selected="" disabled="">Vehicle category</option>
                                     </select>
 {{--                                    <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="vehicle_category" title="Vehicle category">--}}
@@ -221,7 +222,7 @@
                             </div>
                             <div class="input-group vehicle_type veh" style="display:none">
                                 <label for="vehicle_category" class="sr-only"></label>
-                                <select name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used" autocomplete="off">
+                                <select name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used0" autocomplete="off">
                                 </select>
                             </div>
                             <div class="divs">
@@ -233,7 +234,7 @@
                             </div>
                             <div class="kt-login__actions d-flex align-items-center justify-content-between text-justify">
                                 <button id="kt_login_signup_cancel" class="btn btn-gradient btn-gradient-default kt-login__btn-secondary mx-0">Cancel</button>
-                                <button id="kt_login_signup_submit" type="submit" class="btn btn-gradient btn-gradient-blue kt-login__btn-primary mx-0">Sign Up!</button>
+                                <button id="" type="submit" class="btn btn-gradient btn-gradient-blue mx-0">Sign Up!</button>
                             </div>
                             <div class="kt-login__actions kt-margin-t-10 flex-column">
                                 <span class="kt-login__account-msg d-block w-100 text-white font-weight-bold">Already have an account? <a href="javascript:void(0);" id="kt_login_signin" class="kt-login__account-link ">Login</a> to your account</span>

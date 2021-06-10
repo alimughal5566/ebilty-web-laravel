@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -41,5 +42,11 @@ class LoginController extends Controller
     public function get_vehicle_cat(){
         $cats = VehicleCategory::all();
         return response()->json(['cats'=>$cats]);
+    }
+    public function get_vehicles(){
+        $id = $_GET['id'];
+        $vehs = Vehicle::where('vehicle_category_id', $id)->get();
+
+        return response()->json($vehs);
     }
 }

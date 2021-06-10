@@ -1,3 +1,5 @@
+var counter = 0;
+var counter_veh = 0;
 $(document).ready(function() {
     $('select').selectpicker({
        size: 4
@@ -23,9 +25,10 @@ $(document).ready(function() {
                         console.log(value);
                     });
 
-                    $('#vehicle_category_list').empty().append(html);
+                    $('#vehicle_category_list'+counter).empty().append(html);
 
-                    $('#vehicle_category_list').selectpicker('refresh');
+                    $('#vehicle_category_list'+counter).selectpicker('refresh');
+
                 }
             });
         }else{
@@ -111,74 +114,80 @@ $(document).ready(function() {
         $(document).on('change', '#vehicle_category', function(){
                 $('.veh').show('2000');
         });
-        var counter=0;
         $(document).on('click', '.plos', function(){
-               var txt=`<div class="input-group div_${counter}" >
-                                    <label for="vehicle_category_${counter}" class="sr-only"></label>
-                                    <select name="vehicle_category[]" required class="form-control sbt" data-dropup-auto="false" id="vehicle_category_${counter}" data-id="${counter}" autocomplete="off">
-                                                                                <option value="1">category 1</option>
-                                                                                <option value="2">category 2</option>
-                                                                                <option value="3">category 3</option>
-                                                                                <option value="4">category 4</option>
-                                                                                <option value="5">category 1</option>
-                                                                                <option value="6">category 5</option>
-                                                                                <option value="7">category 6</option>
-                                                                                <option value="8">category 7</option>
-                                                                                <option value="" selected disabled>Vehicle category</option>
-                                    </select>
-                                    <div class="option_min_add">
-                                        <span class="fa fa-minus-circle minus text-dark " data-id="${counter}"  ></span>&nbsp
 
-                                    </div>
-                                </div>
-                                <div class="input-group vehicle_type" style="display: none"  id="type_${counter}">
-                                    <label for="vehicle_category" class="sr-only"></label>
-                                    <select  name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used_${counter}" autocomplete="off" required >
-                                    </select>
-                                </div>
-                                </div>`;
-                             counter++;
-            $('.divs').append(txt);
-            // $('#first').hide('3000');
-            // if ($('.divs').counter === 0) {
-                // console.log('popo');
-                // code to run if it isn't there
-            // }
+            if( !$('#vehicle_category_list'+counter).val() ) {
+                alert('Please select an option first')
+            }else {
+                counter++;
+                var veh_id = `vehicle_category_list${counter}`;
+                var txt = `<div class="input-group div_${counter}" >
+                <label for="vehicle_category_${counter}" class="sr-only"></label>
+                <select required name="vehicle_category[]" required class="form-control sbt" data-dropup-auto="false" id="vehicle_category_list${counter}" data-id="${counter}" autocomplete="off">
+                     `;
+                txt += $('#vehicle_category_list0').html();
+
+                txt += `</select>
+                <div class="option_min_add">
+                    <span class="fa fa-minus-circle minus text-dark " data-id="${counter}"  ></span>&nbsp
+
+                </div>
+                </div>
+                <div class="input-group vehicle_type" style="display: none"  id="type_${counter}">
+                    <label for="vehicle_category" class="sr-only"></label>
+                    <select  name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used_${counter}" autocomplete="off" required >
+                    </select>
+                </div>
+                </div>`;
+                // console.log(txt)
+
+                $('.divs').append(txt);
+                $('#' + veh_id).selectpicker('refresh');
+           }
         });
 
         $(document).on('click', '.minus', function(){
             var id=$(this).attr('data-id');
                $('.div_'+id).hide('3000')
                $('#type_'+id).hide('3000')
+            counter--;
 
         });
 
+        var current_vehicle_id = '#vehicle_category_list'+counter
+        $(document).on('change', current_vehicle_id, function(){
 
-        $(document).on('change', '#vehicle_category', function(){
-            $.request('onChangefees1', {
-                method:'post',
-                data: {id:$('#vehicle_category option:selected' ).val()},
+            var id = $(current_vehicle_id+' option:selected' ).val();
+            var url = '/get_vehicles';
+            $.ajax({
+                method:'get',
+                data: {id:id},
+                url: url,
                 success: function(response, status, xhr, $form) {
+                    console.log(response)
                     var html='';
-                    $.each(response,function (key,value) {
-                        html += '<option value="'+value.id+'">'+value.name+'</option>';
-                        console.log(value);
-                    });
                     html += "<option value='' selected disabled>Choose type</option>";
-                    $('#truck_used').empty().append(html);
+                    $.each(response,function (key,value) {
+                        console.log(value)
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#truck_used'+counter_veh).empty().append(html);
+                    $('.vehicle_type').show()
+                    $('#truck_used'+counter_veh).selectpicker('refresh');
+                    counter_veh++;
                 }
             });
         });
 
         $(document).on('change', '.sbt', function(){
-            var id=$(this).attr('data-id');
-            console.log(this)
-           var val1= $('#vehicle_category_'+id+' option:selected').val();
-            // alert(id);
-            // return;
-            $.request('onChangefees1', {
-                method:'post',
-                data: {id:val1},
+            var current_vehicle_id = '#vehicle_category_list'+counter
+            var id = $(current_vehicle_id+' option:selected' ).val();
+            var url = '/get_vehicles';
+            // var val1= $('#vehicle_category_'+id+' option:selected').val();
+            $.ajax({
+                method:'get',
+                data: {id:id},
+                url: url,
                 success: function(response, status, xhr, $form) {
                     var html='';
                     $.each(response,function (key,value) {
@@ -187,8 +196,10 @@ $(document).ready(function() {
                         console.log(value);
                     });
                     html += "<option value='' selected disabled>Choose type</option>";
-                    $('#truck_used_'+id).empty().append(html);
+                    $('#truck_used_'+counter_veh).empty().append(html);
+                    $('#truck_used_'+counter_veh).selectpicker('refresh');
                     $('#type_'+id).show('3000');
+                    counter_veh++;
                 }
             });
         });
