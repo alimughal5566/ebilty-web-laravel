@@ -25,6 +25,8 @@ Route::get('/landingPage', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
+Route::post('/register_user', 'auth\RegisterController@register_user')->name('register_user');
+Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehicles');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
