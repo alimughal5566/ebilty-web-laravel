@@ -282,7 +282,7 @@
                                                     <label>Sender Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control sender_address_id">
                                                         <select class="form-control " onchange="showsenderform1(this.value)" name="sender" data-live-search="true" title="Choose User" required="" tabindex="-98">
-                                                            <option class="bs-title-option" value=""></option>
+{{--                                                            <option class="bs-title-option" value=""></option>--}}
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
                                                         {{--                                       <div class="dropdown-menu ">--}}
@@ -298,7 +298,7 @@
                                                 <div class="form-group">
                                                     <label>Sender Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control sender_address_id">
-                                                        <select class="form-control sender_address_id"  onchange="showsenderform(this.value)" name="sender_address_id" id="sender_address_id" data-live-search="true" title="Sender City" required="" tabindex="-98">
+                                                        <select class="form-control sender_address_id"  onchange="showsenderform(this.value)" name="sender_address_id" id="sender_address_id" data-live-search="true" title="Sender address" required="" tabindex="-98">
                                                             <option class="bs-title-option" value=""></option>
 {{--                                                            <option value="" class="rem" disabled="">Please Choose sender</option>--}}
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
