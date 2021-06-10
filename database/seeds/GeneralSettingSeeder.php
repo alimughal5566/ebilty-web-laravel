@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class GeneralSettingSeeder extends Seeder
 {
@@ -110,5 +112,49 @@ class GeneralSettingSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
+
+        Role::create(['name' => 'customer']);
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'driver']);
+
+
+        $user=User::create([
+            'name' => 'driver',
+            'password' => bcrypt(1234),
+            'email' => 'driver@gmail.com',
+            'phone'=>'111',
+        ]);
+//        $user=User::where('email','driver@gmail.com')->first();
+        $user->assignRole('driver');
+
+
+        $user=User::create([
+            'name' => 'customer',
+            'password' => bcrypt(1234),
+            'email' => 'customer@gmail.com',
+            'phone'=>'111',
+        ]);
+        $user->assignRole('customer')  ;
+
+
+        $user=User::create([
+            'name' => 'admin',
+            'password' => bcrypt(1234),
+            'email' => 'admin@gmail.com',
+            'phone'=>'111',
+        ]);
+        $user->assignRole('admin');
+
+
+        DB::table('shipment_package_types')->insert([
+            'name' => 'Medium Package',
+        ]);
+
+        DB::table('shipment_package_types')->insert([
+            'name' => 'Large Package',
+        ]);
+
+
+
     }
 }

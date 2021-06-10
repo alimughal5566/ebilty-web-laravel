@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin\Setting\Vehicle;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        $user=User::find(3);
+//        $user->assignRole('driver');
+//        $user=User::find(4);
+//        $user->assignRole('customer');
+//        dd();
         return view('admin.shipment.add-shipment');
+    }
+
+    public function getVehicles(Request $request)
+    {
+$vehicles= Vehicle::where('vehicle_category_id',$request->id)->get();
+       return response()->json(['data'=>$vehicles]) ;
     }
 }
