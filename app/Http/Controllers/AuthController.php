@@ -52,8 +52,7 @@ class AuthController extends Controller
     }
 
 
-    public function createUser(Request $request)
-    {
+    public function createUser(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
@@ -91,6 +90,24 @@ class AuthController extends Controller
 //        return response()->json([
 //            'message' => 'Successfully created user!'
 //        ], 201);
+    }
+
+
+    public function createSenderAddress(Request $request){
+
+        $address=new UserAddress;
+        $address->user_id = $request->user_id;
+        $address->created_by = auth()->user()->id;
+        $address->address=$request->address;
+        $address->area_id=$request->area;
+        $address->state_id=$request->state;
+        $address->city_id=$request->city;
+        $address->country_id=$request->country;
+        $address->zip=$request->zip;
+        $address->form=$request->form;
+        $address->save();
+
+        return response()->json(['success' => 'Address saved successfully','user_id'=>$request->user_id,'address_id'=>$address->id]);;
     }
 
     public function sendOtpApi(SignupOtp $request){

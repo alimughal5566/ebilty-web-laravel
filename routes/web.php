@@ -96,3 +96,4 @@ Route::get('/getCities', 'HomeController@getCities')->name('getCities');
 Route::get('/getArea', 'HomeController@getArea')->name('getArea');
 Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
 Route::post('/createUser', 'AuthController@createUser')->name('createUser');
+Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
