@@ -6,6 +6,7 @@ use App\Country;
 use App\Driver;
 use App\Models\Admin\Setting\PackageType;
 use App\Models\Admin\Setting\VehicleCategory;
+use App\Models\UserVehicle;
 use App\ShipmentArea;
 use App\Shippment;
 use App\User;
@@ -28,6 +29,19 @@ class DriverController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+//        dd(auth()->user()->id);
+        $records    =   Shippment::orderBy('id','desc');
+        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->get();
+        $records->where(function($q) use ($vehicles){
+            foreach($vehicles as $truck) {
+                $q->Where('truck_used', $truck->vehicle_id);
+//                $q->orWhere('vehicle_category', $truck->vehicle_type);
+            }
+        });
+        dd($records->get());
+
+
+
 
 
         $shipments= Shippment::where('user_id',auth()->user()->id)->orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
