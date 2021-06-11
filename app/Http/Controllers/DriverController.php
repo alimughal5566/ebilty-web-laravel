@@ -7,6 +7,7 @@ use App\Driver;
 use App\Models\Admin\Setting\PackageType;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\ShipmentArea;
+use App\Shippment;
 use App\User;
 use App\UserAddress;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class DriverController extends Controller
 
     public function __construct() {
 //        dd(Auth::user());
-        $this->middleware(['auth','role:customer']);
+        $this->middleware(['auth','role:driver']);
     }
 
 
@@ -26,9 +27,11 @@ class DriverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+
+
+        $shipments= Shippment::where('user_id',auth()->user()->id)->orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
+        return view('driver.shipment.index', compact('shipments'));
     }
 
     /**
@@ -36,18 +39,7 @@ class DriverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-         $vehicle_types=VehicleCategory::all();
-         $shipment_packages=PackageType::all();
-         $countries=Country::wherehas('states')->get();
-//         $senders= ShipmentArea::where('created_by',Auth::user()->id)->with('user')->get();
 
-       $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
-       $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
-        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','senders','receivers'));
-
-    }
 
     /**
      * Store a newly created resource in storage.

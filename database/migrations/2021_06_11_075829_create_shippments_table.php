@@ -36,6 +36,8 @@ class CreateShippmentsTable extends Migration
             $table->string('vehicle_id')->nullable();
             $table->string('invoice_image')->nullable();
             $table->string('status_id')->nullable();
+            $table->string('assigned_to')->nullable();
+            $table->string('assigned_at')->nullable();
             $table->timestamps();
         });
     }

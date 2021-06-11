@@ -85,12 +85,12 @@ Route::prefix('admin')->group(function() {
 
 
 
-
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
-        Route::get('/shipment/create', 'DriverController@create')->name('create.shippment');
+        Route::get('/shipment/create', 'CustomerController@create')->name('create.shippment');
         Route::post('/shipment/create', 'ShippmentController@store')->name('create.shipment');
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
         Route::get('/shipments', 'CustomerController@index')->name('customer.shipments');
+        Route::get('/driver/shipments', 'DriverController@index')->name('driver.shipments');
 });
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
 Route::get('/getCities', 'HomeController@getCities')->name('getCities');

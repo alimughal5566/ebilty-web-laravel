@@ -41,6 +41,7 @@ class ShippmentController extends Controller
         $shipment->package_cost= $request->package_cost;
         $shipment->vehicle_type_id= $request->vehicle_type;
         $shipment->vehicle_id= $request->vehicle;
+        $shipment->status_id=9;
 
         if ($request->invoice_image) {
             $invoice_image = time() . '.' . $request->invoice_image->extension();

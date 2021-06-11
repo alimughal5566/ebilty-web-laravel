@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
-    {{--    <link rel="stylesheet" href="http://127.0.0.1:8002/themes/spotlayer/assets/admin/css/demo1/style.bundle.css">--}}
+{{--    <link rel="stylesheet" href="http://127.0.0.1:8002/themes/spotlayer/assets/admin/css/demo1/style.bundle.css">--}}
     <style>
         .progress {
             width: 100px;
@@ -135,14 +135,14 @@
             </thead>
             <tbody>
             @forelse($shipments as $shipment)
-                <tr>
-                    <th scope="row">{{$shipment->id}}</th>
-                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
-                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
-                    <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                    <td>{{$shipment->status->name}}</td>
-                    <td>
-                        @php $percentage=0;
+            <tr>
+                <th scope="row">{{$shipment->id}}</th>
+                <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
+                <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
+                <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
+                <td>{{$shipment->status->name}}</td>
+                <td>
+                    @php $percentage=0;
 if($shipment->status_id==1){
 $percentage=30;
 }
@@ -164,38 +164,38 @@ $percentage=90;
 if($shipment->status_id==3){
 $percentage=50;
 }
-                        @endphp
-                        <div class="progress mx-auto" data-value='{{$percentage}}'>
+ @endphp
+                    <div class="progress mx-auto" data-value='{{$percentage}}'>
                                           <span class="progress-left">
                                               <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>
-                            <span class="progress-right">
+                        <span class="progress-right">
                                                  <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>
-                            <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                                <div class="h2 font-weight-bold">{{$percentage}}<sup class="small">%</sup></div>
-                            </div>
+                        <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                            <div class="h2 font-weight-bold">{{$percentage}}<sup class="small">%</sup></div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td>
-                        @if(count($shipment->bids)>0)
-                            <span class="example-tools justify-content-center">
+                <td>
+                    @if(count($shipment->bids)>0)
+                        <span class="example-tools justify-content-center">
                             <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
                                  <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
                            <i class="la la-car"></i></a>
                        </span>
                         @else
-                            <span class="example-tools justify-content-center">
+                        <span class="example-tools justify-content-center">
                             <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon"   data-target="#myModal" title=" 0 Bids"  style="position: relative; cursor: default" aria-describedby="tooltip797420">
                                  <span class=" text-danger" style=" position: absolute;top: -6px; right: -2px;">●</span>
                            <i class="la la-car"></i></a>
                        </span>
-                        @endif
+                    @endif
 
-                    </td>
+                </td>
 
-                </tr>
+            </tr>
 
 
             @empty
@@ -213,9 +213,9 @@ $percentage=50;
     </div>
 
 
-    {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
-    {{--     modalOpen--}}
-    {{--    </button>--}}
+{{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
+{{--     modalOpen--}}
+{{--    </button>--}}
 
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
@@ -258,42 +258,42 @@ $percentage=50;
             </div>
         </div>
     </div>
-    {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
+{{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
 
-    <script>
-        $(function() {
+<script>
+    $(function() {
 
-            $(".progress").each(function() {
+        $(".progress").each(function() {
 
-                var value = $(this).attr('data-value');
-                var left = $(this).find('.progress-left .progress-bar');
-                var right = $(this).find('.progress-right .progress-bar');
+            var value = $(this).attr('data-value');
+            var left = $(this).find('.progress-left .progress-bar');
+            var right = $(this).find('.progress-right .progress-bar');
 
-                if (value > 0) {
-                    if (value <= 50) {
-                        right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
-                    } else {
-                        right.css('transform', 'rotate(180deg)')
-                        left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
-                    }
+            if (value > 0) {
+                if (value <= 50) {
+                    right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+                } else {
+                    right.css('transform', 'rotate(180deg)')
+                    left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
                 }
-
-            })
-
-            function percentageToDegrees(percentage) {
-                return percentage / 100 * 360
             }
 
-        });
-        function showBids(data) {
-            data=JSON.parse(data);
-            $('#jqueryTable tbody').html('');
-            var html='';
-            $.each(data, function (index, value) {
-                html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + value.customer_budget + "</td><td >" + value.bid_amount + "</td><td >" + value.route + "</td><td >" + value.last_updated + "</td><tr>";
-            });
-            $('#jqueryTable').append(html);
-            // console.log(data[0]);
+        })
+
+        function percentageToDegrees(percentage) {
+            return percentage / 100 * 360
         }
-    </script>
+
+    });
+    function showBids(data) {
+        data=JSON.parse(data);
+        $('#jqueryTable tbody').html('');
+        var html='';
+        $.each(data, function (index, value) {
+            html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + value.customer_budget + "</td><td >" + value.bid_amount + "</td><td >" + value.route + "</td><td >" + value.last_updated + "</td><tr>";
+        });
+        $('#jqueryTable').append(html);
+        // console.log(data[0]);
+    }
+</script>
 @endsection
