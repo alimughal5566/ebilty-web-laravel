@@ -136,7 +136,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-lg-6">
-                                                <label>Shipping Time&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <label>Shipping Time    <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                 <div class="input-group ">
                                                     <input type="time" class="form-control ship_time" name="ship_time" value="{{old('ship_time')}}" >
                                                 </div>
@@ -145,12 +145,12 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                            Delivery Type&nbsp;<span class="kt-badge  "></span>
+                                                            Delivery Type <span class="kt-badge  "></span>
                                                         </h3>
                                                         <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
-                                       <input type="radio" name="dilivery_typ" class="dilivery_typ" value="2"  checked="">
+                                       <input type="radio" name="dilivery_type" class="dilivery_typ" value="1"  checked="" {{(old('dilivery_type')==1)?'checked':''}}  >
                                        <span></span>
                                        </span>
                                        </span>
@@ -173,7 +173,7 @@
                                                         <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
-                                       <input type="radio" name="dilivery_typ" class="dilivery_typ" value="1" >
+                                       <input type="radio" name="dilivery_type" class="dilivery_typ" value="2" {{(old('dilivery_type')==2)?'checked':''}} >
                                        <span></span>
                                        </span>
                                        </span>
@@ -200,7 +200,7 @@
                                                         <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
-                                       <input type="radio" name="is_insured" class="is_insured" value="1" >
+                                       <input type="radio" name="is_insured" class="is_insured" value="1" {{(old('is_insured')==1)?'checked':''}}>
                                        <span></span>
                                        </span>
                                        </span>
@@ -223,7 +223,7 @@
                                                         <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
-                                       <input type="radio" name="is_insured" class="is_insured" value="0"  checked="">
+                                       <input type="radio" name="is_insured" class="is_insured" value="0"  checked="" {{(old('is_insured')==0)?'checked':''}}>
                                        <span></span>
                                        </span>
                                        </span>
@@ -281,10 +281,10 @@
                                                 <div class="form-group">
                                                     <label>Sender<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control sender_address_id">
-                                                        <select class="form-control"  onchange="showsenderform1(this.value)" name="sender"  id="sendr" data-live-search="true" title="Choose User"  tabindex="-98">
+                                                        <select class="form-control"  onchange="showsenderform1(this.value)" name="sender_name"  id="sendr" data-live-search="true" title="Choose User"  tabindex="-98">
                                                             {{--                                                            <option class="bs-title-option" value=""></option>--}}
                                                             @foreach($senders as $sender)
-                                                                <option value="{{$sender->user_id}}"  {{(old('sender')==$sender->user_id)?'selected':''}}>{{$sender->user->name}}</option>
+                                                                <option value="{{$sender->user_id}}"  {{(old('sender_name')==$sender->user_id)?'selected':''}}>{{$sender->user->name}}</option>
                                                             @endforeach
 
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
@@ -301,8 +301,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Sender Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                    <div class="dropdown bootstrap-select form-control sender_address_id">
-                                                        <select class="form-control sender_address_id"    onchange="showsenderform(this.value)" name="sender_address_id" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
+                                                    <div class="dropdown bootstrap-select form-control ">
+                                                        <select class="form-control sender_address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
 
@@ -452,7 +452,7 @@
                                                                 <div class="form-group col-lg-4">
                                                                     <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                                     <div class="dropdown bootstrap-select form-control ">
-                                                                        <select name="vehicle_category" class="form-control" id="statees"  onchange="getCities(this.value,'cityy')"   title="Please select country first" >
+                                                                        <select name="statee" class="form-control" id="statees"  onchange="getCities(this.value,'cityy')"   title="Please select country first" >
                                                                             {{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
                                                                         </select>
                                                                     </div>
@@ -556,8 +556,8 @@
                                             <div class="dropdown bootstrap-select form-control">
                                                 <select class="form-control" name="payment_type" id="payment_type"  tabindex="-98">
                                                     <option data-hidden="true"></option>
-                                                    <option value="1"  {{(old('payment_type')==1)?'selected':''}}>Postpaid </option>
-                                                    <option value="2" {{(old('payment_type')==2)?'selected':''}}>Prepaid </option>
+                                                    <option value="1"  {{(old('payment_type')==1)?'selected':''}} selected>Postpaid </option>
+                                                    <option value="2" {{(old('payment_type')==2)?'selected':''}} >Prepaid </option>
                                                 </select>
                                                 <div class="dropdown-menu ">
                                                     <div class="inner show" role="listbox" id="bs-select-11" tabindex="-1">
@@ -608,7 +608,7 @@
                                                         <select onchange="showreceiverform1(this.value)" class="form-control" name="receiver_name" id="receiver_name" data-live-search="true" title="Client"  tabindex="-98">
                                                             <option data-hidden="true"></option>
                                                             @foreach($receivers as $receiver)
-                                                                <option value="{{$receiver->user_id}}">{{$receiver->user->name}}</option>
+                                                                <option value="{{$receiver->user_id}}"  {{(old('receiver_name')==$receiver->user_id)?'selected':''}}>{{$receiver->user->name}}</option>
                                                             @endforeach
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
@@ -621,7 +621,7 @@
                                                 <div class="form-group ">
                                                     <label>Receiver Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
-                                                        <select onchange="showreceiverform(this.value)" class="form-control receiver_address_id" id="receiver_address_id" name="receiver_address_id"  data-live-search="true" title="Address"  tabindex="-98">
+                                                        <select onchange="showreceiverform(this.value)" class="form-control receiver_address_id" id="receiver_address_id" name="receiver_address"  data-live-search="true" title="Address"  tabindex="-98">
                                                             {{--                                                            <option data-hidden="true"></option>--}}
                                                             {{--                                                            <option class="rem1" selected="" disabled="">Choose address</option>--}}
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
@@ -787,7 +787,7 @@
                                                             <div class="form-group col-lg-4">
                                                                 <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                                 <div class="dropdown bootstrap-select form-control ">
-                                                                    <select name="vehicle_category" class="form-control" id="r_statees"  onchange="getCities(this.value,'r_cityy')"   title="Please select country first" >
+                                                                    <select name="sta" class="form-control" id="r_statees"  onchange="getCities(this.value,'r_cityy')"   title="Please select country first" >
                                                                         {{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
                                                                     </select>
                                                                 </div>
@@ -1285,7 +1285,7 @@
                                           $
                                           </span>
                                                         </div>
-                                                        <input type="text" class="form-control decimal" data-type="currency" name="courier_fee" id="delivery_cost" value="{{old('courier_fee',30)}}" >
+                                                        <input type="text" class="form-control decimal" data-type="currency" name="shipping_fee" id="delivery_cost" value="{{old('courier_fee',30)}}" >
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-6">
@@ -1321,28 +1321,28 @@
                                 <div class="kt-portlet__body">
                                     <div class="row">
                                         <div class="form-group col-lg-6">
-                                            <label>package Value&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                            <label>package Cost <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text">package price</span></div>
-                                                <input type="number" class="form-control budget_client" name="budget_client" min="1" placeholder="package Value">
+                                                <input type="number" class="form-control budget_client"  value="{{old('package_cost')}}" name="package_cost" min="1" placeholder="Price">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-6">
-                                            <label>invioce Upload&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                            <label>Upload&nbsp;invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text">Invoice Image</span></div>
-                                                <input type="file" class="form-control budget_client" name="budget_client" min="1" placeholder="package Value">
+                                                <input type="file" class="form-control budget_client" accept="image/png, image/gif, image/jpeg"  name="invoice_image" min="1" placeholder="package Value">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-10 offset-2 mb-0" >
                                             <label for="vehicle_category">Choose vehicle category <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         </div>
                                         <div class="form-group col-lg-8 offset-2">
-                                            <div class="dropdown bootstrap-select form-control vehicle_category">
-                                                <select class="form-control vehicle_category" onchange="getVehicles(this.value)" name="vehicle_category" id="vehicle_category" tabindex="-98">
+                                            <div class="dropdown bootstrap-select form-control">
+                                                <select class="form-control" onchange="getVehicles(this.value)" name="vehicle_type" id="vehicle_category" tabindex="-98">
                                                     <option data-hidden="true"></option>
                                                     @foreach($vehicle_types as $type )
-                                                        <option value="{{$type->id}}" {{(old('vehicle_category')==$type->id)?'selected':''}}>{{$type->name}}</option>
+                                                        <option value="{{$type->id}}" {{(old('vehicle_type')==$type->id)?'selected':''}}>{{$type->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="dropdown-menu ">
@@ -1355,12 +1355,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-10 offset-2 mb-0">
-                                            <label for="slectedTracks">Vehicles</label>
+                                            <label for="slectedTracks">Available Vehicles</label>
                                         </div>
                                         <div class="form-group col-lg-8 offset-2">
-                                            <div class="dropdown bootstrap-select form-control vehicle_category">
-                                                <select name="vehicle_category" class="form-control"  id="vehicle_category_list">
-                                                    <option value="" selected="" disabled="">Vehicle category</option>
+                                            <div class="dropdown bootstrap-select form-control ">
+                                                <select name="vehicle" class="form-control" id="vehicle_category_list">
+                                                    <option value="" selected="" disabled="">Choose Vehicle</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1391,6 +1391,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <script>
+        @if (\Session::has('success'))
+        toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
+        @endif
 
         @foreach ($errors->all() as $error)
         toastr.warning('{{$error}}');

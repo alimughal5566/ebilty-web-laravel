@@ -106,7 +106,6 @@ class AuthController extends Controller
         $address->zip=$request->zip;
         $address->form=$request->form;
         $address->save();
-
         return response()->json(['success' => 'Address saved successfully','user_id'=>$request->user_id,'address_id'=>$address->id]);;
     }
 

@@ -45,7 +45,6 @@ class DriverController extends Controller
 
        $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
        $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
-//        dd($senders);
         return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','senders','receivers'));
 
     }
@@ -56,14 +55,7 @@ class DriverController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-//        dd($request);
-        $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'name1' => ['required', 'string', 'max:255'],
-        ]);
-    }
+
 
     /**
      * Display the specified resource.
