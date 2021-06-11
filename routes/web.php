@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/landingPage', function () {
-    return view('landingpage');
-});
+Route::get('/', 'FrontEndController@index')->name('index');
 
 Auth::routes(['verify' => true]);
 
@@ -60,7 +54,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/make_status_active_package_type', 'PackageTypeController@make_status_active_package_type')->name('admin.setting.make_status_active_package_type');
         Route::get('/make_status_inactive_package_type', 'PackageTypeController@make_status_inactive_package_type')->name('admin.setting.make_status_inactive_package_type');
         Route::get('/vehicle_category', 'VehicleCategoryController@index')->name('admin.setting.vehicle_category');
-        Route::get('/add_vehicle_type', 'VehicleCategoryController@add_vehicle_type')->name('admin.setting.add_vehicle_type');
+        Route::post('/add_vehicle_type', 'VehicleCategoryController@add_vehicle_type')->name('admin.setting.add_vehicle_type');
         Route::get('/edit_vehicle_category', 'VehicleCategoryController@edit_vehicle_category')->name('admin.setting.edit_vehicle_category');
         Route::get('/update_vehicle_category', 'VehicleCategoryController@update_vehicle_category')->name('admin.setting.update_vehicle_category');
         Route::get('/delete_vehicle_category', 'VehicleCategoryController@delete_vehicle_category')->name('admin.setting.delete_vehicle_category');
