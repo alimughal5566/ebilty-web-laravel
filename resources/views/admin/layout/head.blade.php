@@ -15,7 +15,8 @@
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
+    <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
   <link rel="stylesheet" href="{{asset('assets/css/custom_style.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/light.css')}}">
