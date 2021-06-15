@@ -97,8 +97,7 @@
                            </div>
                            <div class="kt-widget__content">
                               <div class="kt-widget__head">
-                                 <a href="javascript:void(0);" class="kt-widget__username">
-                                 System administration
+                                 <a href="javascript:void(0);" class="kt-widget__username">{{auth()->user()->name}}
                                  </a>
                                  <div class="kt-widget__action">
                                     <a href="#" class="btn btn-brand btn-sm btn-upper">Edit</a>

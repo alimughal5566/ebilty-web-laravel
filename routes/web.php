@@ -85,6 +85,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
         Route::get('/shipments', 'CustomerController@index')->name('customer.shipments');
         Route::get('/driver/shipments', 'DriverController@index')->name('driver.shipments');
+        Route::get('/save/bid', 'DriverController@bidStore')->name('create.bid');
+        Route::get('/update/bid/status', 'CustomerController@bidStatusUpdate')->name('update.bid.status');
+        Route::get('/send/bid/revise/request', 'CustomerController@sendBidReviserequest')->name('sendBidReviserequest');
+        Route::get('/update/bid/revise/request', 'DriverController@updateBidReviserequest')->name('updateBidReviserequest');
+        Route::get('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
+        Route::get('/shipment/{id}', 'ShippmentController@show')->name('shipmentDetail');
 });
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
 Route::get('/getCities', 'HomeController@getCities')->name('getCities');
@@ -92,3 +98,4 @@ Route::get('/getArea', 'HomeController@getArea')->name('getArea');
 Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
 Route::post('/createUser', 'AuthController@createUser')->name('createUser');
 Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
+Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');

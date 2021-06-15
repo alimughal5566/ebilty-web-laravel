@@ -77,8 +77,6 @@
         * ==========================================
         *
         */
-
-
         .rounded-lg {
             border-radius: 1rem;
         }
@@ -92,10 +90,6 @@
         }
 
     </style>
-
-
-
-
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-container  kt-container--fluid  ">
             <div class="kt-subheader__main">
@@ -129,17 +123,20 @@
                 <th scope="col">From</th>
                 <th scope="col">To</th>
                 <th scope="col">Shipment Time</th>
+                <th scope="col">Amount</th>
                 <th scope="col">Status</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             @forelse($shipments as $shipment)
             <tr>
-                <th scope="row">{{$shipment->id}}</th>
+                <td scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></td>
                 <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                 <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                 <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
+                <td>{{(isset($shipment->myBid) && $shipment->myBid->bid_amount && $shipment->myBid->revise_status!=1)?$shipment->myBid->bid_amount:$shipment->myBid->revise_amount_shipper}}</td>
                 <td>{{$shipment->status->name}}</td>
                 <td>
                     @php $percentage=0;
@@ -179,31 +176,30 @@ $percentage=50;
                 </td>
 
                 <td>
-                    @if(count($shipment->bids)>0)
-                        <span class="example-tools justify-content-center">
-                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
-                                 <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
-                           <i class="la la-car"></i></a>
-                       </span>
-                        @else
-                        <span class="example-tools justify-content-center">
-                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon"   data-target="#myModal" title=" 0 Bids"  style="position: relative; cursor: default" aria-describedby="tooltip797420">
-                                 <span class=" text-danger" style=" position: absolute;top: -6px; right: -2px;">●</span>
-                           <i class="la la-car"></i></a>
-                       </span>
+                    <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{$shipment->packages}}','{{$shipment->vehicle->name}}','{{$shipment->vehicleType->name}}','{{$shipment->receiver->address}}','{{$shipment->id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
+                    @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper!='')
+                        <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
                     @endif
-
+                </td>
+<td>
+              @if($shipment->assigned_to==auth()->user()->id)
+                        <div class="form-group col-lg-12 car_container">
+                            <select class="form-control" id="car_id_" name="car_id" data-live-search="true" onchange="setStatus('{{$shipment->id}}',this.value)">
+                                @foreach($statuses as $status)
+                                    <option value="{{$status->id}}" {{($status->id==$shipment->status_id)?"selected":""}} {{($shipment->status_id>=$status->id)?"disabled":""}}>
+                                    {{$status->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                  @endif
                 </td>
 
             </tr>
-
-
             @empty
                 <tr>
                     <td colspan="7" class="text-center p-1">No shipment found</td>
                 </tr>
             @endforelse
-
             </tbody>
         </table>
         <div class="float-right mr-2">
@@ -258,11 +254,117 @@ $percentage=50;
             </div>
         </div>
     </div>
-{{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
+<div class="modal fade" id="showBidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Place a bid</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--                <p>bid your truct</p>-->
+                <div class="row col-md-12">
+                    <lable for="truck_type">Vehicle Category</lable>
+                    <input type="text" id="category" name="category" class="form-control" readonly>
+                </div>
+                <div class="row col-md-12">
+                    <lable for="ve_name">Vehicle Name</lable>
+                    <input type="text" id="ve_name" name="ve_name" class="form-control" readonly>
+                </div>
+                <div>
+                    <lable for="route">Address
+                        <textarea id="route" name="route" class="form-control" readonly ></textarea>
+                    </lable>
+                </div>
+                <div>
+                    <div >
+                        <table class=" col-md-10  offset-1 table-fluid mb-5  mt-4 table-bordered px-3 text-center" id="jqueryTable2">
+                            <thead>
+                            <th class="p-3">Description</th>
+                            <th  class="p-3">Weight</th>
+                            <th  class="p-3">Qty</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
 
+                    </div>
+                </div>
+                <input type="hidden" id="order_id_placed" >
+{{--                <input type="hidden" id="truck_type" name="truck_type" >--}}
+{{--                <input type="hidden" id="save_bid_user_id" >--}}
+                <div>
+                    <lable for="bid_price">What Is Your Total Amount You'd Like To Bid For This Job?
+                        <input type="number" id="bid_price" name="bid_price" class="form-control" min="1" placeholder="Your desired amount" required>
+                    </lable>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary bidsave">Place a Bid</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Revision request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-none beds">
+                    <lable for="bid_price">My Bidded Amount
+                        <input type="number" id="prev" name="prev" class="form-control" min="1" placeholder="My Entered Amount" readonly >
+                    </lable>
+                </div>
+                <div>
+                    <lable for="bid_price">Amount to be revised
+                        <input type="number" id="amt" name="bid_amt" class="form-control" min="1" placeholder="Revision amount" readonly>
+                        <input type="hidden" id="bedid" name="bedid" >
+                    </lable>
+                </div>
+
+                <div>
+                    <lable for="bid_price">Comment
+                        <textarea name="cmt" id="cmt" cols="10" rows="5" class="form-control" required></textarea>
+                    </lable>
+                </div>
+
+                <h4 class="pt-2 mb-0">Revision</h4>
+                <div class="d-flex ">
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <lable for="111">Accept
+                        <input type="radio" name="stat" id="111" class="form-control btn-sm state" value="1" style="font-size: 0.1rem" >
+                    </lable> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <lable for="11">Reject
+                        <input type="radio" checked name="stat" id="11" class="form-control btn-sm state" value="2" style="font-size: 0.1rem">
+                    </lable>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">back</button>
+                <button type="button" class="btn btn-primary sbmet" onclick="sav()">Submit request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 <script>
     $(function() {
-
         $(".progress").each(function() {
 
             var value = $(this).attr('data-value');
@@ -295,5 +397,143 @@ $percentage=50;
         $('#jqueryTable').append(html);
         // console.log(data[0]);
     }
+
+    function openBid(bid,packages,vehicle,category,address,shipment_id) {
+        packages=JSON.parse(packages);
+        if(bid){
+            bid=JSON.parse(bid);
+            $('.bidsave').addClass('d-none');
+            $('#bid_price').val(bid.bid_amount);
+            $('#bid_price').attr('readonly','true');
+        }else{
+            $('.bidsave').removeClass('d-none');
+            $('#bid_price').removeAttr('readonly');
+            $('#bid_price').val('');
+
+        }
+        $('#jqueryTable2 tbody').html('');
+        var html='';
+        $.each(packages, function (index, value) {
+            $('#jqueryTable2 tbody').append(`<tr><td>${value.description}</td><td>${value.quantity}</td><td>${value.weight}</td></tr>`)
+        });
+        if(packages.length==0){
+            $('#jqueryTable2 tbody').append(`<tr><td colspan="3">No Package found</td></tr>`)
+        }
+        $('#jqueryTable2').append(html);
+                $('#ve_name').empty().val(vehicle);
+                $('#category').empty().val(category);
+                $('#route').empty().val(address);
+                $('#id').empty().val(address);
+                $('#showBidModal').modal('show')
+              $('#order_id_placed').val(shipment_id)
+    }
+    // Bid Save
+    $('body').on('click','.bidsave' , function (){
+        if($('#bid_price').val()==''){
+            $('#bid_price').addClass('border-danger');
+            return ;
+        }
+        $('#bid_price').removeClass('border-danger');
+        $.ajax({
+            url: "{{route('create.bid')}}",
+            type: "GET",
+            data: { 'order_id': $('#order_id_placed').val(),
+                 'bid_price' : $('#bid_price').val()
+            },
+            success: function (result){
+                $('#bid_price').attr('readonly','true');
+                $('.bidsave').addClass('d-none');
+                toastr.success( 'Bid Created successfully');
+                $('#showBidModal').modal('hide')
+
+
+            },
+            error: function (request, status, error) {
+                $('#showBidModal').modal('hide')
+            }
+        })
+    })
+
+
+    function setStatus2(id,amount,revised_amount,revise_status,revise_comment){
+        // alert(revise_comment);
+        if(revised_amount!=''){
+            $('.beds').removeClass('d-none');
+            $('#prev').val(amount);
+            $('#amt').val(revised_amount);
+
+        }else {
+            $('.sbmet').removeClass('d-none');
+            $('.beds').addClass('d-none');
+            $('#prev').val(amount);
+            $('#amt').val('');
+        }
+        $('#bedid').val(id);
+        if(revise_status=='1' || revise_status=='3'){
+            if(revise_status==1){
+                $("#111").prop("checked","true")
+                $("#11").removeAttr("checked")
+            }else if(revise_status==3){
+                $("#111").prop("checked","true")
+                $("#11").prop("checked","false")
+            }
+            if(revise_comment!=''){
+                $('#cmt').val(revise_comment)
+            }
+
+            $('.sbmet').addClass('d-none');
+        }else{
+            $('.sbmet').removeClass('d-none');
+        }
+        $('#showModal').modal('show')
+    }
+
+    function sav() {
+        if($('#cmt').val()==''){
+            $('#cmt').addClass('border-danger');
+            return ;
+        }
+        var status = $('.state:checked').val();
+        var cmt = $('#cmt').val();
+
+        $('#cmt').removeClass('border-danger');
+        $.ajax({
+            url: "{{route('updateBidReviserequest')}}",
+            type: "get",
+            data: {'id': $('#bedid').val() , 'status': status, 'comment': cmt},
+            success: function (result){
+                toastr.success( 'Action successfull');
+                $('#showModal').modal('hide')
+                setTimeout(function(){ location.reload() },1000);
+
+            },
+            error: function (request, status, error) {
+                // swal.fire(
+                //     'Already bidds',
+                //     'Please waits for approval.',
+                //     'warning');
+                //
+                // $('#showModal').modal('hide')
+            }
+        })
+    }
+
+
+    function setStatus(id,status) {
+        $.ajax({
+            url: "{{route('updateshipmentStatus')}}",
+            type: "get",
+            data: {'id': id,'status': status},
+            success: function (result) {
+                toastr.success( 'Action successfull');
+                setTimeout(function(){ location.reload() },1000);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+                // $('#showBidModal').modal('hide')
+            }
+        })
+    }
+
 </script>
 @endsection

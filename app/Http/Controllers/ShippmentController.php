@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Shippment;
 use App\ShippmentPackage;
+use PDF;
+
 use Illuminate\Http\Request;
 
 class ShippmentController extends Controller
 {
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validate($request, [
             'ship_date' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
@@ -62,11 +63,34 @@ if($request->category_id) {
     $package->height = $request->height;
     $package->save();
 }
-
-
         return redirect()->back()->with('success', 'Shippment created successfully');
+    }
 
 
 
+    public function show($id){
+        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
+        return view('user.shipment.show', compact('shipment'));
+    }
+
+    public function downloadPdf($id){
+        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
+        view()->share('shipment',$shipment);
+
+//            $pdf = PDF::loadView('user.shipment.downloadpdf');
+//            return $pdf->download('pdfview.pdf');
+
+//        view()->share('items',$items);
+
+
+
+            $pdf = PDF::loadView('pdfview');
+            return $pdf->download('pdfview.pdf');
+
+
+
+
+
+        return view('pdfview');
     }
 }

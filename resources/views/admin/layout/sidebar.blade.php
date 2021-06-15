@@ -46,7 +46,7 @@
                <div class="kt-widget__content kt-padding-t-10">
                   <div class="kt-widget__section">
                      <a href="javascript:void(0);" class="kt-widget__username">
-                     System administration
+                         {{auth()->user()->name}}
                      </a>
                      <span class="kt-widget__subtitle">
                      Welcome back,

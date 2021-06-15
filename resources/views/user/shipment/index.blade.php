@@ -3,8 +3,8 @@
     {{--    <link rel="stylesheet" href="http://127.0.0.1:8002/themes/spotlayer/assets/admin/css/demo1/style.bundle.css">--}}
     <style>
         .progress {
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             background: none;
             position: relative;
         }
@@ -136,34 +136,34 @@
             <tbody>
             @forelse($shipments as $shipment)
                 <tr>
-                    <th scope="row">{{$shipment->id}}</th>
+                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                     <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                     <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
                     <td>{{$shipment->status->name}}</td>
                     <td>
                         @php $percentage=0;
-if($shipment->status_id==1){
-$percentage=30;
-}
-if($shipment->status_id==6){
-$percentage=20;
-}
-if($shipment->status_id==4){
-$percentage=40;
-}
-if($shipment->status_id==6){
-$percentage=35;
-}
-if($shipment->status_id==8){
-$percentage=100;
-}
-if($shipment->status_id==7){
-$percentage=90;
-}
-if($shipment->status_id==3){
-$percentage=50;
-}
+                        if($shipment->status_id==1){
+                        $percentage=30;
+                        }
+                        if($shipment->status_id==6){
+                        $percentage=20;
+                        }
+                        if($shipment->status_id==4){
+                        $percentage=40;
+                        }
+                        if($shipment->status_id==6){
+                        $percentage=35;
+                        }
+                        if($shipment->status_id==8){
+                        $percentage=100;
+                        }
+                        if($shipment->status_id==7){
+                        $percentage=90;
+                        }
+                        if($shipment->status_id==3){
+                        $percentage=50;
+                        }
                         @endphp
                         <div class="progress mx-auto" data-value='{{$percentage}}'>
                                           <span class="progress-left">
@@ -200,7 +200,7 @@ $percentage=50;
 
             @empty
                 <tr>
-                    <td colspan="7" class="text-center p-1">No shipment found</td>
+                    <td colspan="7" class="text-center p-1">No shippment found</td>
                 </tr>
             @endforelse
 
@@ -242,7 +242,7 @@ $percentage=50;
                                     <th>Bid Amount</th>
                                     <th>Route</th>
                                     <th>Last updated</th>
-                                    <th>Action</th>
+                                    <th style="min-width: 170px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="bid_list"><tr>
@@ -258,11 +258,58 @@ $percentage=50;
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="showreviseModal" tabindex="-1" style="background-color: #afafaf !important;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Revision request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <lable for="bid_price">Amount to be revised
+                            <input type="number" id="amt" name="bid_amt" class="form-control" min="1" placeholder="Revision amount" required>
+                            <input type="hidden" id="bedid" name="bedid" >
+                        </lable>
+                    </div>
+                    <div class="d-none beds">
+                        <lable for="bid_price">Service Provider Amount
+                            <input type="number" id="prev" name="prev" class="form-control" min="1" placeholder="Service Provider Amount" readonly>
+                        </lable>
+                    </div>
+
+                    <div class="comnt d-none">
+                        <lable for="cmt">Provider Comment
+                            <textarea name="cmt" id="cmt" cols="10" rows="5" class="form-control" required></textarea>
+                        </lable>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">back</button>
+                    <button type="button" class="btn btn-primary sbmet" onclick="sav()">Submit request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
     {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
     <script>
         $(function() {
-
             $(".progress").each(function() {
 
                 var value = $(this).attr('data-value');
@@ -285,15 +332,109 @@ $percentage=50;
             }
 
         });
-        function showBids(data) {
+        function showBids(data){
             data=JSON.parse(data);
             $('#jqueryTable tbody').html('');
             var html='';
             $.each(data, function (index, value) {
-                html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + value.customer_budget + "</td><td >" + value.bid_amount + "</td><td >" + value.route + "</td><td >" + value.last_updated + "</td><tr>";
+            let status='';
+            let status_text='';
+            let txt='';
+
+            if(value.approved_status==0) {
+                  status = 1;
+                  status_text= "<span class='fa fa-pause-circle text-danger'>&nbsp</span>Accept bid";
+                 txt= "  ";
+            }
+            if(value.approved_status==1){
+                 status = 2;
+                 status_text= "<span class='fa fa-check-circle text-success'> &nbsp</span>Reject bid";
+                 txt= " ";
+            }
+            if(value.approved_status==2){
+                txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
+            }
+                html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
+                    "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
             });
             $('#jqueryTable').append(html);
             // console.log(data[0]);
         }
+
+
+        function setStatus(id, shipment_id, approved_status) {
+            $.ajax({
+                url: "{{route('update.bid.status')}}",
+                type: "get",
+                data: {'id': id,'shipment_id': shipment_id,'approved_status':approved_status},
+                success: function (result) {
+                    toastr.success( 'Status updated successfully');
+                    setTimeout(function(){ location.reload() },1000);
+                },
+                error: function (request, status, error) {
+                    // alert(request.responseText);
+                    // $('#showBidModal').modal('hide')
+                }
+            })
+        }
+
+
+        function openReviseModal(id,amount,revised_amount,revise_status,revise_comment){
+            if(revise_status==2 || revise_status==1 || revise_status==3){
+                // alert('sdf');
+                // alert();
+                $('.beds').removeClass('d-none');
+                $('#prev').val(amount);
+                $('#amt').val(revised_amount);
+                $('.sbmet').addClass('d-none');
+            } else{
+                $('.sbmet').removeClass('d-none');
+                $('.beds').addClass('d-none');
+                $('#prev').val(amount);
+                $('#amt').val('');
+            }
+            // alert( revise_comment)
+            if( revise_status==1){
+                $('#cmt').val(((revise_comment==null) ?'':revise_comment));
+                $('.comnt').removeClass('d-none');
+            }else{
+                $('#cmt').val('');
+                $('.comnt').addClass('d-none');
+            }
+
+            $('#bedid').val(id);
+            $('#showreviseModal').modal('show')
+
+        }
+
+
+        function sav() {
+            if($('#amt').val()=='' || $('#amt').val()<1){
+                $('#amt').addClass('border-danger');
+                return ;
+            }
+            $('#amt').removeClass('border-danger');
+            $.ajax({
+                url: "{{route('sendBidReviserequest')}}",
+                type: "get",
+                data: {'id': $('#bedid').val() , 'amt': $('#amt').val()},
+                success: function (result){
+                    toastr.success( 'Revise request send successfully');
+                    $('#showreviseModal').modal('hide')
+                    setTimeout(function(){ location.reload() },1000);
+
+                },
+                error: function (request, status, error) {
+                    // swal.fire(
+                    //     'Already bidds',
+                    //     'Please waits for approval.',
+                    //     'warning');
+                    //
+                    // $('#showModal').modal('hide')
+                }
+            })
+        }
+
+
     </script>
 @endsection

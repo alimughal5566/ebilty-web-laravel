@@ -413,7 +413,7 @@
          <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
             <div class="kt-header__topbar-user">
                <span class="kt-header__topbar-welcome">Hi,</span>
-               <span class="kt-header__topbar-username">System administration</span>
+               <span class="kt-header__topbar-username">{{auth()->user()->name}}</span>
                <span class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-font-light kt-badge--bold">SY</span>
             </div>
          </div>
@@ -424,7 +424,7 @@
                   <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>
                </div>
                <div class="kt-user-card__name">
-                  System administration
+                   {{ucfirst(auth()->user()->name)}}
                </div>
                <!--<div class="kt-user-card__badge kt-hidden">
                   <span class="btn btn-success btn-sm btn-bold btn-font-md">0 messages</span>
