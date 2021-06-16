@@ -59,10 +59,14 @@ class HomeController extends Controller
         $states = ShipmentArea::where('city_id', $request->id)->get();
         return response()->json(['cities'=>$states]) ;
     }
-    public function getUserAddress(Request $request)
-    {
+    public function getUserAddress(Request $request){
         $address = UserAddress::where('user_id', $request->id)->get();
         return response()->json(['address'=>$address]) ;
+    }
+
+    public function profile($id){
+        $user = User::where('id', $id)->first();
+        return view('user.profile.show',compact('user'));
     }
 
 }

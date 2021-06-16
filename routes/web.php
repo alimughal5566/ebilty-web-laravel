@@ -80,6 +80,7 @@ Route::prefix('admin')->group(function() {
 
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
+        Route::get('/profile/{id}', 'HomeController@profile')->name('show.profile');
         Route::get('/shipment/create', 'CustomerController@create')->name('create.shippment');
         Route::post('/shipment/create', 'ShippmentController@store')->name('create.shipment');
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
@@ -91,6 +92,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/update/bid/revise/request', 'DriverController@updateBidReviserequest')->name('updateBidReviserequest');
         Route::get('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
         Route::get('/shipment/{id}', 'ShippmentController@show')->name('shipmentDetail');
+        Route::get('/vehicles', 'DriverController@myVehicles')->name('my.vehicles');
+        Route::get('/vehicle/status/update', 'DriverController@vehicleStatusUpdate')->name('vehicle.status.update');
+        Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
+        Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
+        Route::post('/update-driver-vehicle', 'DriverController@upadteDriverVehicle')->name('upadteDriverVehicle');
+
 });
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
 Route::get('/getCities', 'HomeController@getCities')->name('getCities');
@@ -99,3 +106,5 @@ Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAdd
 Route::post('/createUser', 'AuthController@createUser')->name('createUser');
 Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
 Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');
+
+//Route::get('qrcode/{id}', 'QrCodeController@generate')->name('generate.qr');

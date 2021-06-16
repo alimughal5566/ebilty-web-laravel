@@ -6,6 +6,8 @@ use App\Country;
 use App\Driver;
 use App\Models\Admin\Setting\PackageType;
 use App\Models\Admin\Setting\Shipment;
+use App\Models\Admin\Setting\Vehicle;
+use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
 use App\ShipmentArea;
 use App\ShipmentBids;
@@ -32,7 +34,7 @@ class DriverController extends Controller
      */
     public function index(){
 //        dd(auth()->user()->id);
-        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->select('vehicle_id')->get()->toArray();
+        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
 //        $records->where(function($q) use ($vehicles){
 //            foreach($vehicles as $truck) {
 ////                $q->Where('truck_used', $truck->vehicle_id);
@@ -87,12 +89,11 @@ class DriverController extends Controller
         return response()->json(['success' =>'Bid created successfully'], 200);
 
     }
-    public function edit(Driver $driver)
-    {
-        //
+    public function myVehicles(){
+        $vehicles = UserVehicle::with('vehicle','vehicle_category')->where('user_id',auth()->user()->id)->get();
+        $cats = VehicleCategory::all();
+        return view('driver.vehicles', compact('vehicles','cats'));
     }
-
-
 
     public function updateBidReviserequest(Request $request){
         if($request->id) {
@@ -110,6 +111,43 @@ class DriverController extends Controller
             $bid->save();
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
+    }
+    public function vehicleStatusUpdate(Request $request){
+        if($request->id) {
+            $bid = UserVehicle::find($request->id);
+            $bid->status = $request->status;
+            $bid->save();
+        }
+        return response()->json(['success' =>'Status updated  successfully'], 200);
+    }
+
+    public function addVehicle(Request $request){
+
+            $vehicle = new UserVehicle;
+            $vehicle->user_id = auth()->user()->id;
+            $vehicle->vehicle_number = $request->vehicle_number;
+            $vehicle->category_id = $request->veh_cat;
+            $vehicle->vehicle_id = $request->vehicle;
+            $vehicle->save();
+
+        return redirect()->back()->with(['success' =>'Status updated  successfully'], 200);
+    }
+    public function upadteDriverVehicle(Request $request){
+
+            $vehicle = UserVehicle::find($request->vehicle_id);
+
+            $vehicle->vehicle_number = $request->vehicle_number;
+            $vehicle->category_id = $request->veh_cat;
+            $vehicle->vehicle_number = $request->edit_name;
+            $vehicle->vehicle_id = $request->vehicle;
+            $vehicle->is_verified =0;
+            $vehicle->save();
+
+        return redirect()->back()->with(['success' =>'Data updated  successfully'], 200);
+    }
+    public function getDriverVehicle(Request $request){
+        $vehicle = UserVehicle::where('id',$request->id)->with('vehicle')->first();
+        return response()->json(['vehicle' =>$vehicle], 200);
     }
     /**
      * Update the specified resource in storage.

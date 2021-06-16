@@ -223,7 +223,7 @@
                                                         <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
-                                       <input type="radio" name="is_insured" class="is_insured" value="0"  checked="" {{(old('is_insured')==0)?'checked':''}}>
+                                       <input type="radio" name="is_insured" class="is_insured" value="0" checked="" {{(old('is_insured')==0)?'checked':''}}>
                                        <span></span>
                                        </span>
                                        </span>

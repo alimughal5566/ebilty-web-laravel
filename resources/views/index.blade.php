@@ -176,7 +176,7 @@
                            <!--/ Languages -->
                            <!-- Login trigger -->
                            <div class="topnav login--panel topnav-account-login topnav-login align-self-center">
-                              <a class="topnav-item " href="http://ebilty.com/login">
+                              <a class="topnav-item " href="{{route('login')}}">
                               <i class="login-icon fas fa-sign-in-alt visible-xs xs-icon"></i>
                               <span class="topnav-item--text">LOGIN</span>
                               </a>
@@ -1032,7 +1032,7 @@
                         <h4 class="tbk__subtitle fw-thin">
                            Just type the tracking code and we'll do everything!
                         </h4>
-                        <form action="http://ebilty.com/tracking" method="get" class="contact_form row mt-40" data-h5-instanceid="1" novalidate="novalidate">
+                        <form action="#" method="get" class="contact_form row mt-40" data-h5-instanceid="1" novalidate="novalidate">
                            <div class="cf_response"></div>
                            <input name="_token" type="hidden" value="VHua1cK3OOhcypf2NC4EI5og6E7krvTUpQWTDK4P">
                            <input name="_session_key" type="hidden" value="ikd96sYWgPIOZLVW9hPRyk86FgzK0RsZbi7epnDk">

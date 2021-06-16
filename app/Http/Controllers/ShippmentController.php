@@ -7,6 +7,7 @@ use App\ShippmentPackage;
 use PDF;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ShippmentController extends Controller
 {
@@ -51,6 +52,8 @@ class ShippmentController extends Controller
         }
         $shipment->save();
 
+        QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
+
 if($request->category_id) {
     $package = new ShippmentPackage;
     $package->shippment_id = $shipment->id;
@@ -69,7 +72,7 @@ if($request->category_id) {
 
 
     public function show($id){
-        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
+        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids')->first();
         return view('user.shipment.show', compact('shipment'));
     }
 
@@ -85,7 +88,7 @@ if($request->category_id) {
 
 
             $pdf = PDF::loadView('pdfview');
-            return $pdf->download('pdfview.pdf');
+            return $pdf->download('shipment.pdf');
 
 
 

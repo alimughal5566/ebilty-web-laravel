@@ -74,10 +74,12 @@
                         <div class="kt-login__form mt-3">
                             <form class="kt-form mb-3" method="POST" action="{{route('login')}}">
                                 @csrf
-                                <div class="kt-alert kt-alert--outline alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                <span>You have been successfully logged out!</span>
-                                </div>
+                                @if (\Session::has('success'))
+                                    <div class="kt-alert kt-alert--outline alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                        <span>You have been successfully logged out!</span>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                 <label for="userSigninLogin" class="sr-only"></label>
                                 <input class="form-control" type="text" placeholder="Username" name="email" id="userSigninLogin" autocomplete="off" required="">

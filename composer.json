@@ -17,6 +17,7 @@
         "laravel/passport": "9.4",
         "laravel/tinker": "^2.5",
         "laravel/ui": "2.4",
+        "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {

@@ -231,7 +231,7 @@ var wmOffices = jQuery('.world-map-offices'),
                                         cform.find('.cf_response').addClass('alert alert-success');
                                                                                             cform.find('.cf_response').html('Successfully registered, you are being redirect.');
                                             cResponse.show();
-                                            window.location.href = "http://ebilty.com/en/dashboard";
+                                            window.location.href = "../";
                                                                                     }
                                 });
                             }

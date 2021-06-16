@@ -5,20 +5,19 @@
     <meta charset="utf-8">
     <title>Shipment Detail</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="">
-<div class="row">
-<div class="col-12">
-    <div class="">
-          <img  class="float-right" src="{{public_path('uploads/logos/company-logo.png')}}">
-    </div>
+<div  >
+        <div class="row">
+            <div class="col-12">
+                         <div class="">
+                              <img  class="float-right" src="{{public_path('uploads/logos/company-logo.png')}}">
+                        </div>
                         <div style="font-size:0;position:relative;width:144px;height:30px;">
+{{--                            @if(file_exists(public_path('images/qrcodes/'.$shipment->id.'.svg')))--}}
+{{--                                {!! file_get_contents(public_path('images/qrcodes/'.$shipment->id.'.svg')) !!}--}}
+{{--                            @endif--}}
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:0px;top:0px;">&nbsp;</div>
                             <div style="background-color:black;width:4px;height:30px;position:absolute;left:4px;top:0px;">&nbsp;</div>
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:12px;top:0px;">&nbsp;</div>
@@ -48,31 +47,121 @@
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:134px;top:0px;">&nbsp;</div>
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:140px;top:0px;">&nbsp;</div>
                         </div>
-</div>
-</div>
+        </div>
+    </div>
 
-    <div class="row">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <td><b> Phone</b></td>
-                <td><b>sender adddress</b></td>
-                <td><b>Lead Actor</b></td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{$shipment->sender->user->phone}}</td>
-                <td>
-                    {{$shipment->sender->address}}
 
-                </td>
-                <td>
-                    222
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+
+    <div class="row  pt-1">
+        <div class="col-10 offset-1">
+            <div class="card">
+                <div class="card-body">
+                    <p class="mb-0 pb-0 border-0 border-bottom-0">Shipment Details</p>
+                    <table class="table table-fluid border-0">
+                        <thead>
+                        <tr class="border-0">
+                            <td>Created by: {{ucfirst($shipment->user->name)}}</td><td></td><td></td><td></td><td></td><td></td>
+                            <td><b></b></td><td>{{$shipment->created_at->format('d/M/Y')}}</td>
+                        </tr>
+{{--                        <tr class="border-0">--}}
+{{--                            <td></td><td></td><td></td><td></td><td></td><td></td>--}}
+{{--                            <td><b></b></td><td>{{$shipment->ship_date}} {{$shipment->ship_time}}</td>--}}
+{{--                        </tr>--}}
+                        </thead>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row  ">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="mb-0 pb-0">Sender Details</p>
+                    <table class="table table-fluid table-bordered">
+                        <thead>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Phone</b></td>
+                            <td><b>Email</b></td>
+                            <td><b>Address</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{$shipment->sender->user->name}}</td>
+                            <td>{{$shipment->sender->user->phone}}</td>
+                            <td>{{$shipment->sender->user->email}}</td>
+                            <td>{{$shipment->sender->address}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{{--    <div class="row  pt-1">--}}
+{{--        <div class="col-12">--}}
+{{--            <div class="card">--}}
+{{--                <div class="card-body">--}}
+{{--                    <p class="mb-0 pb-0">Sender Details</p>--}}
+{{--                    <table class="table table-fluid table-bordered">--}}
+{{--                        <thead>--}}
+{{--                        <tr>--}}
+{{--                            <td><b>Name</b></td>--}}
+{{--                            <td><b>Phone</b></td>--}}
+{{--                            <td><b>Email</b></td>--}}
+{{--                            <td><b>Address</b></td>--}}
+{{--                        </tr>--}}
+{{--                        </thead>--}}
+{{--                        <tbody>--}}
+{{--                        <tr>--}}
+{{--                            <td>{{$shipment->sender->user->name}}</td>--}}
+{{--                            <td>{{$shipment->sender->user->phone}}</td>--}}
+{{--                            <td>{{$shipment->sender->user->email}}</td>--}}
+{{--                            <td>{{$shipment->sender->address}}</td>--}}
+{{--                        </tr>--}}
+{{--                        </tbody>--}}
+{{--                    </table>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+
+
+    <div class="row pt-1" >
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="mb-0 pb-0">Receiver details</p>
+                    <table class="table table-fluid table-bordered">
+                        <thead>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Phone</b></td>
+                            <td><b>Email</b></td>
+                            <td><b>Address</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{$shipment->receiver->user->name}}</td>
+                            <td>{{$shipment->receiver->user->phone}}</td>
+                            <td>{{$shipment->receiver->user->email}}</td>
+                            <td>{{$shipment->receiver->address}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -80,7 +169,7 @@
 </div>
 
 
-
+<hr>
 
 
 
