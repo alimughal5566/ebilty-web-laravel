@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'FrontEndController@index')->name('index');
+Route::get('/send-message', 'HomeController@sendMessage');
 
 Auth::routes(['verify' => true]);
 
@@ -23,8 +24,13 @@ Route::post('/register_user', 'auth\RegisterController@register_user')->name('re
 Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehicles');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
-    Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
+    Route::get('/customers', 'HomeController@customers')->name('admin.customers');
+    Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
+    Route::get('/shipments', 'HomeController@shipments')->name('admin.shipments');
+    Route::get('/doc_verify/{id?}', 'HomeController@docVerify')->name('docVerify');
+    Route::get('/edit-request-approve/{id?}', 'HomeController@approveEditRequest')->name('approveEditRequest');
 
+    Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
@@ -97,6 +103,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
         Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
         Route::post('/update-driver-vehicle', 'DriverController@upadteDriverVehicle')->name('upadteDriverVehicle');
+        Route::post('/updateLicense', 'HomeController@updateLicense')->name('updateLicense');
+        Route::post('/update-cnic', 'HomeController@updateCnic')->name('updateCnic');
+        Route::post('/update-personal-profile', 'HomeController@updatePersonalInfo')->name('updatePersonalInfo');
+        Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');
 
 });
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');

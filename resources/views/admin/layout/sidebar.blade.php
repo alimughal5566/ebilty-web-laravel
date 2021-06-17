@@ -5,7 +5,8 @@
    <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand" kt-hidden-height="65" style="">
       <div class="kt-aside__brand-logo">
          <a href="#">
-{{--         <img alt="Logo" src="http://localhost/ebilty-web/storage/app/uploads/public/605/adf/deb/605adfdeb172d020773592.png" style="max-height:50px;">--}}
+{{--             <img src="{{url('/images/noimage.jpg')}}"  alt="" width="100" >--}}
+         <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:50px;">
          </a>
       </div>
       <div class="kt-aside__brand-tools">
@@ -72,7 +73,7 @@
 
           @role('admin')
          <ul class="kt-menu__nav ">
-            <li class="kt-menu__item  kt-menu__item--open kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel">
+            <li class="kt-menu__item   kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel">
                <a href="#" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -86,8 +87,8 @@
                   <span class="kt-menu__link-text">Dashboard</span>
                </a>
             </li>
-            <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
-               <a href="#" class="kt-menu__link kt-menu__toggle">
+            <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel {{ (request()->segment('2')=='shipments') ? 'kt-menu__item--open active' : '' }} data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
+               <a href="{{route('admin.shipments')}}" class="kt-menu__link kt-menu__toggle">
                   <span class="kt-menu__link-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -100,144 +101,75 @@
                   <span class="kt-menu__link-text">Shipments List</span>
                   <i class="kt-menu__ver-arrow la la-angle-right"></i>
                </a>
-               <div class="kt-menu__submenu " kt-hidden-height="412" style="display: none; overflow: hidden;">
-                  <span class="kt-menu__arrow"></span>
-                  <ul class="kt-menu__subnav">
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">All Shipments</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">New Requests</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Approved</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Assigned</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Delivered To Driver</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">In Stock</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Postponed</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Delivered shipments</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Supplied</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">In Custom</span>
-                        </a>
-                     </li>
-                  </ul>
-               </div>
+{{--               <div class="kt-menu__submenu " kt-hidden-height="412" style="display: none; overflow: hidden;">--}}
+{{--                  <span class="kt-menu__arrow"></span>--}}
+{{--                  <ul class="kt-menu__subnav">--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">All Shipments</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">New Requests</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Approved</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Assigned</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Delivered To Driver</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">In Stock</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Postponed</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Delivered shipments</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Supplied</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">In Custom</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                  </ul>--}}
+{{--               </div>--}}
             </li>
-            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
-               <a href="#" class="kt-menu__link kt-menu__toggle">
-                  <span class="kt-menu__link-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                           <rect id="bound" x="0" y="0" width="24" height="24"></rect>
-                           <path d="M20.4061385,6.73606154 C20.7672665,6.89656288 21,7.25468437 21,7.64987309 L21,16.4115967 C21,16.7747638 20.8031081,17.1093844 20.4856429,17.2857539 L12.4856429,21.7301984 C12.1836204,21.8979887 11.8163796,21.8979887 11.5143571,21.7301984 L3.51435707,17.2857539 C3.19689188,17.1093844 3,16.7747638 3,16.4115967 L3,7.64987309 C3,7.25468437 3.23273352,6.89656288 3.59386153,6.73606154 L11.5938615,3.18050598 C11.8524269,3.06558805 12.1475731,3.06558805 12.4061385,3.18050598 L20.4061385,6.73606154 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>
-                           <polygon id="Combined-Shape-Copy" fill="#000000" points="14.9671522 4.22441676 7.5999999 8.31727912 7.5999999 12.9056825 9.5999999 13.9056825 9.5999999 9.49408582 17.25507 5.24126912"></polygon>
-                        </g>
-                     </svg>
-                  </span>
-                  <span class="kt-menu__link-text">Containers List</span>
-                  <i class="kt-menu__ver-arrow la la-angle-right"></i>
-               </a>
-               <div class="kt-menu__submenu ">
-                  <span class="kt-menu__arrow"></span>
-                  <ul class="kt-menu__subnav">
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">All Containers</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">New Requests</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Blocked Containers</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Registered Containers</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Loaded Containers</span>
-                        </a>
-                     </li>
-                     <li class="kt-menu__item " aria-haspopup="true">
-                        <a href="#" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Released Containers</span>
-                        </a>
-                     </li>
-                  </ul>
-               </div>
-            </li>
-            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel">
-               <a href="#" class="kt-menu__link ">
-                  <span class="kt-menu__link-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                           <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
-                           <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                           <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero"></path>
-                        </g>
-                     </svg>
-                  </span>
-                  <span class="kt-menu__link-text">Customers List</span>
-               </a>
-            </li>
-            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel">
-               <a href="#" class="kt-menu__link ">
+
+             <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel {{ (request()->segment('2')=='drivers') ? 'kt-menu__item--open active' : '' }}">
+                 <a href="{{route('admin.drivers')}}" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -247,9 +179,96 @@
                         </g>
                      </svg>
                   </span>
-                  <span class="kt-menu__link-text">Employees List</span>
-               </a>
-            </li>
+                     <span class="kt-menu__link-text">Drivers</span>
+                 </a>
+             </li>
+             <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel {{ (request()->segment('2')=='customers') ? 'kt-menu__item--open active' : '' }}">
+                 <a href="{{route('admin.customers')}}" class="kt-menu__link ">
+                  <span class="kt-menu__link-icon">
+                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                           <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                           <path d="M18,2 L20,2 C21.6568542,2 23,3.34314575 23,5 L23,19 C23,20.6568542 21.6568542,22 20,22 L18,22 L18,2 Z" id="Rectangle-161-Copy" fill="#000000" opacity="0.3"></path>
+                           <path d="M5,2 L17,2 C18.6568542,2 20,3.34314575 20,5 L20,19 C20,20.6568542 18.6568542,22 17,22 L5,22 C4.44771525,22 4,21.5522847 4,21 L4,3 C4,2.44771525 4.44771525,2 5,2 Z M12,11 C13.1045695,11 14,10.1045695 14,9 C14,7.8954305 13.1045695,7 12,7 C10.8954305,7 10,7.8954305 10,9 C10,10.1045695 10.8954305,11 12,11 Z M7.00036205,16.4995035 C6.98863236,16.6619875 7.26484009,17 7.4041679,17 C11.463736,17 14.5228466,17 16.5815,17 C16.9988413,17 17.0053266,16.6221713 16.9988413,16.5 C16.8360465,13.4332455 14.6506758,12 11.9907452,12 C9.36772908,12 7.21569918,13.5165724 7.00036205,16.4995035 Z" id="Combined-Shape" fill="#000000"></path>
+                        </g>
+                     </svg>
+                  </span>
+                     <span class="kt-menu__link-text">Customers</span>
+                 </a>
+             </li>
+
+
+{{--            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">--}}
+{{--               <a href="#" class="kt-menu__link kt-menu__toggle">--}}
+{{--                  <span class="kt-menu__link-icon">--}}
+{{--                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">--}}
+{{--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
+{{--                           <rect id="bound" x="0" y="0" width="24" height="24"></rect>--}}
+{{--                           <path d="M20.4061385,6.73606154 C20.7672665,6.89656288 21,7.25468437 21,7.64987309 L21,16.4115967 C21,16.7747638 20.8031081,17.1093844 20.4856429,17.2857539 L12.4856429,21.7301984 C12.1836204,21.8979887 11.8163796,21.8979887 11.5143571,21.7301984 L3.51435707,17.2857539 C3.19689188,17.1093844 3,16.7747638 3,16.4115967 L3,7.64987309 C3,7.25468437 3.23273352,6.89656288 3.59386153,6.73606154 L11.5938615,3.18050598 C11.8524269,3.06558805 12.1475731,3.06558805 12.4061385,3.18050598 L20.4061385,6.73606154 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>--}}
+{{--                           <polygon id="Combined-Shape-Copy" fill="#000000" points="14.9671522 4.22441676 7.5999999 8.31727912 7.5999999 12.9056825 9.5999999 13.9056825 9.5999999 9.49408582 17.25507 5.24126912"></polygon>--}}
+{{--                        </g>--}}
+{{--                     </svg>--}}
+{{--                  </span>--}}
+{{--                  <span class="kt-menu__link-text">Containers List</span>--}}
+{{--                  <i class="kt-menu__ver-arrow la la-angle-right"></i>--}}
+{{--               </a>--}}
+{{--               <div class="kt-menu__submenu ">--}}
+{{--                  <span class="kt-menu__arrow"></span>--}}
+{{--                  <ul class="kt-menu__subnav">--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">All Containers</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">New Requests</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Blocked Containers</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Registered Containers</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Loaded Containers</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                     <li class="kt-menu__item " aria-haspopup="true">--}}
+{{--                        <a href="#" class="kt-menu__link ">--}}
+{{--                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>--}}
+{{--                        <span class="kt-menu__link-text">Released Containers</span>--}}
+{{--                        </a>--}}
+{{--                     </li>--}}
+{{--                  </ul>--}}
+{{--               </div>--}}
+{{--            </li>--}}
+{{--            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel">--}}
+{{--               <a href="#" class="kt-menu__link ">--}}
+{{--                  <span class="kt-menu__link-icon">--}}
+{{--                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">--}}
+{{--                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
+{{--                           <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>--}}
+{{--                           <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>--}}
+{{--                           <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero"></path>--}}
+{{--                        </g>--}}
+{{--                     </svg>--}}
+{{--                  </span>--}}
+{{--                  <span class="kt-menu__link-text">Customers List</span>--}}
+{{--               </a>--}}
+{{--            </li>--}}
+
             <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel">
                <a href="#" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
@@ -309,8 +328,8 @@
                   </ul>
                </div>
             </li>
-            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel">
-               <a href="#" class="kt-menu__link ">
+            <li class="kt-menu__item   kt-menu__item--submenu kt-menu__item--rel {{ (request()->segment('2')=='setting') ? 'kt-menu__item--open active' : '' }}">
+               <a href="{{route('admin.setting.general_setting')}}" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -334,7 +353,7 @@
 
           @role('customer')
           <ul class="kt-menu__nav ">
-              <li class="kt-menu__item  {{ (request()->is('/dashboard')) ? 'kt-menu__item--open' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel active">
+              <li class="kt-menu__item  {{ (request()->is('/dashboard')) ? 'kt-menu__item--open active' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel ">
                   <a href="#" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">

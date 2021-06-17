@@ -38,10 +38,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function assignedShipments(){
+        return $this->hasMany('App\Shippment','assigned_to','id');
+    }
+    public function shipments(){
+        return $this->hasMany('App\Shippment','user_id','id');
+    }
 
-//    public function mySenders()
-//    {
-//        return $this->hasMany(UserAddress::class,'created_by','id')->where('form','sender')->where('created_by',auth()->user()->id);
-//    }
+
+
 
 }

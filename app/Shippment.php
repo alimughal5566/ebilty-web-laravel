@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class
-Shippment extends Model
+class Shippment extends Model
 {
     public function sender()
     {
@@ -38,5 +37,7 @@ Shippment extends Model
     public function vehicle(){
        return $this->hasOne('App\Models\Admin\Setting\Vehicle','id','vehicle_id');
     }
+    public function assignedto(){
+        return $this->hasOne('App\User','id','assigned_to');    }
 
 }

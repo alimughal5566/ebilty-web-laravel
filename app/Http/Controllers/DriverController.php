@@ -1,22 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Country;
 use App\Driver;
-use App\Models\Admin\Setting\PackageType;
-use App\Models\Admin\Setting\Shipment;
-use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
-use App\ShipmentArea;
 use App\ShipmentBids;
 use App\ShipmentStatus;
 use App\Shippment;
-use App\User;
-use App\UserAddress;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class DriverController extends Controller
 {
@@ -87,7 +79,6 @@ class DriverController extends Controller
         $bid->user_id = auth()->user()->id;
         $bid->save();
         return response()->json(['success' =>'Bid created successfully'], 200);
-
     }
     public function myVehicles(){
         $vehicles = UserVehicle::with('vehicle','vehicle_category')->where('user_id',auth()->user()->id)->get();

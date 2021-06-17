@@ -51,21 +51,20 @@ class ShippmentController extends Controller
             $shipment->invoice_image=$invoice_image;
         }
         $shipment->save();
-
         QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
 
-if($request->category_id) {
-    $package = new ShippmentPackage;
-    $package->shippment_id = $shipment->id;
-    $package->package_category_id = $request->category_id;
-    $package->description = $request->description;
-    $package->quantity = $request->quantity;
-    $package->weight = $request->weight;
-    $package->length = $request->length;
-    $package->width = $request->width;
-    $package->height = $request->height;
-    $package->save();
-}
+                if($request->category_id) {
+                    $package = new ShippmentPackage;
+                    $package->shippment_id = $shipment->id;
+                    $package->package_category_id = $request->category_id;
+                    $package->description = $request->description;
+                    $package->quantity = $request->quantity;
+                    $package->weight = $request->weight;
+                    $package->length = $request->length;
+                    $package->width = $request->width;
+                    $package->height = $request->height;
+                    $package->save();
+                }
         return redirect()->back()->with('success', 'Shippment created successfully');
     }
 
@@ -78,19 +77,9 @@ if($request->category_id) {
 
     public function downloadPdf($id){
         $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
-        view()->share('shipment',$shipment);
-
-//            $pdf = PDF::loadView('user.shipment.downloadpdf');
-//            return $pdf->download('pdfview.pdf');
-
-//        view()->share('items',$items);
-
-
-
+           view()->share('shipment',$shipment);
             $pdf = PDF::loadView('pdfview');
             return $pdf->download('shipment.pdf');
-
-
 
 
 

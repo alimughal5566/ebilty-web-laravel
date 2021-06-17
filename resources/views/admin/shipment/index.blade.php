@@ -355,85 +355,19 @@
                 txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
             }
                 html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
-                    "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
+                    "<td > " + status_text + ""+txt+"</td><tr>";
             });
             $('#jqueryTable').append(html);
             // console.log(data[0]);
         }
 
 
-        function setStatus(id, shipment_id, approved_status) {
-            $.ajax({
-                url: "{{route('update.bid.status')}}",
-                type: "get",
-                data: {'id': id,'shipment_id': shipment_id,'approved_status':approved_status},
-                success: function (result) {
-                    toastr.success( 'Status updated successfully');
-                    setTimeout(function(){ location.reload() },1000);
-                },
-                error: function (request, status, error) {
-                    // alert(request.responseText);
-                    // $('#showBidModal').modal('hide')
-                }
-            })
-        }
 
 
-        function openReviseModal(id,amount,revised_amount,revise_status,revise_comment){
-            if(revise_status==2 || revise_status==1 || revise_status==3){
-                // alert('sdf');
-                // alert();
-                $('.beds').removeClass('d-none');
-                $('#prev').val(amount);
-                $('#amt').val(revised_amount);
-                $('.sbmet').addClass('d-none');
-            } else{
-                $('.sbmet').removeClass('d-none');
-                $('.beds').addClass('d-none');
-                $('#prev').val(amount);
-                $('#amt').val('');
-            }
-            // alert( revise_comment)
-            if( revise_status==1){
-                $('#cmt').val(((revise_comment==null) ?'':revise_comment));
-                $('.comnt').removeClass('d-none');
-            }else{
-                $('#cmt').val('');
-                $('.comnt').addClass('d-none');
-            }
-
-            $('#bedid').val(id);
-            $('#showreviseModal').modal('show')
-
-        }
 
 
-        function sav() {
-            if($('#amt').val()=='' || $('#amt').val()<1){
-                $('#amt').addClass('border-danger');
-                return ;
-            }
-            $('#amt').removeClass('border-danger');
-            $.ajax({
-                url: "{{route('sendBidReviserequest')}}",
-                type: "get",
-                data: {'id': $('#bedid').val() , 'amt': $('#amt').val()},
-                success: function (result){
-                    toastr.success( 'Revise request send successfully');
-                    $('#showreviseModal').modal('hide')
-                    setTimeout(function(){ location.reload() },1000);
 
-                },
-                error: function (request, status, error) {
-                    // swal.fire(
-                    //     'Already bidds',
-                    //     'Please waits for approval.',
-                    //     'warning');
-                    //
-                    // $('#showModal').modal('hide')
-                }
-            })
-        }
+
 
 
     </script>

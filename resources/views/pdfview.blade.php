@@ -15,9 +15,9 @@
                               <img  class="float-right" src="{{public_path('uploads/logos/company-logo.png')}}">
                         </div>
                         <div style="font-size:0;position:relative;width:144px;height:30px;">
-{{--                            @if(file_exists(public_path('images/qrcodes/'.$shipment->id.'.svg')))--}}
-{{--                                {!! file_get_contents(public_path('images/qrcodes/'.$shipment->id.'.svg')) !!}--}}
-{{--                            @endif--}}
+                            @if(file_exists(public_path('images/qrcodes/'.$shipment->id.'.svg')))
+                                {!! file_get_contents(public_path('images/qrcodes/'.$shipment->id.'.svg')) !!}
+                            @endif
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:0px;top:0px;">&nbsp;</div>
                             <div style="background-color:black;width:4px;height:30px;position:absolute;left:4px;top:0px;">&nbsp;</div>
                             <div style="background-color:black;width:2px;height:30px;position:absolute;left:12px;top:0px;">&nbsp;</div>

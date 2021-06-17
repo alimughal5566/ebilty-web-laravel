@@ -33,7 +33,6 @@ class CustomerController extends Controller
         $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
         $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
         return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','senders','receivers'));
-
     }
 
 
@@ -66,7 +65,6 @@ class CustomerController extends Controller
             $ship->save();
         }
         return response()->json(['success' =>'status updated  successfully'], 200);
-
     }
 
     public function sendBidReviserequest(Request $request){

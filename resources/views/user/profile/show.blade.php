@@ -5,7 +5,7 @@
             <div class="kt-subheader__main">
                 {{--         <h3 class="kt-subheader__title"><button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left" id="kt_subheader_mobile_toggle"><span></span></button>Create New Shipment</h3>--}}
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                < class="kt-subheader__breadcrumbs">
+{{--                < class="kt-subheader__breadcrumbs">--}}
                     {{--            <a href="#" class="kt-subheader__breadcrumbs-home">--}}
                     {{--               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">--}}
                     {{--                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
@@ -14,8 +14,7 @@
                     {{--                  </g>--}}
                     {{--               </svg>--}}
                     {{--            </a>--}}
-                    <a href="#" class="kt-subheader__breadcrumbs-home">
-                        Profile</a>
+                    <a href="#" class="kt-subheader__breadcrumbs-home">Profile</a>
                     <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active"></span>
                 </div>
             </div>
@@ -24,23 +23,82 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-
-
         <!--end:: Portlet-->
-
-
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-3">
                 <!--begin:: Widgets/Order Statistics-->
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body kt-portlet__body--fluid ">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+
+                                <div class="kt-widget12__item">
+                                    <div class="kt-widget12__info ">
+                                        <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
+                                        <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+
+                                    @if($user->edit_request==1)
+                                             <span data-toggle="modal" data-target="#edit2" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                        @endif
+                                        @php $license='/images/noimage.jpg'; @endphp
+                                        @if($user->license_image)
+                                            @php    $license= '/images/license/'.$user->license_image; @endphp
+                                        @endif
+                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
+                                    </div>
+
+                                </div>
+                                <div class="kt-widget12__item">
+                                        <div class="kt-widget12__info">
+                                            <span class="kt-widget12__desc d-inline-flex"><b>License</b></span>
+                                            <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+
+                                        @if($user->edit_request==1)
+                                                 <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                           @endif
+                                            @php $cnic='/images/noimage.jpg'; @endphp
+                                            @if($user->cnic_image)
+                                                @php  $cnic= '/setting/cnic/'.$user->cnic_image; @endphp
+                                            @endif
+                                            <span class="kt-widget12__value">
+                                                <img src="{{url($cnic)}}"  alt="" width="300">
+                                            </span>
+                                        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end:: Widgets/Order Statistics-->
+            </div>
+
+
+
+            <div class="col-xl-9">
+                <!--begin:: Widgets/Order Statistics-->
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label d-inline-flex ">
+                            <h3 class="kt-portlet__head-title">
                                 Personal Details
                             </h3>
                         </div>
+                        @if($user->edit_request=='')
+                            <h4 class=" text-right float-right pt-3">
+                                <a href="{{route('requestToEdit')}}">request to edit</a>
+                            </h4>
+                        @endif
+                        @if($user->edit_request==1)
+                            <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                        @endif
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
                         <div class="kt-widget12">
@@ -64,85 +122,17 @@
                                             {{$user->phone}}
 {{--                                    <span class="btn btn-label- btn-sm btn-bold btn-upper"></span>--}}
                                      <span class=" btn-bold "></span></span>
-                                    </div>
+                                   </div>
 
                                 </div>
-
-{{--                                <div class="kt-widget12__item">--}}
-{{--                                    <div class="kt-widget12__info">--}}
-{{--                                        <span class="kt-widget12__desc">Office</span>--}}
-{{--                                        <span class="kt-widget12__value">Lahore</span>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="kt-widget12__info">--}}
-{{--                                        <span class="kt-widget12__desc">Delivery Time</span>--}}
-{{--                                        <span class="kt-widget12__value">Morning</span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--end:: Widgets/Order Statistics-->
-            </div>
-            <div class="col-xl-12">
-                <!--begin:: Widgets/Order Statistics-->
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                               Documents
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body kt-portlet__body--fluid">
-                        <div class="kt-widget12">
-                            <div class="kt-widget12__content">
-
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Passport</span>
-                                        <span class="kt-widget12__value"><img src="{{public_path('/uploads/no-image.jpg')}}" width="100" >
-                                                        <img alt="Logo" src="http://localhost/ebilty-web/storage/app/uploads/public/605/adf/deb/605adfdeb172d020773592.png" style="max-height:50px;">
-</span>
-                                    </div>
-                                    <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Shipping Cost</span>
-                                        <span class="kt-widget12__value"> gfgf</span>
-                                    </div>
-                                </div>
-                                <div class="kt-widget12__item">
-                                    <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Total Requested From The Receiver</span>
+                                        <span class="kt-widget12__desc">Registered date</span>
                                         <span class="kt-widget12__value">
-                                        $00<!-- <span class="btn btn-label-danger btn-sm btn-bold btn-upper" data-toggle="kt-tooltip" data-placement="top" title="The actual cost will be calculated when we receive the package" data-original-title="The actual cost will be calculated when we receive the package" data-skin="dark">Not confirmed yet</span>-->
-                                                                            </span>
-                                        <!--
-                                            </span>
-                                        -->
-                                    </div>
-                                </div>
-                                <div class="kt-widget12__item">
-                                    <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Total Requested From The Sender</span>
-                                        <span class="kt-widget12__value">
-                                        $00<!-- <span class="btn btn-label-danger btn-sm btn-bold btn-upper" data-toggle="kt-tooltip" data-placement="top" title="The actual cost will be calculated when we receive the package" data-original-title="The actual cost will be calculated when we receive the package" data-skin="dark">Not confirmed yet</span>-->
-                                                                            </span>
-                                        <!--
-                                                                                -->
-                                    </div>
-                                </div>
-                                <div class="kt-widget12__item">
-                                    <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Total received</span>
-                                        <span class="kt-widget12__value">$00</span>
-                                    </div>
-                                    <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Total remaining</span>
-                                        <span class="kt-widget12__value">
-                                                                                    $00
-                                            <!--<span class="btn btn-label-danger btn-sm btn-bold btn-upper" data-toggle="kt-tooltip" data-placement="top" title="The actual cost will be calculated when we receive the package" data-original-title="The actual cost will be calculated when we receive the package" data-skin="dark">Not confirmed yet</span>-->
-                                    </span>
-                                    </div>
+                                            {{$user->created_at->format('d-M-Y')}}
+{{--                                    <span class="btn btn-label- btn-sm btn-bold btn-upper"></span>--}}
+                                     <span class=" btn-bold "></span></span>
+                                   </div>
 
                                 </div>
                             </div>
@@ -151,6 +141,8 @@
                 </div>
                 <!--end:: Widgets/Order Statistics-->
             </div>
+
+
         </div>
 
 
@@ -158,11 +150,183 @@
     </div>
 
 
-    {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
-    {{--     modalOpen--}}
-    {{--    </button>--}}
+    <div class="modal fade show" id="edit2" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload license</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+          <form method="POST" action="{{route('updateLicense')}}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="card card-custom">
+                        <div class="card-body p-0">
+                            <div class="row justify-content-center pl-4 p-1 px-md-0">
+                                <div class="col-md-12">
+                                    <div class="form-group row pl-4">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12 mt-3 ">
+                                                    {{--                                                 <span class="text-center d-block"><h5 class="d-inline">Campaign Id: </h5> <span id="camp_id"></span></span>--}}
+                                                </div>
 
-    <!-- The Modal -->
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>License Number:</label>
+                                                        <input name="license_number" value="{{$user->license_number}}" class="form-control" type="text" required/>
 
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>License Picture:</label>
+                                                        <input name="license_image" class="form-control"  type="file" accept="image/*" required/>
+                                                    </div>
+                                                </div>
 
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!--end::Invoice-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">back
+                    </button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade show" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Campaign Sticker details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form method="POST" action="{{route('updateCnic')}}" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="card card-custom">
+                            <div class="card-body p-0">
+                                <div class="row justify-content-center pl-4 p-1 px-md-0">
+                                    <div class="col-md-12">
+                                        <div class="form-group row pl-4">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12 mt-3 ">
+                                                    {{--                                                 <span class="text-center d-block"><h5 class="d-inline">Campaign Id: </h5> <span id="camp_id"></span></span>--}}
+                                                </div>
+
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>Cnic Number:</label>
+                                                        <input name="cnic_number" value="{{$user->cnic_number}}" class="form-control" type="text" required/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>License Picture:</label>
+                                                        <input name="cnic_image" class="form-control"  type="file" accept="image/*" required/>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--end::Invoice-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">back
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade show" id="edit3" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profile details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form method="POST" action="{{route('updatePersonalInfo')}}" >
+                    <div class="modal-body">
+                        <div class="card card-custom">
+                            <div class="card-body p-0">
+                                <div class="row justify-content-center pl-4 p-1 px-md-0">
+                                    <div class="col-md-12">
+                                        <div class="form-group row pl-4">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12 mt-3 ">
+                                                    {{--                                                 <span class="text-center d-block"><h5 class="d-inline">Campaign Id: </h5> <span id="camp_id"></span></span>--}}
+                                                </div>
+
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>Name:</label>
+                                                        <input name="nam" value="{{$user->name}}" class="form-control" type="text" required/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>Phone:</label>
+                                                        <input name="phone" class="form-control"  value="{{$user->phone}}" type="text"  required/>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--end::Invoice-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">back
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+
+    <script>
+        @if (\Session::has('success'))
+           toastr.success('{!! \Session::get('success') !!}');
+        @endif
+        </script>
 @endsection
