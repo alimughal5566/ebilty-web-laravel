@@ -99,6 +99,8 @@ class AuthController extends Controller
         $address->user_id = $request->user_id;
         $address->created_by = auth()->user()->id;
         $address->address=$request->address;
+        $address->lat=$request->lat;
+        $address->lng=$request->lng;
         $address->area_id=$request->area;
         $address->state_id=$request->state;
         $address->city_id=$request->city;

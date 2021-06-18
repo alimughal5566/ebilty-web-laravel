@@ -81,7 +81,6 @@
                                             <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
                                             <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>
                                             <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>
-
 {{--                                            <td>--}}
 {{--                                                <label class="switch">--}}
 {{--                                                    <input type="checkbox" id="type_status{{$vehicle->id}}"--}}
@@ -203,16 +202,11 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
@@ -235,7 +229,6 @@
             }
             $('#docx').modal('show');
         }
-
 
 
         function viewShips(data){

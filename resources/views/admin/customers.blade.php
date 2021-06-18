@@ -65,7 +65,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @forelse($users as $user)
                                         <tr>
                                             <td class="count">{{ $user->id }}</td>

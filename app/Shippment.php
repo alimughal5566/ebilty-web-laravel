@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shippment extends Model
 {
-    public function sender()
-    {
-        return $this->hasOne('App\UserAddress','id','sender_address_id');
+    public function sender(){
+        return $this->belongsTo('App\UserAddress','sender_address_id','id');
     }
     public function user()
     {
         return $this->hasOne('App\User','id','user_id');
     }
     public function receiver(){
-        return $this->hasOne('App\UserAddress','id','receiver_address_id');
+        return $this->belongsTo('App\UserAddress','receiver_address_id','id');
     }
 
     public function status(){

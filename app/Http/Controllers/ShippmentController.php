@@ -71,12 +71,13 @@ class ShippmentController extends Controller
 
 
     public function show($id){
-        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids')->first();
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids')->first();
+//        dd($shipment);
         return view('user.shipment.show', compact('shipment'));
     }
 
     public function downloadPdf($id){
-        $shipment= Shippment::find($id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
            view()->share('shipment',$shipment);
             $pdf = PDF::loadView('pdfview');
             return $pdf->download('shipment.pdf');

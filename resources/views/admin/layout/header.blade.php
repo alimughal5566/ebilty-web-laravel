@@ -1,7 +1,11 @@
 <!-- begin:: Header -->
+
+
 <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
+
    <!-- begin:: Header Menu -->
    <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+
    <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper" style="opacity: 1;">
       <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
          <ul class="kt-menu__nav ">
@@ -13,11 +17,12 @@
                         <div id="date-part-icon" class="d-inline-block mr-1">
                            <i class="far fa-calendar-day"></i>
                         </div>
-                        <div id="date-part" class="d-inline-block">05/31/2021 </div>
+                        <div id="date-part" class="d-inline-block">{{Carbon\Carbon::now()->format('d M Y h:i:s a')}} </div>
                         <div id="time-part-icon" class="d-inline-block ml-3 mr-1">
                            <i class="far fa-clock"></i>
                         </div>
-                        <div id="time-part" class="d-inline-block">03:46:24 AM</div>
+{{--                        <div id="time-part" class="d-inline-block">03:46:24 AM</div>--}}
+
                      </div>
                   </span>
                </a>
@@ -513,6 +518,8 @@
       </div>
       <!--end: User bar -->
    </div>
-   <!-- end:: Header Topbar -->
+
+    <!-- end:: Header Topbar -->
+
 </div>
 <!-- end:: Header -->

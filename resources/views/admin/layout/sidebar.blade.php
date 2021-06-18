@@ -386,6 +386,8 @@
 
               @role('driver')
               <ul class="kt-menu__nav ">
+                  @if(auth()->user()->documents_verified=='1')
+
                   <li class="kt-menu__item  {{ (request()->is('user/driver/shipments')) ? 'kt-menu__item--open active' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel ">
                       <a href="{{route('driver.shipments')}}" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
@@ -400,8 +402,7 @@
                           <span class="kt-menu__link-text">Shipments</span>
                       </a>
                   </li>
-
-
+                  @endif
                   <li class="kt-menu__item  {{ (request()->is('user/vehicles')) ? 'kt-menu__item--open active' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel ">
                       <a href="{{route('my.vehicles')}}" class="kt-menu__link ">
                   <span class="kt-menu__link-icon">
@@ -417,6 +418,7 @@
                       </a>
                   </li>
               </ul>
+
               @endrole
 
 

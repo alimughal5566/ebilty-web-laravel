@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-        <form method="POST" action="{{route('create.shipment')}}"  enctype="multipart/form-data">
+        <form method="POST" action="{{route('create.shipment')}}"  enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
@@ -325,11 +325,10 @@
                                                         <div class="location-senderaddress">
                                                             <div class="row">
                                                                 <div class="form-group col-lg-4">
-                                                                    <label>Address&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                    <input type="text" id="adres" placeholder="Address" class="form-control address street_addr" name="senderaddress[street_address]"  rel="senderaddress" />
-                                                                    <input type="hidden" class="form-control lat" data-senderaddress="lat" name="senderaddress[lat]" />
-                                                                    <input type="hidden" class="form-control lng" data-senderaddress="lng" name="senderaddress[lng]" />
-                                                                    <input type="hidden" class="form-control url" data-senderaddress="url" name="senderaddress[url]" />
+                                                                    <label>Sender addres</label>
+                                                                    <input type="text" id="address-input" class="form-control map-input" autocomplete="off" placeholder="Enter Location">
+                                                                    <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
+                                                                    <input type="hidden" name="address_longitude" id="address-longitude" value="0" />
                                                                 </div>
                                                                 <div class="form-group col-lg-4">
                                                                     <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
@@ -367,8 +366,10 @@
                                                             <div class="row">
                                                                 <div class="form-group col-lg-12">
                                                                     <label>Google Map</label>
-                                                                    <div class="col-sm-12 map_canvas map_senderaddress"></div>
-                                                                    <span class="form-text text-muted">Change the pin to select the right location</span>
+                                                                    <div id="address-map-container" style="width:100%;height:400px; ">
+                                                                        <div style="width: 100%; height: 100%" id="address-map"></div>
+                                                                    </div>
+                                                                    <span class="form-text text-muted">Dragg the pin to select the right location</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -619,7 +620,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group ">
-                                                    <label>Receiver Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                    <label>Receiver Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
                                                         <select onchange="showreceiverform(this.value)" class="form-control receiver_address_id" id="receiver_address_id" name="receiver_address"  data-live-search="true" title="Address"  tabindex="-98">
                                                             {{--                                                            <option data-hidden="true"></option>--}}
@@ -657,11 +658,15 @@
                                                     <div class="location-senderaddress">
                                                         <div class="row">
                                                             <div class="form-group col-lg-4">
-                                                                <label>Address <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                <input type="text" id="r_adres" placeholder="Address" class="form-control address street_addr" name="senderaddress[street_address]"  rel="senderaddress" />
-                                                                <input type="hidden" class="form-control lat" data-senderaddress="lat" name="senderaddress[lat]" />
-                                                                <input type="hidden" class="form-control lng" data-senderaddress="lng" name="senderaddress[lng]" />
-                                                                <input type="hidden" class="form-control url" data-senderaddress="url" name="senderaddress[url]" />
+                                                                <label>Location</label>
+                                                                <input type="text" id="address_input" autocomplete="off" class="form-control imap-input" placeholder="Enter address" >
+                                                                <input type="hidden" name="address_latitude" id="address-latitude1" value="0" />
+                                                                <input type="hidden" name="address_longitude" id="address-longitude1" value="0" />
+
+{{--                                                                <input type="text" id="r_adres" placeholder="Address" class="form-control address street_addr" name="senderaddress[street_address]"  rel="senderaddress" />--}}
+{{--                                                                <input type="hidden" class="form-control lat" data-senderaddress="lat" name="senderaddress[lat]" />--}}
+{{--                                                                <input type="hidden" class="form-control lng" data-senderaddress="lng" name="senderaddress[lng]" />--}}
+{{--                                                                <input type="hidden" class="form-control url" data-senderaddress="url" name="senderaddress[url]" />--}}
                                                             </div>
                                                             <div class="form-group col-lg-4">
                                                                 <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
@@ -699,8 +704,11 @@
                                                         <div class="row">
                                                             <div class="form-group col-lg-12">
                                                                 <label>Google Map</label>
-                                                                <div class="col-sm-12 map_canvas map_recvraddress"></div>
-                                                                <span class="form-text text-muted">Change the pin to select the right location</span>
+                                                                <div  style="width:100%;height:400px; ">
+                                                                    <div style="width: 100%; height: 100%" id="address-mapp"></div>
+                                                                </div>
+
+                                                                <span class="form-text text-muted">Drag the pin to select the right location</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1390,6 +1398,9 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('G_MAP_KEY')}}&libraries=places&callback=initialize&libraries=places" async></script>
+{{--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfh-Jh-Vn1Lf2TeP9g9cf5bzRbX1gnFZ4&libraries=places&callback=initialize1&libraries=places" async></script>--}}
+
     <script>
         @if (\Session::has('success'))
         toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
@@ -1398,7 +1409,6 @@
         @foreach ($errors->all() as $error)
         toastr.warning('{{$error}}');
         @endforeach
-
 
         function getVehicles(id) {
             $.ajax({
@@ -1419,7 +1429,6 @@
 
 
         function showsenderform(val) {
-
             if(val=='new'){
                 var sender_id=$('#sendr option:selected').val()
                 if(sender_id=='' || sender_id=='new'){
@@ -1793,7 +1802,9 @@
             })
         }
         function saveaddress() {
-            var address = $('#adres').val();
+            var address = $('#address-input').val();
+            var lng = $('#address-longitude').val();
+            var lat = $('#address-latitude').val();
             var country = $('#contry option:selected').val();
             var zip = $('#zep').val();
             var state = $('#stat option:selected').val();
@@ -1827,7 +1838,6 @@
                 toastr.warning("Fill area field");
                 return;
             }
-
             $('.saved').css('opacity','0.5');
             $('.loadr').removeClass('d-none');
             $.ajax({
@@ -1841,6 +1851,8 @@
                     'country': country,
                     'zip': zip,
                     'user_id': user_id,
+                    'lat': lat,
+                    'lng': lng,
                     'form': 'sender',
                 },
                 success: function (data) {
@@ -1862,17 +1874,18 @@
                         toastr.success(data.success);
                     }
                 }
-
             })
         }
         function saveaddresss() {
-            var address = $('#r_adres').val();
+            var address = $('#address_input').val();
             var country = $('#r_contry option:selected').val();
             var zip = $('#r_zep').val();
             var state = $('#r_stat option:selected').val();
             var city = $('#r_cite option:selected').val();
             var area = $('#r_areea').val();
-            var user_id = $('#r_sendr option:selected').val();
+            var user_id = $('#receiver_name option:selected').val();
+            var lat = $('#address-latitude1').val();
+            var lng = $('#address-longitude1').val();
 
             if (address == '') {
                 toastr.warning("Fill address field");
@@ -1914,6 +1927,8 @@
                     'country': country,
                     'zip': zip,
                     'user_id': user_id,
+                    'lat': lat,
+                    'lng': lng,
                     'form': 'receiver',
                 },
                 success: function (data) {
@@ -1940,9 +1955,193 @@
         }
 
 
+        function initialize() {
+
+
+            $('#address_input').on('keyup', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                const locationInputs = document.getElementsByClassName("imap-input");
+                const autocompletes = [];
+                const geocoder = new google.maps.Geocoder;
+                for (let i = 0; i < locationInputs.length; i++) {
+                    const input = locationInputs[i];
+                    const fieldKey = input.id.replace("_input", "");
+                    // alert(fieldKey);
+                    const isEdit = document.getElementById(fieldKey + "-latitude1").value != '' && document.getElementById(fieldKey + "-longitude1").value != '';
+                    const latitude = parseFloat(document.getElementById(fieldKey + "-latitude1").value) || -33.8688;
+                    const longitude = parseFloat(document.getElementById(fieldKey + "-longitude1").value) || 151.2195;
+
+                    const map = new google.maps.Map(document.getElementById(fieldKey + '-mapp'), {
+                        center: {lat: latitude, lng: longitude},
+                        zoom: 18
+                    });
+
+                    const marker = new google.maps.Marker({
+                        map: map,
+                        position: {lat: latitude, lng: longitude},
+                        title: "Click to zoom",
+                        draggable: true
+                    });
+                    marker.setVisible(isEdit);
+                    const autocomplete = new google.maps.places.Autocomplete(input);
+                    autocomplete.key = fieldKey;
+                    autocompletes.push({input: input, map: map, marker: marker, autocomplete: autocomplete});
+                }
+                for (let i = 0; i < autocompletes.length; i++) {
+                    const input = autocompletes[i].input;
+                    const autocomplete = autocompletes[i].autocomplete;
+                    const map = autocompletes[i].map;
+                    const marker = autocompletes[i].marker;
+
+                    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                        marker.setVisible(false);
+                        const place = autocomplete.getPlace();
+                        geocoder.geocode({'placeId': place.place_id}, function (results, status) {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                const lat = results[0].geometry.location.lat();
+                                const lng = results[0].geometry.location.lng();
+                                $('#address-latitude1').val(lat);
+                                $('#address-longitude1').val(lng);
+                                setLocationCoordinates(autocomplete.key, lat, lng);
+                            }
+                        });
+
+                        if (!place.geometry) {
+                            window.alert("No details available for input: '" + place.name + "'");
+                            input.value = "";
+                            return;
+                        }
+
+                        if (place.geometry.viewport) {
+                            map.fitBounds(place.geometry.viewport);
+                        } else {
+                            map.setCenter(place.geometry.location);
+                            map.setZoom(17);
+                        }
+                        marker.setPosition(place.geometry.location);
+                        marker.setVisible(true);
+
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function() {
+                        geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    $('#address_input').val(results[0].formatted_address);
+                                    $('#address-latitude1').val(marker.getPosition().lat());
+                                    $('#address-longitude1').val(marker.getPosition().lng());
+                                    console.log(marker.getPosition().lng());
+                                    console.log(marker.getPosition().lat());
+                                }
+                            }
+                        });
+                    });
+                }
+             return;
+            });
+
+
+            $('#address-input').on('keyup', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            const locationInputs = document.getElementsByClassName("map-input");
+            const autocompletes = [];
+            const geocoder = new google.maps.Geocoder;
+            for (let i = 0; i < locationInputs.length; i++) {
+                const input = locationInputs[i];
+                const fieldKey = input.id.replace("-input", "");
+                const isEdit = document.getElementById(fieldKey + "-latitude").value != '' && document.getElementById(fieldKey + "-longitude").value != '';
+                const latitude = parseFloat(document.getElementById(fieldKey + "-latitude").value) || -33.8688;
+                const longitude = parseFloat(document.getElementById(fieldKey + "-longitude").value) || 151.2195;
+
+                const map = new google.maps.Map(document.getElementById(fieldKey + '-map'), {
+                    center: {lat: latitude, lng: longitude},
+                    zoom: 18
+                });
+
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: {lat: latitude, lng: longitude},
+                    title: "Click to zoom",
+                    draggable: true
+                });
+                marker.setVisible(isEdit);
+                const autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.key = fieldKey;
+                autocompletes.push({input: input, map: map, marker: marker, autocomplete: autocomplete});
+            }
+            for (let i = 0; i < autocompletes.length; i++) {
+                const input = autocompletes[i].input;
+                const autocomplete = autocompletes[i].autocomplete;
+                const map = autocompletes[i].map;
+                const marker = autocompletes[i].marker;
+
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    marker.setVisible(true);
+                    const place = autocomplete.getPlace();
+                    geocoder.geocode({'placeId': place.place_id}, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            const lat = results[0].geometry.location.lat();
+                            const lng = results[0].geometry.location.lng();
+                            setLocationCoordinates(autocomplete.key, lat, lng);
+                        }
+                    });
+
+                    if (!place.geometry) {
+                        window.alert("No details available for input: '" + place.name + "'");
+                        input.value = "";
+                        return;
+                    }
+
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+                    }
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+
+                });
+
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                $('#address-input').val(results[0].formatted_address);
+                                $('#address-latitude').val(marker.getPosition().lat());
+                                $('#address-longitude').val(marker.getPosition().lng());
+
+                                console.log(marker.getPosition().lng());
+                                console.log(marker.getPosition().lat());
+                            }
+                        }
+                    });
+                });
+
+            }
+
+
+
+        }
+
+        function setLocationCoordinates(key, lat, lng) {
+            const latitudeField = document.getElementById(key + "-" + "latitude");
+            const longitudeField = document.getElementById(key + "-" + "longitude");
+            latitudeField.value = lat;
+            longitudeField.value = lng;
+        }
 
 
     </script>
-
 
 @stop

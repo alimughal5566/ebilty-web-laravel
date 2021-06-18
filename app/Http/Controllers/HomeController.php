@@ -124,6 +124,7 @@ class HomeController extends Controller
     }
 
     public function shipments(){
+//        dd();
         $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
 //        dd($shipments);
         return view('admin.shipment.index', compact('shipments'));
@@ -149,7 +150,6 @@ class HomeController extends Controller
         $user->save();
         return redirect()->back()->with(['success' =>'Profile details updated successfully']);
     }
-
 
     public function sendMessage(){
 //        $recipients="00923045903545";
