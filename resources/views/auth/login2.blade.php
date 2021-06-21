@@ -360,7 +360,7 @@
                     toastr.success('Verification code sends successfully to your number');
                     $('#vrificationModal').modal('show')
                 }else{
-                    alert(result.data);
+                    // alert(result.data);
                     toastr.warning('Phone number is incorrect');
                 }
             }
