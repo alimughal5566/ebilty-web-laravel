@@ -24,11 +24,12 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
+            'phone' => ['required', 'unique:users,phone'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
             'full_name' => ['required', 'min:3'],
-            'phone' => ['required', 'unique:users,phone']
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
@@ -37,7 +38,6 @@ class AuthController extends Controller
             'name' => $request->full_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-//            'dob' => $request->dob,
             'phone' => $request->phone,
         ]);
 

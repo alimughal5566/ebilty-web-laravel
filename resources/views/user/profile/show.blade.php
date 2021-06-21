@@ -44,7 +44,7 @@
                                         <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
                                         <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
-                                    @if($user->edit_request==1)
+                                    @if($user->edit_request==1 && $user->id==auth()->user()->id)
                                              <span data-toggle="modal" data-target="#edit2" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                         @endif
                                         @php $license='/images/noimage.jpg'; @endphp
@@ -60,7 +60,7 @@
                                             <span class="kt-widget12__desc d-inline-flex"><b>License</b></span>
                                             <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
-                                        @if($user->edit_request==1)
+                                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
                                                  <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                            @endif
                                             @php $cnic='/images/noimage.jpg'; @endphp
@@ -91,17 +91,17 @@
                                 Personal Details
                             </h3>
                         </div>
-                        @if($user->documents_verified==1)
+                        @if($user->documents_verified==1 && $user->id==auth()->user()->id)
                             <h4 class=" text-right float-right pt-3">
                                 <a href="{{route('requestToEdit')}}">request to edit</a>
                             </h4>
                         @endif
-                        @if($user->edit_request=='' && $user->edit_request!=3 )
+                        @if($user->edit_request=='' && $user->edit_request!=3 && $user->id==auth()->user()->id )
                             <span class="text-right float-right pt-4 ml-auto">
                                 <a href="{{route('requestToEdit')}}"> request to edit</a>
                             </span> &nbsp
                         @endif
-                        @if($user->edit_request==1)
+                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
                             <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
                         @endif
 

@@ -1507,7 +1507,6 @@
                     }
                 })
 
-
                 $('#addnewsender').addClass('d-none');
                 $('#addnewsenderaddress').addClass('d-none');
             }
@@ -1956,8 +1955,6 @@
 
 
         function initialize() {
-
-
             $('#address_input').on('keyup', function(e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 13) {

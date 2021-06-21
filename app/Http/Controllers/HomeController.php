@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Country;
 use App\Models\Admin\Setting\Vehicle;
+use App\Models\UserVehicle;
+use App\phoneVerification;
 use App\ShipmentArea;
 use App\Shippment;
 use App\State;
 use App\User;
 use App\UserAddress;
 use Illuminate\Http\Request;
-
 use Twilio\Rest\Client;
+use Exception;
+
 
 class HomeController extends Controller
 {
@@ -22,7 +26,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['sendMessage','otpVerifcationCheck']);
     }
 
     /**
@@ -32,12 +36,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $user=User::find(3);
-//        $user->assignRole('driver');
-//        $user=User::find(4);
-//        $user->assignRole('customer');
-//        dd();
-        return view('admin.shipment.add-shipment');
+        if(auth()->user()->hasRole('admin')){
+            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
+        }
+       elseif(auth()->user()->hasRole('driver')){
+           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
+           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
+       }
+        elseif(auth()->user()->hasRole('customer')){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','receiver.user','status','bids.user')->paginate('5');
+        }
+        return view('dashboard', compact('shipments'));
     }
 
     public function getVehicles(Request $request)
@@ -104,7 +113,6 @@ class HomeController extends Controller
         return redirect()->back()->with(['success' =>'Request send successfully'], 200);
     }
     public function drivers(){
-
         $users = User::whereHas(
             'roles', function($q){
             $q->where('name', 'driver');
@@ -114,7 +122,6 @@ class HomeController extends Controller
     }
 
     public function customers(){
-
         $users = User::whereHas(
             'roles', function($q){
             $q->where('name', 'customer');
@@ -124,10 +131,14 @@ class HomeController extends Controller
     }
 
     public function shipments(){
-//        dd();
         $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
-//        dd($shipments);
         return view('admin.shipment.index', compact('shipments'));
+    }
+    public function mysavedlocations(){
+        $addresses = UserAddress::with('state','city')->where('user_id',auth()->user()->id)->get();
+        $countries = Country::all();
+//        dd($addresses);
+        return view('user.adddresses', compact('addresses','countries'));
     }
 
     public function docVerify($id){
@@ -150,30 +161,93 @@ class HomeController extends Controller
         $user->save();
         return redirect()->back()->with(['success' =>'Profile details updated successfully']);
     }
+    public function addAddress(Request $request){
+        $user = new UserAddress;
+        $user->address=$request->address;
+        $user->country_id=$request->country;
+        $user->state_id=$request->state;
+        $user->city_id=$request->city;
+        $user->area_id=$request->area;
+        $user->created_by=auth()->user()->id;
+        $user->user_id=auth()->user()->id;
+        $user->zip=$request->zip;
+        $user->form	='add-location';
+        $user->save();
+        return redirect()->back()->with(['success' =>'Location added  successfully']);
+    }
 
-    public function sendMessage(){
-//        $recipients="00923045903545";
-//        $account_sid ='AC5683d8fe206b469101470ecb88c9bf44';
-//        $auth_token = '6b10cdf9bed6f8afbfb776d7706b94b3';
-//        $twilio_number = '923111460595';
-//        dd($auth_token);
-        $code = mt_rand(1000, 9999);
-        $client = new Client( 'AC5683d8fe206b469101470ecb88c9bf44', '6b10cdf9bed6f8afbfb776d7706b94b3');
-//        dd($client);
-        $client->messages->create(
-           '+923040902523',
-            [
-                'from' => '+14145090655',
-                'body' => $code,
-            ]
-        );
+    public function addressStatusUpdate(Request $request){
+        if($request->id){
+            $UserAddress = UserAddress::find($request->id);
+            $UserAddress->is_default =1;
+            $UserAddress->save();
+
+            UserAddress::where('user_id' ,auth()->user()->id)
+                ->where('id' ,'!=', $request->id)
+                ->update(['is_default' =>0]);
+        }
+        return response()->json(['success' =>'Status updated  successfully'], 200);
+    }
 
 
-//        $client = new Client($account_sid, $auth_token);
-//        $client->messages->create($recipients,
-//            ['from' => $twilio_number, 'body' =>'1321'] );
-        dd('sends');
+    public function sendMessage(Request $request){
+        try{
+//            $code = mt_rand(1000, 9999);
+//            $client = new Client(env('TWILIO_P_ID'),env('TWILIO_s_ID'));
+//            $client->messages->create(
+//                '',
+//                [
+//                    'from' =>env('TWILIO_From_NUMBER'),
+//                    'body' =>'Thankyou for signing up in ebilty. Your verification code is: '.$code,
+//                ]
+//            );
+//
+//dd();
 
+            $code = mt_rand(1000, 9999);
+            $client = new Client(env('TWILIO_P_ID'),env('TWILIO_S_ID'));
+            $client->messages->create(
+                $request->number,
+                [
+                    'from' =>env('TWILIO_From_NUMBER'),
+                    'body' =>'Thankyou for signing up in ebilty. Your verification code is: '.$code,
+                ]
+            );
+            $phone= phoneVerification::where('number',$request->number)->first();
+            if(!$phone){
+                $phone= new phoneVerification;
+            }
+            $phone->number= $request->number;
+            $phone->code=$code;
+            $phone->is_verified=0;
+            $phone->save();
+            return response()->json(['success' =>'true'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' =>'false','data'=> $e->getMessage()], 200);
+
+        }
+
+    }
+
+    public function otpVerifcationCheck(Request $request){
+            $phone= phoneVerification::where('number',$request->number)->first();
+            if($phone){
+                if($request->code==$phone->code) {
+                    $phone->is_verified=1;
+                    $phone->save();
+                    return response()->json(['success' => 'true', 'message' => 'Number verifies successfully'], 200);
+                }else{
+                    return response()->json(['success' =>'false','message'=>'Code is incorrect'], 200);
+
+                }
+
+            }else{
+                return response()->json(['success' =>'false','message'=>'Number not found'], 200);
+
+            }
+
+
+            return response()->json(['success' =>'true'], 200);
 
 
     }

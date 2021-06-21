@@ -510,8 +510,7 @@
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Name</span>
                                         <span class="kt-widget12__value">{{$shipment->receiver->user->name}}
-
-                                                                                                                    </span>
+                                        </span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Mobile</span>
@@ -655,6 +654,8 @@
                 title: `${i + 1}. ${title}`,
                 label: `${i + 1}`,
                 optimized: false,
+                animation: google.maps.Animation.DROP,
+
             });
             // Add a click listener for each marker, and set up the info window.
             marker.addListener("click", () => {

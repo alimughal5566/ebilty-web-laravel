@@ -179,7 +179,7 @@
                     </td>
 
                     <td>
-                        @if(count($shipment->bids)>0)
+                        @if(count($shipment->bids)>0 ))
                             <span class="example-tools justify-content-center">
                             <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
                                  <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
@@ -221,7 +221,6 @@
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Bids</h4>
@@ -299,11 +298,6 @@
 
 
 
-
-
-
-
-
     {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
@@ -311,7 +305,6 @@
     <script>
         $(function() {
             $(".progress").each(function() {
-
                 var value = $(this).attr('data-value');
                 var left = $(this).find('.progress-left .progress-bar');
                 var right = $(this).find('.progress-right .progress-bar');
@@ -324,9 +317,7 @@
                         left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
                     }
                 }
-
             })
-
             function percentageToDegrees(percentage) {
                 return percentage / 100 * 360
             }
@@ -340,7 +331,7 @@
             let status='';
             let status_text='';
             let txt='';
-
+// console.log(data)
             if(value.approved_status==0) {
                   status = 1;
                   status_text= "<span class='fa fa-pause-circle text-danger'>&nbsp</span>Accept bid";

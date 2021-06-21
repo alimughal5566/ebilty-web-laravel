@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -44,6 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function shipments(){
         return $this->hasMany('App\Shippment','user_id','id');
     }
+
+
 
 
 

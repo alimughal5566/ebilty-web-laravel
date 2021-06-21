@@ -55,7 +55,8 @@
         </style>
         <!-- begin:: Page -->
         <div class="kt-grid kt-grid--ver kt-grid--root kt-page custom-grid">
-        <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v5 kt-login--signin" id="kt_login">
+{{--            @dd(@$form)--}}
+        <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v5 {{($errors->has('form'))?'kt-login--signup ':'kt-login--signin'}}" id="kt_login">
             <div class="kt-login__header mx-auto text-center d-block w-100">
                 <a class="kt-login__logo d-inline-block py-4" href="#">
                     <!-- <img style="max-height:90px;max-width:80%;" class="h-auto w-auto" alt="" src="http://127.0.0.1:8000/storage/app/uploads/public/605/adf/deb/605adfdeb172d020773592.png"> -->
@@ -74,6 +75,13 @@
                         <div class="kt-login__form mt-3">
                             <form class="kt-form mb-3" method="POST" action="{{route('login')}}">
                                 @csrf
+                                @if(count($errors) > 0  && !$errors->has('form'))
+                                    <div class="alert alert-warning alert-dismissible fade show">
+                                        @foreach($errors->all() as $error)
+                                                <ul class="text-white pl-1">{{$error}}</ul>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 @if (\Session::has('success'))
                                     <div class="kt-alert kt-alert--outline alert alert-success alert-dismissible" role="alert">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
@@ -82,7 +90,7 @@
                                 @endif
                                 <div class="form-group">
                                 <label for="userSigninLogin" class="sr-only"></label>
-                                <input class="form-control" type="text" placeholder="Username" name="email" id="userSigninLogin" autocomplete="off" required="">
+                                <input class="form-control" value="{{old('email')}}" type="text" placeholder="Username" name="email" id="userSigninLogin" autocomplete="off" required="">
                                 <i class="fa fa-user field-icon"></i>
                                 </div>
                                 <div class="form-group">
@@ -142,39 +150,51 @@
                             <div class="kt-login__subtitle text-white font-weight-bold">Enter your details to create your account</div>
                         </div>
                         <form class="kt-form" action="{{route('register_user')}}" method="POST" enctype="multipart/form-data">
+                            @if(count($errors) > 0  )
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    @foreach($errors->all() as $error)
+                                        @if($error!='signup')
+                                         <ul class="text-white pl-1">{{$error}}</ul>
+                                    @endif
+                                  @endforeach
+                                </div>
+                            @endif
                             @csrf
                             <div class="input-group">
                                 <label for="registerName" class="sr-only"></label>
-                                <input class="form-control" type="text" id="registerName" placeholder="Full Name" name="name" required="">
+                                <input class="form-control" value="{{old('name')}}" type="text" id="registerName" placeholder="Full Name" name="name" required="">
                                 <i class="fa fa-user field-icon"></i>
                             </div>
                             <div class="input-group">
                                 <label for="registerEmail" class="sr-only"></label>
-                                <input class="form-control" type="text" placeholder="Email" id="registerEmail" name="email" autocomplete="off" required="">
+                                <input class="form-control" value="{{old('email')}}" type="email" placeholder="Email" id="registerEmail" name="email" autocomplete="off" required="">
                                 <i class="fa fa-envelope field-icon"></i>
                             </div>
                             <div class="input-group">
                                 <label for="postal_code" class="sr-only"></label>
-                                <input class="form-control" type="text" placeholder="Postal Address" name="postal_code" id="postal_code" autocomplete="off" required="">
+                                <input class="form-control" type="text" value="{{old('postal_code')}}" placeholder="Postal Address" name="postal_code" id="postal_code" autocomplete="off" required="">
                                 <i class="fa fa-home field-icon"></i>
                             </div>
                             <div class="input-group">
                                 <label for="mobile" class="sr-only"></label>
-                                <input class="form-control" type="text" placeholder="Mobile Number" name="mobile" id="mobile" autocomplete="off" required="">
+                                <input class="form-control" type="text" value="{{old('phone')}}" placeholder="Mobile Number"  min="5" name="phone" id="mobile" autocomplete="off" required="">
                                 <i class="fa fa-mobile-alt field-icon"></i>
                             </div>
+                             <a href="#" class="verify" style="text-decoration: underline;display: none" onclick="verify()">Send verification code</a>
+                             <a  class="text-danger mobile-error" style="display: none" ></a>
+                             <a  class="text-success mobile-success" style="display: none" ></a>
                             <div class="input-group upload-btn-wrapper">
                                 <label for="cnic" class="sr-only"></label>
                                 <span class="upload-wrap px-3 w-100 d-flex align-items-center justify-content-between">
                                 <span class="upload-txt ont-weight-bold">CNIC</span>
                                 <a class="btn">Upload Image</a>
                                 </span>
-                                <input class="" type="file" placeholder="CNIC" name="cnic" autocomplete="off" id="cnic" required="" accept="image/*">
-                                <input type="hidden" name="cnic_image" id="cnic_image">
+                                <input class="" type="file" placeholder="CNIC" name="cnic" autocomplete="off" id="cnic" {{(old('cnic_image'))?'':'required'}} accept="image/*">
+                                <input type="hidden" name="cnic_image" id="cnic_image" value="{{old('cnic_image')}}">
                             </div>
                             <div class="input-group">
                                 <label for="bussiness_type" class="sr-only"></label>
-                                <input class="form-control" type="text" placeholder="Bussiness Type" name="bussiness_type" id="bussiness_type" autocomplete="off" required="">
+                                <input class="form-control" type="text" value="{{old('bussiness_type')}}" placeholder="Bussiness Type" name="bussiness_type" id="bussiness_type" autocomplete="off" required="">
                                 <i class="fa fa-user-cog field-icon"></i>
                             </div>
                             <div class="input-group">
@@ -182,8 +202,8 @@
                                 <div class="dropdown bootstrap-select form-control">
                                 <select name="user_role_id" class="form-control " data-dropup-auto="false" id="user_role_id" autocomplete="off" required="" tabindex="-98">
                                     <option value="" selected="" disabled="">Register As</option>
-                                    <option value="1" class="individual">Vendor</option>
-                                    <option value="2" class="company">Driver</option>
+                                    <option value="1" {{old('user_role_id')==1?'selected':''}} class="individual">Vendor</option>
+                                    <option value="2" {{old('user_role_id')==2?'selected':''}} class="company">Driver</option>
                                 </select>
                                 <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="user_role_id" title="Register As">
                                     <div class="filter-option">
@@ -236,7 +256,7 @@
                             </div>
                             <div class="kt-login__actions d-flex align-items-center justify-content-between text-justify">
                                 <button id="kt_login_signup_cancel" class="btn btn-gradient btn-gradient-default kt-login__btn-secondary mx-0">Cancel</button>
-                                <button id="" type="submit" class="btn btn-gradient btn-gradient-blue mx-0">Sign Up!</button>
+                                <button id="sbet" type="submit" class="btn btn-gradient btn-gradient-blue mx-0">Sign Up!</button>
                             </div>
                             <div class="kt-login__actions kt-margin-t-10 flex-column">
                                 <span class="kt-login__account-msg d-block w-100 text-white font-weight-bold">Already have an account? <a href="javascript:void(0);" id="kt_login_signin" class="kt-login__account-link ">Login</a> to your account</span>
@@ -266,45 +286,120 @@
         </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="kt_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">terms and conditions</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="kt-scroll ps" data-scroll="true" data-height="200" style="height: 200px; overflow: hidden;">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        <div class="modal fade show" id="vrificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Phone number Verification </h5>
                     </div>
-                    <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                    <div class="modal-body">
+                        <div class="card-body  p-0">
+                            <!--begin::Invoice-->
+                            <div class="col-md-10 offset-1 text-center text-success">
+                                <p>Verification code has been sent to your number</p>
+                            </div>
+                            <div class="col-md-10 offset-1 ">
+                                <lable for="bid_price">Verification code
+                                    <input type="number" minlength="1" name="code" class="form-control" id="cod"  placeholder="Verification code" required>
+                                </lable>
+                                <span class="text-danger errer"></span>
+                            </div>
+                            <div class="col-md-1 offset-5 ">
+                                <a href="#" onclick="verifies()" class=" btn-info btn mt-2">verify</a>
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Agree</button>
-                    <button type="button" class="btn btn-primary" id="agree" data-dismiss="modal">Agree</button>
                 </div>
             </div>
         </div>
-        </div>
 
 
-   <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
-   <script src="assets/js/login.js" type="text/javascript"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.3.8/js/ajax-bootstrap-select.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script>
 
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
+        <script src="assets/js/login.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.3.8/js/ajax-bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+
+        <script>
+    $("#mobile").on("keyup", function(e) {
+        var number=$("#mobile").val();
+            if(number.length<9){
+            $('.mobile-error').css('display','block');
+            $('.mobile-error').text('Minimum 10characters required')
+            $('.verify').css('display','none');
+            $('#mobile').addClass('mb-0');
+            $('#sbet').attr('disabled','true');
+            return;
+        }
+        if(telephoneCheck(number)){
+            $('#sbet').removeAttr('disabled');
+            $('.verify').css('display','block');
+            $('#mobile').addClass('mb-0');
+            $('.mobile-error').css('display','none');
+
+        } else{
+            $('.mobile-error').css('display','block');
+            $('.mobile-error').text('Phone number is invalid')
+            $('.verify').css('display','none');
+            $('#mobile').addClass('mb-0');
+            $('#sbet').attr('disabled','true');
+            return;
+        }
+    })
+    function verify(){
+        var number=$("#mobile").val();
+        $.ajax({
+            url: "{{route('sendMessage')}}",
+            type: "post",
+            data: {'number':number},
+            success: function(result){
+                if(result.success=='true'){
+                    toastr.success('Verification code sends successfully to your number');
+                    $('#vrificationModal').modal('show')
+                }else{
+                    alert(result.data);
+                    toastr.warning('Phone number is incorrect');
+                }
+            }
+        })
+    }
+
+    function verifies(){
+        var number=$("#mobile").val();
+        var code=$("#cod").val();
+
+        if(code.length<4){
+            $('.errer').text('Minimum 4 characters required');
+            return;
+        }
+        $.ajax({
+            url: "{{route('otpVerifcationCheck')}}",
+            type: "get",
+            data: {'number':number,'code':code},
+            success: function(result){
+                if(result.success=='true') {
+                    toastr.success(result.message);
+                    $('#vrificationModal').modal('hide');
+                    $('.mobile-success').css('display','block');
+                    $('.mobile-success').text('Number verified successfully');
+                    $('.verify').css('display','none');
+                }
+                else if(result.success=='false'){
+                  $('.errer').text(result.message);
+                    toastr.warning(result.message);
+                }
+            }
+        })
+    }
+
+    function telephoneCheck(str) {
+        var isphone = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(str);
+        return isphone;
+    }
+    telephoneCheck("1 555 555 5555");
 
 </script>
 

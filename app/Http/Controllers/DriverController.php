@@ -27,12 +27,6 @@ class DriverController extends Controller
     public function index(){
 //        dd(auth()->user()->id);
         $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
-//        $records->where(function($q) use ($vehicles){
-//            foreach($vehicles as $truck) {
-////                $q->Where('truck_used', $truck->vehicle_id);
-////                $q->orWhere('vehicle_category', $truck->vehicle_type);
-//            }
-//        });
         $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
         $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
 //        dd($shipments[0]);

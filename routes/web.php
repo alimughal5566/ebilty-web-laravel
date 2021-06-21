@@ -15,14 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'FrontEndController@index')->name('index');
-Route::get('/send-message', 'HomeController@sendMessage');
+Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
+Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
+
 
 Auth::routes(['verify' => true]);
 
 Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
 Route::post('/register_user', 'auth\RegisterController@register_user')->name('register_user');
 Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehicles');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::get('/customers', 'HomeController@customers')->name('admin.customers');
     Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
@@ -99,8 +101,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
         Route::get('/shipment/{id}', 'ShippmentController@show')->name('shipmentDetail');
         Route::get('/vehicles', 'DriverController@myVehicles')->name('my.vehicles');
+        Route::get('/my-locations', 'HomeController@mysavedlocations')->name('my.locations');
         Route::get('/vehicle/status/update', 'DriverController@vehicleStatusUpdate')->name('vehicle.status.update');
+        Route::get('/address/status/update', 'HomeController@addressStatusUpdate')->name('address.status.update');
         Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
+        Route::post('/add-address', 'HomeController@addAddress')->name('addAddress');
         Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
         Route::post('/update-driver-vehicle', 'DriverController@upadteDriverVehicle')->name('upadteDriverVehicle');
         Route::post('/updateLicense', 'HomeController@updateLicense')->name('updateLicense');

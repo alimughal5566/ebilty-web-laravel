@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\UserVehicle;
 use App\Providers\RouteServiceProvider;
+use App\Rules\PhoneNumberVerification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -53,6 +54,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+//        dd('s');
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -75,12 +77,19 @@ class RegisterController extends Controller
         ]);
     }
     public function register_user(Request $request){
+//        $this->validator($request);
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
             'name' => ['required', 'min:3'],
-            'phone' => ['required', 'unique:users,phone']
+            'phone' => ['required', 'unique:users,phone',new PhoneNumberVerification],
         ]);
+        if ($validator->fails()) {
+            $validator->errors()->add('form', 'signup');
+            return redirect()->back()->with(['errors' => $validator->errors()], 422)->withInput();
+        }
+
+
         $filename = '';
         if($request->cnic)
         {
@@ -104,13 +113,15 @@ class RegisterController extends Controller
             $user->assignRole('customer');
         }else{
             $user->assignRole('driver');
-            foreach ($request->vehicle_category as $key=> $cat){
-                $user_vehicle = new UserVehicle([
-                    'user_id'=> $user->id,
-                    'category_id'=> $cat,
-                    'vehicle_id'=> $request->truck_used[$key]
-                ]);
-                $user_vehicle->save();
+            if($request->vehicle_category) {
+                foreach ($request->vehicle_category as $key => $cat) {
+                    $user_vehicle = new UserVehicle([
+                        'user_id' => $user->id,
+                        'category_id' => $cat,
+                        'vehicle_id' => $request->truck_used[$key]
+                    ]);
+                    $user_vehicle->save();
+                }
             }
         }
 
