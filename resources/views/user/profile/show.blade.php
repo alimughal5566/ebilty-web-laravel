@@ -86,19 +86,31 @@
                 <!--begin:: Widgets/Order Statistics-->
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label d-inline-flex ">
+                        <div class="kt-portlet__head-label d-flex align-items-center">
                             <h3 class="kt-portlet__head-title">
                                 Personal Details
                             </h3>
                         </div>
-                        @if($user->edit_request=='')
+                        @if($user->documents_verified==1)
                             <h4 class=" text-right float-right pt-3">
                                 <a href="{{route('requestToEdit')}}">request to edit</a>
                             </h4>
                         @endif
+                        @if($user->edit_request=='' && $user->edit_request!=3 )
+                            <span class="text-right float-right pt-4 ml-auto">
+                                <a href="{{route('requestToEdit')}}"> request to edit</a>
+                            </span> &nbsp
+                        @endif
                         @if($user->edit_request==1)
                             <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
                         @endif
+
+                        @if($user->documents_verified==0)
+                            <h4 class="text-right float-right pt-3 ">
+                                <span class="text-danger"> Not verified</span>
+                            </h4>
+                        @endif
+
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
                         <div class="kt-widget12">
