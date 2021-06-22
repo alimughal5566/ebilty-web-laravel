@@ -96,7 +96,8 @@
 
             <div class="col-xl-9">
                 <!--begin:: Widgets/Order Statistics-->
-                <div class="kt-portlet kt-portlet--height-fluid">
+                <div class=" row col-xl-12">
+                   <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head ">
                         <div class="kt-portlet__head-label d-flex align-items-center">
                             <h3 class="kt-portlet__head-title">
@@ -165,6 +166,64 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
+
+
+
+                <div class=" row col-xl-12">
+                   <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head ">
+                        <div class="kt-portlet__head-label d-flex align-items-center">
+                            <h3 class="kt-portlet__head-title">
+                                Location Details
+                            </h3>
+                        </div>
+{{--                        @if($user->documents_verified==1 && $user->id==auth()->user()->id)--}}
+{{--                            <h4 class=" text-right float-right pt-3">--}}
+{{--                                <a href="{{route('requestToEdit')}}">request to edit</a>--}}
+{{--                            </h4>--}}
+{{--                        @endif--}}
+                        <div>
+
+                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                            <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                        @endif
+
+
+                        </div>
+
+                    </div>
+                    <div class="kt-portlet__body kt-portlet__body--fluid">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Country</span>
+                                        <span class="kt-widget12__value">
+                                       {{($user->country)?$user->country->name:''}}
+                                                </span>
+                                    </div>
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">State</span>
+                                        <span class="kt-widget12__value">{{($user->state)?$user->state->name:''}}</span>
+                                    </div>
+                                </div>
+                                <div class="kt-widget12__item">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">City</span>
+                                        <span class="kt-widget12__value">
+                                            {{($user->city)?$user->city->name:''}}
+                                            {{--                                    <span class="btn btn-label- btn-sm btn-bold btn-upper"></span>--}}
+                                     <span class=" btn-bold "></span></span>
+                                   </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <!--end:: Widgets/Order Statistics-->
             </div>
@@ -348,6 +407,83 @@
         </div>
     </div>
 
+
+    <div class="modal fade show" id="edit6" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Location details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form method="POST" action="{{route('updateLocationInfo')}}"  enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="card card-custom">
+                            <div class="card-body p-0">
+                                <div class="row justify-content-center pl-4 p-1 px-md-0">
+                                    <div class="col-md-12">
+                                        <div class="form-group row pl-4">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-lg-11 pt-3">
+                                                    <div class="form-check">
+                                                        <label>Country:</label>
+{{--                                                        <input name="nam" value="{{($user->country)?$user->country->name:''}}" class="form-control" type="text" required/>--}}
+
+                                                        <select class="form-control country_id" id="contry" onchange="getStates(this.value,'stat')" required title="Please choose country" data-live-search="true" name="country_id" >
+                                                            @foreach($countries as $country)
+                                                                <option value="{{$country->id}}" {{($user->country && $user->country->id==$country->id)?'selected':''}}>{{$country->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 pt-3">
+                                                    <div class="form-check">
+                                                        <label>State:</label>
+                                                            <label>State / Region&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                            <select class="form-control state_id" id="stat" onchange="getCities(this.value,'cite')"  title="Please choose state" name="state_id" data-live-search="true" required  >
+                                                               @if($user->state)
+                                                                    <option value="{{$user->state->id}}" selected>{{$user->state->name}}
+                                                                @endif
+                                                            </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 pt-3">
+                                                    <div class="form-check">
+                                                        <label>City:</label>
+                                                        <select class="form-control city_id" name="city_id" id="cite" title="Please choose city" data-live-search="true" required>
+                                                            @if($user->city)
+                                                                <option value="{{$user->city->id}}" selected>{{$user->city->name}}
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--end::Invoice-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">back
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade show" id="updateProfilePic" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -405,5 +541,46 @@
         @if (\Session::has('success'))
            toastr.success('{!! \Session::get('success') !!}');
         @endif
+
+
+        function getStates(id,clas) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getStates')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose State</option>";
+                    $.each(data.states,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+clas).empty().append(html);
+                    $('#'+clas).selectpicker('refresh');
+                }
+            })
+
+        }
+
+        function getCities(id,clas) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getCities')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose City</option>";
+                    $.each(data.cities,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+clas).empty().append(html);
+                    $('#'+clas).selectpicker('refresh');
+                }
+            })
+        }
+
+
+
+
+
         </script>
 @endsection

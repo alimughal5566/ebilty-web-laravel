@@ -22,7 +22,7 @@ class ShippmentController extends Controller
             'vehicle' => ['required', 'string', 'max:255'],
             'vehicle_type' => ['required', 'string', 'max:255'],
             'shipping_fee' => ['required', 'string', 'max:255'],
-            'invoice_image' => ['required', 'max:10000', 'mimes:png,gif,jpeg'],
+            'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
         ]);
 
         $shipment=new Shippment;

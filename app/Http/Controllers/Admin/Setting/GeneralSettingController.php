@@ -479,5 +479,14 @@ class GeneralSettingController extends Controller
         return response()->json($response);
     }
 
+    public function advertisementStatusUpdate(Request $request){
+        if($request->id){
+            $UserAddress = General_Setting::find($request->id);
+            $UserAddress->status =$request->status;
+            $UserAddress->save();
+        }
+        return response()->json(['success' =>'Status updated  successfully'], 200);
+    }
+
 
 }

@@ -166,9 +166,9 @@
                         }
                         @endphp
                         <div class="progress mx-auto" data-value='{{$percentage}}'>
-                                          <span class="progress-left">
-                                              <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
-                                          </span>
+                              <span class="progress-left">
+                                  <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
+                              </span>
                             <span class="progress-right">
                                                  <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>
@@ -208,7 +208,6 @@
         </table>
         <div class="float-right mr-2">
             {{$shipments->links()}}
-
         </div>
     </div>
 

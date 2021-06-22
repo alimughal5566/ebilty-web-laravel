@@ -67,25 +67,26 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
+            'postal_code' => $request->zip,
         ]);
         $user->save();
-        $address=new UserAddress;
-        $address->user_id = $user->id;
-        $address->created_by = auth()->user()->id;
-        $address->address=$request->address;
-        $address->area_id=$request->area;
-        $address->state_id=$request->state;
-        $address->city_id=$request->city;
-        $address->country_id=$request->country;
-        $address->zip=$request->zip;
-        $address->form=$request->form;
-        $address->save();
+//        $address=new UserAddress;
+//        $address->user_id = $user->id;
+//        $address->created_by = auth()->user()->id;
+//        $address->address=$request->address;
+//        $address->area_id=$request->area;
+//        $address->state_id=$request->state;
+//        $address->city_id=$request->city;
+//        $address->country_id=$request->country;
+//        $address->zip=$request->zip;
+//        $address->form=$request->form;
+//        $address->save();
 
 
         $user->assignRole('customer');
 
         event(new Registered($user));
-        return response()->json(['success' => 'User registered successfully','user_id'=>$user->id,'address_id'=>$address->id]);;
+        return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);;
 //        dd('dd');
 //        return response()->json([
 //            'message' => 'Successfully created user!'

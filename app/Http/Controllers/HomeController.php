@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Country;
+use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Vehicle;
 use App\Models\UserVehicle;
 use App\phoneVerification;
@@ -14,9 +15,6 @@ use App\User;
 use App\UserAddress;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
-use Exception;
-
-
 class HomeController extends Controller
 {
     /**
@@ -34,8 +32,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
+    public function index(){
+        $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
         if(auth()->user()->hasRole('admin')){
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         }
@@ -46,7 +44,7 @@ class HomeController extends Controller
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','receiver.user','status','bids.user')->paginate('5');
         }
-        return view('dashboard', compact('shipments'));
+        return view('dashboard', compact('shipments','add'));
     }
 
     public function getVehicles(Request $request)
@@ -61,7 +59,8 @@ class HomeController extends Controller
     }
     public function getCities(Request $request)
     {
-        $states = City::where('state_id', $request->id)->wherehas('areas')->get();
+//        $states = City::where('state_id', $request->id)->wherehas('areas')->get();
+        $states = City::where('state_id', $request->id)->get();
         return response()->json(['cities'=>$states]) ;
     }
     public function getArea(Request $request)
@@ -75,8 +74,9 @@ class HomeController extends Controller
     }
 
     public function profile($id){
-        $user = User::where('id', $id)->first();
-        return view('user.profile.show',compact('user'));
+        $user = User::where('id', $id)->with('country','state','city')->first();
+        $countries=Country::all();
+        return view('user.profile.show',compact('user','countries'));
     }
 
 
@@ -99,10 +99,17 @@ class HomeController extends Controller
             $request->profile_image->move(public_path('images/profile/'),$profile_image);
             $user->profile_image= $profile_image;
         }
-//        dd($user);
         $user->documents_verified=0;
         $user->save();
         return redirect()->back()->with(['success' =>'Data updated  successfully'], 200);
+    }
+    public function updateLocationInfo(Request $request){
+        $user = User::where('id', auth()->user()->id)->first();
+        $user->country_id=$request->country_id;
+        $user->state_id=$request->state_id;
+        $user->city_id=$request->city_id;
+        $user->save();
+        return redirect()->back()->with(['success' =>'Location details updated  successfully'], 200);
     }
     public function updateCnic(Request $request){
         $user = User::where('id', auth()->user()->id)->first();

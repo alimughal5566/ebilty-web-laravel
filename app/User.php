@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone','profile_image'
+        'name', 'email', 'password','phone','profile_image','country_id','state_id','city_id'
     ];
 
     /**
@@ -44,6 +44,18 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function shipments(){
         return $this->hasMany('App\Shippment','user_id','id');
+    }
+
+    public function country(){
+        return $this->belongsTo('App\Country','country_id','id');
+    }
+    public function state()
+    {
+        return $this->belongsTo('App\State','state_id','id');
+    }
+    public function city()
+    {
+        return $this->belongsTo('App\City','city_id','id');
     }
 
 

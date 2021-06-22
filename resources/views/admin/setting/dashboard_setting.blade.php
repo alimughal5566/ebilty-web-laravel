@@ -253,20 +253,18 @@
     @if(\Session::has('success'))
         toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
     @endif
-
     function updatestatus(id){
         var status=0;
         if($('#type_status'+id).prop("checked") == true) {
             status = 1;
         }
-        var url = '{{route('address.status.update')}}'
+        var url = '{{route('advertisementStatusUpdate')}}'
         $.ajax({
             type: "get",
             url: url,
             data: {'id':id,'status':status},
-            success: function( msg ) {
+            success: function( ) {
                 toastr.success( 'Status updated successfully');
-
             }
         });
     }
