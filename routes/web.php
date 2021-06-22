@@ -106,6 +106,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/my-locations', 'HomeController@mysavedlocations')->name('my.locations');
         Route::get('/vehicle/status/update', 'DriverController@vehicleStatusUpdate')->name('vehicle.status.update');
         Route::get('/address/status/update', 'HomeController@addressStatusUpdate')->name('address.status.update');
+        Route::get('/advertisementStatusUpdate', 'HomeController@advertisementStatusUpdate');
         Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
         Route::post('/add-address', 'HomeController@addAddress')->name('addAddress');
         Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');

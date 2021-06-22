@@ -191,18 +191,13 @@
                                             <td class="name"><img alt="" src="{{url('/setting/advertisements/'.$setting->content)}}" style="max-height:50px;"></td>
                                             <td> {{$setting->section_name}} </td>
                                             <td >
-                                                @if($setting->status == 0)
+
                                                     <label class="switch">
                                                         <input type="checkbox" id="type_status{{$setting->id}}" class="chk"
                                                                {{($setting->status == 1)?'checked':''}} onchange="updatestatus({{$setting->id}})">
                                                         <span class="slider round"></span>
                                                     </label>
-                                                @else
-                                                    <label class="switch">
-                                                        <input type="checkbox" >
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @endif
+
                                             </td>
 {{--                                            <td>--}}
 {{--                                                <a href="#" class="text-warning"> <i class="fas fa-edit"></i>  </a>--}}
@@ -258,6 +253,24 @@
     @if(\Session::has('success'))
         toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
     @endif
+
+    function updatestatus(id){
+        var status=0;
+        if($('#type_status'+id).prop("checked") == true) {
+            status = 1;
+        }
+        var url = '{{route('address.status.update')}}'
+        $.ajax({
+            type: "get",
+            url: url,
+            data: {'id':id,'status':status},
+            success: function( msg ) {
+                toastr.success( 'Status updated successfully');
+
+            }
+        });
+    }
+
 </script>
 @endsection
 
