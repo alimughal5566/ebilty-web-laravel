@@ -302,7 +302,7 @@
                                                 <div class="form-group">
                                                     <label>Sender Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
-                                                        <select class="form-control sender_address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
+                                                        <select class="form-control sender_address"  placeholder=" Address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
 
@@ -427,7 +427,7 @@
                                                                         {{--                                                                        </div>--}}
                                                                         <div class="kt-form__control">
                                                                             <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                            <input type="text" class="form-control email" name="receiver[address]" id="s_add" >
+                                                                            <input type="text" placeholder="Address" class="form-control email" name="receiver[address]" id="s_add" >
                                                                         </div>
                                                                     </div>
 
@@ -2127,10 +2127,7 @@
 
             }
 
-
-
         }
-
         function setLocationCoordinates(key, lat, lng) {
             const latitudeField = document.getElementById(key + "-" + "latitude");
             const longitudeField = document.getElementById(key + "-" + "longitude");

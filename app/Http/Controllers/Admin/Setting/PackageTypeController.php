@@ -18,8 +18,9 @@ class PackageTypeController extends Controller
     }
     public function index()
     {
+//        dd();
         $types = PackageType::all();
-        return view('admin.setting.package_type', compact('types','types'));
+        return view('admin.setting.package_type', compact('types'));
     }
     public function add_package_type(Request $request){
 

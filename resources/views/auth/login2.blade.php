@@ -150,14 +150,16 @@
                             <div class="kt-login__subtitle text-white font-weight-bold">Enter your details to create your account</div>
                         </div>
                         <form class="kt-form" action="{{route('register_user')}}" method="POST" enctype="multipart/form-data">
-                            @if(count($errors) > 0  )
-                                <div class="alert alert-danger alert-dismissible fade show">
-                                    @foreach($errors->all() as $error)
-                                        @if($error!='signup')
-                                         <ul class="text-white pl-1">{{$error}}</ul>
-                                    @endif
-                                  @endforeach
-                                </div>
+                            @if($errors->has('form'))
+                                @if(count($errors) > 0  )
+                                    <div class="alert alert-danger alert-dismissible fade show">
+                                        @foreach($errors->all() as $error)
+                                            @if($error!='signup')
+                                             <ul class="text-white pl-1">{{$error}}</ul>
+                                        @endif
+                                      @endforeach
+                                    </div>
+                                @endif
                             @endif
                             @csrf
                             <div class="input-group">
@@ -361,7 +363,7 @@
                     $('#vrificationModal').modal('show')
                 }else{
                     // alert(result.data);
-                    toastr.warning('Phone number is incorrect');
+                    toastr.error('Phone number is incorrect');
                 }
             }
         })

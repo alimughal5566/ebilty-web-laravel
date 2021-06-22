@@ -82,7 +82,6 @@ class HomeController extends Controller
 
     public function updateLicense(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
-
         if ($request->license_image) {
             $license_image = time() . '.' . $request->license_image->extension();
             $request->license_image->move(public_path('images/license/'), $license_image);
@@ -90,6 +89,18 @@ class HomeController extends Controller
         }
         $user->documents_verified=0;
         $user->license_number= $request->license_number;
+        $user->save();
+        return redirect()->back()->with(['success' =>'Data updated  successfully'], 200);
+    }
+    public function updateProfilePic(Request $request){
+        $user = User::where('id', auth()->user()->id)->first();
+        if ($request->profile_image) {
+            $profile_image = time() . '.' . $request->profile_image->extension();
+            $request->profile_image->move(public_path('images/profile/'),$profile_image);
+            $user->profile_image= $profile_image;
+        }
+//        dd($user);
+        $user->documents_verified=0;
         $user->save();
         return redirect()->back()->with(['success' =>'Data updated  successfully'], 200);
     }
@@ -238,7 +249,6 @@ class HomeController extends Controller
                     return response()->json(['success' => 'true', 'message' => 'Number verifies successfully'], 200);
                 }else{
                     return response()->json(['success' =>'false','message'=>'Code is incorrect'], 200);
-
                 }
 
             }else{

@@ -106,7 +106,7 @@
                         </style>
                         <div class="kt-portlet__head">
                             <div class="kt-portlet__head-label">
-                                <h3 class="kt-portlet__head-title">General Setting(s)</h3>
+                                <h3 class="kt-portlet__head-title">Home Page Setting(s)</h3>
                             </div>
                         </div>
                         <div id="save_msg" style="margin-top: 5px !important; background-color: #c2ffcc !important; display: none; color: #08751a !important; border: 1px solid; border-radius: 8px !important; border-color: green !important; padding: 5px!important; text-align: center; font-size: 25px !important;"></div>
@@ -143,7 +143,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a>
+                                                <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
                                             </td>
                                         </tr>
                                     @empty

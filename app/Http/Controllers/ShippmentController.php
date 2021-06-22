@@ -65,7 +65,7 @@ class ShippmentController extends Controller
                     $package->height = $request->height;
                     $package->save();
                 }
-        return redirect()->back()->with('success', 'Shippment created successfully');
+        return redirect()->route('shipmentDetail',$shipment->id)->with('success', 'Shippment created successfully');
     }
 
 

@@ -19,16 +19,16 @@ class GeneralSettingController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
-    {
-        $settings = General_Setting::all();
+    public function index(){
+        $settings = General_Setting::where('page_name','!=','dashboard')->get();
         return view('admin.setting.general_setting', compact('settings'));
     }
+    public function dashboard(){
+        $settings = General_Setting::where('page_name','=','dashboard')->get();
+        return view('admin.setting.dashboard_setting', compact('settings'));
+    }
     public function save_homepage_slider1(Request $request){
-//        dd($request->all());
-
         $home_slider1 = General_Setting::where('id', 1)->first();
-        $filename = '';
         $json = json_decode($home_slider1->content);
         $filename = $json->image;
         if($request->image1)
@@ -90,7 +90,6 @@ class GeneralSettingController extends Controller
 
     }
     public function save_homepage_slider3(Request $request){
-//        dd($request->all());
         $home_slider3 = General_Setting::where('id', 3)->first();
         $filename = '';
         $json = json_decode($home_slider3->content);
@@ -118,6 +117,24 @@ class GeneralSettingController extends Controller
         $home_slider3->status = 1;
         $home_slider3->update();
         Session::flash('message', 'The slider 3 has been updated');
+        return redirect()->back();
+
+    }
+    public function addAdvertisement(Request $request){
+        $home_slider3 = new General_Setting;
+//        dd($request);
+        if($request->image) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/advertisements/', $filename);
+        }
+        $home_slider3->content = $filename;
+        $home_slider3->status = 1;
+        $home_slider3->section_name = 'advertisement_section';
+        $home_slider3->page_name = 'dashboard';
+        $home_slider3->save();
+        Session::flash('success', 'Add uploaded successfully');
         return redirect()->back();
 
     }

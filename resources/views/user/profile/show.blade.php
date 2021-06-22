@@ -38,31 +38,43 @@
                     <div class="kt-portlet__body kt-portlet__body--fluid ">
                         <div class="kt-widget12">
                             <div class="kt-widget12__content">
-
+                                <div class="kt-widget12__item">
+                                    <div class="kt-widget12__info ">
+                                        <span class="kt-widget12__desc d-inline-flex "><b>Profile Picture</b></span>
+                                        <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+                                             @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                                  <span data-toggle="modal" data-target="#updateProfilePic" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                             @endif
+                                        @php $profile_image='/images/noimage.jpg'; @endphp
+                                        @if($user->profile_image)
+                                            @php    $profile_image= '/images/profile/'.$user->profile_image; @endphp
+                                        @endif
+                                        <span class="kt-widget12__value"><img src="{{url($profile_image)}}"  alt="" width="300" ></span>
+                                    </div>
+                                </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info ">
                                         <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
                                         <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
-                                    @if($user->edit_request==1 && $user->id==auth()->user()->id)
-                                             <span data-toggle="modal" data-target="#edit2" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
-                                        @endif
+                                             @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                                  <span data-toggle="modal" data-target="#edit2" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                             @endif
                                         @php $license='/images/noimage.jpg'; @endphp
                                         @if($user->license_image)
                                             @php    $license= '/images/license/'.$user->license_image; @endphp
                                         @endif
                                         <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
                                     </div>
-
                                 </div>
                                 <div class="kt-widget12__item">
                                         <div class="kt-widget12__info">
-                                            <span class="kt-widget12__desc d-inline-flex"><b>License</b></span>
+                                            <span class="kt-widget12__desc d-inline-flex"><b>Identity Card</b></span>
                                             <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
-                                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
-                                                 <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
-                                           @endif
+                                            @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                               <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                             @endif
                                             @php $cnic='/images/noimage.jpg'; @endphp
                                             @if($user->cnic_image)
                                                 @php  $cnic= '/setting/cnic/'.$user->cnic_image; @endphp
@@ -85,31 +97,34 @@
             <div class="col-xl-9">
                 <!--begin:: Widgets/Order Statistics-->
                 <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
+                    <div class="kt-portlet__head ">
                         <div class="kt-portlet__head-label d-flex align-items-center">
                             <h3 class="kt-portlet__head-title">
                                 Personal Details
                             </h3>
                         </div>
-                        @if($user->documents_verified==1 && $user->id==auth()->user()->id)
-                            <h4 class=" text-right float-right pt-3">
-                                <a href="{{route('requestToEdit')}}">request to edit</a>
-                            </h4>
-                        @endif
-                        @if($user->edit_request=='' && $user->edit_request!=3 && $user->id==auth()->user()->id )
-                            <span class="text-right float-right pt-4 ml-auto">
-                                <a href="{{route('requestToEdit')}}"> request to edit</a>
-                            </span> &nbsp
+{{--                        @if($user->documents_verified==1 && $user->id==auth()->user()->id)--}}
+{{--                            <h4 class=" text-right float-right pt-3">--}}
+{{--                                <a href="{{route('requestToEdit')}}">request to edit</a>--}}
+{{--                            </h4>--}}
+{{--                        @endif--}}
+                        <div>
+                            @if($user->documents_verified==0)
+                                <h4 class="text-right float-right pt-3 pr-1 ">
+                                    <span class="text-danger ml-2"> Not verified </span>
+                                </h4>
+                            @endif
+                        @if($user->edit_request=='' && $user->edit_request!=3 && $user->id==auth()->user()->id)
+                            <span class="text-right float-right pt-4 ml-0">
+                                <a href="{{route('requestToEdit')}}"> request to edit </a>
+                            </span>
                         @endif
                         @if($user->edit_request==1 && $user->id==auth()->user()->id)
                             <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
                         @endif
 
-                        @if($user->documents_verified==0)
-                            <h4 class="text-right float-right pt-3 ">
-                                <span class="text-danger"> Not verified</span>
-                            </h4>
-                        @endif
+
+                        </div>
 
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
@@ -222,7 +237,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Campaign Sticker details</h5>
+                    <h5 class="modal-title">Cnic details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -249,7 +264,7 @@
                                                 </div>
                                                 <div class="col-lg-11">
                                                     <div class="form-check">
-                                                        <label>License Picture:</label>
+                                                        <label>Cnic Picture:</label>
                                                         <input name="cnic_image" class="form-control"  type="file" accept="image/*" required/>
                                                     </div>
                                                 </div>
@@ -284,7 +299,7 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form method="POST" action="{{route('updatePersonalInfo')}}" >
+                <form method="POST" action="{{route('updatePersonalInfo')}}"  enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="card card-custom">
                             <div class="card-body p-0">
@@ -308,6 +323,56 @@
                                                     <div class="form-check">
                                                         <label>Phone:</label>
                                                         <input name="phone" class="form-control"  value="{{$user->phone}}" type="text"  required/>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--end::Invoice-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">back
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade show" id="updateProfilePic" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm"  aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form method="POST" action="{{route('updateProfilePic')}}" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="card card-custom">
+                            <div class="card-body p-0">
+                                <div class="row justify-content-center pl-4 p-1 px-md-0">
+                                    <div class="col-md-12">
+                                        <div class="form-group row pl-4">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12 mt-3 ">
+                                             </div>
+
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>Profile picture:</label>
+                                                        <input name="profile_image" class="form-control"  value="{{$user->profile_picture}}" type="file" accept="image/*"  required/>
                                                     </div>
                                                 </div>
 

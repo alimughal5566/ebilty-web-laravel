@@ -175,12 +175,46 @@
                            </div>
                            <!--/ Languages -->
                            <!-- Login trigger -->
+                            @if(!auth()->user())
                            <div class="topnav login--panel topnav-account-login topnav-login align-self-center">
                               <a class="topnav-item " href="{{route('login')}}">
                               <i class="login-icon fas fa-sign-in-alt visible-xs xs-icon"></i>
                               <span class="topnav-item--text">LOGIN</span>
                               </a>
                            </div>
+                            @else
+                            <div class="topnav topnav--lang topnav-account-login topnav-account align-self-center">
+                                <div class="languages drop">
+                                    <a href="javascript:void(0);" class="topnav-item">
+                                        <i class="fas far fa-user-circle xs-icon"></i>
+                                        <span class="topnav-item--text">ACCOUNT</span>
+                                    </a>
+                                    <div class="pPanel">
+                                        <ul class="inner">
+                                            <li class="toplang-item">
+                                                <a href="{{route('home')}}">
+                                                    <img src="../assets/img/set-03-01.svg" alt="Dashboard" class="toplang-flag"> Dashboard
+                                                </a>
+                                            </li>
+                                            <li class="toplang-item">
+                                                <a href="{{route('show.profile',auth()->user()->id)}}">
+                                                    <img src="../assets/img/set-03-04.svg" alt="Profile" class="toplang-flag"> Profile
+                                                </a>
+                                            </li>
+                                            <li class="toplang-item">
+                                                 <a href="/logout" class="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        <form id="logout-form" class="" action="{{route('logout')}}" method="POST">
+                                                            @csrf
+
+                                                            <img src="../assets/img/set-03-03.svg" alt="Logout" class="toplang-flag"> Logout
+                                                        </form>
+                                                 </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                            <!--/ Login trigger -->
                         </div>
                         <!--/ .site-header-main-right -->

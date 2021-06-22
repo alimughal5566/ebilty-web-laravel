@@ -6,7 +6,7 @@
       <div class="kt-aside__brand-logo">
          <a href="{{route('home')}}">
 {{--             <img src="{{url('/images/noimage.jpg')}}"  alt="" width="100" >--}}
-         <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:50px;">
+         <img alt="" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:50px;">
          </a>
       </div>
       <div class="kt-aside__brand-tools">
@@ -42,15 +42,23 @@
          <div class="kt-widget kt-widget--user-profile-1 kt-padding-l-20 kt-padding-r-20 kt-padding-b-0">
             <div class="kt-widget__head">
                <span class="kt-media kt-media--lg kt-media--brand ">
-               <span>SY</span>
+              @php $profile_image='/images/noimage.jpg'; @endphp
+                   @if(auth()->user()->profile_image)
+                       @php    $profile_image= '/images/profile/'.auth()->user()->profile_image; @endphp
+                   @endif
+                                    <span class=""><img style="border-radius: 5px" src="{{url($profile_image)}}"  alt="" width="120px" height="110px"  ></span>
                </span>
                <div class="kt-widget__content kt-padding-t-10">
                   <div class="kt-widget__section">
                      <a href="javascript:void(0);" class="kt-widget__username">
                          {{auth()->user()->name}}
                      </a>
-                     <span class="kt-widget__subtitle">
-                     Welcome back,
+                     <span>
+                              @if(auth()->user()->documents_verified==1)
+                              <span class="fa text-success fa-check-circle"></span>
+                            @else
+                                <span class="fa text-warning fa-times-circle"></span>
+                            @endif
                      </span>
                   </div>
                </div>
@@ -420,6 +428,7 @@
               </ul>
 
               @endrole
+          @hasanyrole('driver|customer')
           <ul class="kt-menu__nav p-0">
                   <li class="kt-menu__item  {{ (request()->is('user/my-ocations')) ? 'kt-menu__item--open active' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel ">
                       <a href="{{route('my.locations')}}" class="kt-menu__link ">
@@ -437,7 +446,7 @@
                   </li>
 
           </ul>
-
+    @endhasanyrole
 
 
 

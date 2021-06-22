@@ -141,25 +141,25 @@
                                         No of transactions
                                     </div>
                                     <div>
-                                        <h2>1500</h2>
+                                        <h2>{{$shipments->count()}}</h2>
                                     </div>
                                 </div>
-                                <div class="container-info">
-                                    <div>
-                                        <i class="fas fa-chart-line"></i>
-                                        Ranking
-                                    </div>
-                                    <div>
-                                        <h2>25</h2>
-                                    </div>
-                                </div>
+{{--                                <div class="container-info">--}}
+{{--                                    <div>--}}
+{{--                                        <i class="fas fa-chart-line"></i>--}}
+{{--                                        Ranking--}}
+{{--                                    </div>--}}
+{{--                                    <div>--}}
+{{--                                        <h2>00</h2>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="container-info">
                                     <div>
                                         <i class="fas fa-money-bill"></i>
                                         Payments
                                     </div>
                                     <div>
-                                        <h2>3222</h2>
+                                        <h2>00</h2>
                                     </div>
                                 </div>
                                 <div class="container-info">
@@ -168,16 +168,16 @@
                                         Revenue
                                     </div>
                                     <div>
-                                        <h2>1212</h2>
+                                        <h2>00</h2>
                                     </div>
                                 </div>
                                 <div class="container-info">
                                     <div>
                                         <i class="far fa-window-close"></i>
-                                        Cancelled Rides
+                                        Cancelled Shipment/Rides
                                     </div>
                                     <div>
-                                        <h2>10</h2>
+                                        <h2>00</h2>
                                     </div>
                                 </div>
                             </div>
@@ -187,13 +187,18 @@
                     <div class="col-12 col-md-8">
                         <div class="kt-widget kt-widget--user-profile-3 custom-widget">
                             <div class="kt-widget__top">
-                                <div class="kt-widget__pic kt-widget__pic--brand kt-font-boldest kt-font-light boxnameShow">
-                                    SY
+                                <div class="kt-widget__pic kt-widget__pic--brand kt-font-boldest kt-font-light boxnameShow bg-white">
+                                    @php $profile_image='/images/noimage.jpg'; @endphp
+                                    @if(auth()->user()->profile_image)
+                                        @php    $profile_image= '/images/profile/'.auth()->user()->profile_image; @endphp
+                                    @endif
+                                    <span class=""><img style="border-radius: 5px" src="{{url($profile_image)}}"  alt="" width="120px" height="110px"  ></span>
+
                                 </div>
                                 <div class="kt-widget__content">
                                     <div class="kt-widget__head">
                                         <a href="javascript:void(0);" class="kt-widget__username">
-                                            System administration
+                                            {{auth()->user()->name}}
                                         </a>
 
                                         <div class="kt-widget__action">
@@ -202,21 +207,21 @@
                                     </div>
 
                                     <div class="kt-widget__subhead">
-                                        <a href="javascript:void(0);"><i class="flaticon-alarm-1"></i>+96171456227</a>
-                                        <a href="javascript:void(0);"><i class="flaticon2-calendar-3"></i> </a>
+                                        <a href="javascript:void(0);"><i class="flaticon2-calendar-3"></i> {{auth()->user()->phone}}</a>
+{{--                                        <a href="javascript:void(0);"><i class="flaticon-alarm-1"></i>{{auth()->user()->phone}}</a>--}}
                                     </div>
 
                                     <div class="kt-widget__info">
                                         <div class="kt-widget__desc">
-                                            amman_street1,  12345
-                                            <br> lawrance road, Malaysia
+                                            {{auth()->user()->email}}
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-
+                             @hasrole('admin')
                                 <div class="col-4">
                                     <div class="dashboardcontainainer a">
                                         <div class="headers">
@@ -283,10 +288,10 @@
                                             <div>
                                                 <!-- <i class="flaticon-map-location"></i>  -->
                                                 <i class="fas fa-clipboard-list"></i>
-                                                No of transactions
+                                                No of shippments
                                             </div>
                                             <div>
-                                                <h3>1500</h3>
+                                                <h3>1111</h3>
                                             </div>
                                         </div>
                                         <div class="container-info">
@@ -383,9 +388,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            @endhasrole
 
-
-                                <div class="col-12">
+                             @hasanyrole('driver||customer')
+                                 <div class="col-12">
                                     <div class="dashboardcontainainer ">
                                         <div class="container-info">
                                             <div class="main_img_banner_DB">
@@ -397,6 +403,7 @@
 
                                     </div>
                                 </div>
+                            @endhasanyrole
                             </div>
 
                         </div>
@@ -424,9 +431,9 @@
                 <th scope="col">To</th>
                 <th scope="col">Shipment Time</th>
                 <th scope="col">Status</th>
-                @can ('admin' || 'customer')
-                <th scope="col"></th>
-                @endcan
+                @hasanyrole('admin||customer')
+{{--                  <th scope="col"></th>--}}
+                @endhasanyrole
             </tr>
             </thead>
             <tbody>
@@ -473,7 +480,8 @@
                             </div>
                         </div>
                     </td>
-                    @can ('admin' || 'customer')
+
+                        @hasanyrole('admin||customer')
                     <td>
                         @if(count($shipment->bids)>0)
                             <span class="example-tools justify-content-center">
@@ -490,7 +498,7 @@
                         @endif
 
                     </td>
-                    @endcan
+                        @endhasanyrole
 
                 </tr>
 
@@ -555,15 +563,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
     {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>

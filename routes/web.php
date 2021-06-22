@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
+        Route::get('/dashboard_setting', 'GeneralSettingController@dashboard')->name('admin.setting.dashboard_setting');
+        Route::post('/add-advertisement', 'GeneralSettingController@addAdvertisement')->name('addAdvertisement');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
         Route::post('/save_homepage_slider3', 'GeneralSettingController@save_homepage_slider3')->name('admin.setting.save_homepage_slider3');
@@ -109,6 +111,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
         Route::post('/update-driver-vehicle', 'DriverController@upadteDriverVehicle')->name('upadteDriverVehicle');
         Route::post('/updateLicense', 'HomeController@updateLicense')->name('updateLicense');
+        Route::post('/updateProfilePic', 'HomeController@updateProfilePic')->name('updateProfilePic');
         Route::post('/update-cnic', 'HomeController@updateCnic')->name('updateCnic');
         Route::post('/update-personal-profile', 'HomeController@updatePersonalInfo')->name('updatePersonalInfo');
         Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');

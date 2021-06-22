@@ -82,7 +82,7 @@ class AuthController extends Controller
         $address->save();
 
 
-//        $user->assignRole('Patient');
+        $user->assignRole('customer');
 
         event(new Registered($user));
         return response()->json(['success' => 'User registered successfully','user_id'=>$user->id,'address_id'=>$address->id]);;

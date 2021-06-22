@@ -179,7 +179,7 @@
                     </td>
 
                     <td>
-                        @if(count($shipment->bids)>0 ))
+                        @if(count($shipment->bids)>0 )
                             <span class="example-tools justify-content-center">
                             <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
                                  <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
