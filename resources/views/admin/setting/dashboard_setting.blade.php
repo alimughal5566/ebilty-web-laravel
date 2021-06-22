@@ -1,7 +1,66 @@
 @extends('admin.layout.app')
 
 @section('content')
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
 
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #eea200;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #eea200;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-container  kt-container--fluid  ">
             <div class="kt-subheader__main">
@@ -17,7 +76,7 @@
 {{--                            </g>--}}
 {{--                        </svg>--}}
 {{--                    </a>--}}
-                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Dashbard Settings</span>
+                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Dashboard Settings</span>
                 </div>
             </div>
             <div class="kt-subheader__toolbar">
@@ -121,7 +180,7 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Section</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Content</th>
+{{--                                        <th scope="col">Content</th>--}}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -134,19 +193,20 @@
                                             <td >
                                                 @if($setting->status == 0)
                                                     <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" onchange="make_status_active({{$setting->id}})">
+                                                        <input type="checkbox" id="type_status{{$setting->id}}" class="chk"
+                                                               {{($setting->status == 1)?'checked':''}} onchange="updatestatus({{$setting->id}})">
                                                         <span class="slider round"></span>
                                                     </label>
                                                 @else
                                                     <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" checked onchange="make_status_inactive({{$setting->id}})">
+                                                        <input type="checkbox" >
                                                         <span class="slider round"></span>
                                                     </label>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="#" class="text-warning"> <i class="fas fa-edit"></i>  </a>
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                <a href="#" class="text-warning"> <i class="fas fa-edit"></i>  </a>--}}
+{{--                                            </td>--}}
                                         </tr>
                                     @empty
                                         <tr>
@@ -188,14 +248,14 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">back</button>
                     <input type="submit" class="btn btn-primary" value="Upload" >
                 </div>
-</form>
+            </form>
             </div>
         </div>
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 <script>
-    @if (\Session::has('success'))
+    @if(\Session::has('success'))
         toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
     @endif
 </script>
