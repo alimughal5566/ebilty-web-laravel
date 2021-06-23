@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
         Route::get('/dashboard_setting', 'GeneralSettingController@dashboard')->name('admin.setting.dashboard_setting');
         Route::post('/add-advertisement', 'GeneralSettingController@addAdvertisement')->name('addAdvertisement');
+        Route::post('/save_homepage_slider', 'GeneralSettingController@save_homepage_slider')->name('admin.setting.save_homepage_slider');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
         Route::post('/save_homepage_slider3', 'GeneralSettingController@save_homepage_slider3')->name('admin.setting.save_homepage_slider3');
@@ -48,7 +49,7 @@ Route::prefix('admin')->group(function() {
         Route::post('/save_homepage_card3', 'GeneralSettingController@save_homepage_card3')->name('admin.setting.save_homepage_card3');
         Route::post('/save_homepage_card4', 'GeneralSettingController@save_homepage_card4')->name('admin.setting.save_homepage_card4');
         Route::post('/save_faq_banner', 'GeneralSettingController@save_faq_banner')->name('admin.setting.save_faq_banner');
-        Route::get('/make_status_active_setting', 'GeneralSettingController@make_status_active_setting')->name('admin.setting.make_status_active_setting');
+        Route::get('/homepage_update_status', 'GeneralSettingController@homepage_update_status')->name('admin.setting.homepage_update_status');
         Route::get('/make_status_inactive_setting', 'GeneralSettingController@make_status_inactive_setting')->name('admin.setting.make_status_inactive_setting');
         Route::get('/advertisementStatusUpdate', 'GeneralSettingController@advertisementStatusUpdate')->name('advertisementStatusUpdate');
         Route::get('/get_payment_type', 'ShipmentController@get_payment_type')->name('admin.setting.get_payment_type');

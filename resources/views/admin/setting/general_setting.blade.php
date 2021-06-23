@@ -130,20 +130,13 @@
                                             <td class="name">{{$setting->page_name}}</td>
                                             <td > {{$setting->section_name}} </td>
                                             <td >
-                                                @if($setting->status == 0)
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" onchange="make_status_active({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @else
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" checked onchange="make_status_inactive({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @endif
+                                                <label class="switch">
+                                                    <input type="checkbox" class="text-warning" id="type_status{{$setting->id}}" {{ $setting->status == 1 ? 'checked' : '' }} onchange="update_status({{$setting->id}})">
+                                                    <span class="slider round"></span>
+                                                </label>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
                                             </td>
                                         </tr>
                                     @empty
@@ -162,7 +155,7 @@
         </div>
     </div>
     <!-- end:: Content -->
-    <div class="modal fade" id="id_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="homepage_slider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
@@ -173,7 +166,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post" action="{{route('admin.setting.save_homepage_slider1')}}" enctype="multipart/form-data">
+                    <form  method="post" action="{{route('admin.setting.save_homepage_slider')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -189,21 +182,25 @@
                                                             <th scope="col">Description</th>
                                                             <th scope="col">Image</th>
                                                             <th scope="col">Buttons</th>
-                                                            <th scope="col">Status</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td><input type="text" name="title1" class="form-control"></td>
-                                                            <td><textarea name="descrip1" ></textarea></td>
-                                                            <td><input type="file" name="image1" class="form-control"></td>
                                                             <td>
-                                                                <input type="text" name="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
-                                                                <input type="text" name="button2" placeholder="Enter Button 1 link" class="form-control"><br>
-                                                                <input type="text" name="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
-                                                                <input type="text" name="button4" placeholder="Enter Button 2 link" class="form-control">
+                                                                <input type="text" name="title" id="title" class="form-control">
+                                                                <input type="hidden" name="id" id="id" class="form-control">
                                                             </td>
-                                                            <td><input type="checkbox" name="status1"></td>
+                                                            <td><textarea name="descrip" id="descrip"></textarea></td>
+                                                            <td>
+                                                                <input type="file" name="image" class="form-control"><br>
+                                                                <img src="" id="image" width="100px" height="100px">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="button1" id="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
+                                                                <input type="text" name="button2" id="button2" placeholder="Enter Button 1 link" class="form-control"><br>
+                                                                <input type="text" name="button3" id="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
+                                                                <input type="text" name="button4" id="button4" placeholder="Enter Button 2 link" class="form-control">
+                                                            </td>
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -814,9 +811,28 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
 
     <script>
+        @if (\Session::has('success'))
+            toastr.success('{!! \Session::get('success') !!}');
+        @endif
+        function show_data_modal(content, id){
+            if(id < 5){
+                $('#homepage_slider').modal('show');
+                $('#title').val(content.title)
+                $('#descrip').val(content.description)
+                $('#button1').val(content.button1_title)
+                $('#button2').val(content.button1_link)
+                $('#button3').val(content.button2_title)
+                $('#button4').val(content.button2_link)
+                $('#id').val(id)
+                var path = '{{asset('setting/sliders')}}'+'/'+content.image
+                $("#image").attr("src",path);
+            }
+        }
         $('#edit_payment_form').on('submit', function(e) {
             e.preventDefault();
             var url = '{{route('admin.setting.update_package_type')}}';
@@ -885,20 +901,19 @@
                 }
             });
         }
-        function make_status_active(id){
-            $(this).parents('tr').first().remove();
-            var url = '{{route('admin.setting.make_status_active_setting')}}'
+        function update_status(id){
+
+            var url = '{{route('admin.setting.homepage_update_status')}}'
+            var status = 0;
+            if($('#type_status'+id).is(':checked')){
+                status = 1;
+            }
             $.ajax({
                 type: "get",
                 url: url,
-                data: {id:id},
+                data: {id:id, status: status},
                 success: function( msg ) {
-                    $("#save_msg").html()
-                    $('#save_msg').css('display','block');
-                    $('#save_msg').css('background-color','#c2ffcc');
-
-                    $("#save_msg").append(msg.msg);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
+                    toastr.success('Status has been updated')
                 }
             });
         }
