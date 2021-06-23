@@ -130,17 +130,10 @@
                                             <td class="name">{{$setting->page_name}}</td>
                                             <td > {{$setting->section_name}} </td>
                                             <td >
-                                                @if($setting->status == 0)
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" onchange="make_status_active({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @else
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" checked onchange="make_status_inactive({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @endif
+                                                <label class="switch">
+                                                    <input type="checkbox" class="text-warning" id="type_status{{$setting->id}}" {{ $setting->status == 1 ? 'checked' : '' }} onchange="update_status({{$setting->id}})">
+                                                    <span class="slider round"></span>
+                                                </label>
                                             </td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
@@ -189,7 +182,6 @@
                                                             <th scope="col">Description</th>
                                                             <th scope="col">Image</th>
                                                             <th scope="col">Buttons</th>
-                                                            <th scope="col">Status</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -203,7 +195,6 @@
                                                                 <input type="text" name="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
                                                                 <input type="text" name="button4" placeholder="Enter Button 2 link" class="form-control">
                                                             </td>
-                                                            <td><input type="checkbox" name="status1"></td>
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -814,9 +805,14 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
 
     <script>
+        @if (\Session::has('success'))
+            toastr.success('{!! \Session::get('success') !!}');
+        @endif
         $('#edit_payment_form').on('submit', function(e) {
             e.preventDefault();
             var url = '{{route('admin.setting.update_package_type')}}';
@@ -885,20 +881,19 @@
                 }
             });
         }
-        function make_status_active(id){
-            $(this).parents('tr').first().remove();
-            var url = '{{route('admin.setting.make_status_active_setting')}}'
+        function update_status(id){
+
+            var url = '{{route('admin.setting.homepage_update_status')}}'
+            var status = 0;
+            if($('#type_status'+id).is(':checked')){
+                status = 1;
+            }
             $.ajax({
                 type: "get",
                 url: url,
-                data: {id:id},
+                data: {id:id, status: status},
                 success: function( msg ) {
-                    $("#save_msg").html()
-                    $('#save_msg').css('display','block');
-                    $('#save_msg').css('background-color','#c2ffcc');
-
-                    $("#save_msg").append(msg.msg);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
+                    toastr.success('Status has been updated')
                 }
             });
         }

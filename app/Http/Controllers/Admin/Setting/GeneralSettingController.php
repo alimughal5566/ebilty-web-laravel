@@ -386,14 +386,14 @@ class GeneralSettingController extends Controller
         return redirect()->back();
 
     }
-    public function make_status_active_setting(){
+    public function homepage_update_status(){
         $id = $_GET['id'];
+        $status = $_GET['status'];
         $type = General_Setting::where('id',$id)->first();
-        $type->status = 1;
+        $type->status = $status;
         $type->update();
         $response = array(
-            'status' => 'success',
-            'msg' => 'Activated successfully'
+            'status' => 'success'
         );
         return response()->json($response);
     }

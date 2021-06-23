@@ -47,7 +47,7 @@ Route::prefix('admin')->group(function() {
         Route::post('/save_homepage_card3', 'GeneralSettingController@save_homepage_card3')->name('admin.setting.save_homepage_card3');
         Route::post('/save_homepage_card4', 'GeneralSettingController@save_homepage_card4')->name('admin.setting.save_homepage_card4');
         Route::post('/save_faq_banner', 'GeneralSettingController@save_faq_banner')->name('admin.setting.save_faq_banner');
-        Route::get('/make_status_active_setting', 'GeneralSettingController@make_status_active_setting')->name('admin.setting.make_status_active_setting');
+        Route::get('/homepage_update_status', 'GeneralSettingController@homepage_update_status')->name('admin.setting.homepage_update_status');
         Route::get('/make_status_inactive_setting', 'GeneralSettingController@make_status_inactive_setting')->name('admin.setting.make_status_inactive_setting');
         Route::get('/get_payment_type', 'ShipmentController@get_payment_type')->name('admin.setting.get_payment_type');
         Route::get('/add_payment_type', 'ShipmentController@add_payment_type')->name('admin.setting.add_payment_type');
