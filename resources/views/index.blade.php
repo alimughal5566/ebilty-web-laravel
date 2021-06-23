@@ -247,9 +247,11 @@
       <div class="kl-iosslider hideControls" style="position: relative; cursor: -webkit-grab; backface-visibility: hidden; transform: matrix(1, 0, 0, 1, -3166, 0); width: 3166px;">
       <!-- Slide 1 -->
           @isset($sliders)
-        @foreach($sliders as $slider)
-          <div class="item iosslider__item kl-iosslider-active" style="overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 3166, 0); backface-visibility: hidden; width: 1583px;">
-          <!-- Image -->
+           @foreach($sliders as $slider)
+               @if(isset($slider->image))
+                  <div class="item iosslider__item " style="overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 3166, 0); backface-visibility: hidden; width: 1583px;">
+
+                  <!-- Image -->
           <!-- <div class="slide-item-bg" style="background-image:url(./front/images/_niches/cargo/bg01.jpg);"> -->
           <div class="slide-item-bg" style="background-image:url({{$slider->image}});">
           </div><!-- cargo2.jpg -->
@@ -278,12 +280,17 @@
                   <!--/ Big Title -->
                   <!-- Link more button -->
                       <div class="button_more text-center">
-                        <a href="{{ $slider->button1_link }}" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
-                            {{ $slider->button1_title }}
-                        </a>
-                      <a href="{{ $slider->button2_link }}" target="_self" class="more btn-gradient btn-gradient-blue">  <!-- http://ebilty.com/en/about -->
-                          {{ $slider->button2_title }}
-                      </a>
+                          @if($slider->button1_link )
+                            <a href="{{ $slider->button1_link }}" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
+                                {{ $slider->button1_title }}
+                            </a>
+                          @endif
+                          @if($slider->button2_link )
+                              <a href="{{ $slider->button2_link }}" target="_self" class="more btn-gradient btn-gradient-blue">  <!-- http://ebilty.com/en/about -->
+                                  {{ $slider->button2_title }}
+                              </a>
+                          @endif
+
                       </div>
                   <!--/ Link more button -->
                   </div>
@@ -291,8 +298,10 @@
               </div>
           <!--/ Captions container -->
           </div>
-        @endforeach
-      @endisset
+
+             @endif
+                  @endforeach
+            @endisset
       <!--/ Slide 1 -->
 
       </div>
@@ -1123,10 +1132,10 @@
         <!--end::Global Theme Bundle -->
 
       <!-- end::Page Scripts -->
-      <div class="stripe-loading-indicator loaded">
-         <div class="stripe"></div>
-         <div class="stripe-loaded"></div>
-      </div>
+{{--      <div class="stripe-loading-indicator loaded">--}}
+{{--         <div class="stripe"></div>--}}
+{{--         <div class="stripe-loaded"></div>--}}
+{{--      </div>--}}
 
 
 

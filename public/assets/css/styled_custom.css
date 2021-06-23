@@ -122,7 +122,7 @@ body.sticky-header #header {
 }
 
 .custom-slider.iosslider-slideshow {
-    height: calc(100vh - 70px) !important;
+    height: calc(100vh - 120px) !important;
 }
 
 .iosslider--custom-height {
