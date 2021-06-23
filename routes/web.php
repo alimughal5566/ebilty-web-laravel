@@ -36,6 +36,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
         Route::get('/dashboard_setting', 'GeneralSettingController@dashboard')->name('admin.setting.dashboard_setting');
         Route::post('/add-advertisement', 'GeneralSettingController@addAdvertisement')->name('addAdvertisement');
+        Route::post('/save_homepage_slider', 'GeneralSettingController@save_homepage_slider')->name('admin.setting.save_homepage_slider');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
         Route::post('/save_homepage_slider3', 'GeneralSettingController@save_homepage_slider3')->name('admin.setting.save_homepage_slider3');

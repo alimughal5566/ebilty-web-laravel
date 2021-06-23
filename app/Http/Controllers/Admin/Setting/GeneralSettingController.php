@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Setting\Qas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use function GuzzleHttp\Promise\all;
 
 class GeneralSettingController extends Controller
 {
@@ -56,6 +57,37 @@ class GeneralSettingController extends Controller
         Session::flash('message', 'The slider 1 has been updated');
         return redirect()->back();
 
+    }
+    public function save_homepage_slider(Request $request){
+//        dd($request->all());
+        $home_slider1 = General_Setting::where('id', $request->id)->first();
+        $json = json_decode($home_slider1->content);
+        $filename = $json->image;
+        if($request->image1)
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/sliders/', $filename);
+        }
+        $array = array(
+            'title' => $request->title,
+            'description' => $request->descrip,
+            'image' => $filename,
+            'button1_title' => $request->button1,
+            'button1_link' => $request->button2,
+            'button2_title' => $request->button3,
+            'button2_link' => $request->button4,
+            'status' => $request->status1
+        );
+
+        $content = json_encode($array);
+        $home_slider1->content = $content;
+        $home_slider1->status = 1;
+//        dd($home_slider1);
+        $home_slider1->update();
+        Session::flash('message', 'The slider has been updated');
+        return redirect()->back();
     }
     public function save_homepage_slider2(Request $request){
 //        dd($request->all());

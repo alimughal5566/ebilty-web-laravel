@@ -136,7 +136,7 @@
                                                 </label>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
                                             </td>
                                         </tr>
                                     @empty
@@ -155,7 +155,7 @@
         </div>
     </div>
     <!-- end:: Content -->
-    <div class="modal fade" id="id_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="homepage_slider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
@@ -166,7 +166,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post" action="{{route('admin.setting.save_homepage_slider1')}}" enctype="multipart/form-data">
+                    <form  method="post" action="{{route('admin.setting.save_homepage_slider')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -186,14 +186,20 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td><input type="text" name="title1" class="form-control"></td>
-                                                            <td><textarea name="descrip1" ></textarea></td>
-                                                            <td><input type="file" name="image1" class="form-control"></td>
                                                             <td>
-                                                                <input type="text" name="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
-                                                                <input type="text" name="button2" placeholder="Enter Button 1 link" class="form-control"><br>
-                                                                <input type="text" name="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
-                                                                <input type="text" name="button4" placeholder="Enter Button 2 link" class="form-control">
+                                                                <input type="text" name="title" id="title" class="form-control">
+                                                                <input type="hidden" name="id" id="id" class="form-control">
+                                                            </td>
+                                                            <td><textarea name="descrip" id="descrip"></textarea></td>
+                                                            <td>
+                                                                <input type="file" name="image" class="form-control"><br>
+                                                                <img src="" id="image" width="100px" height="100px">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="button1" id="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
+                                                                <input type="text" name="button2" id="button2" placeholder="Enter Button 1 link" class="form-control"><br>
+                                                                <input type="text" name="button3" id="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
+                                                                <input type="text" name="button4" id="button4" placeholder="Enter Button 2 link" class="form-control">
                                                             </td>
                                                         </tbody>
                                                     </table>
@@ -813,6 +819,20 @@
         @if (\Session::has('success'))
             toastr.success('{!! \Session::get('success') !!}');
         @endif
+        function show_data_modal(content, id){
+            if(id < 5){
+                $('#homepage_slider').modal('show');
+                $('#title').val(content.title)
+                $('#descrip').val(content.description)
+                $('#button1').val(content.button1_title)
+                $('#button2').val(content.button1_link)
+                $('#button3').val(content.button2_title)
+                $('#button4').val(content.button2_link)
+                $('#id').val(id)
+                var path = '{{asset('setting/sliders')}}'+'/'+content.image
+                $("#image").attr("src",path);
+            }
+        }
         $('#edit_payment_form').on('submit', function(e) {
             e.preventDefault();
             var url = '{{route('admin.setting.update_package_type')}}';
