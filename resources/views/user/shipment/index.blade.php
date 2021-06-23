@@ -218,7 +218,7 @@
 
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -236,6 +236,7 @@
                                 <tr>
                                     <th>User</th>
                                     <th>Applied at</th>
+                                    <th>Verified</th>
                                     <th>Budget</th>
                                     <th>Bid Amount</th>
                                     <th>Route</th>
@@ -344,7 +345,7 @@
             if(value.approved_status==2){
                 txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
             }
-                html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
+                html += "<tr><td>" + value.user.name + "<td>" + ((value.created_at!=null) ?value.created_at.substring(0, 16) : '') + "</td><td>" + ((value.user.documents_verified ==1) ? 'Verified' : 'Not verified') + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
                     "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
             });
             $('#jqueryTable').append(html);
