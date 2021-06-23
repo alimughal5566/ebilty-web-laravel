@@ -136,7 +136,11 @@
                                                 </label>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @if($setting->id < 5)
+                                                    <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @else
+                                                    <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty
