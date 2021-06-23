@@ -384,11 +384,17 @@
                 $('#amt').val('');
             }
             // alert( revise_comment)
-            if( revise_status==1){
-                $('#cmt').val(((revise_comment==null) ?'':revise_comment));
+            // if( revise_status==1){
+            //     $('#cmt').val(((revise_comment==null) ?'':revise_comment));
+            //     $('.comnt').removeClass('d-none');
+            // }else{
+            //     $('#cmt').val('');
+            //     $('.comnt').addClass('d-none');
+            // }
+            if(revise_comment.length>4){
                 $('.comnt').removeClass('d-none');
+                $('#cmt').val(((revise_comment==null) ?'':revise_comment));
             }else{
-                $('#cmt').val('');
                 $('.comnt').addClass('d-none');
             }
 

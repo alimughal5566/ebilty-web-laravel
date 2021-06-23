@@ -27,6 +27,7 @@ Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehi
 Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::get('/customers', 'HomeController@customers')->name('admin.customers');
+    Route::get('/crackers', 'HomeController@crackers')->name('admin.crackers');
     Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
     Route::get('/shipments', 'HomeController@shipments')->name('admin.shipments');
     Route::get('/doc_verify/{id?}', 'HomeController@docVerify')->name('docVerify');
@@ -125,6 +126,7 @@ Route::get('/getCities', 'HomeController@getCities')->name('getCities');
 Route::get('/getArea', 'HomeController@getArea')->name('getArea');
 Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
 Route::post('/createUser', 'AuthController@createUser')->name('createUser');
+Route::post('/createCracker', 'AuthController@createCracker')->name('createCracker');
 Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
 Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');
 

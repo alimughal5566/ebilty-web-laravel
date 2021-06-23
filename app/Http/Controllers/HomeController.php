@@ -37,9 +37,19 @@ class HomeController extends Controller
         if(auth()->user()->hasRole('admin')){
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         }
-       elseif(auth()->user()->hasRole('driver')){
-           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
-           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
+       elseif(auth()->user()->hasAnyRole(['cracker', 'driver'])){
+//            dd(auth()->user()->city_id);
+//           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
+//           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
+           $shipments    = Shippment::
+               where('assigned_to', auth()->user()->id)
+               ->orWhereNull('assigned_to')
+               ->whereHas(
+                   'sender', function($q){
+                   $q->where('form','sender');
+                   $q->where('city_id', auth()->user()->city_id);
+               })
+               ->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
        }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','receiver.user','status','bids.user')->paginate('5');
@@ -108,6 +118,7 @@ class HomeController extends Controller
         $user->country_id=$request->country_id;
         $user->state_id=$request->state_id;
         $user->city_id=$request->city_id;
+        $user->documents_verified=0;
         $user->save();
         return redirect()->back()->with(['success' =>'Location details updated  successfully'], 200);
     }
@@ -135,7 +146,7 @@ class HomeController extends Controller
             'roles', function($q){
             $q->where('name', 'driver');
         }
-        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status')->get();
+        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
         return view('admin.drivers', compact('users'));
     }
 
@@ -146,6 +157,14 @@ class HomeController extends Controller
         }
         )->with('shipments.sender.user','shipments.receiver.user','shipments.status','shipments.assignedto')->get();
         return view('admin.customers', compact('users'));
+    }
+    public function crackers(){
+        $users = User::whereHas(
+            'roles', function($q){
+            $q->where('name', 'cracker');
+        }
+        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+        return view('admin.crackers', compact('users'));
     }
 
     public function shipments(){
@@ -162,6 +181,7 @@ class HomeController extends Controller
     public function docVerify($id){
         $user = User::where('id', $id)->first();
         $user->documents_verified=1;
+        $user->edit_request=0;
         $user->save();
         return redirect()->back()->with(['success' =>'Documents verified successfully'], 200);
     }
@@ -220,8 +240,6 @@ class HomeController extends Controller
 //                ]
 //            );
 //
-//dd();
-
             $code = mt_rand(1000, 9999);
             $client = new Client(env('TWILIO_P_ID'),env('TWILIO_S_ID'));
             $client->messages->create(
@@ -240,11 +258,9 @@ class HomeController extends Controller
             $phone->is_verified=0;
             $phone->save();
             return response()->json(['success' =>'true'], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             return response()->json(['success' =>'false','data'=> $e->getMessage()], 200);
-
         }
-
     }
 
     public function otpVerifcationCheck(Request $request){
@@ -257,16 +273,10 @@ class HomeController extends Controller
                 }else{
                     return response()->json(['success' =>'false','message'=>'Code is incorrect'], 200);
                 }
-
             }else{
                 return response()->json(['success' =>'false','message'=>'Number not found'], 200);
-
             }
-
-
             return response()->json(['success' =>'true'], 200);
-
-
     }
 
 

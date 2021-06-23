@@ -136,7 +136,8 @@
                 <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                 <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                 <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                <td>{{(isset($shipment->myBid) && $shipment->myBid->bid_amount && $shipment->myBid->revise_status!=1)?$shipment->myBid->bid_amount:$shipment->myBid->revise_amount_shipper}}</td>
+
+                <td>{{(isset($shipment->myBid) && $shipment->myBid->bid_amount && $shipment->myBid->revise_status!=1)?$shipment->myBid->bid_amount:(isset($shipment->myBid->revise_amount_shipper)?$shipment->myBid->revise_amount_shipper:'')}}</td>
                 <td>{{$shipment->status->name}}</td>
                 <td>
                     @php $percentage=0;

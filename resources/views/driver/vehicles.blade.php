@@ -155,7 +155,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" style="text-align: center">No vehicle found</td>
+                                            <td colspan="8" style="text-align: center">No vehicle found</td>
                                         </tr>
                                     @endforelse
                                     </tbody>

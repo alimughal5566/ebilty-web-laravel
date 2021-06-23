@@ -8,12 +8,12 @@
 {{--                <span class="kt-subheader__desc">Drivers</span>--}}
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
                 <div class="kt-subheader__breadcrumbs">
-                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Drivers</span>
+                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Brockers</span>
                 </div>
             </div>
             <div class="kt-subheader__toolbar">
                 <div class="kt-subheader__wrapper">
-                </div>
+               </div>
             </div>
         </div>
     </div>
@@ -38,12 +38,14 @@
                             <div class="kt-portlet__head-label">
                                 <h3 class="kt-portlet__head-title">
                                 </h3>
+
                             </div>
                             <div class="kt-portlet__head-label" >
                                 <h3 class="kt-portlet__head-title">
-{{--                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_vehicle"><i class="fas fa-plus"></i></button>--}}
+                                    <a href="#" class="text-warning" data-toggle="modal" data-target="#add_user"><i class="fas fa-plus"></i></a>
                                 </h3>
                             </div>
+
                         </div>
                         <div id="save_msg" style="margin-top: 5px !important; background-color: #c2ffcc !important; display: none; color: #08751a !important; border: 1px solid; border-radius: 8px !important; border-color: green !important; padding: 5px!important; text-align: center; font-size: 25px !important;"></div>
                         <div class="kt-portlet__body kt-portlet__body--fit-x">
@@ -61,7 +63,7 @@
                                         <th scope="col">Documents status</th>
                                         <th scope="col">Documents</th>
                                         <th scope="col">Shipments</th>
-                                        <th scope="col">Profile Edit Request</th>
+{{--                                        <th scope="col">Profile Edit Request</th>--}}
                                         {{--  <th scope="col">Status</th>--}}
 {{--                                        <th scope="col">Action</th>--}}
                                     </tr>
@@ -80,22 +82,11 @@
                                             <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>
                                             <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
                                             <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>
-                                            <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>
-{{--                                            <td>--}}
-{{--                                                <label class="switch">--}}
-{{--                                                    <input type="checkbox" id="type_status{{$vehicle->id}}"--}}
-{{--                                                           {{($vehicle->status == 1)?'checked':''}} onchange="updatestatus({{$vehicle->id}})">--}}
-{{--                                                    <span class="slider round"></span>--}}
-{{--                                                </label>--}}
-{{--                                            </td>--}}
-{{--                                            <td>--}}
-{{--                                                <a href="#" onclick="edit_vehicle({{$vehicle->id}})" class=" text-warning"> <i class="fa fa-edit"></i> </a>--}}
-{{--                                                <a onclick="delete_vehicle({{$vehicle->id}})" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a>--}}
-{{--                                            </td>--}}
+{{--                                        <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>--}}
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10" style="text-align: center">No User found</td>
+                                            <td colspan="9" style="text-align: center">No User found</td>
                                         </tr>
                                     @endforelse
                                     </tbody>
@@ -164,8 +155,6 @@
                             </div>
                         </div>
                     </div>
-
-
             </div>
         </div>
     </div>
@@ -207,12 +196,91 @@
             </div>
         </div>
     </div>
+    <div class="modal fade show" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add</h5>
+                    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                    {{--                        <i aria-hidden="true" class="ki ki-close"></i>--}}
+                    {{--                    </button>--}}
+
+                </div>
+                <div class="modal-body">
+                    <div class="card-body  p-0">
+                        <form method="post" action="{{route('createCracker')}}">
+                            @csrf
+
+                        <!--begin::Invoice-->
+                        <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                                   <span class="kt-portlet__head-icon">
+                                                       <i class="flaticon2-user"></i>
+                                                   </span>
+                                    <h3 class="kt-portlet__head-title">
+                                        Add new Broker
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <div class="kt-portlet__body">
+                                @if(count($errors) > 0)
+                                    <div class="alert alert-warning alert-dismissible fade show">
+                                        @foreach($errors->all() as $error)
+                                            <ul class="text-white pl-1">{{$error}}</ul> <br>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                <div class="row">
+
+                                    <div class="form-group col-lg-5">
+                                        <label>Name <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="text" class="form-control name" value="{{old('full_name')}}" name="full_name" required placeholder="Full name">
+                                    </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>Email <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input class="form-control mobile" name="email"  value="{{old('email')}}"  type="email" required placeholder="Email">
+                                    </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>Mobile <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="number" class="form-control mobile" value="{{old('phone')}}"  name="phone"  required placeholder="Number">
+                                    </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>Password <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="password" class="form-control" value="{{old('password')}}"  name="password" required placeholder="Password">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="kt-portlet__foot">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3 offset-9">
+                                        <input type="submit" class="btn btn-success" value="Save">
+                                        <button type="button" class="btn btn-secondary cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <script>
         @if (\Session::has('success'))
              toastr.success('{!! \Session::get('success') !!}');
+        @endif
+
+        @if ($errors->has('full_name')||$errors->has('email')||$errors->has('phone')||$errors->has('password'))
+            $('#add_user').modal('show')
+             toastr.error('Validation error occured');
         @endif
         function viewDocs(cnic,cnic_image,license,license_image,status,id){
                 $('.cnic').text(cnic);
