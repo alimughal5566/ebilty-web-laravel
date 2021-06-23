@@ -27,6 +27,36 @@ class GeneralSettingController extends Controller
         $settings = General_Setting::where('page_name','=','dashboard')->get();
         return view('admin.setting.dashboard_setting', compact('settings'));
     }
+    public function save_homepage_slider(Request $request){
+//        dd($request->all());
+        $home_slider1 = General_Setting::where('id', $request->id)->first();
+        $json = json_decode($home_slider1->content);
+        $filename = $json->image;
+        if($request->image)
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/sliders/', $filename);
+        }
+        $array = array(
+            'title' => $request->title,
+            'description' => $request->descrip,
+            'image' => $filename,
+            'button1_title' => $request->button1,
+            'button1_link' => $request->button2,
+            'button2_title' => $request->button3,
+            'button2_link' => $request->button4,
+        );
+        $content = json_encode($array);
+        $home_slider1->content = $content;
+        $home_slider1->status = 1;
+//        dd($home_slider1);
+        $home_slider1->update();
+        Session::flash('message', 'The slider has been updated');
+        return redirect()->back();
+    }
+
     public function save_homepage_slider1(Request $request){
         $home_slider1 = General_Setting::where('id', 1)->first();
         $json = json_decode($home_slider1->content);
