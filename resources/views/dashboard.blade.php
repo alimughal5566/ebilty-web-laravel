@@ -396,7 +396,11 @@
                                         <div class="container-info">
                                             <div class="main_img_banner_DB">
                                                 <!-- <i class="flaticon-map-location"></i>  -->
-                                                <img class="" src="https://blog.ipleaders.in/wp-content/uploads/2020/04/advertising-agency-e1586694068452.jpg" alt=""  style="width: 100%">
+                                                @php $profile_image='https://blog.ipleaders.in/wp-content/uploads/2020/04/advertising-agency-e1586694068452.jpg'; @endphp
+                                                @if($add )
+                                                    @php  $profile_image= '/setting/advertisements/'.$add->content; @endphp
+                                                @endif
+                                                <img  alt="" src="{{url($profile_image)}}"   style="width: 100%">
                                             </div>
 
                                         </div>
@@ -473,7 +477,7 @@
                                               <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>
                             <span class="progress-right">
-                                                 <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
+                                  <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>
                             <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
                                 <div class="h2 font-weight-bold">{{$percentage}}<sup class="small">%</sup></div>

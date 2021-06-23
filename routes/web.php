@@ -49,6 +49,7 @@ Route::prefix('admin')->group(function() {
         Route::post('/save_faq_banner', 'GeneralSettingController@save_faq_banner')->name('admin.setting.save_faq_banner');
         Route::get('/homepage_update_status', 'GeneralSettingController@homepage_update_status')->name('admin.setting.homepage_update_status');
         Route::get('/make_status_inactive_setting', 'GeneralSettingController@make_status_inactive_setting')->name('admin.setting.make_status_inactive_setting');
+        Route::get('/advertisementStatusUpdate', 'GeneralSettingController@advertisementStatusUpdate')->name('advertisementStatusUpdate');
         Route::get('/get_payment_type', 'ShipmentController@get_payment_type')->name('admin.setting.get_payment_type');
         Route::get('/add_payment_type', 'ShipmentController@add_payment_type')->name('admin.setting.add_payment_type');
         Route::get('/delete_payment_type', 'ShipmentController@delete_payment_type')->name('admin.setting.delete_payment_type');
@@ -84,6 +85,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/delete_qas', 'GeneralSettingController@delete_qas')->name('admin.setting.delete_qas');
         Route::get('/make_status_inactive_qas', 'GeneralSettingController@make_status_inactive_qas')->name('admin.setting.make_status_inactive_qas');
         Route::get('/make_status_active_qas', 'GeneralSettingController@make_status_active_qas')->name('admin.setting.make_status_active_qas');
+
     });
 });
 
@@ -106,7 +108,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/my-locations', 'HomeController@mysavedlocations')->name('my.locations');
         Route::get('/vehicle/status/update', 'DriverController@vehicleStatusUpdate')->name('vehicle.status.update');
         Route::get('/address/status/update', 'HomeController@addressStatusUpdate')->name('address.status.update');
-        Route::get('/advertisementStatusUpdate', 'HomeController@advertisementStatusUpdate');
         Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
         Route::post('/add-address', 'HomeController@addAddress')->name('addAddress');
         Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
@@ -115,6 +116,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::post('/updateProfilePic', 'HomeController@updateProfilePic')->name('updateProfilePic');
         Route::post('/update-cnic', 'HomeController@updateCnic')->name('updateCnic');
         Route::post('/update-personal-profile', 'HomeController@updatePersonalInfo')->name('updatePersonalInfo');
+        Route::post('/update-location-details', 'HomeController@updateLocationInfo')->name('updateLocationInfo');
         Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');
 
 });

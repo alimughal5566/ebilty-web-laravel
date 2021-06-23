@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse">
+                            <div id="collapseOne" class="panel-collapse collapse show">
                                 <div class="panel-body">
                                     <div class="kt-portlet__body">
                                         <div class="form-group form-group-last kt-hide">
@@ -369,7 +369,7 @@
                                                                     <div id="address-map-container" style="width:100%;height:400px; ">
                                                                         <div style="width: 100%; height: 100%" id="address-map"></div>
                                                                     </div>
-                                                                    <span class="form-text text-muted">Dragg the pin to select the right location</span>
+                                                                    <span class="form-text text-muted">Drag the pin to select the right location</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -418,75 +418,70 @@
 
                                                         </div>
                                                         <div class="location-receiver">
-                                                            <div class="row">
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="form-group col-md-4">--}}
+{{--                                                                    <div class="form-group kt-form__group--inline">--}}
+{{--                                                                        <div class="kt-form__control">--}}
+{{--                                                                            <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                            <input type="text" placeholder="Address" class="form-control email" name="receiver[address]" id="s_add" >--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                                <div class="form-group col-md-4">
-                                                                    <div class="form-group kt-form__group--inline">
-                                                                        {{--                                                                        <div class="kt-form__label">--}}
-                                                                        {{--                                                                            <label class="col-form-label">Address:<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-                                                                        {{--                                                                        </div>--}}
-                                                                        <div class="kt-form__control">
-                                                                            <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                            <input type="text" placeholder="Address" class="form-control email" name="receiver[address]" id="s_add" >
-                                                                        </div>
-                                                                    </div>
+{{--                                                                <div class="form-group col-lg-6">--}}
+{{--                                                                    <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                    <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                        <select class="form-control country_id" onchange="getStates(this.value,'statees')" id="s_country"  title="Please write address first" name="receiver[country]"  >--}}
+{{--                                                                            <option data-hidden="true"></option>--}}
+{{--                                                                            @foreach($countries as $country)--}}
+{{--                                                                                <option  value="{{$country->id}}">{{$country->name}}</option>--}}
+{{--                                                                            @endforeach--}}
+{{--                                                                        </select>--}}
+{{--                                                                        <div class="dropdown-menu ">--}}
+{{--                                                                            <div class="inner show" role="listbox" id="bs-select-25" tabindex="-1">--}}
+{{--                                                                                <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                                </div>
+{{--                                                                <div class="form-group col-lg-4">--}}
+{{--                                                                    <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                    <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                        <select name="statee" class="form-control" id="statees"  onchange="getCities(this.value,'cityy')"   title="Please select country first" >--}}
+{{--                                                                            --}}{{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
+{{--                                                                        </select>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="form-group col-lg-4">--}}
+{{--                                                                    <label>City<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                    <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                        <select class="form-control cities" id="cityy" name="receiver[city]" onchange="getArea(this.value,'areaa')"  title="Please select state first" data-live-search="true"  tabindex="-98">--}}
+{{--                                                                            <option data-hidden="true"></option>--}}
+{{--                                                                        </select>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                                <div class="form-group col-lg-6">
-                                                                    <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                    <div class="dropdown bootstrap-select form-control ">
-                                                                        <select class="form-control country_id" onchange="getStates(this.value,'statees')" id="s_country"  title="Please write address first" name="receiver[country]"  >
-                                                                            <option data-hidden="true"></option>
-                                                                            @foreach($countries as $country)
-                                                                                <option  value="{{$country->id}}">{{$country->name}}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        <div class="dropdown-menu ">
-                                                                            <div class="inner show" role="listbox" id="bs-select-25" tabindex="-1">
-                                                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group col-lg-4">
-                                                                    <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                    <div class="dropdown bootstrap-select form-control ">
-                                                                        <select name="statee" class="form-control" id="statees"  onchange="getCities(this.value,'cityy')"   title="Please select country first" >
-                                                                            {{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-lg-4">
-                                                                    <label>City<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                    <div class="dropdown bootstrap-select form-control ">
-                                                                        <select class="form-control cities" id="cityy" name="receiver[city]" onchange="getArea(this.value,'areaa')"  title="Please select state first" data-live-search="true"  tabindex="-98">
-                                                                            <option data-hidden="true"></option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group col-lg-4">
-                                                                    <label>Area<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                    <div class="dropdown bootstrap-select form-control area_id">
-                                                                        <select class="form-control areas" data-receiver="sublocality" id="areaa" name="receiver[area]" title="Please select city first" data-live-search="true" tabindex="-98">
-                                                                            {{--                                                                            <option class="bs-title-option" value=""></option>--}}
-                                                                            <option data-hidden="true"></option>
-                                                                        </select>
-                                                                        <div class="dropdown-menu ">
-                                                                            <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-17" aria-autocomplete="list"></div>
-                                                                            <div class="inner show" role="listbox" id="bs-select-17" tabindex="-1">
-                                                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-lg-6">
-                                                                    <label>Postal Code</label>
-                                                                    <input class="form-control postal_code" type="text" id="postal" name="receiver[postal_code]" placeholder="Area Zip code">
-                                                                </div>
-                                                            </div>
+{{--                                                                <div class="form-group col-lg-4">--}}
+{{--                                                                    <label>Area<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                    <div class="dropdown bootstrap-select form-control area_id">--}}
+{{--                                                                        <select class="form-control areas" data-receiver="sublocality" id="areaa" name="receiver[area]" title="Please select city first" data-live-search="true" tabindex="-98">--}}
+{{--                                                                            --}}{{--                                                                            <option class="bs-title-option" value=""></option>--}}
+{{--                                                                            <option data-hidden="true"></option>--}}
+{{--                                                                        </select>--}}
+{{--                                                                        <div class="dropdown-menu ">--}}
+{{--                                                                            <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-17" aria-autocomplete="list"></div>--}}
+{{--                                                                            <div class="inner show" role="listbox" id="bs-select-17" tabindex="-1">--}}
+{{--                                                                                <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="form-group col-lg-6">--}}
+{{--                                                                    <label>Postal Code</label>--}}
+{{--                                                                    <input class="form-control postal_code" type="text" id="postal" name="receiver[postal_code]" placeholder="Area Zip code">--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
                                                             {{--                                                            <div class="form-group row">--}}
                                                             {{--                                                                <label class="col-xl-3 col-lg-3 col-form-label"></label>--}}
                                                             {{--                                                                <div class="col-lg-9 col-xl-6">--}}
@@ -760,75 +755,75 @@
 
                                                     </div>
                                                     <div class="location-receiver">
-                                                        <div class="row">
+{{--                                                        <div class="row">--}}
 
-                                                            <div class="form-group col-md-4">
-                                                                <div class="form-group kt-form__group--inline">
-                                                                    {{--                                                                        <div class="kt-form__label">--}}
-                                                                    {{--                                                                            <label class="col-form-label">Address:<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-                                                                    {{--                                                                        </div>--}}
-                                                                    <div class="kt-form__control">
-                                                                        <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                        <input type="text" class="form-control email" name="receiver[address]" id="r_add" >
-                                                                    </div>
-                                                                </div>
+{{--                                                            <div class="form-group col-md-4">--}}
+{{--                                                                <div class="form-group kt-form__group--inline">--}}
+{{--                                                                    --}}{{--                                                                        <div class="kt-form__label">--}}
+{{--                                                                    --}}{{--                                                                            <label class="col-form-label">Address:<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                    --}}{{--                                                                        </div>--}}
+{{--                                                                    <div class="kt-form__control">--}}
+{{--                                                                        <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                        <input type="text" class="form-control email" name="receiver[address]" id="r_add" >--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                            </div>
+{{--                                                            </div>--}}
 
-                                                            <div class="form-group col-lg-6">
-                                                                <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                <div class="dropdown bootstrap-select form-control ">
-                                                                    <select class="form-control country_id" onchange="getStates(this.value,'r_statees')" id="r_country"  title="Please write address first" name="receiver[country]"  >
-                                                                        <option data-hidden="true"></option>
-                                                                        @foreach($countries as $country)
-                                                                            <option  value="{{$country->id}}">{{$country->name}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <div class="dropdown-menu ">
-                                                                        <div class="inner show" role="listbox" id="bs-select-25" tabindex="-1">
-                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+{{--                                                            <div class="form-group col-lg-6">--}}
+{{--                                                                <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                    <select class="form-control country_id" onchange="getStates(this.value,'r_statees')" id="r_country"  title="Please write address first" name="receiver[country]"  >--}}
+{{--                                                                        <option data-hidden="true"></option>--}}
+{{--                                                                        @foreach($countries as $country)--}}
+{{--                                                                            <option  value="{{$country->id}}">{{$country->name}}</option>--}}
+{{--                                                                        @endforeach--}}
+{{--                                                                    </select>--}}
+{{--                                                                    <div class="dropdown-menu ">--}}
+{{--                                                                        <div class="inner show" role="listbox" id="bs-select-25" tabindex="-1">--}}
+{{--                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
 
-                                                            <div class="form-group col-lg-4">
-                                                                <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                <div class="dropdown bootstrap-select form-control ">
-                                                                    <select name="sta" class="form-control" id="r_statees"  onchange="getCities(this.value,'r_cityy')"   title="Please select country first" >
-                                                                        {{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-lg-4">
-                                                                <label>City<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                <div class="dropdown bootstrap-select form-control ">
-                                                                    <select class="form-control cities" id="r_cityy" name="receiver[city]" onchange="getArea(this.value,'r_areaa')"  title="Please select state first" data-live-search="true"  tabindex="-98">
-                                                                        <option data-hidden="true"></option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
+{{--                                                            <div class="form-group col-lg-4">--}}
+{{--                                                                <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                    <select name="sta" class="form-control" id="r_statees"  onchange="getCities(this.value,'r_cityy')"   title="Please select country first" >--}}
+{{--                                                                        --}}{{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
+{{--                                                                    </select>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <div class="form-group col-lg-4">--}}
+{{--                                                                <label>City<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
+{{--                                                                    <select class="form-control cities" id="r_cityy" name="receiver[city]" onchange="getArea(this.value,'r_areaa')"  title="Please select state first" data-live-search="true"  tabindex="-98">--}}
+{{--                                                                        <option data-hidden="true"></option>--}}
+{{--                                                                    </select>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
 
-                                                            <div class="form-group col-lg-4">
-                                                                <label>Area<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                                <div class="dropdown bootstrap-select form-control area_id">
-                                                                    <select class="form-control areas" data-receiver="sublocality" id="r_areaa" name="receiver[area]" title="Please select city first" data-live-search="true" tabindex="-98">
-                                                                        {{--                                                                            <option class="bs-title-option" value=""></option>--}}
-                                                                        <option data-hidden="true"></option>
-                                                                    </select>
-                                                                    <div class="dropdown-menu ">
-                                                                        <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-17" aria-autocomplete="list"></div>
-                                                                        <div class="inner show" role="listbox" id="bs-select-17" tabindex="-1">
-                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-lg-6">
-                                                                <label>Postal Code</label>
-                                                                <input class="form-control postal_code" type="text" id="r_postal" name="receiver[postal_code]" placeholder="Area Zip code">
-                                                            </div>
-                                                        </div>
+{{--                                                            <div class="form-group col-lg-4">--}}
+{{--                                                                <label>Area<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                <div class="dropdown bootstrap-select form-control area_id">--}}
+{{--                                                                    <select class="form-control areas" data-receiver="sublocality" id="r_areaa" name="receiver[area]" title="Please select city first" data-live-search="true" tabindex="-98">--}}
+{{--                                                                        --}}{{--                                                                            <option class="bs-title-option" value=""></option>--}}
+{{--                                                                        <option data-hidden="true"></option>--}}
+{{--                                                                    </select>--}}
+{{--                                                                    <div class="dropdown-menu ">--}}
+{{--                                                                        <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-17" aria-autocomplete="list"></div>--}}
+{{--                                                                        <div class="inner show" role="listbox" id="bs-select-17" tabindex="-1">--}}
+{{--                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <div class="form-group col-lg-6">--}}
+{{--                                                                <label>Postal Code</label>--}}
+{{--                                                                <input class="form-control postal_code" type="text" id="r_postal" name="receiver[postal_code]" placeholder="Area Zip code">--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                         {{--                                                     <input type="password" class="form-control r_password" name="receiver[password]" >--}}
                                                     </div>
                                                 </div>
@@ -1561,19 +1556,18 @@
                     $('#'+clas).selectpicker('refresh');
                 }
             })
-
         }
 
         function sender_save() {
             var s_nam = $('#s_nam').val();
             var s_email = $('#s_email').val();
             var s_pass = $('#s_pass').val();
-            var s_country = $('#s_country option:selected').val();
+            // var s_country = $('#s_country option:selected').val();
             var s_phone = $('#s_phone').val();
-            var statees = $('#statees option:selected').val();
-            var cityy = $('#cityy option:selected').val();
-            var s_add = $('#s_add').val();
-            var areaa = $('#areaa').val();
+            // var statees = $('#statees option:selected').val();
+            // var cityy = $('#cityy option:selected').val();
+            // var s_add = $('#s_add').val();
+            // var areaa = $('#areaa').val();
             var s_zip = $('#postal').val();
 
             if (s_nam == '') {
@@ -1601,52 +1595,47 @@
                 $('#s_pass').css('border', '1px solid #e2e5ec');
             }
             // alert(s_add.length);
-            if (s_add == '' || s_add.length < 2) {
-                // alert('ss')
-                $('#s_add').css('border', '1px solid #e00258');
-                return;
-            } else {
-                $('#s_add').css('border', '1px solid #e2e5ec');
-            }
-            if (s_country == '') {
-                // alert(s_country);
-                toastr.warning("Fill country");
-                // $('#s_country').css('border', '1px solid #e00258');
-                return;
-            } else {
-                $('#s_country').css('border', '1px solid #e2e5ec');
-            }
+            // if (s_add == '' || s_add.length < 2) {
+            //     // alert('ss')
+            //     $('#s_add').css('border', '1px solid #e00258');
+            //     return;
+            // } else {
+            //     $('#s_add').css('border', '1px solid #e2e5ec');
+            // }
+            // if (s_country == '') {
+            //     // alert(s_country);
+            //     toastr.warning("Fill country");
+            //     // $('#s_country').css('border', '1px solid #e00258');
+            //     return;
+            // } else {
+            //     $('#s_country').css('border', '1px solid #e2e5ec');
+            // }
 
-            if (statees == '') {
-                toastr.warning("Fill state");
-                return;
-            } else {
-                $('#statees').css('border', '1px solid #e2e5ec');
-            }
-            if (cityy == '') {
-                toastr.warning("Fill City");
-                return;
-            } else {
-                $('#cityy').css('border', '1px solid #e2e5ec');
-            }
-            if (areaa == '') {
-                toastr.warning("Fill area field");
-                return;
-            } else {
-                $('#areaa').css('border', '1px solid #e2e5ec');
-            }
+            // if (statees == '') {
+            //     toastr.warning("Fill state");
+            //     return;
+            // } else {
+            //     $('#statees').css('border', '1px solid #e2e5ec');
+            // }
+            // if (cityy == '') {
+            //     toastr.warning("Fill City");
+            //     return;
+            // } else {
+            //     $('#cityy').css('border', '1px solid #e2e5ec');
+            // }
+            // if (areaa == '') {
+            //     toastr.warning("Fill area field");
+            //     return;
+            // } else {
+            //     $('#areaa').css('border', '1px solid #e2e5ec');
+            // }
             $('.savee').css('opacity','0.5');
             $('.bx-spin').removeClass('d-none');
             $.ajax({
                 type: 'post',
                 url: "{{route('createUser')}}",
                 data: {
-                    'area': areaa,
-                    'address': s_add,
-                    'city': cityy,
-                    'state': statees,
                     'phone': s_phone,
-                    'country': s_country,
                     'password': s_pass,
                     'email': s_email,
                     'full_name': s_nam,
@@ -1663,19 +1652,19 @@
                     }
                     if(data.success){
                         var html='';
-                        html += '<option value="'+data.address_id+'" selected>'+s_add+' </option>';
+                        // html += '<option value="'+data.address_id+'" selected>'+s_add+' </option>';
                         var html1='';
                         html1 += '<option value="'+data.user_id+'" selected>'+s_nam+' </option>';
-                        $('#sender_address_id').prepend(html);
-                        $('#sender_address_id').selectpicker('refresh');
+                        // $('#sender_address_id').prepend(html);
+                        // $('#sender_address_id').selectpicker('refresh');
                         $('#addnewsender').addClass('d-none');
                         $('#sendr').prepend(html1);
                         $('#sendr').selectpicker('refresh');
 
                         $('#sendr').val(data.user_id);
                         $('#sendr').change();
-                        $('#sender_address_id').val(data.address_id);
-                        $('#sender_address_id').change();
+                        // $('#sender_address_id').val(data.address_id);
+                        // $('#sender_address_id').change();
                         toastr.success(data.success);
                     }
                 }
@@ -1686,12 +1675,12 @@
             var s_nam = $('#r_nam').val();
             var s_email = $('#r_email').val();
             var s_pass = $('#r_pass').val();
-            var s_country = $('#r_country option:selected').val();
+            // var s_country = $('#r_country option:selected').val();
             var s_phone = $('#r_phone').val();
-            var statees = $('#r_statees option:selected').val();
-            var cityy = $('#r_cityy option:selected').val();
-            var s_add = $('#r_add').val();
-            var areaa = $('#r_areaa').val();
+            // var statees = $('#r_statees option:selected').val();
+            // var cityy = $('#r_cityy option:selected').val();
+            // var s_add = $('#r_add').val();
+            // var areaa = $('#r_areaa').val();
             var s_zip = $('#r_postal').val();
 
             if (s_nam == '') {
@@ -1719,52 +1708,47 @@
                 $('#r_pass').css('border', '1px solid #e2e5ec');
             }
             // alert(s_add.length);
-            if (s_add == '' || s_add.length < 2) {
-                // alert('ss')
-                $('#r_add').css('border', '1px solid #e00258');
-                return;
-            } else {
-                $('#r_add').css('border', '1px solid #e2e5ec');
-            }
-            if (s_country == '') {
-                // alert(s_country);
-                toastr.warning("Fill country");
-                // $('#s_country').css('border', '1px solid #e00258');
-                return;
-            } else {
-                $('#r_country').css('border', '1px solid #e2e5ec');
-            }
-
-            if (statees == '') {
-                toastr.warning("Fill state");
-                return;
-            } else {
-                $('#r_statees').css('border', '1px solid #e2e5ec');
-            }
-            if (cityy == '') {
-                toastr.warning("Fill City");
-                return;
-            } else {
-                $('#r_cityy').css('border', '1px solid #e2e5ec');
-            }
-            if (areaa == '') {
-                toastr.warning("Fill area field");
-                return;
-            } else {
-                $('#r_areaa').css('border', '1px solid #e2e5ec');
-            }
+            // if (s_add == '' || s_add.length < 2) {
+            //     // alert('ss')
+            //     $('#r_add').css('border', '1px solid #e00258');
+            //     return;
+            // } else {
+            //     $('#r_add').css('border', '1px solid #e2e5ec');
+            // }
+            // if (s_country == '') {
+            //     // alert(s_country);
+            //     toastr.warning("Fill country");
+            //     // $('#s_country').css('border', '1px solid #e00258');
+            //     return;
+            // } else {
+            //     $('#r_country').css('border', '1px solid #e2e5ec');
+            // }
+            //
+            // if (statees == '') {
+            //     toastr.warning("Fill state");
+            //     return;
+            // } else {
+            //     $('#r_statees').css('border', '1px solid #e2e5ec');
+            // }
+            // if (cityy == '') {
+            //     toastr.warning("Fill City");
+            //     return;
+            // } else {
+            //     $('#r_cityy').css('border', '1px solid #e2e5ec');
+            // }
+            // if (areaa == '') {
+            //     toastr.warning("Fill area field");
+            //     return;
+            // } else {
+            //     $('#r_areaa').css('border', '1px solid #e2e5ec');
+            // }
             $('.saveee').css('opacity','0.5');
             $('.bxy').removeClass('d-none');
             $.ajax({
                 type: 'post',
                 url: "{{route('createUser')}}",
                 data: {
-                    'area': areaa,
-                    'address': s_add,
-                    'city': cityy,
-                    'state': statees,
                     'phone': s_phone,
-                    'country': s_country,
                     'password': s_pass,
                     'email': s_email,
                     'full_name': s_nam,
@@ -1781,23 +1765,22 @@
                     }
                     if(data.success){
                         var html='';
-                        html += '<option value="'+data.address_id+'" selected>'+s_add+' </option>';
+                        // html += '<option value="'+data.address_id+'" selected>'+s_add+' </option>';
                         var html1='';
                         html1 += '<option value="'+data.user_id+'" selected>'+s_nam+' </option>';
-                        $('#receiver_address_id').prepend(html);
-                        $('#receiver_address_id').selectpicker('refresh');
+                        // $('#receiver_address_id').prepend(html);
+                        // $('#receiver_address_id').selectpicker('refresh');
                         $('#addnewreceiver').addClass('d-none');
                         $('#receiver_name').prepend(html1);
                         $('#receiver_name').selectpicker('refresh');
 
                         $('#receiver_name').val(data.user_id);
                         $('#receiver_name').change();
-                        $('#receiver_address_id').val(data.address_id);
-                        $('#receiver_address_id').change();
+                        // $('#receiver_address_id').val(data.address_id);
+                        // $('#receiver_address_id').change();
                         toastr.success(data.success);
                     }
                 }
-
             })
         }
         function saveaddress() {
