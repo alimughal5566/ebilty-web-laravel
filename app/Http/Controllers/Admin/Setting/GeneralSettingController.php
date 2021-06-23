@@ -78,7 +78,6 @@ class GeneralSettingController extends Controller
             'button1_link' => $request->button2,
             'button2_title' => $request->button3,
             'button2_link' => $request->button4,
-            'status' => $request->status1
         );
 
         $content = json_encode($array);
