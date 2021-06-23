@@ -63,7 +63,7 @@ class GeneralSettingController extends Controller
         $home_slider1 = General_Setting::where('id', $request->id)->first();
         $json = json_decode($home_slider1->content);
         $filename = $json->image;
-        if($request->image1)
+        if($request->image)
         {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
