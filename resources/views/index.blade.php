@@ -253,7 +253,7 @@
 
                   <!-- Image -->
           <!-- <div class="slide-item-bg" style="background-image:url(./front/images/_niches/cargo/bg01.jpg);"> -->
-          <div class="slide-item-bg" style="background-image:url({{$slider->image}});">
+          <div class="slide-item-bg" style="background-image:url({{asset("/setting/sliders")."/".$slider->image}});">
           </div><!-- cargo2.jpg -->
           <!--/ Image -->
           <!-- Gradient overlay -->
