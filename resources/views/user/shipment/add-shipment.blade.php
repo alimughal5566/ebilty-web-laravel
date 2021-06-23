@@ -98,7 +98,7 @@
                                                             <label class="kt-option">
                                           <span class="kt-option__control">
                                           <span class="kt-radio kt-radio--state-brand">
-                                          <input type="radio" name="book_as" class="type" value="2"   {{(old('book_as')==2)?'checked':''}}>
+                                          <input type="radio" name="book_as" class="type" value="2"  {{(old('book_as')==2)?'checked':''}}>
                                           <span></span>
                                           </span>
                                           </span>
@@ -194,17 +194,17 @@
                                             <div class="col-lg-6">
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <h3 class="kt-section__title kt-margin-b-5 pt-1 ">
-                                                            Wants to avail Insurance?&nbsp;<span class="kt-badge  "></span>
-                                                        </h3>
-                                                        <label class="kt-option">
+                                                    <h3 class="kt-section__title kt-margin-b-5 pt-1 ">
+                                                        Wants to avail Insurance? <span class="kt-badge  "></span>
+                                                    </h3>
+                                        <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
                                        <input type="radio" name="is_insured" class="is_insured" value="1" {{(old('is_insured')==1)?'checked':''}}>
                                        <span></span>
                                        </span>
                                        </span>
-                                                            <span class="kt-option__label">
+                                    <span class="kt-option__label">
                                        <span class="kt-option__head">
                                        <span class="kt-option__title">
                                        Yes
@@ -214,20 +214,20 @@
                                        <span class="kt-option__body">
                                        </span>
                                        </span>
-                                                        </label>
+                                         </label>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                            &nbsp;<span class=""></span>
-                                                        </h3>
-                                                        <label class="kt-option">
+                                    <div class="col-lg-6">
+                                        <h3 class="kt-section__title kt-margin-b-5 pt-1">
+                                            &nbsp;<span class=""></span>
+                                        </h3>
+                                        <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
                                        <input type="radio" name="is_insured" class="is_insured" value="0" checked="" {{(old('is_insured')==0)?'checked':''}}>
                                        <span></span>
                                        </span>
                                        </span>
-                                                            <span class="kt-option__label">
+                                          <span class="kt-option__label">
                                        <span class="kt-option__head">
                                        <span class="kt-option__title">
                                        No
@@ -239,6 +239,14 @@
                                        </span>
                                                         </label>
                                                     </div>
+
+                                            <div class="col-lg-12 packege-cost" style="display: none">
+                                                <label>package Cost </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text">package price</span></div>
+                                                    <input type="number" class="form-control budget_client"  value="{{old('package_cost')}}" name="package_cost" min="1" placeholder="Price">
+                                                </div>
+                                            </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,20 +289,12 @@
                                                 <div class="form-group">
                                                     <label>Sender<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control sender_address_id">
-                                                        <select class="form-control"  onchange="showsenderform1(this.value)" name="sender_name"  id="sendr" data-live-search="true" title="Choose User"  tabindex="-98">
-                                                            {{--                                                            <option class="bs-title-option" value=""></option>--}}
-                                                            @foreach($senders as $sender)
-                                                                <option value="{{$sender->user_id}}"  {{(old('sender_name')==$sender->user_id)?'selected':''}}>{{$sender->user->name}}</option>
+                                                        <select class="form-control" onchange="showsenderform1(this.value)" name="sender_name" id="sendr" data-live-search="true" title="Choose User" tabindex="-98">
+                                                            @foreach($users as $sender)
+                                                                <option value="{{$sender->id}}" {{(old('sender_name')==$sender->id)?'selected':''}} {{(auth()->user()->id==$sender->id)?"selected":''}} >{{$sender->name}} ({{$sender->email}})</option>
                                                             @endforeach
-
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
-                                                        {{--                                       <div class="dropdown-menu ">--}}
-                                                        {{--                                          <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div>--}}
-                                                        {{--                                          <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">--}}
-                                                        {{--                                             <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
-                                                        {{--                                          </div>--}}
-                                                        {{--                                       </div>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,9 +302,13 @@
                                                 <div class="form-group">
                                                     <label>Sender Address/Client Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
-                                                        <select class="form-control sender_address"  placeholder=" Address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
+                                                        <select class="form-control sender_address" placeholder=" Address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
+                                                            @foreach($addresses as $address)
+                                                                <option value="{{$address->id}}" {{(old('sender_address')==$address->id)?'selected':''}} {{($address->is_default==1)?"selected sender-id='.$address->id.'":''}} >{{$address->address}} </option>
+                                                            @endforeach
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
+                                                        <input type="hidden" id="addris_id">
 
                                                     </div>
                                                 </div>
@@ -541,8 +545,6 @@
                                                 </div>
                                             </div>
 
-
-
                                         </div>
                                     </div>
                                     <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
@@ -598,13 +600,13 @@
                                     <div class="kt-portlet__body">
                                         <div class="row m-0">
                                             <div class="col-md-6">
-                                                <div class="form-group ">
+                                                <div class="form-group">
                                                     <label>Client<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
                                                         <select onchange="showreceiverform1(this.value)" class="form-control" name="receiver_name" id="receiver_name" data-live-search="true" title="Client"  tabindex="-98">
                                                             <option data-hidden="true"></option>
-                                                            @foreach($receivers as $receiver)
-                                                                <option value="{{$receiver->user_id}}"  {{(old('receiver_name')==$receiver->user_id)?'selected':''}}>{{$receiver->user->name}}</option>
+                                                            @foreach($users as $receiver)
+                                                                <option value="{{$receiver->id}}" {{(old('receiver_name')==$receiver->id)?'selected':''}}>{{$receiver->name}} ({{$receiver->email}})</option>
                                                             @endforeach
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
@@ -618,8 +620,9 @@
                                                     <label>Receiver Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="dropdown bootstrap-select form-control ">
                                                         <select onchange="showreceiverform(this.value)" class="form-control receiver_address_id" id="receiver_address_id" name="receiver_address"  data-live-search="true" title="Address"  tabindex="-98">
-                                                            {{--                                                            <option data-hidden="true"></option>--}}
-                                                            {{--                                                            <option class="rem1" selected="" disabled="">Choose address</option>--}}
+                                                            @foreach($addresses as $address)
+                                                                <option value="{{$address->id}}" {{(old('receiver_address')==$address->id)?'selected':''}}>{{$address->address}} </option>
+                                                            @endforeach
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
                                                         <div class="dropdown-menu ">
@@ -712,7 +715,7 @@
                                                     <div class="row align-items-center">
                                                         <div class="col-lg-12">
                                                             <button type="button" onclick="saveaddresss()" class="btn btn-success saveed">Save <i class=" loadir bx bx-loader-circle bx-spin bx-rotate-90 d-none" style="color:#ffffff ; padding: 0; vertical-align: auto;font-size: 24px;"></i></button>
-                                                            <button type="button" class="btn btn-secondary cancel">Cancel</button>
+{{--                                                            <button type="button" class="btn btn-secondary cancel" onclick="document.getElementById('addnewreceivr').style.display='none'">Cancel</button>--}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1323,15 +1326,15 @@
                             <div id="collapseTFive" class="panel-collapse collapse">
                                 <div class="kt-portlet__body">
                                     <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label>package Cost <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text">package price</span></div>
-                                                <input type="number" class="form-control budget_client"  value="{{old('package_cost')}}" name="package_cost" min="1" placeholder="Price">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-lg-6">
-                                            <label>Upload&nbsp;invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+{{--                                        <div class="form-group col-lg-6">--}}
+{{--                                            <label>package Cost <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                            <div class="input-group">--}}
+{{--                                                <div class="input-group-prepend"><span class="input-group-text">package price</span></div>--}}
+{{--                                                <input type="number" class="form-control budget_client"  value="{{old('package_cost')}}" name="package_cost" min="1" placeholder="Price">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+                                        <div class="form-group col-lg-8 offset-2">
+                                            <label>Upload invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text">Invoice Image</span></div>
                                                 <input type="file" class="form-control budget_client" accept="image/png, image/gif, image/jpeg"  name="invoice_image" min="1" placeholder="package Value">
@@ -1501,7 +1504,6 @@
                         $('#sender_address_id').selectpicker('refresh');
                     }
                 })
-
                 $('#addnewsender').addClass('d-none');
                 $('#addnewsenderaddress').addClass('d-none');
             }
@@ -2117,6 +2119,48 @@
             latitudeField.value = lat;
             longitudeField.value = lng;
         }
+
+        $('.is_insured').on('click', function(e) {
+
+       if($('.is_insured:checked').val()==1){
+           $('.packege-cost').css('display','block')
+       }else{
+           $('.packege-cost').css('display','none')
+       }
+        });
+        $('.type').on('click', function(e) {
+            var val=$('#addris_id').val();
+            if(val==''){
+                $('#addris_id').val($('#sender_address_id option:selected').val());
+               val= $('#sender_address_id option:selected').val();
+            }
+           if($('.type:checked').val()==1){
+               $('#sendr').val({{auth()->user()->id}});
+               $('#sendr').selectpicker('refresh');
+
+               $('#sender_address_id').val(val);
+               $('#sender_address_id').selectpicker('refresh');
+
+               $('#receiver_name').val('');
+               $('#receiver_name').selectpicker('refresh');
+
+               $('#receiver_address_id').val('');
+               $('#receiver_address_id').selectpicker('refresh');
+           }else{
+               $('#sendr').val('');
+               $('#sendr').selectpicker('refresh');
+
+               $('#receiver_name').val({{auth()->user()->id}});
+               $('#receiver_name').selectpicker('refresh');
+
+               $('#sender_address_id').val('');
+               $('#sender_address_id').selectpicker('refresh');
+
+               $('#receiver_address_id').val(val);
+               $('#receiver_address_id').selectpicker('refresh');
+           }
+        });
+
 
 
     </script>

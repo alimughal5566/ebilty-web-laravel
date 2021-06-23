@@ -426,7 +426,14 @@
             <!--begin: Head -->
             <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
                <div class="kt-user-card__avatar">
-                  <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>
+{{--                  <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>--}}
+                   <span class="kt-media kt-media--lg kt-media--brand ">
+              @php $profile_image='/images/noimage.jpg'; @endphp
+                       @if(auth()->user()->profile_image)
+                           @php    $profile_image= '/images/profile/'.auth()->user()->profile_image; @endphp
+                       @endif
+                         <span class=""><img style="border-radius: 5px" src="{{url($profile_image)}}"  alt="" width="120px" height="110px"  ></span>
+               </span>
                </div>
                <div class="kt-user-card__name">
                    {{ucfirst(auth()->user()->name)}}
@@ -442,8 +449,8 @@
                   <div class="kt-notification__item-icon">
                      <i class="flaticon2-calendar-3 kt-font-success"></i>
                   </div>
-                  <div class="kt-notification__item-details">
-                     <div class="kt-notification__item-title kt-font-bold" onclick="window.location.href='{{route('show.profile',auth()->user()->id)}}'">
+                  <div class="kt-notification__item-details" onclick="window.location.href='{{route('show.profile',auth()->user()->id)}}'">
+                     <div class="kt-notification__item-title kt-font-bold" >
                         My Profile
                      </div>
                      <div class="kt-notification__item-time">

@@ -9,6 +9,7 @@ use App\Models\Admin\Setting\PackageType;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\ShipmentBids;
 use App\Shippment;
+use App\User;
 use App\UserAddress;
 use Illuminate\Http\Request;
 
@@ -17,22 +18,25 @@ class CustomerController extends Controller
     public function __construct() {
         $this->middleware(['auth','role:customer']);
     }
-
     public function index(){
         $shipments= Shippment::where('user_id',auth()->user()->id)->orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
 //        dd($shipments);
         return view('user.shipment.index', compact('shipments'));
     }
-    public function create()
-    {
+    public function create(){
         $vehicle_types=VehicleCategory::all();
         $shipment_packages=PackageType::all();
         $countries=Country::wherehas('states')->get();
-//         $senders= ShipmentArea::where('created_by',Auth::user()->id)->with('user')->get();
+//        $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
+      $addresses= UserAddress::where('user_id',auth()->user()->id)->get();
+        $users = User::whereHas(
+            'roles', function($q){
+            $q->where('name', 'customer');
+        }
+        )->get();
 
-        $senders= UserAddress::where('created_by',auth()->user()->id)->where('form','sender')->with('user')->get();
-        $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
-        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','senders','receivers'));
+//        $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
+        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','users','addresses'));
     }
 
 

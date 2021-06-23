@@ -55,14 +55,14 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Number</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">City</th>
                                         <th scope="col">Shipments</th>
                                         <th scope="col">Email verified</th>
                                         <th scope="col">Documents status</th>
                                         <th scope="col">Documents</th>
                                         <th scope="col">Shipments</th>
                                         <th scope="col">Profile Edit Request</th>
-
-                                        {{--                                        <th scope="col">Status</th>--}}
+                                        {{--  <th scope="col">Status</th>--}}
 {{--                                        <th scope="col">Action</th>--}}
                                     </tr>
                                     </thead>
@@ -70,10 +70,11 @@
 
                                     @forelse($users as $user)
                                         <tr>
-                                            <td class="count">{{ $user->id }}</td>
+                                            <td class="count"><a href="{{route('show.profile',$user->id)}}">{{ $user->id }} </a></td>
                                             <td class="name">{{ucfirst($user->name)}}</td>
                                             <td class="name">{{$user->phone}}</td>
                                             <td class="name">{{$user->email}}</td>
+                                            <td class="name">{{($user->city)?$user->city->name:'N/a'}}</td>
                                             <td class="name">{{($user->assignedShipments->count())}}</td>
                                             <td class="name">{{($user->email_verified_at)?'Yes':'No'}}</td>
                                             <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>
@@ -94,7 +95,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" style="text-align: center">No User found</td>
+                                            <td colspan="10" style="text-align: center">No User found</td>
                                         </tr>
                                     @endforelse
                                     </tbody>

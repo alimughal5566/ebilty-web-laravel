@@ -24,7 +24,6 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'phone' => ['required', 'unique:users,phone'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
@@ -81,16 +80,31 @@ class AuthController extends Controller
 //        $address->zip=$request->zip;
 //        $address->form=$request->form;
 //        $address->save();
-
-
         $user->assignRole('customer');
-
         event(new Registered($user));
         return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);;
-//        dd('dd');
-//        return response()->json([
-//            'message' => 'Successfully created user!'
-//        ], 201);
+    }
+
+
+
+    public function createCracker(Request $request){
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:4'],
+            'full_name' => ['required', 'min:3'],
+            'phone' => ['required', 'unique:users,phone','min:3']
+        ]);
+        $user = new User([
+            'name' => $request->full_name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+        ]);
+        $user->save();
+        $user->assignRole('cracker');
+        event(new Registered($user));
+        return redirect()->back()->with(['success' =>'User registered successfully']);
+
     }
 
 

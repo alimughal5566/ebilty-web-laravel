@@ -42,9 +42,16 @@
                                     <div class="kt-widget12__info ">
                                         <span class="kt-widget12__desc d-inline-flex "><b>Profile Picture</b></span>
                                         <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+                                        @role('customer')
+                                        @if($user->id==auth()->user()->id)
+                                            <span data-toggle="modal" data-target="#updateProfilePic" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                        @endif
+                                        @endrole
+                                        @role('admin|driver|cracker')
                                              @if($user->edit_request==1 && $user->id==auth()->user()->id)
                                                   <span data-toggle="modal" data-target="#updateProfilePic" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                              @endif
+                                        @endrole
                                         @php $profile_image='/images/noimage.jpg'; @endphp
                                         @if($user->profile_image)
                                             @php    $profile_image= '/images/profile/'.$user->profile_image; @endphp
@@ -52,6 +59,7 @@
                                         <span class="kt-widget12__value"><img src="{{url($profile_image)}}"  alt="" width="300" ></span>
                                     </div>
                                 </div>
+                                @role('admin|driver|cracker')
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info ">
                                         <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
@@ -67,6 +75,7 @@
                                         <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
                                     </div>
                                 </div>
+
                                 <div class="kt-widget12__item">
                                         <div class="kt-widget12__info">
                                             <span class="kt-widget12__desc d-inline-flex"><b>Identity Card</b></span>
@@ -84,6 +93,7 @@
                                             </span>
                                         </div>
                                 </div>
+                                @endrole
 
                             </div>
                         </div>
@@ -110,21 +120,26 @@
 {{--                            </h4>--}}
 {{--                        @endif--}}
                         <div>
+                            @role('admin|driver|cracker')
                             @if($user->documents_verified==0)
                                 <h4 class="text-right float-right pt-3 pr-1 ">
                                     <span class="text-danger ml-2"> Not verified </span>
                                 </h4>
                             @endif
-                        @if($user->edit_request=='' && $user->edit_request!=3 && $user->id==auth()->user()->id)
-                            <span class="text-right float-right pt-4 ml-0">
-                                <a href="{{route('requestToEdit')}}"> request to edit </a>
-                            </span>
-                        @endif
-                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
-                            <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
-                        @endif
-
-
+                            @if($user->edit_request=='' && $user->edit_request!=3 && $user->id==auth()->user()->id)
+                                <span class="text-right float-right pt-4 ml-0">
+                                    <a href="{{route('requestToEdit')}}"> request to edit </a>
+                                </span>
+                            @endif
+                            @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                            @endif
+                            @endrole
+                            @role('customer')
+                                @if($user->id==auth()->user()->id)
+                                    <span data-toggle="modal" data-target="#edit3" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                                @endif
+                            @endrole
                         </div>
 
                     </div>
@@ -185,13 +200,18 @@
 {{--                            </h4>--}}
 {{--                        @endif--}}
                         <div>
-
-                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
-                            <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
-                        @endif
-
-
+                        @role('customer')
+                            @if($user->id==auth()->user()->id)
+                                <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                            @endif
+                        @endrole
+                        @role('admin|driver|cracker')
+                            @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
+                            @endif
+                        @endrole
                         </div>
+
 
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
@@ -201,19 +221,19 @@
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Country</span>
                                         <span class="kt-widget12__value">
-                                       {{($user->country)?$user->country->name:''}}
+                                       {{($user->country)?$user->country->name:'N/a'}}
                                                 </span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">State</span>
-                                        <span class="kt-widget12__value">{{($user->state)?$user->state->name:''}}</span>
+                                        <span class="kt-widget12__value">{{($user->state)?$user->state->name:'N/a'}}</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">City</span>
                                         <span class="kt-widget12__value">
-                                            {{($user->city)?$user->city->name:''}}
+                                            {{($user->city)?$user->city->name:'N/a'}}
                                             {{--                                    <span class="btn btn-label- btn-sm btn-bold btn-upper"></span>--}}
                                      <span class=" btn-bold "></span></span>
                                    </div>
@@ -461,11 +481,8 @@
                                                         </select>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </div>
 
                                     <!--end::Invoice-->
