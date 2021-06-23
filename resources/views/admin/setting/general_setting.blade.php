@@ -160,7 +160,7 @@
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Slider 1</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Home page slider</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -176,31 +176,44 @@
                                             <div class="col-lg-12 col-xl-12">
 
                                                     <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Title</th>
-                                                            <th scope="col">Description</th>
-                                                            <th scope="col">Image</th>
-                                                            <th scope="col">Buttons</th>
-                                                        </tr>
-                                                        </thead>
+{{--                                                        <thead>--}}
+{{--                                                        <tr>--}}
+{{--                                                            <th scope="col">Title</th>--}}
+{{--                                                            <th scope="col">Description</th>--}}
+{{--                                                            <th scope="col">Image</th>--}}
+{{--                                                            <th scope="col">Buttons</th>--}}
+{{--                                                        </tr>--}}
+{{--                                                        </thead>--}}
                                                         <tbody>
                                                         <tr>
                                                             <td>
+                                                                <label>Title</label>
                                                                 <input type="text" name="title" id="title" class="form-control">
                                                                 <input type="hidden" name="id" id="id" class="form-control">
                                                             </td>
-                                                            <td><textarea name="descrip" id="descrip"></textarea></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Description</label>
+                                                           <textarea class="form-control" rows="5" name="descrip" id="descrip"></textarea>
                                                             <td>
+                                                        </tr>
+                                                        <tr><td>
+                                                                <label>Backgound Image</label>
                                                                 <input type="file" name="image" class="form-control"><br>
-                                                                <img src="" id="image" width="100px" height="100px">
-                                                            </td>
-                                                            <td>
+                                                                <span class="float-right pb-1"><img src="" id="image" alt="" width="100px" height="100px"></span></td>
+                                                        </tr>
+                                                          <tr><td>
+                                                                <label>Button name</label>
                                                                 <input type="text" name="button1" id="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
+                                                                  <label>Button url</label>
                                                                 <input type="text" name="button2" id="button2" placeholder="Enter Button 1 link" class="form-control"><br>
+                                                                  <label>Button 2 name</label>
                                                                 <input type="text" name="button3" id="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
+                                                                  <label>Button 2 url</label>
                                                                 <input type="text" name="button4" id="button4" placeholder="Enter Button 2 link" class="form-control">
                                                             </td>
+                                                          </tr>
+
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -213,7 +226,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>

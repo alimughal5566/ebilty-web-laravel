@@ -263,7 +263,7 @@
           <!-- Captions container -->
               <div class="container kl-iosslide-caption kl-ioscaption--style4 s4ext fromleft klios-alignleft kl-caption-posv-middle">
               <!-- Captions animateme wrapper -->
-                  <div class="animateme" data-when="span" data-from="0" data-to="0.75" data-opacity="0.1" data-easing="linear">
+                      <div class="animateme" data-when="span" data-from="0" data-to="0.75" data-opacity="0.1" data-easing="linear">
                   <!-- Main Big Title -->
                   <h2 class="main_title has_titlebig text-center">
                   <!-- <span><strong>FAST</strong>, SAFE & ACCURATE</span> -->
