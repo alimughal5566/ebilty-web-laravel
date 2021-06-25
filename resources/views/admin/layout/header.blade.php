@@ -438,9 +438,12 @@
                <div class="kt-user-card__name">
                    {{ucfirst(auth()->user()->name)}}
                </div>
-               <!--<div class="kt-user-card__badge kt-hidden">
-                  <span class="btn btn-success btn-sm btn-bold btn-font-md">0 messages</span>
-                  </div>-->
+                <div>
+{{--                    login as: {{(auth()->user()->hasRole('driver')?'Driver':'')}}--}}
+                </div>
+{{--             <div class="kt-user-card__badge ">--}}
+{{--                  <span class="btn btn-success btn-sm btn-bold btn-font-md">Login as: {{auth()->user()->role}}</span>--}}
+{{--                  </div>--}}
             </div>
             <!--end: Head -->
             <!--begin: Navigation -->

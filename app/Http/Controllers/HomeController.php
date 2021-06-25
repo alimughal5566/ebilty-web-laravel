@@ -6,6 +6,7 @@ use App\City;
 use App\Country;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Vehicle;
+use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
 use App\phoneVerification;
 use App\ShipmentArea;
@@ -38,7 +39,6 @@ class HomeController extends Controller
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         }
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver'])){
-//            dd(auth()->user()->city_id);
 //           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
 //           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
            $shipments    = Shippment::
@@ -163,8 +163,19 @@ class HomeController extends Controller
             'roles', function($q){
             $q->where('name', 'cracker');
         }
-        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+        )->with('city','myDrivers')->get();
+
         return view('admin.crackers', compact('users'));
+    }
+
+    public function myDrivers(){
+        $users = User::where('created_by',auth()->user()->id)->whereHas(
+            'roles', function($q){
+            $q->where('name', 'brocker_driver');
+        }
+        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+        $vehicles_cat= VehicleCategory::all();
+        return view('user.my_users', compact('users','vehicles_cat'));
     }
 
     public function shipments(){

@@ -1,4 +1,5 @@
 @extends('admin.layout.app')
+@section('title', 'Dashboard')
 @section('content')
     {{--    <link rel="stylesheet" href="http://127.0.0.1:8002/themes/spotlayer/assets/admin/css/demo1/style.bundle.css">--}}
     <style>

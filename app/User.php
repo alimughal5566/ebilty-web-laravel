@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone','profile_image','country_id','state_id','city_id'
+        'name', 'email', 'password','phone','profile_image','country_id','state_id','city_id','created_by'
     ];
 
     /**
@@ -56,6 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function city()
     {
         return $this->belongsTo('App\City','city_id','id');
+    }
+     public function myDrivers(){
+        return $this->hasMany($this, 'created_by','id');
     }
 
 

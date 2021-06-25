@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       <link rel="icon" href="{{url('images/logo.png')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -107,8 +108,8 @@
                         <div class="logo-container hasInfoCard logosize--yes navbar navbar-expand-lg">
                            <!-- Logo -->
                            <h1 class="site-logo logo" id="logo">
-                              <a href="http://ebilty.com/en" title="">
-                              <img src="http://ebilty.com/storage/app/uploads/public/605/b24/19b/605b2419bf83e815997404.png" class="logo-img" alt="eBilty" title="eBilty">
+                              <a href="{{route('index')}}" title="">
+                              <img src="{{url('uploads/logos/company-logo.png')}}" class="logo-img" alt="" title="eBilty">
                               </a>
                            </h1>
                            <div class="separator visible-xxs"></div>

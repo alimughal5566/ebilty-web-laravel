@@ -421,6 +421,7 @@
                 </div>
                 <!--end:: Widgets/Order Statistics-->
             </div>
+
         </div>
         <div class="row">
             <div class="col-xl-6">
@@ -440,7 +441,7 @@
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Name</span>
                                         <span class="kt-widget12__value">
-                                                         {{$shipment->sender->user->name}}
+                                            {{$shipment->sender->user->name}}
                                              </span>
                                     </div>
                                     <div class="kt-widget12__info">
@@ -563,6 +564,44 @@
                 </div>
                 <!--end:: Widgets/Order Statistics-->
             </div>
+            @if($shipment->packages->count()>0)
+            <div class="col-xl-12">
+                <!--begin:: Widgets/Order Statistics-->
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Package Information
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body kt-portlet__body--fluid">
+
+                        <div class="kt-widget12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Package Type</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Dimensions</th>
+                                </tr>
+                            @foreach($shipment->packages as $i=>$package)
+                                    <tr>
+                                      <td>{{++$i}}</td>
+                                      <td>{{ $package->category->name}}</td>
+                                      <td>{{ $package->description}}</td>
+                                      <td>{{ $package->quantity}}</td>
+                                      <td>{{ $package->length}}x{{ $package->width}}x{{ $package->height}}</td>
+                                  </tr>
+                          @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--end:: Widgets/Order Statistics-->
+            </div>
+            @endif
             <div class="col-xl-12">
                 <!--begin:: Widgets/Order Statistics-->
                 <div class="kt-portlet kt-portlet--height-fluid">
@@ -632,50 +671,48 @@
       $zoom=3;
     }
 
-
 @endphp
+
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{env('G_MAP_KEY')}}&callback=initMap" async></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
     <script>
     @if (\Session::has('success'))
-       toastr.success('{!! \Session::get('success') !!}', 'Created successfully');
+       toastr.success( 'Shipment Created successfully');
     @endif
-    function initMap(){
+{{--    function initMap(){--}}
+{{--        const map = new google.maps.Map(document.getElementById("map"), {--}}
+{{--            zoom: {{$zoom}},--}}
+{{--            center: { lat: {{$shipment->sender->lat}}, lng: {{$shipment->sender->lng}} },--}}
+{{--        });--}}
+{{--        const tourStops = [--}}
+{{--            [{ lat: {{$shipment->receiver->lat}}, lng:  {{$shipment->receiver->lng}} }, "{{$shipment->receiver->address}}"],--}}
+{{--            [{ lat: {{$shipment->sender->lat}}, lng:  {{$shipment->sender->lng}} }, "{{$shipment->sender->address}}"],--}}
+{{--        ];--}}
+{{--        const infoWindow = new google.maps.InfoWindow();--}}
+{{--        tourStops.forEach(([position, title], i) => {--}}
+{{--            const marker = new google.maps.Marker({--}}
+{{--                position,--}}
+{{--                map,--}}
+{{--                title: `${i + 1}. ${title}`,--}}
+{{--                label: `${i + 1}`,--}}
+{{--                optimized: false,--}}
+{{--                animation: google.maps.Animation.DROP,--}}
 
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: {{$zoom}},
-            center: { lat: {{$shipment->sender->lat}}, lng: {{$shipment->sender->lng}} },
-        });
-        const tourStops = [
-            [{ lat: {{$shipment->receiver->lat}}, lng:  {{$shipment->receiver->lng}} }, "{{$shipment->receiver->address}}"],
-            [{ lat: {{$shipment->sender->lat}}, lng:  {{$shipment->sender->lng}} }, "{{$shipment->sender->address}}"],
-        ];
-        const infoWindow = new google.maps.InfoWindow();
-        tourStops.forEach(([position, title], i) => {
-            const marker = new google.maps.Marker({
-                position,
-                map,
-                title: `${i + 1}. ${title}`,
-                label: `${i + 1}`,
-                optimized: false,
-                animation: google.maps.Animation.DROP,
-
-            });
-            // Add a click listener for each marker, and set up the info window.
-            marker.addListener("click", () => {
-                infoWindow.close();
-                infoWindow.setContent(marker.getTitle());
-                infoWindow.open(marker.getMap(), marker);
-            });
-        });
-    }
+{{--            });--}}
+{{--            // Add a click listener for each marker, and set up the info window.--}}
+{{--            marker.addListener("click", () => {--}}
+{{--                infoWindow.close();--}}
+{{--                infoWindow.setContent(marker.getTitle());--}}
+{{--                infoWindow.open(marker.getMap(), marker);--}}
+{{--            });--}}
+{{--        });--}}
+{{--    }--}}
 
 
 
     function getLatlong() {
-        {{--alert("https://maps.google.com/maps/dir/{{$shipment->receiver->lat}},{{$shipment->receiver->lng}}/{{$shipment->sender->lat}},{{$shipment->sender->lng}}")--}}
         window.open("https://maps.google.com/maps/dir/{{$shipment->receiver->lat}},{{$shipment->receiver->lng}}/{{$shipment->sender->lat}},{{$shipment->sender->lng}}", "_blank");
     }
 </script>

@@ -1,5 +1,5 @@
 @extends('admin.layout.app')
-
+@section('title', 'Users')
 @section('content')
 
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">

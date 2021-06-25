@@ -125,9 +125,9 @@
                                         <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit kt-margin-t-0"></div>
                                         <div class="row">
                                             <div class="form-group col-lg-6">
-                                                <label>Shipping Date&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <label>Shipping Date<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                 <div class="input-group date">
-                                                    <input type="date" class="form-control date" name="ship_date" value="{{old('ship_date')}}" >
+                                                    <input type="date" class="form-control date" name="ship_date" value="{{old('ship_date')}}" required>
                                                     <div class="input-group-append">
 {{--                                      <span class="input-group-text">--}}
 {{--                                       <i class="la la-calendar"></i>--}}
@@ -136,9 +136,9 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-lg-6">
-                                                <label>Shipping Time    <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <label>Shipping Time <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                 <div class="input-group ">
-                                                    <input type="time" class="form-control ship_time" name="ship_time" value="{{old('ship_time')}}" >
+                                                    <input type="time" class="form-control ship_time" name="ship_time" value="{{old('ship_time')}}"  required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -166,11 +166,11 @@
                                        </span>
                                                         </label>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <h3 class="kt-section__title kt-margin-b-5 pt-1">
-                                                            &nbsp;<span class=""></span>
-                                                        </h3>
-                                                        <label class="kt-option">
+                                    <div class="col-lg-6">
+                                        <h3 class="kt-section__title kt-margin-b-5 pt-1">
+                                            &nbsp;<span class=""></span>
+                                        </h3>
+                                        <label class="kt-option">
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
                                        <input type="radio" name="dilivery_type" class="dilivery_typ" value="2" {{(old('dilivery_type')==2)?'checked':''}} >
@@ -270,19 +270,19 @@
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="kt-portlet__body">
-                                    <div class="form-group form-group-last kt-hide">
-                                        <div class="alert alert-danger kt_form_msg" role="alert">
-                                            <div class="alert-icon"><i class="flaticon-warning"></i></div>
-                                            <div class="alert-text">
-                                                Oh snap! Change a few things up and try submitting again.
-                                            </div>
-                                            <div class="alert-close">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="form-group form-group-last kt-hide">--}}
+{{--                                        <div class="alert alert-danger kt_form_msg" role="alert">--}}
+{{--                                            <div class="alert-icon"><i class="flaticon-warning"></i></div>--}}
+{{--                                            <div class="alert-text">--}}
+{{--                                                Oh snap! Change a few things up and try submitting again.--}}
+{{--                                            </div>--}}
+{{--                                            <div class="alert-close">--}}
+{{--                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                                                    <span aria-hidden="true"><i class="la la-close"></i></span>--}}
+{{--                                                </button>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="base_sender ">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -304,7 +304,7 @@
                                                     <div class="dropdown bootstrap-select form-control ">
                                                         <select class="form-control sender_address" placeholder=" Address" onchange="showsenderform(this.value)" name="sender_address" id="sender_address_id" data-live-search="true" title="Sender address"  tabindex="-98">
                                                             @foreach($addresses as $address)
-                                                                <option value="{{$address->id}}" {{(old('sender_address')==$address->id)?'selected':''}} {{($address->is_default==1)?"selected sender-id='.$address->id.'":''}} >{{$address->address}} </option>
+                                                                <option value="{{$address->id}}" {{(old('sender_address')==$address->id)?'selected':''}} {{($address->is_default==1)?'selected':''}} >{{$address->address}} </option>
                                                             @endforeach
                                                             <option value="new" data-icon="flaticon2-add">Add New</option>
                                                         </select>
@@ -757,78 +757,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="location-receiver">
-{{--                                                        <div class="row">--}}
-
-{{--                                                            <div class="form-group col-md-4">--}}
-{{--                                                                <div class="form-group kt-form__group--inline">--}}
-{{--                                                                    --}}{{--                                                                        <div class="kt-form__label">--}}
-{{--                                                                    --}}{{--                                                                            <label class="col-form-label">Address:<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                    --}}{{--                                                                        </div>--}}
-{{--                                                                    <div class="kt-form__control">--}}
-{{--                                                                        <label>Address<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                        <input type="text" class="form-control email" name="receiver[address]" id="r_add" >--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-
-{{--                                                            </div>--}}
-
-{{--                                                            <div class="form-group col-lg-6">--}}
-{{--                                                                <label>Country<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
-{{--                                                                    <select class="form-control country_id" onchange="getStates(this.value,'r_statees')" id="r_country"  title="Please write address first" name="receiver[country]"  >--}}
-{{--                                                                        <option data-hidden="true"></option>--}}
-{{--                                                                        @foreach($countries as $country)--}}
-{{--                                                                            <option  value="{{$country->id}}">{{$country->name}}</option>--}}
-{{--                                                                        @endforeach--}}
-{{--                                                                    </select>--}}
-{{--                                                                    <div class="dropdown-menu ">--}}
-{{--                                                                        <div class="inner show" role="listbox" id="bs-select-25" tabindex="-1">--}}
-{{--                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
-{{--                                                                        </div>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-
-{{--                                                            <div class="form-group col-lg-4">--}}
-{{--                                                                <label>State<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
-{{--                                                                    <select name="sta" class="form-control" id="r_statees"  onchange="getCities(this.value,'r_cityy')"   title="Please select country first" >--}}
-{{--                                                                        --}}{{--                                                                            <option value="" selected="" disabled="">Vehicle category</option>--}}
-{{--                                                                    </select>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="form-group col-lg-4">--}}
-{{--                                                                <label>City<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                <div class="dropdown bootstrap-select form-control ">--}}
-{{--                                                                    <select class="form-control cities" id="r_cityy" name="receiver[city]" onchange="getArea(this.value,'r_areaa')"  title="Please select state first" data-live-search="true"  tabindex="-98">--}}
-{{--                                                                        <option data-hidden="true"></option>--}}
-{{--                                                                    </select>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-
-{{--                                                            <div class="form-group col-lg-4">--}}
-{{--                                                                <label>Area<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
-{{--                                                                <div class="dropdown bootstrap-select form-control area_id">--}}
-{{--                                                                    <select class="form-control areas" data-receiver="sublocality" id="r_areaa" name="receiver[area]" title="Please select city first" data-live-search="true" tabindex="-98">--}}
-{{--                                                                        --}}{{--                                                                            <option class="bs-title-option" value=""></option>--}}
-{{--                                                                        <option data-hidden="true"></option>--}}
-{{--                                                                    </select>--}}
-{{--                                                                    <div class="dropdown-menu ">--}}
-{{--                                                                        <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-17" aria-autocomplete="list"></div>--}}
-{{--                                                                        <div class="inner show" role="listbox" id="bs-select-17" tabindex="-1">--}}
-{{--                                                                            <ul class="dropdown-menu inner show" role="presentation"></ul>--}}
-{{--                                                                        </div>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="form-group col-lg-6">--}}
-{{--                                                                <label>Postal Code</label>--}}
-{{--                                                                <input class="form-control postal_code" type="text" id="r_postal" name="receiver[postal_code]" placeholder="Area Zip code">--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-                                                        {{--                                                     <input type="password" class="form-control r_password" name="receiver[password]" >--}}
-                                                    </div>
+                                                    <div class="location-receiver"></div>
                                                 </div>
                                                 <div class="kt-portlet__foot">
                                                     <div class="row align-items-center">
@@ -1077,28 +1006,16 @@
                                 </div>
                             </div>
                             <div id="collapseTFour" class="panel-collapse collapse">
-                                <div class="kt-portlet__body">
-                                    <div class="form-group form-group-last kt-hide">
-                                        <div class="alert alert-danger kt_form_msg" role="alert">
-                                            <div class="alert-icon"><i class="flaticon-warning"></i></div>
-                                            <div class="alert-text">
-                                                Oh snap! Change a few things up and try submitting again.
-                                            </div>
-                                            <div class="alert-close">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-section">
-                                        <h3 class="kt-section__title kt-margin-b-20">
-                                            Package Content <span class="kt-badge kt-badge--danger kt-badge--dot"></span>
+                                <div class="kt-portlet__body pt-1" >
+                                    <div class="kt-section mb-0">
+                                        <h3 class=" mb-1 mt-1">
+                                            Package Content
                                         </h3>
-                                        <div class="kt-section__content">
-                                            <div class="form-group form-group-last row" id="package_repeater">
-                                                <div class="pakg p-3">
-                                                    <div class="form-group form-group-last row" id="package_repeater">
+
+                                        <div class="kt-section__content m-1">
+                                            <div class="form-group form-group-last row" >
+                                                <div class="pakg  pb-0 m-3">
+                                                    <div class="form-group form-group-last row" >
                                                         <div data-repeater-list="items" class="col-lg-12">
                                                             <div data-repeater-item class="align-items-center">
                                                                 <div class="form-group row">
@@ -1109,7 +1026,7 @@
                                                                             </div>
                                                                             <div class="kt-form__control">
 
-                                                                                <select class="form-control selectpicker" data-live-search="true" name="category_id" >
+                                                                                <select class="form-control selectpicker" data-live-search="true" name="category_id[]" >
                                                                                     <option data-hidden="true">Choose package type</option>
                                                                                     @foreach($shipment_packages as $package)
                                                                                         <option value="{{$package->id}}">{{$package->name}}</option>
@@ -1125,7 +1042,7 @@
                                                                                 <label class="kt-label m-label--single">Description:</label>
                                                                             </div>
                                                                             <div class="kt-form__control">
-                                                                                <input type="text" class="form-control" name="description" value="{{old('description')}}" placeholder="package description">
+                                                                                <input type="text" class="form-control" name="description[]"  placeholder="package description">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1136,7 +1053,7 @@
                                                                                 <label class="kt-label m-label--single">Quantity:</label>
                                                                             </div>
                                                                             <div class="kt-form__control">
-                                                                                <input type="text" class="form-control bootstrap-touchspin-vertical-btn" name="quantity"  placeholder="package quantity" value="{{old('quantity')}}">
+                                                                                <input type="text" class="form-control bootstrap-touchspin-vertical-btn" name="quantity[]"  placeholder="package quantity" >
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1149,7 +1066,7 @@
                                                                             <div class="kt-form__control">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>
-                                                                                    <input type="text" class="form-control bootstrap-touchspin-vertical-btn sub_weight" name="weight" value="{{old('weight')}}" >
+                                                                                    <input type="text" class="form-control bootstrap-touchspin-vertical-btn sub_weight" name="weight[]"  placeholder="Weight" >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1163,52 +1080,40 @@
                                                                             <div class="kt-form__control">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="length" style="max-width: 100px;" value="{{old('length')}}">
-                                                                    </span>
+                                                                                <span class="input-group-text">
+                                                                                    <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="length[]" style="max-width: 100px;" >
+                                                                                </span>
                                                                                     </div>
                                                                                     <div class="input-group-prepend"><span class="input-group-text">x</span></div>
                                                                                     <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="width" style="max-width: 100px;"  value="{{old('width')}}">
-                                                                    </span>
+                                                                                    <span class="input-group-text">
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="width[]" style="max-width: 100px;" >
+                                                                                    </span>
                                                                                     </div>
                                                                                     <div class="input-group-prepend"><span class="input-group-text">x</span></div>
                                                                                     <div class="input-group-append">
-                                                                    <span class="input-group-text">
-                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="height" style="max-width: 100px;" value="{{old('height')}}">
-                                                                    </span>
+                                                                                    <span class="input-group-text">
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="height[]" style="max-width: 100px;" >
+                                                                                    </span>
                                                                                     </div>
+
+
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        {{--                                                              <div class="d-md-none kt-margin-b-10"></div>--}}
-                                                                    </div>
+
+                                                                    </div> </div>
 
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {{--                                              <div class="form-group form-group-last row">--}}
-                                                        {{--                                                  <label class="col-xl-12 col-form-label kt-align-right">--}}
-                                                        {{--                                                      <a href="javascript:;" data-repeater-create="" class="btn btn-bold btn-sm btn-label-brand">--}}
-                                                        {{--                                                          <i class="la la-plus"></i> Add Item--}}
-                                                        {{--                                                      </a>--}}
-                                                        {{--                                                  </label>--}}
-                                                        {{--                                              </div>--}}
                                                     </div>
                                                 </div>
-
-
-
-
                                             </div>
                                         </div>
+
+                                        <div class="packagerepeatorText"></div>
+                                        <span class="fa fa-plus text-warning pl-2" style="cursor: pointer" onclick="packagerepeator()"> Add more</span>
                                     </div>
-
-
-
-
-
                                     <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
                                     <div class="kt-section">
                                         <div class="kt-section__content">
@@ -1298,7 +1203,7 @@
                                                     <label>Total Weight&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>
-                                                        <input readonly="" type="text" class="form-control  total_weight" name="total_weight" value="{{old('total_weight',0)}}">
+                                                        <input  type="text" class="form-control total_weight" name="total_weight" value="{{old('total_weight')}}" placeholder="Packages total weight">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1396,8 +1301,8 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('G_MAP_KEY')}}&libraries=places&callback=initialize&libraries=places" async></script>
-{{--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfh-Jh-Vn1Lf2TeP9g9cf5bzRbX1gnFZ4&libraries=places&callback=initialize1&libraries=places" async></script>--}}
+{{--    <script src="https://maps.googleapis.com/maps/api/js?key={{env('G_MAP_KEY')}}&libraries=places&callback=initialize&libraries=places" async></script>--}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfh-Jh-Vn1Lf2TeP9g9cf5bzRbX1gnFZ4&libraries=places&callback=initialize1&libraries=places" async></script>
 
     <script>
         @if (\Session::has('success'))
@@ -2160,6 +2065,116 @@
                $('#receiver_address_id').selectpicker('refresh');
            }
         });
+
+        var i=0;
+        function packagerepeator() {
+        var text= `
+                 <div class="kt-section__content m-1 div_${i}">
+                                            <div class="form-group form-group-last row" >
+                                                <div class="pakg  pb-0 m-3">
+                                                    <div class="form-group form-group-last row" >
+                                                        <div data-repeater-list="items" class="col-lg-12">
+                                                            <div data-repeater-item class="align-items-center">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label>Package type:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <select class="form-control"  name="category_id[]" >
+                                                                                    <option data-hidden="true">Choose package type</option>
+                                                                                    @foreach($shipment_packages as $package)
+                                                                                         <option value="{{$package->id}}">{{$package->name}}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label class="kt-label m-label--single">Description:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="text" class="form-control" name="description[]"  placeholder="Package description">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label class="kt-label m-label--single">Quantity:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input type="text" class="form-control bootstrap-touchspin-vertical-btn" name="quantity[]"  placeholder="package quantity" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label class="kt-label m-label--single">Weight:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>
+                                                                                    <input type="text" class="form-control bootstrap-touchspin-vertical-btn sub_weight" name="weight[]"  placeholder="Weight" >
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label class="kt-label m-label--single">Dimensions&nbsp;<i class="flaticon2-delivery-package"></i>&nbsp;[Length&nbsp;x&nbsp;Width&nbsp;x&nbsp;Height] (cm):</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                <span class="input-group-text">
+                                                                                    <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="length[]" style="max-width: 100px;" >
+                                                                                </span>
+                                                                                    </div>
+                                                                                    <div class="input-group-prepend"><span class="input-group-text">x</span></div>
+                                                                                    <div class="input-group-prepend">
+                                                                                    <span class="input-group-text">
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="width[]" style="max-width: 100px;" >
+                                                                                    </span>
+                                                                                    </div>
+                                                                                    <div class="input-group-prepend"><span class="input-group-text">x</span></div>
+                                                                                    <div class="input-group-append">
+                                                                                    <span class="input-group-text">
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="height[]" style="max-width: 100px;" >
+                                                                                    </span>
+                                                                                    </div>
+
+
+                                                                                   <span  style="cursor:pointer" onclick=minus('${i}') class='fa fa-times-circle pt-4 ml-3 text-danger'></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                         </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+`
+            i++;
+            $('.packagerepeatorText').append(text);
+
+        }
+        function minus(i) {
+$('.div_'+i).hide();
+        }
 
 
 
