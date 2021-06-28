@@ -180,7 +180,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="add_vehicle_form" method="get" >
+                    <form id="add_vehicle_form" method="get" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-2"></div>
@@ -192,6 +192,12 @@
                                             <div class="col-lg-9 col-xl-9">
                                                 <input class="form-control" type="text" id="name" name="name" placeholder="Enter Vehicle" required="">
                                                 <input class="form-control" type="hidden" id="status" status="name" value="1" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <input class="form-control" accept="image/png" type="file" id="image" name="image" required="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -280,15 +286,27 @@
     <script>
         $('#add_vehicle_form').on('submit', function(e) {
             e.preventDefault();
+            const fileInput = document.querySelector("#cnic");
+            fileInput.addEventListener("change", (e) => {
+                // get a reference to the file
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    $('#image').val(reader.result);
+                    console.log(reader.result);
+                };
+                reader.readAsDataURL(file);
+                // console.log(reader.readAsDataURL(file));
+            });
+
             var url = '{{route('admin.setting.add_vehicle')}}';
-            var token = $('#_token').val();
+
             var name = $('#name').val();
-            var status = $('#status').val();
             var cat = $("#veh_cat").find(":selected").val();
             $.ajax({
                 type: "get",
                 url: url,
-                data: {name:name, status:status, cat: cat},
+                data: {name: name, cat: cat, image: dataUrl},
                 success: function( msg ) {
                     $("#save_msg").html()
                     $('#add_vehicle').modal('hide');
@@ -309,6 +327,19 @@
                 }
             });
         });
+        function getDataUrl(img) {
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            // Set width and height
+            canvas.width = img.width;
+            canvas.height = img.height;
+            // Draw the image
+            ctx.drawImage(img, 0, 0);
+            return canvas.toDataURL('image/png');
+        }
+        // Select the image
+
         $('#edit_vehicle_form').on('submit', function(e) {
             e.preventDefault();
             var url = '{{route('admin.setting.update_vehicle')}}';
@@ -415,6 +446,7 @@
                 }
             });
         }
+
     </script>
 @stop
 

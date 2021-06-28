@@ -26,6 +26,7 @@ class VehicleController extends Controller
         return view('admin.setting.vehicle', compact('types', 'cats'));
     }
     public function add_vehicle(Request $request){
+        dd($request->all());
         $type = new Vehicle();
         $type->name = $request->name;
         $type->vehicle_category_id = $request->cat;

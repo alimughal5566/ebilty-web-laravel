@@ -1,4 +1,5 @@
 @extends('admin.layout.app')
+@section('title', 'Settings')
 
 @section('content')
 
@@ -106,7 +107,7 @@
                         </style>
                         <div class="kt-portlet__head">
                             <div class="kt-portlet__head-label">
-                                <h3 class="kt-portlet__head-title">General Setting(s)</h3>
+                                <h3 class="kt-portlet__head-title">Home Page Setting(s)</h3>
                             </div>
                         </div>
                         <div id="save_msg" style="margin-top: 5px !important; background-color: #c2ffcc !important; display: none; color: #08751a !important; border: 1px solid; border-radius: 8px !important; border-color: green !important; padding: 5px!important; text-align: center; font-size: 25px !important;"></div>
@@ -130,20 +131,17 @@
                                             <td class="name">{{$setting->page_name}}</td>
                                             <td > {{$setting->section_name}} </td>
                                             <td >
-                                                @if($setting->status == 0)
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" onchange="make_status_active({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @else
-                                                    <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$setting->id}}" checked onchange="make_status_inactive({{$setting->id}})">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                @endif
+                                                <label class="switch">
+                                                    <input type="checkbox" class="text-warning" id="type_status{{$setting->id}}" {{ $setting->status == 1 ? 'checked' : '' }} onchange="update_status({{$setting->id}})">
+                                                    <span class="slider round"></span>
+                                                </label>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a>
+                                                @if($setting->id < 5)
+                                                    <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @else
+                                                    <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty
@@ -162,18 +160,18 @@
         </div>
     </div>
     <!-- end:: Content -->
-    <div class="modal fade" id="id_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="homepage_slider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Slider 1</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Home page slider</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post" action="{{route('admin.setting.save_homepage_slider1')}}" enctype="multipart/form-data">
+                    <form  method="post" action="{{route('admin.setting.save_homepage_slider')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -183,27 +181,44 @@
                                             <div class="col-lg-12 col-xl-12">
 
                                                     <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Title</th>
-                                                            <th scope="col">Description</th>
-                                                            <th scope="col">Image</th>
-                                                            <th scope="col">Buttons</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                        </thead>
+{{--                                                        <thead>--}}
+{{--                                                        <tr>--}}
+{{--                                                            <th scope="col">Title</th>--}}
+{{--                                                            <th scope="col">Description</th>--}}
+{{--                                                            <th scope="col">Image</th>--}}
+{{--                                                            <th scope="col">Buttons</th>--}}
+{{--                                                        </tr>--}}
+{{--                                                        </thead>--}}
                                                         <tbody>
                                                         <tr>
-                                                            <td><input type="text" name="title1" class="form-control"></td>
-                                                            <td><textarea name="descrip1" ></textarea></td>
-                                                            <td><input type="file" name="image1" class="form-control"></td>
                                                             <td>
-                                                                <input type="text" name="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
-                                                                <input type="text" name="button2" placeholder="Enter Button 1 link" class="form-control"><br>
-                                                                <input type="text" name="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
-                                                                <input type="text" name="button4" placeholder="Enter Button 2 link" class="form-control">
+                                                                <label>Title</label>
+                                                                <input type="text" name="title"  placeholder="Title"  id="title" class="form-control">
+                                                                <input type="hidden" name="id" id="id" class="form-control">
                                                             </td>
-                                                            <td><input type="checkbox" name="status1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Description</label>
+                                                           <textarea class="form-control" rows="5" name="descrip" id="descrip"></textarea>
+                                                            <td>
+                                                        </tr>
+                                                        <tr><td>
+                                                                <label>Backgound Image</label>
+                                                                <input type="file" name="image" class="form-control"><br>
+                                                                <span class="float-right pb-1"><img src="" id="image" alt="" width="100px" height="100px"></span></td>
+                                                        </tr>
+                                                          <tr><td>
+                                                                <label>Button name</label>
+                                                                <input type="text" name="button1" id="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
+                                                                  <label>Button url</label>
+                                                                <input type="text" name="button2" id="button2" placeholder="Enter Button 1 link" class="form-control"><br>
+                                                                  <label>Button 2 name</label>
+                                                                <input type="text" name="button3" id="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
+                                                                  <label>Button 2 url</label>
+                                                                <input type="text" name="button4" id="button4" placeholder="Enter Button 2 link" class="form-control">
+                                                            </td>
+                                                          </tr>
+
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -216,7 +231,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +295,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +359,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-warning btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -408,7 +423,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -449,7 +464,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
                                                         <td><input type="text" name="tagline" class="form-control"></td>
                                                         <td>
                                                             <input type="file" name="body_image" class="form-control">
@@ -467,7 +482,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -508,8 +523,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control" ></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -524,7 +539,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -565,8 +580,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"  placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -581,7 +596,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -622,8 +637,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -638,7 +653,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -679,8 +694,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description"  class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -695,7 +710,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -734,7 +749,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" placeholder="Title" name="title" class="form-control"></td>
                                                         <td><textarea name="details" ></textarea></td>
                                                         <td><input type="file" name="body_image" class="form-control"></td>
                                                     </tr>
@@ -750,7 +765,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -789,7 +804,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" name="title"   placeholder="Title" class="form-control"></td>
                                                         <td><input name="details" class="form-control" ></td>
                                                         <td><input type="file" name="image" class="form-control"></td>
                                                     </tr>
@@ -805,7 +820,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -814,9 +829,28 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
 
     <script>
+        @if (\Session::has('success'))
+            toastr.success('{!! \Session::get('success') !!}');
+        @endif
+        function show_data_modal(content, id){
+            if(id < 5){
+                $('#homepage_slider').modal('show');
+                $('#title').val(content.title)
+                $('#descrip').val(content.description)
+                $('#button1').val(content.button1_title)
+                $('#button2').val(content.button1_link)
+                $('#button3').val(content.button2_title)
+                $('#button4').val(content.button2_link)
+                $('#id').val(id)
+                var path = '{{asset('setting/sliders')}}'+'/'+content.image
+                $("#image").attr("src",path);
+            }
+        }
         $('#edit_payment_form').on('submit', function(e) {
             e.preventDefault();
             var url = '{{route('admin.setting.update_package_type')}}';
@@ -843,7 +877,7 @@
                     }else{
                         toggle_button = '<label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>'
                     }
-                    markup = '<tr><td>  </td><td>'+ msg.row.name + '</td>><td>'+ toggle_button +'</td><td> <a onclick="delete_payment_type('+ msg.row.id +')" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_package_type('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
+                    markup = '<tr><td>  </td><td>'+ msg.row.name + '</td>><td>'+ toggle_button +'</td><td> <a onclick="delete_payment_type('+ msg.row.id +')" class="btn btn-primary btn-lg w-50"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_package_type('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
                     tableBody = $("#payment_type_table tbody");
                     // tableBody.append(markup);
                     setTimeout(function(){ $("#save_msg").remove(); }, 3000);
@@ -885,20 +919,19 @@
                 }
             });
         }
-        function make_status_active(id){
-            $(this).parents('tr').first().remove();
-            var url = '{{route('admin.setting.make_status_active_setting')}}'
+        function update_status(id){
+
+            var url = '{{route('admin.setting.homepage_update_status')}}'
+            var status = 0;
+            if($('#type_status'+id).is(':checked')){
+                status = 1;
+            }
             $.ajax({
                 type: "get",
                 url: url,
-                data: {id:id},
+                data: {id:id, status: status},
                 success: function( msg ) {
-                    $("#save_msg").html()
-                    $('#save_msg').css('display','block');
-                    $('#save_msg').css('background-color','#c2ffcc');
-
-                    $("#save_msg").append(msg.msg);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
+                    toastr.success('Status has been updated')
                 }
             });
         }

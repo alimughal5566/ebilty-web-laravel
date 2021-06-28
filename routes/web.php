@@ -14,24 +14,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontEndController@index')->name('index');
+Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
+Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
 
-Route::get('/landingPage', function () {
-    return view('landingpage');
+Route::get('/clear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('storage:link');
+    return "Cleared!";
 });
-
 Auth::routes(['verify' => true]);
 
 Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
 Route::post('/register_user', 'auth\RegisterController@register_user')->name('register_user');
 Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehicles');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
-    Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
+    Route::get('/customers', 'HomeController@customers')->name('admin.customers');
+    Route::get('/crackers', 'HomeController@crackers')->name('admin.crackers');
 
+    Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
+    Route::get('/shipments', 'HomeController@shipments')->name('admin.shipments');
+    Route::get('/doc_verify/{id?}', 'HomeController@docVerify')->name('docVerify');
+    Route::get('/edit-request-approve/{id?}', 'HomeController@approveEditRequest')->name('approveEditRequest');
+
+    Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
+        Route::get('/dashboard_setting', 'GeneralSettingController@dashboard')->name('admin.setting.dashboard_setting');
+        Route::post('/add-advertisement', 'GeneralSettingController@addAdvertisement')->name('addAdvertisement');
+        Route::post('/save_homepage_slider', 'GeneralSettingController@save_homepage_slider')->name('admin.setting.save_homepage_slider');
         Route::post('/save_homepage_slider1', 'GeneralSettingController@save_homepage_slider1')->name('admin.setting.save_homepage_slider1');
         Route::post('/save_homepage_slider2', 'GeneralSettingController@save_homepage_slider2')->name('admin.setting.save_homepage_slider2');
         Route::post('/save_homepage_slider3', 'GeneralSettingController@save_homepage_slider3')->name('admin.setting.save_homepage_slider3');
@@ -43,8 +57,9 @@ Route::prefix('admin')->group(function() {
         Route::post('/save_homepage_card3', 'GeneralSettingController@save_homepage_card3')->name('admin.setting.save_homepage_card3');
         Route::post('/save_homepage_card4', 'GeneralSettingController@save_homepage_card4')->name('admin.setting.save_homepage_card4');
         Route::post('/save_faq_banner', 'GeneralSettingController@save_faq_banner')->name('admin.setting.save_faq_banner');
-        Route::get('/make_status_active_setting', 'GeneralSettingController@make_status_active_setting')->name('admin.setting.make_status_active_setting');
+        Route::get('/homepage_update_status', 'GeneralSettingController@homepage_update_status')->name('admin.setting.homepage_update_status');
         Route::get('/make_status_inactive_setting', 'GeneralSettingController@make_status_inactive_setting')->name('admin.setting.make_status_inactive_setting');
+        Route::get('/advertisementStatusUpdate', 'GeneralSettingController@advertisementStatusUpdate')->name('advertisementStatusUpdate');
         Route::get('/get_payment_type', 'ShipmentController@get_payment_type')->name('admin.setting.get_payment_type');
         Route::get('/add_payment_type', 'ShipmentController@add_payment_type')->name('admin.setting.add_payment_type');
         Route::get('/delete_payment_type', 'ShipmentController@delete_payment_type')->name('admin.setting.delete_payment_type');
@@ -60,7 +75,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/make_status_active_package_type', 'PackageTypeController@make_status_active_package_type')->name('admin.setting.make_status_active_package_type');
         Route::get('/make_status_inactive_package_type', 'PackageTypeController@make_status_inactive_package_type')->name('admin.setting.make_status_inactive_package_type');
         Route::get('/vehicle_category', 'VehicleCategoryController@index')->name('admin.setting.vehicle_category');
-        Route::get('/add_vehicle_type', 'VehicleCategoryController@add_vehicle_type')->name('admin.setting.add_vehicle_type');
+        Route::post('/add_vehicle_type', 'VehicleCategoryController@add_vehicle_type')->name('admin.setting.add_vehicle_type');
         Route::get('/edit_vehicle_category', 'VehicleCategoryController@edit_vehicle_category')->name('admin.setting.edit_vehicle_category');
         Route::get('/update_vehicle_category', 'VehicleCategoryController@update_vehicle_category')->name('admin.setting.update_vehicle_category');
         Route::get('/delete_vehicle_category', 'VehicleCategoryController@delete_vehicle_category')->name('admin.setting.delete_vehicle_category');
@@ -80,13 +95,51 @@ Route::prefix('admin')->group(function() {
         Route::get('/delete_qas', 'GeneralSettingController@delete_qas')->name('admin.setting.delete_qas');
         Route::get('/make_status_inactive_qas', 'GeneralSettingController@make_status_inactive_qas')->name('admin.setting.make_status_inactive_qas');
         Route::get('/make_status_active_qas', 'GeneralSettingController@make_status_active_qas')->name('admin.setting.make_status_active_qas');
+
     });
 });
 
 
 
-
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
-        Route::get('/shipment/create', 'DriverController@create')->name('create.shippment');
+        Route::get('/profile/{id}', 'HomeController@profile')->name('show.profile');
+        Route::get('/shipment/create', 'CustomerController@create')->name('create.shippment');
+        Route::post('/shipment/create', 'ShippmentController@store')->name('create.shipment');
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
-    });
+        Route::get('/shipments', 'CustomerController@index')->name('customer.shipments');
+        Route::get('/driver/shipments', 'DriverController@index')->name('driver.shipments');
+        Route::get('/my-driver/shipments', 'DriverController@myDriverShipments')->name('myDriverShipments');
+        Route::get('/save/bid', 'DriverController@bidStore')->name('create.bid');
+        Route::get('/update/bid/status', 'CustomerController@bidStatusUpdate')->name('update.bid.status');
+        Route::get('/send/bid/revise/request', 'CustomerController@sendBidReviserequest')->name('sendBidReviserequest');
+        Route::get('/update/bid/revise/request', 'DriverController@updateBidReviserequest')->name('updateBidReviserequest');
+        Route::get('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
+        Route::get('/shipment/{id}', 'ShippmentController@show')->name('shipmentDetail');
+        Route::get('/vehicles', 'DriverController@myVehicles')->name('my.vehicles');
+        Route::get('/my-locations', 'HomeController@mysavedlocations')->name('my.locations');
+        Route::get('/vehicle/status/update', 'DriverController@vehicleStatusUpdate')->name('vehicle.status.update');
+        Route::get('/address/status/update', 'HomeController@addressStatusUpdate')->name('address.status.update');
+        Route::post('/vehicle/addVehicle', 'DriverController@addVehicle')->name('addVehicle');
+        Route::post('/add-address', 'HomeController@addAddress')->name('addAddress');
+        Route::get('/get-driver-vehicle', 'DriverController@getDriverVehicle')->name('getDriverVehicle');
+        Route::post('/update-driver-vehicle', 'DriverController@upadteDriverVehicle')->name('upadteDriverVehicle');
+        Route::post('/updateLicense', 'HomeController@updateLicense')->name('updateLicense');
+        Route::post('/updateProfilePic', 'HomeController@updateProfilePic')->name('updateProfilePic');
+        Route::post('/update-cnic', 'HomeController@updateCnic')->name('updateCnic');
+        Route::post('/update-personal-profile', 'HomeController@updatePersonalInfo')->name('updatePersonalInfo');
+        Route::post('/update-location-details', 'HomeController@updateLocationInfo')->name('updateLocationInfo');
+        Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');
+        Route::get('/my-drivers', 'HomeController@myDrivers')->name('myDrivers');
+
+});
+Route::get('/getStates', 'HomeController@getStates')->name('getStates');
+Route::get('/getCities', 'HomeController@getCities')->name('getCities');
+Route::get('/getArea', 'HomeController@getArea')->name('getArea');
+Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
+Route::post('/createUser', 'AuthController@createUser')->name('createUser');
+Route::post('/createCracker', 'AuthController@createCracker')->name('createCracker');
+Route::post('/createDriver', 'AuthController@createDriver')->name('createDriver');
+Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
+Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');
+
+//Route::get('qrcode/{id}', 'QrCodeController@generate')->name('generate.qr');

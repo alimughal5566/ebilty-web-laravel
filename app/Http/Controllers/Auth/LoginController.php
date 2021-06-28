@@ -7,6 +7,8 @@ use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -55,4 +57,46 @@ class LoginController extends Controller
 
         return response()->json($vehs);
     }
+
+
+    public function logout(Request $request){
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/')->with('success','logged out successfully');
+    }
+    protected function sendLoginResponse(Request $request){
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->intended($this->redirectPath())->with('success','logged in successfully');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

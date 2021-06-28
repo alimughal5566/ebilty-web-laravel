@@ -36,7 +36,7 @@ body {
     position: relative;
     cursor: pointer;
 }
-    
+
 .panel-title::after {
     content: "\f107";
     color: #48465b;
@@ -361,7 +361,7 @@ body {
 
 .kt-login .kt-login__wrapper .kt-form .input-group .field-icon {
     top: 36%;
-    z-index: 9999;
+    z-index: 0;
 }
 
 .btn-gradient-default, .upload-btn-wrapper .upload-wrap,
@@ -573,7 +573,7 @@ body {
     background: linear-gradient(to right, #0377AC, #6BF09F);
     border-radius: 10px;
     margin-top: 10px;
-    padding: 10px;
+    padding:5px;
     color: white;
 }
 
@@ -667,7 +667,15 @@ body {
 .top-dashbord-left-container i {
     margin: 0 5px;
 }
+.main_img_banner_DB {
+    width: 100%;
+    height: 300px;
+}
 
+.main_img_banner_DB img {
+    width: 100%;
+    height: 100%;
+}
 
 /*    /REHMAN   */
 
@@ -691,6 +699,14 @@ body {
 
 /* Small devices (landscape phones, less than 768px)*/
 @media (max-width: 767.98px) {
+    .main_img_banner_DB img {
+        width: 100%;
+        height: auto;
+    }
+    .main_img_banner_DB {
+        width: 100%;
+        height: auto;
+    }
 }
 
 /* Extra small devices (portrait phones, less than 576px)*/

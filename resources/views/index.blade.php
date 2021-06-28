@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       <link rel="icon" href="{{url('images/logo.png')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -107,8 +108,8 @@
                         <div class="logo-container hasInfoCard logosize--yes navbar navbar-expand-lg">
                            <!-- Logo -->
                            <h1 class="site-logo logo" id="logo">
-                              <a href="http://ebilty.com/en" title="">
-                              <img src="http://ebilty.com/storage/app/uploads/public/605/b24/19b/605b2419bf83e815997404.png" class="logo-img" alt="eBilty" title="eBilty">
+                              <a href="{{route('index')}}" title="">
+                              <img src="{{url('uploads/logos/company-logo.png')}}" class="logo-img" alt="" title="eBilty">
                               </a>
                            </h1>
                            <div class="separator visible-xxs"></div>
@@ -175,12 +176,46 @@
                            </div>
                            <!--/ Languages -->
                            <!-- Login trigger -->
+                            @if(!auth()->user())
                            <div class="topnav login--panel topnav-account-login topnav-login align-self-center">
-                              <a class="topnav-item " href="http://ebilty.com/login">
+                              <a class="topnav-item " href="{{route('login')}}">
                               <i class="login-icon fas fa-sign-in-alt visible-xs xs-icon"></i>
                               <span class="topnav-item--text">LOGIN</span>
                               </a>
                            </div>
+                            @else
+                            <div class="topnav topnav--lang topnav-account-login topnav-account align-self-center">
+                                <div class="languages drop">
+                                    <a href="javascript:void(0);" class="topnav-item">
+                                        <i class="fas far fa-user-circle xs-icon"></i>
+                                        <span class="topnav-item--text">ACCOUNT</span>
+                                    </a>
+                                    <div class="pPanel">
+                                        <ul class="inner">
+                                            <li class="toplang-item">
+                                                <a href="{{route('home')}}">
+                                                    <img src="../assets/img/set-03-01.svg" alt="Dashboard" class="toplang-flag"> Dashboard
+                                                </a>
+                                            </li>
+                                            <li class="toplang-item">
+                                                <a href="{{route('show.profile',auth()->user()->id)}}">
+                                                    <img src="../assets/img/set-03-04.svg" alt="Profile" class="toplang-flag"> Profile
+                                                </a>
+                                            </li>
+                                            <li class="toplang-item">
+                                                 <a href="/logout" class="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        <form id="logout-form" class="" action="{{route('logout')}}" method="POST">
+                                                            @csrf
+
+                                                            <img src="../assets/img/set-03-03.svg" alt="Logout" class="toplang-flag"> Logout
+                                                        </form>
+                                                 </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                            <!--/ Login trigger -->
                         </div>
                         <!--/ .site-header-main-right -->
@@ -212,95 +247,64 @@
       <!-- Slides -->
       <div class="kl-iosslider hideControls" style="position: relative; cursor: -webkit-grab; backface-visibility: hidden; transform: matrix(1, 0, 0, 1, -3166, 0); width: 3166px;">
       <!-- Slide 1 -->
-      <div class="item iosslider__item kl-iosslider-active" style="overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 3166, 0); backface-visibility: hidden; width: 1583px;">
-      <!-- Image -->
-      <!-- <div class="slide-item-bg" style="background-image:url(./front/images/_niches/cargo/bg01.jpg);"> -->
-      <div class="slide-item-bg" style="background-image:url(http://ebilty.com/storage/app/uploads/public/605/b1c/9e2/605b1c9e268e2852233435.jpg);">
-      </div><!-- cargo2.jpg -->
-      <!--/ Image -->
-      <!-- Gradient overlay -->
-      <div class="kl-slide-overlay" style="background:rgba(32,55,152,0.4); background: -moz-linear-gradient(left, rgba(32,55,152,0.4) 0%, rgba(17,93,131,0.25) 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(32,55,152,0.4)), color-stop(100%,rgba(17,93,131,0.25))); background: -webkit-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -o-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -ms-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: linear-gradient(to right, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); ">
-      </div>
-      <!--/ Gradient overlay -->
-      <!-- Captions container -->
-      <div class="container kl-iosslide-caption kl-ioscaption--style4 s4ext fromleft klios-alignleft kl-caption-posv-middle">
-      <!-- Captions animateme wrapper -->
-      <div class="animateme" data-when="span" data-from="0" data-to="0.75" data-opacity="0.1" data-easing="linear">
-      <!-- Main Big Title -->
-      <h2 class="main_title has_titlebig text-center">
-      <!-- <span><strong>FAST</strong>, SAFE & ACCURATE</span> -->
-      <span class="text-center">
-      EASY SECURE RELIABLE
-      </span>
-      </h2>
-      <!--/ Main Big Title -->
-      <!-- Big Title -->
-      <p class="title_big text-center">
-      <!-- ANYWHERE<strong> IN THIS WORLD</strong> -->
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-      <!--/ Big Title -->
-      <!-- Link more button -->
-      <div class="button_more text-center">
-      <a href="#" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
-      TRANSPORTER
-      </a>
-      <a href="#" target="_self" class="more btn-gradient btn-gradient-blue">  <!-- http://ebilty.com/en/about -->
-      CUSTOMER
-      </a>
-      </div>
-      <!--/ Link more button -->
-      </div>
-      <!--/ Captions animateme wrapper -->
-      </div>
-      <!--/ Captions container -->
-      </div>
+          @isset($sliders)
+           @foreach($sliders as $slider)
+               @if(isset($slider->image))
+                  <div class="item iosslider__item " style="overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 3166, 0); backface-visibility: hidden; width: 1583px;">
+
+                  <!-- Image -->
+          <!-- <div class="slide-item-bg" style="background-image:url(./front/images/_niches/cargo/bg01.jpg);"> -->
+          <div class="slide-item-bg" style="background-image:url({{asset("/setting/sliders")."/".$slider->image}});">
+          </div><!-- cargo2.jpg -->
+          <!--/ Image -->
+          <!-- Gradient overlay -->
+          <div class="kl-slide-overlay" style="background:rgba(32,55,152,0.4); background: -moz-linear-gradient(left, rgba(32,55,152,0.4) 0%, rgba(17,93,131,0.25) 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(32,55,152,0.4)), color-stop(100%,rgba(17,93,131,0.25))); background: -webkit-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -o-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -ms-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: linear-gradient(to right, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); ">
+          </div>
+          <!--/ Gradient overlay -->
+          <!-- Captions container -->
+              <div class="container kl-iosslide-caption kl-ioscaption--style4 s4ext fromleft klios-alignleft kl-caption-posv-middle">
+              <!-- Captions animateme wrapper -->
+                      <div class="animateme" data-when="span" data-from="0" data-to="0.75" data-opacity="0.1" data-easing="linear">
+                  <!-- Main Big Title -->
+                  <h2 class="main_title has_titlebig text-center">
+                  <!-- <span><strong>FAST</strong>, SAFE & ACCURATE</span> -->
+                  <span class="text-center">
+                  {{ $slider->title }}
+                  </span>
+                  </h2>
+                  <!--/ Main Big Title -->
+                  <!-- Big Title -->
+                  <p class="title_big text-center">
+                  <!-- ANYWHERE<strong> IN THIS WORLD</strong> -->
+                      {{ $slider->description }}
+                  </p>
+                  <!--/ Big Title -->
+                  <!-- Link more button -->
+                      <div class="button_more text-center">
+                          @if($slider->button1_link )
+                            <a href="{{ $slider->button1_link }}" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
+                                {{ $slider->button1_title }}
+                            </a>
+                          @endif
+                          @if($slider->button2_link )
+                              <a href="{{ $slider->button2_link }}" target="_self" class="more btn-gradient btn-gradient-blue">  <!-- http://ebilty.com/en/about -->
+                                  {{ $slider->button2_title }}
+                              </a>
+                          @endif
+
+                      </div>
+                  <!--/ Link more button -->
+                  </div>
+              <!--/ Captions animateme wrapper -->
+              </div>
+          <!--/ Captions container -->
+          </div>
+
+             @endif
+                  @endforeach
+            @endisset
       <!--/ Slide 1 -->
-      <!-- Slide 1 -->
-      <div class="item iosslider__item" style="overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 4749, 0); backface-visibility: hidden; width: 1583px;">
-      <!-- Image -->
-      <!-- <div class="slide-item-bg" style="background-image:url(./front/images/_niches/cargo/bg02.jpg);"> -->
-      <div class="slide-item-bg" style="background-image:url(http://ebilty.com/storage/app/uploads/public/605/b1c/9e6/605b1c9e6e612427191076.jpg);">
-      </div><!-- cargo2.jpg -->
-      <!--/ Image -->
-      <!-- Gradient overlay -->
-      <div class="kl-slide-overlay" style="background:rgba(32,55,152,0.4); background: -moz-linear-gradient(left, rgba(32,55,152,0.4) 0%, rgba(17,93,131,0.25) 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(32,55,152,0.4)), color-stop(100%,rgba(17,93,131,0.25))); background: -webkit-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -o-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: -ms-linear-gradient(left, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); background: linear-gradient(to right, rgba(32,55,152,0.4) 0%,rgba(17,93,131,0.25) 100%); ">
-      </div>
-      <!--/ Gradient overlay -->
-      <!-- Captions container -->
-      <div class="container kl-iosslide-caption kl-ioscaption--style4 s4ext fromleft klios-alignleft kl-caption-posv-middle">
-      <!-- Captions animateme wrapper -->
-      <div class="animateme" data-when="span" data-from="0" data-to="0.75" data-opacity="0.1" data-easing="linear">
-      <!-- Main Big Title -->
-      <h2 class="main_title has_titlebig text-center">
-      <!-- <span><strong>FAST</strong>, SAFE & ACCURATE</span> -->
-      <span class="text-center">
-      EASY SECURE RELIABLE
-      </span>
-      </h2>
-      <!--/ Main Big Title -->
-      <!-- Big Title -->
-      <p class="title_big text-center">
-      <!-- ANYWHERE<strong> IN THIS WORLD</strong> -->
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-      <!--/ Big Title -->
-      <!-- Link more button -->
-      <div class="button_more text-center">
-      <a href="#" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
-      TRANSPORTER
-      </a>
-      <a href="#" target="_self" class="more btn-gradient btn-gradient-blue">  <!-- http://ebilty.com/en/about -->
-      CUSTOMER
-      </a>
-      </div>
-      <!--/ Link more button -->
-      </div>
-      <!--/ Captions animateme wrapper -->
-      </div>
-      <!--/ Captions container -->
-      </div>
-      <!--/ Slide 1 -->
+
       </div>
       <!--/ Slides -->
       <!-- Navigation Controls - Prev -->
@@ -378,136 +382,141 @@
       <div class="row">
       <div class="col-lg-8 offset-lg-2">
       <div class="row gutter-md services-row">
-      <div class="col-sm-12 col-md-6 col-lg-3">
       <!-- Icon box float left -->
-      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">
-      <div class="kl-iconbox__inner mt-25">
-      <!-- Icon with custom sizes -->
-      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">
-      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/31f/605de031f420e490519787.png" class="kl-iconbox__icon" alt="" title="">
-      </div>
-      <!--/ Icon -->
-      <!-- /.kl-iconbox__icon-wrapper -->
-      <div class="kl-iconbox__content-wrapper">
-      <!-- Title with csutom size, weight and color -->
-      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">
-      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">
-      Express Delivery
-      </h3>
-      </div>
-      <!--/ Title -->
-      <!-- Description -->
-      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">
-      <p class="kl-iconbox__desc fs-14 text-white">
-      Pickup and deliver the package with the priority delivery service is one of our services which we offer, It provides guaranteed 1-Day or 2-Day deliver
-      </p>
-      </div>
-      <!--/ Description -->
-      </div>
-      <!-- /.kl-iconbox__content-wrapper -->
-      </div>
-      <!--/ kl-iconbox__inner -->
-      </div>
+      @isset($cards)
+          @foreach($cards as $card)
+                  <div class="col-sm-12 col-md-6 col-lg-3">
+                  <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">
+                      <div class="kl-iconbox__inner mt-25">
+                          <!-- Icon with custom sizes -->
+                          <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">
+                              <img src="{{ asset($card->icon) }}" class="kl-iconbox__icon" alt="" title="">
+                          </div>
+                          <!--/ Icon -->
+                      <!-- /.kl-iconbox__icon-wrapper -->
+                          <div class="kl-iconbox__content-wrapper">
+                              <!-- Title with csutom size, weight and color -->
+                              <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">
+                                  <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">
+                                      {{ $card->title }}
+                                  </h3>
+                              </div>
+                              <!--/ Title -->
+                                <!-- Description -->
+                              <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">
+                              <p class="kl-iconbox__desc fs-14 text-white">
+                                  {{$card->description}}
+                              </p>
+                              </div>
+                          <!--/ Description -->
+                          </div>
+                          <!-- /.kl-iconbox__content-wrapper -->
+                      </div>
+                  <!--/ kl-iconbox__inner -->
+                  </div>
+                </div>
+          @endforeach
+      @endisset
       <!--/ Icon box float left -->
       </div>
-      <!--/ col-sm-12 col-md-6 col-lg-3 -->
-      <div class="col-sm-12 col-md-6 col-lg-3">
-      <!-- Icon box float left -->
-      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">
-      <div class="kl-iconbox__inner mt-25">
-      <!-- Icon with custom sizes -->
-      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">
-      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/325/605de03255abc636681567.png" class="kl-iconbox__icon" alt="" title="">
-      </div>
-      <!--/ Icon -->
-      <!-- /.kl-iconbox__icon-wrapper -->
-      <div class="kl-iconbox__content-wrapper">
-      <!-- Title with csutom size, weight and color -->
-      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">
-      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">
-      Collect Money
-      </h3>
-      </div>
-      <!--/ Title -->
-      <!-- Description -->
-      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">
-      <p class="kl-iconbox__desc fs-14 text-white">
-      The ability to collect money from the consignee and ship it to the correspondent again in complete security and privacy
-      </p>
-      </div>
-      <!--/ Description -->
-      </div>
-      <!-- /.kl-iconbox__content-wrapper -->
-      </div>
-      <!--/ kl-iconbox__inner -->
-      </div>
-      <!--/ Icon box float left -->
-      </div>
-      <!--/ col-sm-12 col-md-6 col-lg-3 -->
-      <div class="col-sm-12 col-md-6 col-lg-3">
-      <!-- Icon box float left -->
-      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">
-      <div class="kl-iconbox__inner mt-25">
-      <!-- Icon with custom sizes -->
-      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">
-      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/329/605de0329b660113266214.png" class="kl-iconbox__icon" alt="" title="">
-      </div>
-      <!--/ Icon -->
-      <!-- /.kl-iconbox__icon-wrapper -->
-      <div class="kl-iconbox__content-wrapper">
-      <!-- Title with csutom size, weight and color -->
-      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">
-      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">
-      Local Shipping
-      </h3>
-      </div>
-      <!--/ Title -->
-      <!-- Description -->
-      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">
-      <p class="kl-iconbox__desc fs-14 text-white">
-      Shipping to and from all provinces and cities Enjoy now shipping your goods door to door and special prices for heavyweights.
-      </p>
-      </div>
-      <!--/ Description -->
-      </div>
-      <!-- /.kl-iconbox__content-wrapper -->
-      </div>
-      <!--/ kl-iconbox__inner -->
-      </div>
-      <!--/ Icon box float left -->
-      </div>
-      <!--/ col-sm-12 col-md-6 col-lg-3 -->
-      <div class="col-sm-12 col-md-6 col-lg-3">
-      <!-- Icon box float left -->
-      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">
-      <div class="kl-iconbox__inner mt-25">
-      <!-- Icon with custom sizes -->
-      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">
-      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/32c/605de032ce90a702491670.png" class="kl-iconbox__icon" alt="" title="">
-      </div>
-      <!--/ Icon -->
-      <!-- /.kl-iconbox__icon-wrapper -->
-      <div class="kl-iconbox__content-wrapper">
-      <!-- Title with csutom size, weight and color -->
-      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">
-      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">
-      International Shipping
-      </h3>
-      </div>
-      <!--/ Title -->
-      <!-- Description -->
-      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">
-      <p class="kl-iconbox__desc fs-14 text-white">
-      Shipping from and to all countries of the world Enjoy shipping your goods door to door and special prices for heavyweights after 50 kg
-      </p>
-      </div>
-      <!--/ Description -->
-      </div>
-      <!-- /.kl-iconbox__content-wrapper -->
-      </div>
-      <!--/ kl-iconbox__inner -->
-      </div>
-      <!--/ Icon box float left -->
+{{--      <!--/ col-sm-12 col-md-6 col-lg-3 -->--}}
+{{--      <div class="col-sm-12 col-md-6 col-lg-3">--}}
+{{--      <!-- Icon box float left -->--}}
+{{--      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">--}}
+{{--      <div class="kl-iconbox__inner mt-25">--}}
+{{--      <!-- Icon with custom sizes -->--}}
+{{--      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">--}}
+{{--      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/325/605de03255abc636681567.png" class="kl-iconbox__icon" alt="" title="">--}}
+{{--      </div>--}}
+{{--      <!--/ Icon -->--}}
+{{--      <!-- /.kl-iconbox__icon-wrapper -->--}}
+{{--      <div class="kl-iconbox__content-wrapper">--}}
+{{--      <!-- Title with csutom size, weight and color -->--}}
+{{--      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">--}}
+{{--      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">--}}
+{{--      Collect Money--}}
+{{--      </h3>--}}
+{{--      </div>--}}
+{{--      <!--/ Title -->--}}
+{{--      <!-- Description -->--}}
+{{--      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">--}}
+{{--      <p class="kl-iconbox__desc fs-14 text-white">--}}
+{{--      The ability to collect money from the consignee and ship it to the correspondent again in complete security and privacy--}}
+{{--      </p>--}}
+{{--      </div>--}}
+{{--      <!--/ Description -->--}}
+{{--      </div>--}}
+{{--      <!-- /.kl-iconbox__content-wrapper -->--}}
+{{--      </div>--}}
+{{--      <!--/ kl-iconbox__inner -->--}}
+{{--      </div>--}}
+{{--      <!--/ Icon box float left -->--}}
+{{--      </div>--}}
+{{--      <!--/ col-sm-12 col-md-6 col-lg-3 -->--}}
+{{--      <div class="col-sm-12 col-md-6 col-lg-3">--}}
+{{--      <!-- Icon box float left -->--}}
+{{--      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">--}}
+{{--      <div class="kl-iconbox__inner mt-25">--}}
+{{--      <!-- Icon with custom sizes -->--}}
+{{--      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">--}}
+{{--      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/329/605de0329b660113266214.png" class="kl-iconbox__icon" alt="" title="">--}}
+{{--      </div>--}}
+{{--      <!--/ Icon -->--}}
+{{--      <!-- /.kl-iconbox__icon-wrapper -->--}}
+{{--      <div class="kl-iconbox__content-wrapper">--}}
+{{--      <!-- Title with csutom size, weight and color -->--}}
+{{--      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">--}}
+{{--      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">--}}
+{{--      Local Shipping--}}
+{{--      </h3>--}}
+{{--      </div>--}}
+{{--      <!--/ Title -->--}}
+{{--      <!-- Description -->--}}
+{{--      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">--}}
+{{--      <p class="kl-iconbox__desc fs-14 text-white">--}}
+{{--      Shipping to and from all provinces and cities Enjoy now shipping your goods door to door and special prices for heavyweights.--}}
+{{--      </p>--}}
+{{--      </div>--}}
+{{--      <!--/ Description -->--}}
+{{--      </div>--}}
+{{--      <!-- /.kl-iconbox__content-wrapper -->--}}
+{{--      </div>--}}
+{{--      <!--/ kl-iconbox__inner -->--}}
+{{--      </div>--}}
+{{--      <!--/ Icon box float left -->--}}
+{{--      </div>--}}
+{{--      <!--/ col-sm-12 col-md-6 col-lg-3 -->--}}
+{{--      <div class="col-sm-12 col-md-6 col-lg-3">--}}
+{{--      <!-- Icon box float left -->--}}
+{{--      <div class="kl-iconbox kl-iconbox--fleft text-left pt-20 pb-20 pl-25 pr-25">--}}
+{{--      <div class="kl-iconbox__inner mt-25">--}}
+{{--      <!-- Icon with custom sizes -->--}}
+{{--      <div class="kl-iconbox__icon-wrapper w-30 w-md-30 w-sm-20 w-xs-20 text-white">--}}
+{{--      <img src="http://ebilty.com/storage/app/uploads/public/605/de0/32c/605de032ce90a702491670.png" class="kl-iconbox__icon" alt="" title="">--}}
+{{--      </div>--}}
+{{--      <!--/ Icon -->--}}
+{{--      <!-- /.kl-iconbox__icon-wrapper -->--}}
+{{--      <div class="kl-iconbox__content-wrapper">--}}
+{{--      <!-- Title with csutom size, weight and color -->--}}
+{{--      <div class="kl-iconbox__el-wrapper kl-iconbox__title-wrapper pt-15 pb-15">--}}
+{{--      <h3 class="kl-iconbox__title fs-s fw-extrabold text-white w-50 text-uppercase">--}}
+{{--      International Shipping--}}
+{{--      </h3>--}}
+{{--      </div>--}}
+{{--      <!--/ Title -->--}}
+{{--      <!-- Description -->--}}
+{{--      <div class=" kl-iconbox__el-wrapper kl-iconbox__desc-wrapper mb-0">--}}
+{{--      <p class="kl-iconbox__desc fs-14 text-white">--}}
+{{--      Shipping from and to all countries of the world Enjoy shipping your goods door to door and special prices for heavyweights after 50 kg--}}
+{{--      </p>--}}
+{{--      </div>--}}
+{{--      <!--/ Description -->--}}
+{{--      </div>--}}
+{{--      <!-- /.kl-iconbox__content-wrapper -->--}}
+{{--      </div>--}}
+{{--      <!--/ kl-iconbox__inner -->--}}
+{{--      </div>--}}
+{{--      <!--/ Icon box float left -->--}}
       </div>
       <!--/ col-sm-12 col-md-6 col-lg-3 -->
       <!-- <img src="./front/images/_niches/cargo/sailing-boat.svg" class="kl-iconbox__icon" alt="" title="" />
@@ -1067,7 +1076,7 @@
                         <h4 class="tbk__subtitle fw-thin">
                            Just type the tracking code and we'll do everything!
                         </h4>
-                        <form action="http://ebilty.com/tracking" method="get" class="contact_form row mt-40" data-h5-instanceid="1" novalidate="novalidate">
+                        <form action="#" method="get" class="contact_form row mt-40" data-h5-instanceid="1" novalidate="novalidate">
                            <div class="cf_response"></div>
                            <input name="_token" type="hidden" value="VHua1cK3OOhcypf2NC4EI5og6E7krvTUpQWTDK4P">
                            <input name="_session_key" type="hidden" value="ikd96sYWgPIOZLVW9hPRyk86FgzK0RsZbi7epnDk">
@@ -1124,9 +1133,30 @@
         <!--end::Global Theme Bundle -->
 
       <!-- end::Page Scripts -->
-      <div class="stripe-loading-indicator loaded">
-         <div class="stripe"></div>
-         <div class="stripe-loaded"></div>
-      </div>
+{{--      <div class="stripe-loading-indicator loaded">--}}
+{{--         <div class="stripe"></div>--}}
+{{--         <div class="stripe-loaded"></div>--}}
+{{--      </div>--}}
+
+
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+
+      <script>
+          @if (\Session::has('success'))
+              toastr.success('{{\Session::get('success')}}');
+          @endif
+</script>
+
+
+
+
+
+
+
+
+
+
    </body>
 </html>

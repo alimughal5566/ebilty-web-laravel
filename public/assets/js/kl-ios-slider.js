@@ -35,13 +35,14 @@
 				$.each( elements , function(i, e){
 					var self = $(e),
 						selfContainer = self.closest('.kl-slideshow');
-			
+
 						self.iosSlider({
+
 							snapToChildren: true,
 							desktopClickDrag: true,
 							keyboardControls: true,
-							autoSlide: self.data('autoplay') == '1' ? true : false,
-							autoSlideTimer: self.data('trans'),
+							autoSlide: true,
+							autoSlideTimer:3000,
 							navNextSelector: selfContainer.find('.kl-iosslider-next'),
 							navPrevSelector: selfContainer.find('.kl-iosslider-prev'),
 							navSlideSelector: selfContainer.find('.kl-ios-selectors-block .item'),

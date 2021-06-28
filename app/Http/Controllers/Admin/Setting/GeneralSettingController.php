@@ -19,16 +19,46 @@ class GeneralSettingController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
-    {
-        $settings = General_Setting::all();
+    public function index(){
+        $settings = General_Setting::where('page_name','!=','dashboard')->get();
         return view('admin.setting.general_setting', compact('settings'));
     }
-    public function save_homepage_slider1(Request $request){
+    public function dashboard(){
+        $settings = General_Setting::where('page_name','=','dashboard')->get();
+        return view('admin.setting.dashboard_setting', compact('settings'));
+    }
+    public function save_homepage_slider(Request $request){
 //        dd($request->all());
+        $home_slider1 = General_Setting::where('id', $request->id)->first();
+        $json = json_decode($home_slider1->content);
+        $filename = $json->image;
+        if($request->image)
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/sliders/', $filename);
+        }
+        $array = array(
+            'title' => $request->title,
+            'description' => $request->descrip,
+            'image' => $filename,
+            'button1_title' => $request->button1,
+            'button1_link' => $request->button2,
+            'button2_title' => $request->button3,
+            'button2_link' => $request->button4,
+        );
+        $content = json_encode($array);
+        $home_slider1->content = $content;
+        $home_slider1->status = 1;
+//        dd($home_slider1);
+        $home_slider1->update();
+        Session::flash('message', 'The slider has been updated');
+        return redirect()->back();
+    }
 
+    public function save_homepage_slider1(Request $request){
         $home_slider1 = General_Setting::where('id', 1)->first();
-        $filename = '';
         $json = json_decode($home_slider1->content);
         $filename = $json->image;
         if($request->image1)
@@ -90,7 +120,6 @@ class GeneralSettingController extends Controller
 
     }
     public function save_homepage_slider3(Request $request){
-//        dd($request->all());
         $home_slider3 = General_Setting::where('id', 3)->first();
         $filename = '';
         $json = json_decode($home_slider3->content);
@@ -118,6 +147,24 @@ class GeneralSettingController extends Controller
         $home_slider3->status = 1;
         $home_slider3->update();
         Session::flash('message', 'The slider 3 has been updated');
+        return redirect()->back();
+
+    }
+    public function addAdvertisement(Request $request){
+        $home_slider3 = new General_Setting;
+//        dd($request);
+        if($request->image) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/advertisements/', $filename);
+        }
+        $home_slider3->content = $filename;
+        $home_slider3->status = 1;
+        $home_slider3->section_name = 'advertisement_section';
+        $home_slider3->page_name = 'dashboard';
+        $home_slider3->save();
+        Session::flash('success', 'Add uploaded successfully');
         return redirect()->back();
 
     }
@@ -460,6 +507,15 @@ class GeneralSettingController extends Controller
             'msg' => 'Q/A Type unactivated successfully'
         );
         return response()->json($response);
+    }
+
+    public function advertisementStatusUpdate(Request $request){
+        if($request->id){
+            $UserAddress = General_Setting::find($request->id);
+            $UserAddress->status =$request->status;
+            $UserAddress->save();
+        }
+        return response()->json(['success' =>'Status updated  successfully'], 200);
     }
 
 

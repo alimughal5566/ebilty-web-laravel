@@ -1,7 +1,11 @@
 <!-- begin:: Header -->
+
+
 <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
+
    <!-- begin:: Header Menu -->
    <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+
    <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper" style="opacity: 1;">
       <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
          <ul class="kt-menu__nav ">
@@ -13,11 +17,12 @@
                         <div id="date-part-icon" class="d-inline-block mr-1">
                            <i class="far fa-calendar-day"></i>
                         </div>
-                        <div id="date-part" class="d-inline-block">05/31/2021 </div>
+                        <div id="date-part" class="d-inline-block">{{Carbon\Carbon::now()->format('d M Y h:i:s a')}} </div>
                         <div id="time-part-icon" class="d-inline-block ml-3 mr-1">
                            <i class="far fa-clock"></i>
                         </div>
-                        <div id="time-part" class="d-inline-block">03:46:24 AM</div>
+{{--                        <div id="time-part" class="d-inline-block">03:46:24 AM</div>--}}
+
                      </div>
                   </span>
                </a>
@@ -413,7 +418,7 @@
          <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
             <div class="kt-header__topbar-user">
                <span class="kt-header__topbar-welcome">Hi,</span>
-               <span class="kt-header__topbar-username">System administration</span>
+               <span class="kt-header__topbar-username">{{auth()->user()->name}}</span>
                <span class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-font-light kt-badge--bold">SY</span>
             </div>
          </div>
@@ -421,14 +426,24 @@
             <!--begin: Head -->
             <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
                <div class="kt-user-card__avatar">
-                  <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>
+{{--                  <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>--}}
+                   <span class="kt-media kt-media--lg kt-media--brand ">
+              @php $profile_image='/images/noimage.jpg'; @endphp
+                       @if(auth()->user()->profile_image)
+                           @php    $profile_image= '/images/profile/'.auth()->user()->profile_image; @endphp
+                       @endif
+                         <span class=""><img style="border-radius: 5px" src="{{url($profile_image)}}"  alt="" width="120px" height="110px"  ></span>
+               </span>
                </div>
                <div class="kt-user-card__name">
-                  System administration
+                   {{ucfirst(auth()->user()->name)}}
                </div>
-               <!--<div class="kt-user-card__badge kt-hidden">
-                  <span class="btn btn-success btn-sm btn-bold btn-font-md">0 messages</span>
-                  </div>-->
+                <div>
+{{--                    login as: {{(auth()->user()->hasRole('driver')?'Driver':'')}}--}}
+                </div>
+{{--             <div class="kt-user-card__badge ">--}}
+{{--                  <span class="btn btn-success btn-sm btn-bold btn-font-md">Login as: {{auth()->user()->role}}</span>--}}
+{{--                  </div>--}}
             </div>
             <!--end: Head -->
             <!--begin: Navigation -->
@@ -437,8 +452,8 @@
                   <div class="kt-notification__item-icon">
                      <i class="flaticon2-calendar-3 kt-font-success"></i>
                   </div>
-                  <div class="kt-notification__item-details">
-                     <div class="kt-notification__item-title kt-font-bold">
+                  <div class="kt-notification__item-details" onclick="window.location.href='{{route('show.profile',auth()->user()->id)}}'">
+                     <div class="kt-notification__item-title kt-font-bold" >
                         My Profile
                      </div>
                      <div class="kt-notification__item-time">
@@ -502,10 +517,10 @@
                <div class="kt-notification__custom kt-space-between">
                    <a href="{{route('logout')}}" class="btn btn-danger btn-block btn-bold kt-font-light"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
-                   <form id="logout-form"  class="btn btn-danger btn-block btn-bold kt-font-light"  action="{{ route('logout') }}" method="POST" class="d-none">
+                   <form id="logout-form"  class=""  action="{{ route('logout') }}" method="POST" class="d-none">
                        @csrf
                    </form>
-                  <a href="#" target="_blank" class="btn btn-clean btn-sm btn-bold kt-hidden">Upgrade Plan</a>
+{{--                  <a href="#" target="_blank" class="btn btn-clean btn-sm btn-bold kt-hidden">Upgrade Plan</a>--}}
                </div>
             </div>
             <!--end: Navigation -->
@@ -513,6 +528,8 @@
       </div>
       <!--end: User bar -->
    </div>
-   <!-- end:: Header Topbar -->
+
+    <!-- end:: Header Topbar -->
+
 </div>
 <!-- end:: Header -->

@@ -7,7 +7,7 @@
     <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
        <div class="kt-header-mobile__logo">
           <a href="#">
-          <img alt="Logo" src="http://localhost/ebilty-web/storage/app/uploads/public/605/b24/19b/605b2419bf83e815997404.png" style="max-height:40px">
+{{--          <img alt="Logo" src="http://localhost/ebilty-web/storage/app/uploads/public/605/b24/19b/6b052419bf83e815997404.png" style="max-height:40px">--}}
           </a>
        </div>
        <div class="kt-header-mobile__toolbar">
