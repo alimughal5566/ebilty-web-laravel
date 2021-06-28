@@ -434,10 +434,14 @@
                 <th scope="col">#</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
+                <th scope="col">Packages</th>
+                <th scope="col">Luggage Type</th>
+                <th scope="col">Total Weight</th>
+                <th scope="col">Dimentions</th>
                 <th scope="col">Shipment Time</th>
                 <th scope="col">Status</th>
                 @hasanyrole('admin||customer')
-{{--                  <th scope="col"></th>--}}
+                  <th scope="col"></th>
                 @endhasanyrole
             </tr>
             </thead>
@@ -447,10 +451,24 @@
                     <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                     <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
+                    <td>
+                    @foreach($shipment->packages as $packages)
+                            <div>{{@$packages->category->name}}</div>
+{{--                            <hr>--}}
+                    @endforeach
+                    </td>
+                    <td>
+                        @foreach($shipment->packages as $packages)
+                            <div>{{@$packages->weight}}</div>
+{{--                            <hr>--}}
+                        @endforeach
+                    </td>
+                    <td>{{$shipment->total_weight}}</td>
                     <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
                     <td>{{$shipment->status->name}}</td>
                     <td>
-                        @php $percentage=0;
+                        @php
+                         $percentage=0;
                         if($shipment->status_id==1){
                         $percentage=30;
                         }

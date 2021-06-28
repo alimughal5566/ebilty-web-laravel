@@ -85,9 +85,6 @@ class AuthController extends Controller
         event(new Registered($user));
         return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);;
     }
-
-
-
     public function createCracker(Request $request){
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users,email'],
@@ -98,6 +95,7 @@ class AuthController extends Controller
         $user = new User([
             'name' => $request->full_name,
             'email' => $request->email,
+            'documents_verified' => 1,
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
         ]);
@@ -117,8 +115,10 @@ class AuthController extends Controller
         $user = new User([
             'name' => $request->full_name,
             'email' => $request->email,
+            'email_verified_at' => now(),
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
+            'documents_verified' => 1,
             'created_by' => auth()->user()->id,
         ]);
         $user->save();
@@ -126,6 +126,7 @@ class AuthController extends Controller
             'user_id' => $user->id,
             'category_id' => $request->veh_cat,
             'vehicle_id' => $request->vehicle,
+            'is_verified' => 1,
             'vehicle_number' => $request->vehicle_number,
         ]);
         $veh->save();
@@ -134,8 +135,6 @@ class AuthController extends Controller
         event(new Registered($user));
         return redirect()->back()->with(['success' =>'Driver registered successfully']);
     }
-
-
     public function createSenderAddress(Request $request){
         $address=new UserAddress;
         $address->user_id = $request->user_id;

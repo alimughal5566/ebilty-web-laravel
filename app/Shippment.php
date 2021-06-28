@@ -16,7 +16,6 @@ class Shippment extends Model
     public function receiver(){
         return $this->belongsTo('App\UserAddress','receiver_address_id','id');
     }
-
     public function status(){
         return $this->hasOne('App\ShipmentStatus','id','status_id');
     }
@@ -37,5 +36,6 @@ class Shippment extends Model
     }
     public function assignedto(){
         return $this->hasOne('App\User','id','assigned_to');    }
+
 
 }

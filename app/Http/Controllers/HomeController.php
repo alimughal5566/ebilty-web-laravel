@@ -52,8 +52,13 @@ class HomeController extends Controller
                ->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
        }
         elseif(auth()->user()->hasRole('customer')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','receiver.user','status','bids.user')->paginate('5');
+            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
         }
+        elseif(auth()->user()->hasRole('brocker_driver')){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+
+        }
+//        dd($shipments);
         return view('dashboard', compact('shipments','add'));
     }
 

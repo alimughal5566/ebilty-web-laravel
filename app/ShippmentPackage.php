@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippmentPackage extends Model
 {
+    protected $with=['category'];
     protected $guarded = [
 'id'];
     public function category(){
