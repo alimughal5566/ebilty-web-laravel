@@ -583,14 +583,16 @@
                                     <th>#</th>
                                     <th>Package Type</th>
                                     <th>Description</th>
+                                    <th>weight</th>
                                     <th>Quantity</th>
                                     <th>Dimensions</th>
                                 </tr>
                             @foreach($shipment->packages as $i=>$package)
                                     <tr>
                                       <td>{{++$i}}</td>
-                                      <td>{{ $package->category->name}}</td>
+                                      <td>{{ @$package->category->name}}</td>
                                       <td>{{ $package->description}}</td>
+                                      <td>{{ $package->weight}}</td>
                                       <td>{{ $package->quantity}}</td>
                                       <td>{{ $package->length}}x{{ $package->width}}x{{ $package->height}}</td>
                                   </tr>
