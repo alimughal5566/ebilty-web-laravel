@@ -286,6 +286,7 @@
                 url: url,
                 data: {question: question, answer:answer, status: status},
                 success: function( msg ) {
+                    console.log(msg)
                     $("#save_msg").html()
                     $('#add_qas').modal('hide');
                     $('#save_msg').css('display','block');
@@ -301,7 +302,7 @@
                     markup = '<tr><td>  </td><td>'+ msg.row.name + '</td>><td>'+ toggle_button +'</td><td> <a onclick="delete_qas('+ msg.row.id +')" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_qas('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
                     tableBody = $("#qas_table tbody");
                     tableBody.append(markup);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
+
                 }
             });
         });
