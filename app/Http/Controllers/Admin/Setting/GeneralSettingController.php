@@ -446,7 +446,7 @@ class GeneralSettingController extends Controller
         $qas = new Qas();
         $qas->question = $request->question;
         $qas->answer = $request->answer;
-        $qas->status = $request->status;
+        $qas->status = 1;
         $qas->save();
 
         $response = array(
@@ -494,6 +494,18 @@ class GeneralSettingController extends Controller
         $response = array(
             'status' => 'success',
             'msg' => 'Q/A activated successfully'
+        );
+        return response()->json($response);
+    }
+    public function homepage_update_status(){
+        $id = $_GET['id'];
+        $status = $_GET['status'];
+        $type = General_Setting::where('id',$id)->first();
+        $type->status = $status;
+        $type->update();
+        $response = array(
+            'status' => 'success',
+            'msg' => 'Status activated successfully'
         );
         return response()->json($response);
     }
