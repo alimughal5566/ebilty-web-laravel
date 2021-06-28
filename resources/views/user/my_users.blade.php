@@ -8,7 +8,7 @@
 {{--                <span class="kt-subheader__desc">Drivers</span>--}}
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
                 <div class="kt-subheader__breadcrumbs">
-                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Brockers</span>
+                    <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">My Registered Drivers</span>
                 </div>
             </div>
             <div class="kt-subheader__toolbar">
@@ -30,8 +30,7 @@
         <!-- end:: Aside -->
             <!--End::Aside-->
             <!--Begin:: Inbox List-->
-            <div class="kt-grid__item kt-grid__item--fluid    kt-portlet    kt-inbox__list kt-inbox__list--shown" id="form_data">
-
+            <div class="kt-grid__item kt-grid__item--fluid    kt-portlet kt-inbox__list kt-inbox__list--shown" id="form_data">
                 <div class="kt-portlet__body kt-portlet__body--fit-x">
                     <div class="col-lg-12">
                         <div class="kt-portlet__head">
@@ -58,12 +57,11 @@
                                         <th scope="col">Number</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">City</th>
+                                        <th scope="col">Shipments</th>
                                         <th scope="col">Email verified</th>
-                                        <th scope="col">Drivers</th>
-                                        {{--                                        <th scope="col">Shipments</th>--}}
-{{--                                        <th scope="col">Documents status</th>--}}
-{{--                                        <th scope="col">Documents</th>--}}
-{{--                                        <th scope="col">Shipments</th>--}}
+                                        <th scope="col">Documents status</th>
+                                        <th scope="col">Documents</th>
+                                        <th scope="col">Shipments</th>
 {{--                                        <th scope="col">Profile Edit Request</th>--}}
                                         {{--  <th scope="col">Status</th>--}}
 {{--                                        <th scope="col">Action</th>--}}
@@ -78,12 +76,11 @@
                                             <td class="name">{{$user->phone}}</td>
                                             <td class="name">{{$user->email}}</td>
                                             <td class="name">{{($user->city)?$user->city->name:'N/a'}}</td>
+                                            <td class="name">{{($user->assignedShipments->count())}}</td>
                                             <td class="name">{{($user->email_verified_at)?'Yes':'No'}}</td>
-                                            <td class="name">{!!  ($user->myDrivers->count()>0)?"<a href='#' onclick='drivers(".$user->myDrivers.")'>".$user->myDrivers->count()."</a>":'' !!}</td>
-                                            {{--                                            <td class="name">{{($user->assignedShipments->count())}}</td>--}}
-{{--                                            <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>--}}
-{{--                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>--}}
-{{--                                            <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>--}}
+                                            <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>
+                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
+                                            <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>
 {{--                                        <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>--}}
                                         </tr>
                                     @empty
@@ -162,47 +159,11 @@
     </div>
 
 
-{{--    <div class="modal fade show" id="ships" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">--}}
-{{--        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title">Shipments</h5>--}}
-{{--                    --}}{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                    --}}{{--                        <i aria-hidden="true" class="ki ki-close"></i>--}}
-{{--                    --}}{{--                    </button>--}}
-
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <div class="card-body  p-0">--}}
-{{--                        <!--begin::Invoice-->--}}
-{{--                        <div class="col-md-10 offset-1 ">--}}
-{{--                            <table class="table" id="jqueryTable">--}}
-{{--                                <thead>--}}
-{{--                                <tr>--}}
-{{--                                    <th>Id</th>--}}
-{{--                                    <th>From</th>--}}
-{{--                                    <th>To</th>--}}
-{{--                                    <th>From Address</th>--}}
-{{--                                    <th>To Address</th>--}}
-{{--                                    <th>Delivered date</th>--}}
-{{--                                    <th>Status</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody id="bid_list"><tr>--}}
-{{--                                </tr>--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-    <div class="modal fade show" id="drivers" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
+    <div class="modal fade show" id="ships" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Drivers</h5>
+                    <h5 class="modal-title">Shipments</h5>
                     {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
                     {{--                        <i aria-hidden="true" class="ki ki-close"></i>--}}
                     {{--                    </button>--}}
@@ -212,18 +173,19 @@
                     <div class="card-body  p-0">
                         <!--begin::Invoice-->
                         <div class="col-md-10 offset-1 ">
-                            <table class="table" id="jqueryTablee">
+                            <table class="table" id="jqueryTable">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th>Created date</th>
-
+                                    <th>Id</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>From Address</th>
+                                    <th>To Address</th>
+                                    <th>Delivered date</th>
+                                    <th>Status</th>
                                 </tr>
                                 </thead>
-                                <tbody id="det_list"><tr>
+                                <tbody id="bid_list"><tr>
                                 </tr>
                                 </tbody>
                             </table>
@@ -245,18 +207,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-body  p-0">
-                        <form method="post" action="{{route('createCracker')}}">
+                        <form method="post" action="{{route('createDriver')}}">
                             @csrf
-
                         <!--begin::Invoice-->
                         <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
                             <div class="kt-portlet__head">
                                 <div class="kt-portlet__head-label">
-                                                   <span class="kt-portlet__head-icon">
-                                                       <i class="flaticon2-user"></i>
-                                                   </span>
+                                       <span class="kt-portlet__head-icon">
+                                           <i class="flaticon2-user"></i>
+                                       </span>
                                     <h3 class="kt-portlet__head-title">
-                                        Add new Broker
+                                        Add Driver
                                     </h3>
                                 </div>
                             </div>
@@ -269,6 +230,16 @@
                                         @endforeach
                                     </div>
                                 @endif
+                                    <div class="kt-portlet__head border bg-warning mb-3">
+                                        <div class="kt-portlet__head-label">
+                                                   <span class="kt-portlet__head-icon">
+                                                       <i class="flaticon2-user"></i>
+                                                   </span>
+                                            <h3 class="kt-portlet__head-title ">
+                                                Driver Personal Details
+                                            </h3>
+                                        </div>
+                                    </div>
                                 <div class="row">
 
                                     <div class="form-group col-lg-5">
@@ -287,19 +258,62 @@
                                         <label>Password <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input type="password" class="form-control" value="{{old('password')}}"  name="password" required placeholder="Password">
                                     </div>
-
                                 </div>
+                                    <div class="kt-portlet__head border bg-warning mb-3">
+                                        <div class="kt-portlet__head-label">
+                                           <span class="kt-portlet__head-icon">
+                                               <i class="flaticon2-user"></i>
+                                           </span>
+                                            <h3 class="kt-portlet__head-title ">
+                                                Driver vehicle Details
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="row ">
+                                        <div class="form-group">
+                                            <label class="">Vehicle Number</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <input class="form-control" type="text" name="vehicle_number" placeholder="Vehicle Number" required="" value="{{old('vehicle_number')}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Vehicle Category</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <div class="dropdown bootstrap-select">
+                                                    <select id="veh_cat" required="" name="veh_cat" onchange="getVehicles(this.value,'veehicl')" class="" tabindex="-98">
+                                                        <option value="" selected="" disabled="">Nothing selected</option>
+                                                        @foreach($vehicles_cat as $cat)
+                                                            <option value="{{$cat->id}}"  {{($cat->id==old('veh_cat'))?'selected':''}}>{{$cat->name}}</option>
+
+                                                        @endforeach
+                                                    </select>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Vehicle</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <div class="dropdown bootstrap-select">
+                                                    <select id="veehicl" required="" name="vehicle" class="" tabindex="-98">
+                                                        <option value="" selected="" disabled="">Nothing selected</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                             </div>
                             <div class="kt-portlet__foot">
                                 <div class="row align-items-center">
-                                    <div class="col-lg-3 offset-9">
+                                    <div class="col-lg-4 offset-9">
                                         <input type="submit" class="btn btn-success" value="Save">
                                         <button type="button" class="btn btn-secondary cancel">Cancel</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         </form>
 
                     </div>
@@ -327,7 +341,7 @@
             $('.doc_status1,.doc_status').css('display','none');
             if(status==0){
                 $('.doc_status1').css('display','block');
-                $('.url').attr('href','{{route('docVerify')}}/'+id);
+{{--                $('.url').attr('href','{{route('docVerify')}}/'+id);--}}
             }
             if(status==1){
                 $('.doc_status').css('display','block');
@@ -347,16 +361,21 @@
             $('#jqueryTable').append(html);
             $('#ships').modal('show');
         }
-        function drivers(data){
-            $('#jqueryTablee tbody').html('');
-            var html='';
-            var inc=1;
-            $.each(data, function (index, value) {
-                html += "<tr><td>" + inc++ + "</td><td>" + value.name + "</td><td>" + value.phone + "</td><td >" + value.email + "</td><td >" + value.created_at +  "</td></tr>"
-            });
-            $('#jqueryTablee').append(html);
-            $('#drivers').modal('show');
-
+        function getVehicles(id, vehicl) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getVehicles')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose Vehicle</option>";
+                    $.each(data.data,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+vehicl).empty().append(html);
+                    $('#'+vehicl).selectpicker('refresh');
+                }
+            })
         }
 
 

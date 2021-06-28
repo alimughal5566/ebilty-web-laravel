@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Shippment;
 use App\ShippmentPackage;
+use Illuminate\Support\Facades\Session;
 use PDF;
 
 use Illuminate\Http\Request;
@@ -18,13 +19,12 @@ class ShippmentController extends Controller
             'sender_address' => ['required', 'string', 'max:255'],
             'receiver_name' => ['required', 'string', 'max:255'],
             'receiver_address' => ['required', 'string', 'max:255'],
-            'package_cost' => ['required', 'string', 'max:255'],
+//            'package_cost' => ['integer', 'max:255'],
             'vehicle' => ['required', 'string', 'max:255'],
             'vehicle_type' => ['required', 'string', 'max:255'],
             'shipping_fee' => ['required', 'string', 'max:255'],
             'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
         ]);
-
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
         $shipment->book_as= $request->book_as;
@@ -52,26 +52,28 @@ class ShippmentController extends Controller
         }
         $shipment->save();
         QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
-
                 if($request->category_id) {
-                    $package = new ShippmentPackage;
-                    $package->shippment_id = $shipment->id;
-                    $package->package_category_id = $request->category_id;
-                    $package->description = $request->description;
-                    $package->quantity = $request->quantity;
-                    $package->weight = $request->weight;
-                    $package->length = $request->length;
-                    $package->width = $request->width;
-                    $package->height = $request->height;
-                    $package->save();
+                    for($i=0; $i<count($request->category_id);$i++) {
+                        $package = new ShippmentPackage;
+                        $package->shippment_id = $shipment->id;
+                        $package->package_category_id = $request->category_id[$i];
+                        $package->description = $request->description[$i];
+                        $package->quantity = $request->quantity[$i];
+                        $package->weight = $request->weight[$i];
+                        $package->length = $request->length[$i];
+                        $package->width = $request->width[$i];
+                        $package->height = $request->height[$i];
+                        $package->save();
+                    }
                 }
+        Session::flash('success', 'Shipment created successfully');
         return redirect()->route('shipmentDetail',$shipment->id)->with('success', 'Shippment created successfully');
     }
 
 
 
     public function show($id){
-        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids')->first();
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
         return view('user.shipment.show', compact('shipment'));
     }
 
@@ -80,7 +82,6 @@ class ShippmentController extends Controller
            view()->share('shipment',$shipment);
             $pdf = PDF::loadView('pdfview');
             return $pdf->download('shipment.pdf');
-
 
 
         return view('pdfview');

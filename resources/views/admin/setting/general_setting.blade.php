@@ -1,4 +1,5 @@
 @extends('admin.layout.app')
+@section('title', 'Settings')
 
 @section('content')
 
@@ -164,7 +165,7 @@
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Slider 1</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Home page slider</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -180,31 +181,44 @@
                                             <div class="col-lg-12 col-xl-12">
 
                                                     <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Title</th>
-                                                            <th scope="col">Description</th>
-                                                            <th scope="col">Image</th>
-                                                            <th scope="col">Buttons</th>
-                                                        </tr>
-                                                        </thead>
+{{--                                                        <thead>--}}
+{{--                                                        <tr>--}}
+{{--                                                            <th scope="col">Title</th>--}}
+{{--                                                            <th scope="col">Description</th>--}}
+{{--                                                            <th scope="col">Image</th>--}}
+{{--                                                            <th scope="col">Buttons</th>--}}
+{{--                                                        </tr>--}}
+{{--                                                        </thead>--}}
                                                         <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="text" name="title" id="title" class="form-control">
+                                                                <label>Title</label>
+                                                                <input type="text" name="title"  placeholder="Title"  id="title" class="form-control">
                                                                 <input type="hidden" name="id" id="id" class="form-control">
                                                             </td>
-                                                            <td><textarea name="descrip" id="descrip"></textarea></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><label>Description</label>
+                                                           <textarea class="form-control" rows="5" name="descrip" id="descrip"></textarea>
                                                             <td>
+                                                        </tr>
+                                                        <tr><td>
+                                                                <label>Backgound Image</label>
                                                                 <input type="file" name="image" class="form-control"><br>
-                                                                <img src="" id="image" width="100px" height="100px">
-                                                            </td>
-                                                            <td>
+                                                                <span class="float-right pb-1"><img src="" id="image" alt="" width="100px" height="100px"></span></td>
+                                                        </tr>
+                                                          <tr><td>
+                                                                <label>Button name</label>
                                                                 <input type="text" name="button1" id="button1" placeholder="Enter Button 1 Name" class="form-control"><br>
+                                                                  <label>Button url</label>
                                                                 <input type="text" name="button2" id="button2" placeholder="Enter Button 1 link" class="form-control"><br>
+                                                                  <label>Button 2 name</label>
                                                                 <input type="text" name="button3" id="button3" placeholder="Enter Button 2 Name" class="form-control"><br>
+                                                                  <label>Button 2 url</label>
                                                                 <input type="text" name="button4" id="button4" placeholder="Enter Button 2 link" class="form-control">
                                                             </td>
+                                                          </tr>
+
                                                         </tbody>
                                                     </table>
                                             </div>
@@ -217,7 +231,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +295,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +359,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-warning btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -409,7 +423,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +464,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
                                                         <td><input type="text" name="tagline" class="form-control"></td>
                                                         <td>
                                                             <input type="file" name="body_image" class="form-control">
@@ -468,7 +482,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -509,8 +523,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control" ></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -525,7 +539,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -566,8 +580,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"  placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -582,7 +596,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -623,8 +637,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description" class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -639,7 +653,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -680,8 +694,8 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title" class="form-control"></td>
-                                                        <td><textarea name="description" ></textarea></td>
+                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
+                                                        <td><textarea name="description"  class="form-control"></textarea></td>
                                                         <td><input type="checkbox" name="status"></td>
                                                     </tr>
                                                     </tbody>
@@ -696,7 +710,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -735,7 +749,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" placeholder="Title" name="title" class="form-control"></td>
                                                         <td><textarea name="details" ></textarea></td>
                                                         <td><input type="file" name="body_image" class="form-control"></td>
                                                     </tr>
@@ -751,7 +765,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -790,7 +804,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title" class="form-control"></td>
+                                                        <td><input type="text" name="title"   placeholder="Title" class="form-control"></td>
                                                         <td><input name="details" class="form-control" ></td>
                                                         <td><input type="file" name="image" class="form-control"></td>
                                                     </tr>
@@ -806,7 +820,7 @@
                         <div class="row">
                             <div class="col-xl-12 text-center">
                                 <div class="form-group">
-                                    <button type="submit" id="add_" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="add_" class="btn btn-primary btn-lg w-50">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -863,7 +877,7 @@
                     }else{
                         toggle_button = '<label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>'
                     }
-                    markup = '<tr><td>  </td><td>'+ msg.row.name + '</td>><td>'+ toggle_button +'</td><td> <a onclick="delete_payment_type('+ msg.row.id +')" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_package_type('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
+                    markup = '<tr><td>  </td><td>'+ msg.row.name + '</td>><td>'+ toggle_button +'</td><td> <a onclick="delete_payment_type('+ msg.row.id +')" class="btn btn-primary btn-lg w-50"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_package_type('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
                     tableBody = $("#payment_type_table tbody");
                     // tableBody.append(markup);
                     setTimeout(function(){ $("#save_msg").remove(); }, 3000);

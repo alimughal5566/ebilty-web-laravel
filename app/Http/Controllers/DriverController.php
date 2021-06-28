@@ -7,6 +7,7 @@ use App\Models\UserVehicle;
 use App\ShipmentBids;
 use App\ShipmentStatus;
 use App\Shippment;
+use App\User;
 use Illuminate\Http\Request;
 
 
@@ -15,7 +16,7 @@ class DriverController extends Controller
 
     public function __construct() {
 //        dd(Auth::user());
-        $this->middleware(['auth','role:driver|cracker']);
+        $this->middleware(['auth','role:driver|cracker|brocker_driver']);
     }
 
 
@@ -25,8 +26,7 @@ class DriverController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-//        dd(auth()->user()->id);
-        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
+//        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
         $shipments    = Shippment::
         where('assigned_to', auth()->user()->id)
             ->orWhereNull('assigned_to')
@@ -37,9 +37,23 @@ class DriverController extends Controller
             })
             ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
         $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
-//        dd($shipments[0]);
-//        $shipments= Shippment::where('user_id',auth()->user()->id)->orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         return view('driver.shipment.index', compact('shipments','statuses'));
+    }
+
+    public function myDriverShipments(){
+        $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
+
+        $shipments    = Shippment::
+        where('assigned_to', $drivers)
+            ->orWhereNull('assigned_to')
+            ->whereHas(
+                'sender', function($q){
+                $q->where('form','sender');
+//              $q->where('city_id', auth()->user()->city_id);
+            })
+            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
+        $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+        return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
 
     /**

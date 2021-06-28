@@ -23,7 +23,6 @@ class Shippment extends Model
     public function bids(){
         return $this->hasMany('App\ShipmentBids','shipment_id','id');
     }
-
     public function packages(){
         return $this->hasMany('App\ShippmentPackage','shippment_id');
     }

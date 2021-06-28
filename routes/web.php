@@ -18,7 +18,14 @@ Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
 
-
+Route::get('/clear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('storage:link');
+    return "Cleared!";
+});
 Auth::routes(['verify' => true]);
 
 Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
@@ -28,6 +35,7 @@ Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::get('/customers', 'HomeController@customers')->name('admin.customers');
     Route::get('/crackers', 'HomeController@crackers')->name('admin.crackers');
+
     Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
     Route::get('/shipments', 'HomeController@shipments')->name('admin.shipments');
     Route::get('/doc_verify/{id?}', 'HomeController@docVerify')->name('docVerify');
@@ -100,6 +108,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/getVehicles', 'HomeController@getVehicles')->name('getVehicles');
         Route::get('/shipments', 'CustomerController@index')->name('customer.shipments');
         Route::get('/driver/shipments', 'DriverController@index')->name('driver.shipments');
+        Route::get('/my-driver/shipments', 'DriverController@myDriverShipments')->name('myDriverShipments');
         Route::get('/save/bid', 'DriverController@bidStore')->name('create.bid');
         Route::get('/update/bid/status', 'CustomerController@bidStatusUpdate')->name('update.bid.status');
         Route::get('/send/bid/revise/request', 'CustomerController@sendBidReviserequest')->name('sendBidReviserequest');
@@ -120,6 +129,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::post('/update-personal-profile', 'HomeController@updatePersonalInfo')->name('updatePersonalInfo');
         Route::post('/update-location-details', 'HomeController@updateLocationInfo')->name('updateLocationInfo');
         Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');
+        Route::get('/my-drivers', 'HomeController@myDrivers')->name('myDrivers');
 
 });
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
@@ -128,6 +138,7 @@ Route::get('/getArea', 'HomeController@getArea')->name('getArea');
 Route::get('/getUserAddress', 'HomeController@getUserAddress')->name('getUserAddress');
 Route::post('/createUser', 'AuthController@createUser')->name('createUser');
 Route::post('/createCracker', 'AuthController@createCracker')->name('createCracker');
+Route::post('/createDriver', 'AuthController@createDriver')->name('createDriver');
 Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
 Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');
 

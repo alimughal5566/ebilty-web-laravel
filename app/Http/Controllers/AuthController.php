@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Requests\front\signup\SignupOtp;
+use App\Models\UserVehicle;
 use App\Patient;
 use App\UserAddress;
 use Illuminate\Auth\Events\Registered;
@@ -104,12 +105,38 @@ class AuthController extends Controller
         $user->assignRole('cracker');
         event(new Registered($user));
         return redirect()->back()->with(['success' =>'User registered successfully']);
+    }
+    public function createDriver(Request $request){
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:4'],
+            'full_name' => ['required', 'min:3'],
+            'phone' => ['required', 'unique:users,phone','min:3'],
+            'vehicle_number' => ['required']
+        ]);
+        $user = new User([
+            'name' => $request->full_name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'created_by' => auth()->user()->id,
+        ]);
+        $user->save();
+        $veh = new UserVehicle([
+            'user_id' => $user->id,
+            'category_id' => $request->veh_cat,
+            'vehicle_id' => $request->vehicle,
+            'vehicle_number' => $request->vehicle_number,
+        ]);
+        $veh->save();
 
+        $user->assignRole('brocker_driver');
+        event(new Registered($user));
+        return redirect()->back()->with(['success' =>'Driver registered successfully']);
     }
 
 
     public function createSenderAddress(Request $request){
-
         $address=new UserAddress;
         $address->user_id = $request->user_id;
         $address->created_by = auth()->user()->id;
