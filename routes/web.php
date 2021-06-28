@@ -132,6 +132,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/my-drivers', 'HomeController@myDrivers')->name('myDrivers');
 
 });
+
+
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
 Route::get('/getCities', 'HomeController@getCities')->name('getCities');
 Route::get('/getArea', 'HomeController@getArea')->name('getArea');

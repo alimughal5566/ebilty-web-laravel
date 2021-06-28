@@ -1301,8 +1301,8 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-{{--    <script src="https://maps.googleapis.com/maps/api/js?key={{env('G_MAP_KEY')}}&libraries=places&callback=initialize&libraries=places" async></script>--}}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfh-Jh-Vn1Lf2TeP9g9cf5bzRbX1gnFZ4&libraries=places&callback=initialize1&libraries=places" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('G_MAP_KEY')}}&libraries=places&callback=initialize&libraries=places" async></script>
+{{--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfh-Jh-Vn1Lf2TeP9g9cf5bzRbX1gnFZ4&libraries=places&callback=initialize1&libraries=places" async></script>--}}
 
     <script>
         @if (\Session::has('success'))
@@ -1934,6 +1934,7 @@
 
 
             $('#address-input').on('keyup', function(e) {
+                // alert('dasda');
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 13) {
                     e.preventDefault();
