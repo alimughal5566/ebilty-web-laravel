@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
         if(auth()->user()->hasRole('admin')){
-            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
+            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->paginate('15');
         }
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver'])){
 //           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
