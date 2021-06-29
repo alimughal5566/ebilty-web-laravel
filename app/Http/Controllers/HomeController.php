@@ -34,6 +34,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
         if(auth()->user()->hasRole('admin')){
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
@@ -41,15 +42,15 @@ class HomeController extends Controller
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver'])){
 //           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
 //           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
-           $shipments    = Shippment::
-               where('assigned_to', auth()->user()->id)
+           $shipments    = Shippment::where('assigned_to', auth()->user()->id)
                ->orWhereNull('assigned_to')
-               ->whereHas(
-                   'sender', function($q){
+               ->whereHas('sender', function($q){
                    $q->where('form','sender');
                    $q->where('city_id', auth()->user()->city_id);
                })
-               ->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
+               ->orderBy('updated_at','desc')
+               ->with('myBid','vehicle','vehicleType','packages','receiver')
+               ->paginate('5');
        }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
@@ -58,7 +59,7 @@ class HomeController extends Controller
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
 
         }
-//        dd($shipments);
+
         return view('dashboard', compact('shipments','add'));
     }
 
