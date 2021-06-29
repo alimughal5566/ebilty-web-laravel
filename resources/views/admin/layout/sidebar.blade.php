@@ -6,7 +6,7 @@
       <div class="kt-aside__brand-logo">
          <a href="{{route('home')}}">
 {{--             <img src="{{url('/images/noimage.jpg')}}"  alt="" width="100" >--}}
-         <img alt="" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:50px;">
+         <img alt="" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:54px;">
          </a>
       </div>
       <div class="kt-aside__brand-tools">
