@@ -444,6 +444,7 @@
             </thead>
             <tbody>
             @forelse($shipments as $shipment)
+
                 <tr>
                     <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
@@ -507,6 +508,13 @@
 
                     </td>
                         @endhasanyrole
+                    <td>
+                        @if($shipment->packages)
+                            <i class="fa fa-eye" aria-hidden="true" onclick="show_packages({{$shipment->packages}})"></i>
+                        @else
+                            Not Available
+                        @endif
+                    </td>
 
                 </tr>
 
@@ -524,7 +532,33 @@
         </div>
     </div>
  </div>
-
+        <div class="modal fade" id="show_packages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Package(s)</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" id="package_table">
+                            <thead>
+                            <t>
+                                <th scope="col">Package Type</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Dimensions</th>
+                            </t>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
     {{--     modalOpen--}}
@@ -574,7 +608,23 @@
     {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+    <script>
+        function show_packages(content){
+            $("#package_table tbody tr").remove();
+            $('#show_packages').modal('show');
+            console.log(content)
 
+            console.log(Object.keys(content).length)
+            if(Object.keys(content).length == 0){
+                $('#package_table').append('Not Available')
+            }
+            for(var i = 0; i < Object.keys(content).length; i++ ){
+                $('#package_table').append(`
+                   <tr><td>`+ content[i].category.name +`</td><td>`+content[i].description+`</td><td>`+content[i].weight+`</td><td>`+content[i].quantity+`</td><td>`+content[i].length+`x`+content[i].width+`x`+content[i].height+`</td></tr>
+                `);
+            }
+        }
+    </script>
     <script>
 
         @if (\Session::has('success'))
