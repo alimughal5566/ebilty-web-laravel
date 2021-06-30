@@ -129,12 +129,13 @@
                     <div class="col-12 col-md-4">
 
                         <div class="dashboard-top-container ">
-                            <div class="text-center img-container">
-                                <img alt="Logo" src="{{url('/images/logo.png')}}" style="max-height:40px">
-                                <h5>Summary</h5>
+                            <div class="text-center img-container summary_logo">
+                                <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:126px">
+                                
                             </div>
 
-                            <div class="top-dashbord-left-container d-flex flex-column align-items-stretch h-100 ">
+                            <div class="top-dashbord-left-container d-flex flex-column align-items-stretch h-100 align_form_top">
+                                <h5 class="text-center">Summary</h5>
                                 <div class="container-info">
                                     <div>
                                         <!-- <i class="flaticon-map-location"></i>  -->
@@ -186,8 +187,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
-                        <div class="kt-widget kt-widget--user-profile-3 custom-widget">
-                            <div class="kt-widget__top">
+                        <div class="kt-widget kt-widget--user-profile-3 custom-widget" >
+                            <div class="kt-widget__top" style="padding-left: 6px;">
                                 <div class="kt-widget__pic kt-widget__pic--brand kt-font-boldest kt-font-light boxnameShow bg-white">
                                     @php $profile_image='/images/noimage.jpg'; @endphp
                                     @if(auth()->user()->profile_image)
@@ -495,13 +496,13 @@
                     <td>
                         @if(count($shipment->bids)>0)
                             <span class="example-tools justify-content-center">
-                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
+                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer; z-index: 0" aria-describedby="tooltip797420">
                                  <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
                            <i class="la la-car"></i></a>
                        </span>
                         @else
                             <span class="example-tools justify-content-center">
-                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon"   data-target="#myModal" title=" 0 Bids"  style="position: relative; cursor: default" aria-describedby="tooltip797420">
+                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon"   data-target="#myModal" title=" 0 Bids"  style="position: relative; cursor: default; z-index: 0" aria-describedby="tooltip797420">
                                  <span class=" text-danger" style=" position: absolute;top: -6px; right: -2px;">●</span>
                            <i class="la la-car"></i></a>
                        </span>

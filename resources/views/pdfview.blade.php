@@ -8,11 +8,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<style>
+    table {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
+
 <div  >
         <div class="row">
             <div class="col-12">
                          <div class="">
-                              <img  class="float-right" src="{{public_path('uploads/logos/company-logo.png')}}">
+                              <img  class="float-right img-fluid" src="{{public_path('uploads/logos/company-logo.png')}}" style="width: 140px ; height: 70px ;">
                         </div>
                         <div style="font-size:0;position:relative;width:144px;height:30px;">
                             @if(file_exists(public_path('images/qrcodes/'.$shipment->id.'.svg')))
