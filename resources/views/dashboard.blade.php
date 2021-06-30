@@ -391,7 +391,7 @@
                                 </div>
                             @endhasrole
 
-                             @hasanyrole('driver||customer')
+                             @hasanyrole('driver||customer||company')
                                  <div class="col-12">
                                     <div class="dashboardcontainainer ">
                                         <div class="container-info">
@@ -437,8 +437,9 @@
                 <th scope="col">Total Weight</th>
                 <th scope="col">Shipment Time</th>
                 <th scope="col">Status</th>
+                <th scope="col">%|Completion</th>
+                <th scope="col">Quick View</th>
                 @hasanyrole('admin||customer')
-{{--                  <th scope="col"></th>--}}
                 @endhasanyrole
             </tr>
             </thead>

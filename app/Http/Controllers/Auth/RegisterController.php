@@ -77,12 +77,13 @@ class RegisterController extends Controller
         ]);
     }
     public function register_user(Request $request){
-//        $this->validator($request);
+//        dd($request);
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
             'name' => ['required', 'min:3'],
-            'phone' => ['required', 'unique:users,phone',new PhoneNumberVerification],
+            'phone' => ['required', 'unique:users,phone'],
+//            'phone' => ['required', 'unique:users,phone',new PhoneNumberVerification],
         ]);
         if ($validator->fails()) {
             $validator->errors()->add('form', 'signup');
@@ -108,10 +109,12 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password),
         ]);
         $user->save();
-        event(new Registered($user));
+//        event(new Registered($user));
         if ($request->user_role_id == 1){
             $user->assignRole('customer');
-        }else{
+        }
+        elseif($request->user_role_id == 2)
+        {
             $user->assignRole('driver');
             if($request->vehicle_category) {
                 foreach ($request->vehicle_category as $key => $cat) {
@@ -123,6 +126,9 @@ class RegisterController extends Controller
                     $user_vehicle->save();
                 }
             }
+        }
+        elseif($request->user_role_id == 3){
+            $user->assignRole('company');
         }
 
         $this->guard()->login($user);

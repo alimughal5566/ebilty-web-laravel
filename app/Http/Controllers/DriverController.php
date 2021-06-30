@@ -30,8 +30,7 @@ class DriverController extends Controller
         $shipments    = Shippment::
         where('assigned_to', auth()->user()->id)
             ->orWhereNull('assigned_to')
-            ->whereHas(
-                'sender', function($q){
+            ->whereHas('sender', function($q){
                 $q->where('form','sender');
                 $q->where('city_id', auth()->user()->city_id);
             })
@@ -42,7 +41,6 @@ class DriverController extends Controller
 
     public function myDriverShipments(){
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
-
         $shipments    = Shippment::
         where('assigned_to', $drivers)
             ->orWhereNull('assigned_to')

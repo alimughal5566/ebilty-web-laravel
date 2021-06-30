@@ -15,6 +15,7 @@ use App\State;
 use App\User;
 use App\UserAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
 class HomeController extends Controller
 {
@@ -51,12 +52,43 @@ class HomeController extends Controller
                ->orderBy('updated_at','desc')
                ->with('myBid','vehicle','vehicleType','packages','receiver')
                ->paginate('5');
+
+
+
+//           $shipments    = Shippment::Where(function ($q){
+//               $q->Where('assigned_to',Auth::id());
+//               $q->orWhereNull('assigned_to');
+//           })
+//               ->join('user_addresses' , 'user_addresses.id' , 'shippments.sender_address_id')
+//               ->where('user_addresses.city_id', auth()->user()->city_id)
+//               ->where('user_addresses.form','sender')
+//               ->orderBy('shippments.updated_at','desc')
+//               ->with('myBid','vehicle','vehicleType','packages','receiver')
+//               ->paginate('5');
+//           dd($shipments);
+//       }
+
+
+
        }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+
         }
         elseif(auth()->user()->hasRole('brocker_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+
+        }elseif(auth()->user()->hasRole('company')){
+            $shipments    = Shippment::where('assigned_to', auth()->user()->id)
+                ->orWhereNull('assigned_to')
+                ->whereHas('sender', function($q){
+                    $q->where('form','sender');
+                    $q->where('city_id', auth()->user()->city_id);
+                })
+                ->orderBy('updated_at','desc')
+                ->with('myBid','vehicle','vehicleType','packages','receiver')
+                ->paginate('5');
+
 
         }
 
@@ -175,11 +207,21 @@ class HomeController extends Controller
     }
 
     public function myDrivers(){
+        if (Auth::user()->hasRole('cracker')){
         $users = User::where('created_by',auth()->user()->id)->whereHas(
             'roles', function($q){
             $q->where('name', 'brocker_driver');
         }
         )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+
+        }elseif (Auth::user()->hasRole('company')){
+            $users = User::where('created_by',auth()->user()->id)->whereHas(
+                'roles', function($q){
+                $q->where('name', 'company_driver');
+            }
+            )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+
+        }
         $vehicles_cat= VehicleCategory::all();
         return view('user.my_users', compact('users','vehicles_cat'));
     }

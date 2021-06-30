@@ -130,8 +130,12 @@ class AuthController extends Controller
             'vehicle_number' => $request->vehicle_number,
         ]);
         $veh->save();
-
-        $user->assignRole('brocker_driver');
+            if(Auth::user()->hasRole('cracker')){
+                $user->assignRole('brocker_driver');
+            }
+            elseif(Auth::user()->hasRole('company')){
+                $user->assignRole('company_driver');
+            }
         event(new Registered($user));
         return redirect()->back()->with(['success' =>'Driver registered successfully']);
     }

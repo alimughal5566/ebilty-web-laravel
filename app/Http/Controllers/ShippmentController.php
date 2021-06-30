@@ -74,6 +74,7 @@ class ShippmentController extends Controller
 
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
+
         return view('user.shipment.show', compact('shipment'));
     }
 

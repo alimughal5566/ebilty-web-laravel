@@ -465,7 +465,7 @@
 
 
 
-          @hasanyrole('cracker')
+          @hasanyrole('cracker|company')
           <ul class="kt-menu__nav p-0 pt-2 ">
               @if(auth()->user()->documents_verified=='1')
                   <li class="kt-menu__item  {{ (request()->is('user/my-driver/shipments')) ? 'kt-menu__item--open active' : '' }} kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel ">

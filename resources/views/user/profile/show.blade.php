@@ -47,7 +47,7 @@
                                             <span data-toggle="modal" data-target="#updateProfilePic" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                         @endif
                                         @endrole
-                                        @role('admin|driver|cracker')
+                                        @role('admin|driver|cracker|company')
                                              @if($user->edit_request==1 && $user->id==auth()->user()->id)
                                                   <span data-toggle="modal" data-target="#updateProfilePic" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                              @endif
@@ -59,7 +59,7 @@
                                         <span class="kt-widget12__value"><img src="{{url($profile_image)}}"  alt="" width="300" ></span>
                                     </div>
                                 </div>
-                                @role('admin|driver|cracker')
+                                @role('admin|driver|cracker|company')
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info ">
                                         <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
@@ -81,7 +81,7 @@
                                             <span class="kt-widget12__desc d-inline-flex"><b>Identity Card</b></span>
                                             <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
-                                            @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                            @if( $user->edit_request==1 && $user->id==auth()->user()->id)
                                                <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
                                              @endif
                                             @php $cnic='/images/noimage.jpg'; @endphp
@@ -120,7 +120,7 @@
 {{--                            </h4>--}}
 {{--                        @endif--}}
                         <div>
-                            @role('admin|driver|cracker')
+                                @role('admin|driver|cracker|company')
                             @if($user->documents_verified==0)
                                 <h4 class="text-right float-right pt-3 pr-1 ">
                                     <span class="text-danger ml-2"> Not verified </span>
@@ -205,7 +205,7 @@
                                 <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
                             @endif
                         @endrole
-                        @role('admin|driver|cracker')
+                        @role('admin|driver|cracker|company')
                             @if($user->edit_request==1 && $user->id==auth()->user()->id)
                                 <span data-toggle="modal" data-target="#edit6" title="Edit" class="text-right float-right fa fa-edit text-warning pt-4" style="cursor: pointer"></span>
                             @endif

@@ -204,8 +204,9 @@
                                 <div class="dropdown bootstrap-select form-control">
                                 <select name="user_role_id" class="form-control " data-dropup-auto="false" id="user_role_id" autocomplete="off" required="" tabindex="-98">
                                     <option value="" selected="" disabled="">Register As</option>
-                                    <option value="1" {{old('user_role_id')==1?'selected':''}} class="individual">Vendor</option>
+                                    <option value="1" {{old('user_role_id')==1?'selected':''}} class="individual">Customer</option>
                                     <option value="2" {{old('user_role_id')==2?'selected':''}} class="company">Driver</option>
+                                    <option value="3" {{old('user_role_id')==3?'selected':''}} class="company">Company</option>
                                 </select>
                                 <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="user_role_id" title="Register As">
                                     <div class="filter-option">
@@ -240,9 +241,9 @@
 {{--                                        </div>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                <div class="option_min_add sec_min">
-                                    <span class="fa fa-plus-circle plos text-dark " id="first" data-placement="top" data-toggle="kt-tooltip" data-skin="dark" data-original-title="Add More Vehincle"></span>
-                                </div>
+{{--                                <div class="option_min_add sec_min">--}}
+{{--                                    <span class="fa fa-plus-circle plos text-dark " id="first" data-placement="top" data-toggle="kt-tooltip" data-skin="dark" data-original-title="Add More Vehincle"></span>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="input-group vehicle_type veh" style="display:none">
                                 <label for="vehicle_category" class="sr-only"></label>
