@@ -112,28 +112,49 @@ class AuthController extends Controller
             'phone' => ['required', 'unique:users,phone','min:3'],
             'vehicle_number' => ['required']
         ]);
-        $user = new User([
-            'name' => $request->full_name,
-            'email' => $request->email,
-            'email_verified_at' => now(),
-            'password' => bcrypt($request->password),
-            'phone' => $request->phone,
-            'documents_verified' => 1,
-            'created_by' => auth()->user()->id,
-        ]);
-        $user->save();
-        $veh = new UserVehicle([
-            'user_id' => $user->id,
-            'category_id' => $request->veh_cat,
-            'vehicle_id' => $request->vehicle,
-            'is_verified' => 1,
-            'vehicle_number' => $request->vehicle_number,
-        ]);
-        $veh->save();
+
             if(Auth::user()->hasRole('cracker')){
+
+                $user = new User([
+                    'name' => $request->full_name,
+                    'email' => $request->email,
+                    'email_verified_at' => now(),
+                    'password' => bcrypt($request->password),
+                    'phone' => $request->phone,
+                    'documents_verified' => 1,
+                    'created_by' => auth()->user()->id,
+                ]);
+                $user->save();
+                $veh = new UserVehicle([
+                    'user_id' => $user->id,
+                    'category_id' => $request->veh_cat,
+                    'vehicle_id' => $request->vehicle,
+                    'is_verified' => 1,
+                    'vehicle_number' => $request->vehicle_number,
+                ]);
+                $veh->save();
+
+
                 $user->assignRole('brocker_driver');
             }
             elseif(Auth::user()->hasRole('company')){
+                $user = new User([
+                    'name' => $request->full_name,
+                    'email' => $request->email,
+                    'email_verified_at' => now(),
+                    'password' => bcrypt($request->password),
+                    'phone' => $request->phone,
+                    'documents_verified' => 1,
+                    'created_by' => auth()->user()->id,
+                ]);
+                $user->save();
+                $veh = new UserVehicle([
+                    'user_id' => $user->id,
+                    'category_id' => $request->veh_cat,
+                    'vehicle_id' => $request->vehicle,
+                    'vehicle_number' => $request->vehicle_number,
+                ]);
+                $veh->save();
                 $user->assignRole('company_driver');
             }
         event(new Registered($user));

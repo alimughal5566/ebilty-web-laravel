@@ -126,8 +126,6 @@ class HomeController extends Controller
         $countries=Country::all();
         return view('user.profile.show',compact('user','countries'));
     }
-
-
     public function updateLicense(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
         if ($request->license_image) {
@@ -172,7 +170,6 @@ class HomeController extends Controller
         $user->save();
         return redirect()->back()->with(['success' =>'Data updated  successfully'], 200);
     }
-
     public function requestToEdit(){
         $user = User::where('id', auth()->user()->id)->first();
         $user->edit_request=3;
@@ -187,7 +184,6 @@ class HomeController extends Controller
         )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
         return view('admin.drivers', compact('users'));
     }
-
     public function customers(){
         $users = User::whereHas(
             'roles', function($q){
@@ -205,7 +201,6 @@ class HomeController extends Controller
 
         return view('admin.crackers', compact('users'));
     }
-
     public function myDrivers(){
         if (Auth::user()->hasRole('cracker')){
         $users = User::where('created_by',auth()->user()->id)->whereHas(
@@ -225,7 +220,6 @@ class HomeController extends Controller
         $vehicles_cat= VehicleCategory::all();
         return view('user.my_users', compact('users','vehicles_cat'));
     }
-
     public function shipments(){
         $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         return view('admin.shipment.index', compact('shipments'));
@@ -236,7 +230,6 @@ class HomeController extends Controller
 //        dd($addresses);
         return view('user.adddresses', compact('addresses','countries'));
     }
-
     public function docVerify($id){
         $user = User::where('id', $id)->first();
         $user->documents_verified=1;
@@ -272,7 +265,6 @@ class HomeController extends Controller
         $user->save();
         return redirect()->back()->with(['success' =>'Location added  successfully']);
     }
-
     public function addressStatusUpdate(Request $request){
         if($request->id){
             $UserAddress = UserAddress::find($request->id);
@@ -285,8 +277,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Status updated  successfully'], 200);
     }
-
-
     public function sendMessage(Request $request){
         try{
 //            $code = mt_rand(1000, 9999);
@@ -321,7 +311,6 @@ class HomeController extends Controller
             return response()->json(['success' =>'false','data'=> $e->getMessage()], 200);
         }
     }
-
     public function otpVerifcationCheck(Request $request){
             $phone= phoneVerification::where('number',$request->number)->first();
             if($phone){

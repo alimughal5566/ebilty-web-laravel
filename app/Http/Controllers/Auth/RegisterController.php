@@ -99,22 +99,33 @@ class RegisterController extends Controller
             $filename =time().'.'.$extension;
             $file->move('setting/cnic/', $filename);
         }
-        $user = new User([
-            'name' => $request->name,
-            'email' => $request->email,
-            'postal_code' => $request->postal_code,
-            'phone' => $request->mobile,
-            'cnic_image' => $filename,
-            'bussiness_type' => $request->bussiness_type,
-            'password' => bcrypt($request->password),
-        ]);
-        $user->save();
-//        event(new Registered($user));
+
+
         if ($request->user_role_id == 1){
+            $user = new User([
+                'name' => $request->name,
+                'email' => $request->email,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->mobile,
+                'cnic_image' => $filename,
+                'bussiness_type' => $request->bussiness_type,
+                'password' => bcrypt($request->password),
+            ]);
+            $user->save();
             $user->assignRole('customer');
         }
         elseif($request->user_role_id == 2)
         {
+            $user = new User([
+                'name' => $request->name,
+                'email' => $request->email,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->mobile,
+                'cnic_image' => $filename,
+                'bussiness_type' => $request->bussiness_type,
+                'password' => bcrypt($request->password),
+            ]);
+            $user->save();
             $user->assignRole('driver');
             if($request->vehicle_category) {
                 foreach ($request->vehicle_category as $key => $cat) {
@@ -128,9 +139,19 @@ class RegisterController extends Controller
             }
         }
         elseif($request->user_role_id == 3){
+            $user = new User([
+                'name' => $request->name,
+                'email' => $request->email,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->mobile,
+                'cnic_image' => $filename,
+                'bussiness_type' => $request->bussiness_type,
+                'password' => bcrypt($request->password),
+            ]);
+            $user->save();
             $user->assignRole('company');
         }
-
+        event(new Registered($user));
         $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {

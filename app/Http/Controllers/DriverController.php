@@ -16,7 +16,7 @@ class DriverController extends Controller
 
     public function __construct() {
 //        dd(Auth::user());
-        $this->middleware(['auth','role:driver|cracker|brocker_driver']);
+        $this->middleware(['auth','role:driver|cracker|brocker_driver|company']);
     }
 
 
@@ -40,6 +40,7 @@ class DriverController extends Controller
     }
 
     public function myDriverShipments(){
+//        dd('asdasdasda');
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
         $shipments    = Shippment::
         where('assigned_to', $drivers)
