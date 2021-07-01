@@ -51,7 +51,6 @@ class AuthController extends Controller
 //        ], 201);
     }
 
-
     public function createUser(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'unique:users,email'],
@@ -176,7 +175,6 @@ class AuthController extends Controller
         $address->save();
         return response()->json(['success' => 'Address saved successfully','user_id'=>$request->user_id,'address_id'=>$address->id]);;
     }
-
     public function sendOtpApi(SignupOtp $request){
         $validator = Validator::make($request->all(), [
             'phone' => ['required', 'unique:users,phone','min:4']

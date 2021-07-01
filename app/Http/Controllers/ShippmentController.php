@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserVehicle;
 use App\Shippment;
 use App\ShippmentPackage;
+use App\User;
+use FontLib\Table\Type\name;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use PDF;
 
@@ -86,5 +90,44 @@ class ShippmentController extends Controller
 
 
         return view('pdfview');
+    }
+
+    public function shipmentAssign(Request $request)
+    {
+        if (Auth::user()->hasRole('cracker')){
+            $users = User::where('created_by',auth()->user()->id)
+            ->join('user_vehicles','user_id','users.id')
+            ->whereHas(
+                'roles', function($q){
+                $q->where('name', 'brocker_driver');
+            }
+            )
+            ->with('vehicle','vehicle_category')
+            ->get();
+
+        }
+    elseif (Auth::user()->hasRole('company')){
+            $users = User::where('created_by',auth()->user()->id)
+            ->join('user_vehicles','user_id','users.id')
+            ->whereHas(
+                'roles', function($q){
+                $q->where('name', 'company_driver');
+            }
+            )
+            ->with('vehicle','vehicle_category')
+            ->get();
+
+        }
+        return response()->json($users);
+    }
+
+    public function assignDriver(Request $request){
+
+        $shipment= Shippment::where('id',$request->shipment_id)
+                    ->update(['assigned_to'=>$request->driver_id]);
+//        dd($shipment);
+//            if($shipment){
+            return response()->json(['success' =>'Assign Successfully'], 200);
+
     }
 }

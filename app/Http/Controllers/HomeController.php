@@ -92,7 +92,8 @@ class HomeController extends Controller
 
         }
 
-        return view('dashboard', compact('shipments','add'));
+        $vehicles_cat=VehicleCategory::all();
+        return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
 
     public function getVehicles(Request $request)

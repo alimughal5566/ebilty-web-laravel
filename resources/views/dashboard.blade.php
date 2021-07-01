@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 @section('content')
     {{--    <link rel="stylesheet" href="http://127.0.0.1:8002/themes/spotlayer/assets/admin/css/demo1/style.bundle.css">--}}
-    <style>
+    <style xmlns="">
         .progress {
             width: 90px;
             height: 90px;
@@ -90,6 +90,13 @@
         div.h4 {
             line-height: 1rem;
         }
+
+        @media (min-width: 576px) {
+            #showDriverList .modal-dialog {
+                max-width: 1000px !important;
+                margin: 1.75rem auto;
+            }
+        }
     </style>
 
 
@@ -131,7 +138,7 @@
                         <div class="dashboard-top-container ">
                             <div class="text-center img-container summary_logo">
                                 <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:126px">
-                                
+
                             </div>
 
                             <div class="top-dashbord-left-container d-flex flex-column align-items-stretch h-100 align_form_top">
@@ -442,6 +449,9 @@
                 <th scope="col">Quick View</th>
                 @hasanyrole('admin||customer')
                 @endhasanyrole
+                @hasanyrole('company||cracker')
+                <th scope="col">Assign To</th>
+                @endhasanyrole
             </tr>
             </thead>
             <tbody>
@@ -516,7 +526,18 @@
                         @else
                             Not Available
                         @endif
+
                     </td>
+                    @hasanyrole('company||cracker')
+                    @if($shipment->assigned_to == Auth()->id())
+                    <td>
+                        <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->id}})"></i>
+{{--                            <i class="fa fa-user" aria-hidden="true"></i>--}}
+                       || <a href="#" class="text-warning" data-toggle="modal" data-target="#add_user"><i class="fas fa-plus"></i></a>
+
+                    </td>
+                    @endif
+                    @endhasanyrole
 
                 </tr>
 
@@ -561,6 +582,45 @@
                 </div>
             </div>
         </div>
+
+
+
+
+                        <!--        assign shipment to driver model-->
+
+        <div class="modal fade" id="showDriverList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Drivers List</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" id="show_DriverList">
+                            <thead>
+                            <t>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Driver Contact</th>
+                                <th scope="col">vehicle Name</th>
+                                <th scope="col">vehicle Type</th>
+                                <th scope="col">vehicle Number</th>
+                                <th scope="col">Action</th>
+                            </t>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                        <!--        assign shipment to driver model-->
+
 
     {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
     {{--     modalOpen--}}
@@ -607,12 +667,144 @@
             </div>
         </div>
     </div>
-    {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+
+
+
+        <div class="modal fade show" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add</h5>
+                        {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                        {{--                        <i aria-hidden="true" class="ki ki-close"></i>--}}
+                        {{--                    </button>--}}
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body  p-0">
+                            <form method="post" action="{{route('createDriver')}}">
+                            @csrf
+                            <!--begin::Invoice-->
+                                <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                       <span class="kt-portlet__head-icon">
+                                           <i class="flaticon2-user"></i>
+                                       </span>
+                                            <h3 class="kt-portlet__head-title">
+                                                Add Driver
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="kt-portlet__body">
+                                        @if(count($errors) > 0)
+                                            <div class="alert alert-warning alert-dismissible fade show">
+                                                @foreach($errors->all() as $error)
+                                                    <ul class="text-white pl-1">{{$error}}</ul> <br>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                        <div class="kt-portlet__head border bg-warning mb-3">
+                                            <div class="kt-portlet__head-label">
+                                                   <span class="kt-portlet__head-icon">
+                                                       <i class="flaticon2-user"></i>
+                                                   </span>
+                                                <h3 class="kt-portlet__head-title ">
+                                                    Driver Personal Details
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="form-group col-lg-5">
+                                                <label>Name <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <input type="text" class="form-control name" value="{{old('full_name')}}" name="full_name" required placeholder="Full name">
+                                            </div>
+                                            <div class="form-group col-lg-5">
+                                                <label>Email <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <input class="form-control mobile" name="email"  value="{{old('email')}}"  type="email" required placeholder="Email">
+                                            </div>
+                                            <div class="form-group col-lg-5">
+                                                <label>Mobile <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <input type="number" class="form-control mobile" value="{{old('phone')}}"  name="phone"  required placeholder="Number">
+                                            </div>
+                                            <div class="form-group col-lg-5">
+                                                <label>Password <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                                <input type="password" class="form-control" value="{{old('password')}}"  name="password" required placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__head border bg-warning mb-3">
+                                            <div class="kt-portlet__head-label">
+                                           <span class="kt-portlet__head-icon">
+                                               <i class="flaticon2-user"></i>
+                                           </span>
+                                                <h3 class="kt-portlet__head-title ">
+                                                    Driver vehicle Details
+                                                </h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="row ">
+                                            <div class="form-group">
+                                                <label class="">Vehicle Number</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input class="form-control" type="text" name="vehicle_number" placeholder="Vehicle Number" required="" value="{{old('vehicle_number')}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Vehicle Category</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <div class="dropdown bootstrap-select">
+                                                        <select id="veh_cat" required="" name="veh_cat" onchange="getVehicles(this.value,'veehicl')" class="" tabindex="-98">
+                                                            <option value="" selected="" disabled="">Nothing selected</option>
+                                                            @foreach($vehicles_cat as $cat)
+                                                                <option value="{{$cat->id}}"  {{($cat->id==old('veh_cat'))?'selected':''}}>{{$cat->name}}</option>
+
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Vehicle</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <div class="dropdown bootstrap-select">
+                                                        <select id="veehicl" required="" name="vehicle" class="" tabindex="-98">
+                                                            <option value="" selected="" disabled="">Nothing selected</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="kt-portlet__foot">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-4 offset-9">
+                                                    <input type="submit" class="btn btn-success" value="Save">
+                                                    <button type="button" class="btn btn-secondary cancel">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--}}
+    <link rel= "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <script>
         function show_packages(content){
-            $("#package_table tbody tr").remove();
+            // $("#package_table tbody tr").remove();
             $('#show_packages').modal('show');
             console.log(content)
 
@@ -620,12 +812,35 @@
             if(Object.keys(content).length == 0){
                 $('#package_table').append('Not Available')
             }
+            $('#package_table tr').empty();
             for(var i = 0; i < Object.keys(content).length; i++ ){
                 $('#package_table').append(`
                    <tr><td>`+ content[i].category.name +`</td><td>`+content[i].description+`</td><td>`+content[i].weight+`</td><td>`+content[i].quantity+`</td><td>`+content[i].length+`x`+content[i].width+`x`+content[i].height+`</td></tr>
                 `);
             }
         }
+
+        @if ($errors->has('full_name')||$errors->has('email')||$errors->has('phone')||$errors->has('password'))
+        $('#add_user').modal('show')
+        toastr.error('Validation error occured');
+        @endif
+        function getVehicles(id, vehicl) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getVehicles')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose Vehicle</option>";
+                    $.each(data.data,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+vehicl).empty().append(html);
+                    $('#'+vehicl).selectpicker('refresh');
+                }
+            })
+        }
+
     </script>
     <script>
 
@@ -759,5 +974,44 @@
         }
 
 
+
+        function showDriverList(id){
+            // $("#package_table tbody tr").remove();
+            var data = {id:id};
+            $('#showDriverList').modal('show');
+            // alert(data);
+            $.get( '{{route("shipment.assign")}}',data, function( response ) {
+               console.log(response);
+                if(Object.keys(response).length == 0){
+                    $('#show_DriverList').append('Not Available')
+                }
+                $('#show_DriverList tbody').empty();
+                let shipment_id;
+                let driver_id;
+                for(var i = 0; i < Object.keys(response).length; i++ ){
+                    shipment_id = id;
+                    driver_id = response[i].id;
+                    $('#show_DriverList').append(`<tr><td>`+ response[i].name +`</td><td>`+response[i].email+`</td><td>`+response[i].phone+`</td><td>`+response[i].vehicle.name+`</td><td>`+response[i].vehicle_category.name+`</td><td>`+response[i].vehicle_number+`</td><td><a class=" btn btn-sm btn-outline-danger" onclick="assignShipnemt(${shipment_id},${driver_id})">Assign</a></td></tr>`);
+                }
+            });
+
+        }
+
+
+        function assignShipnemt(shipment_id,driver_id){
+
+            console.log(shipment_id,driver_id)
+            let data={'shipment_id':shipment_id,'driver_id':driver_id}
+            console.log(data);
+            $.get( '{{route("assign.driver")}}',data, function( response ) {
+                    toastr.success( 'shipment assigned successfully ');
+                    setTimeout(function(){ location.reload() },1000);
+            })
+
+        }
+
+
     </script>
+
+
 @endsection

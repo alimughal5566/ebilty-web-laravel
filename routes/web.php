@@ -143,5 +143,7 @@ Route::post('/createCracker', 'AuthController@createCracker')->name('createCrack
 Route::post('/createDriver', 'AuthController@createDriver')->name('createDriver');
 Route::post('/createSenderAddress', 'AuthController@createSenderAddress')->name('createSenderAddress');
 Route::get('/shipment/download/{id}', 'ShippmentController@downloadPdf')->name('downloadPdf');
+Route::get('/shipment/assign', 'ShippmentController@shipmentAssign')->name('shipment.assign');
+Route::get('/Assign/driver/', 'ShippmentController@assignDriver')->name('assign.driver');
 
 //Route::get('qrcode/{id}', 'QrCodeController@generate')->name('generate.qr');

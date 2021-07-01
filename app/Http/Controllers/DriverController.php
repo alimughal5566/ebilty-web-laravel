@@ -40,7 +40,6 @@ class DriverController extends Controller
     }
 
     public function myDriverShipments(){
-//        dd('asdasdasda');
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
         $shipments    = Shippment::
         where('assigned_to', $drivers)

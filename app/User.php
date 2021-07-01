@@ -61,7 +61,14 @@ protected $guarded=[''];
      public function myDrivers(){
         return $this->hasMany($this, 'created_by','id');
     }
-
+    public function vehicle()
+    {
+        return $this->hasOne('App\Models\Admin\Setting\Vehicle','id','vehicle_id');
+    }
+    public function vehicle_category()
+    {
+        return $this->hasOne('App\Models\Admin\Setting\VehicleCategory','id','category_id');
+    }
 
 
 
