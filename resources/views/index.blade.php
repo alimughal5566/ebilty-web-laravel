@@ -1149,7 +1149,23 @@
           @endif
 </script>
 
+<script src="//js.pusher.com/3.1/pusher.min.js"></script> 
+      <script>
+      Pusher.logToConsole = true;
+      var pusher = new Pusher('47441135a7f8bd008495', {
+         cluster: 'ap2',
+    encrypted: true
+});
 
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('notification');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\NotificationEvent', function(data) {
+   console.log('sfddsfdsfsdf')
+    // this is called when the event notification is received...
+});
+      </script>
 
 
 
