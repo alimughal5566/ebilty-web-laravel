@@ -18,8 +18,7 @@ Route::get('test', function () {
     event(new App\Events\NotificationEvent);
     return "Event has been sent!";
 });
-
-
+Route::get('testfirebase' , 'MapController@index');
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
