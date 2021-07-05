@@ -44,6 +44,7 @@
     <script src="{{asset('assets/js/framework.js')}}"></script>
     <script src="{{asset('assets/js/framework.extras.js')}}"></script>
     <link rel="stylesheet" property="stylesheet" href="#">
+  
 
  </body>
  </html>

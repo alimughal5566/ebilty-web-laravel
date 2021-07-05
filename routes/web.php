@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function () {
+    event(new App\Events\NotificationEvent);
+    return "Event has been sent!";
+});
+
+
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
@@ -28,9 +34,9 @@ Route::get('/clear', function () {
 });
 Auth::routes(['verify' => true]);
 
-Route::get('/get_vehicle_cat', 'auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
-Route::post('/register_user', 'auth\RegisterController@register_user')->name('register_user');
-Route::get('/get_vehicles', 'auth\LoginController@get_vehicles')->name('get_vehicles');
+Route::get('/get_vehicle_cat', 'Auth\LoginController@get_vehicle_cat')->name('get_vehicle_cat');
+Route::post('/register_user', 'Auth\RegisterController@register_user')->name('register_user');
+Route::get('/get_vehicles', 'Auth\LoginController@get_vehicles')->name('get_vehicles');
 Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function() {
     Route::get('/customers', 'HomeController@customers')->name('admin.customers');
