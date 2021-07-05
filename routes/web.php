@@ -109,6 +109,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/shipments', 'CustomerController@index')->name('customer.shipments');
         Route::get('/driver/shipments', 'DriverController@index')->name('driver.shipments');
         Route::get('/my-driver/shipments', 'DriverController@myDriverShipments')->name('myDriverShipments');
+        Route::get('/my-All/shipments', 'DriverController@myAllShipments')->name('my.all.shipments');
+        Route::get('/shipment/driver', 'DriverController@shipmentDriver')->name('shipment.driver');
         Route::get('/save/bid', 'DriverController@bidStore')->name('create.bid');
         Route::get('/update/bid/status', 'CustomerController@bidStatusUpdate')->name('update.bid.status');
         Route::get('/send/bid/revise/request', 'CustomerController@sendBidReviserequest')->name('sendBidReviserequest');

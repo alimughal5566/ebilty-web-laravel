@@ -54,6 +54,38 @@ class DriverController extends Controller
         return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
 
+
+
+
+    public function myAllShipments(){
+        $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
+
+        $shipments    = Shippment::
+        where('assigned_to', $drivers)
+            ->orWhereNull('assigned_to')
+            ->whereHas(
+                'sender', function($q){
+                $q->where('form','sender');
+//              $q->where('city_id', auth()->user()->city_id);
+            })
+            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
+        $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+        return view('user.my-all-shipments', compact('shipments','statuses'));
+    }
+
+    public function shipmentDriver(Request $request){
+
+
+        $users = User::where('created_by',auth()->user()->id)
+            ->join('user_vehicles','user_id','users.id')
+            ->with('vehicle','vehicle_category')
+            ->first();
+        return response()->json($users);
+
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *

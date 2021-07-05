@@ -583,9 +583,6 @@
             </div>
         </div>
 
-
-
-
                         <!--        assign shipment to driver model-->
 
         <div class="modal fade" id="showDriverList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -617,7 +614,6 @@
                 </div>
             </div>
         </div>
-
 
                         <!--        assign shipment to driver model-->
 
@@ -668,9 +664,7 @@
         </div>
     </div>
 
-
-
-        <div class="modal fade show" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
+   <div class="modal fade show" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

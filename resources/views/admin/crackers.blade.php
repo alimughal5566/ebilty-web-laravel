@@ -287,6 +287,32 @@
                                         <label>Password <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input type="password" class="form-control" value="{{old('password')}}"  name="password" required placeholder="Password">
                                     </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>Country:</label>
+                                        <select class="form-control country_id" id="contry" onchange="getStates(this.value,'stat')" required title="Please choose country" data-live-search="true" name="country_id" >
+{{--                                            @foreach($countries as $country)--}}
+{{--                                                <option value="{{$country->id}}" {{($user->country && $user->country->id==$country->id)?'selected':''}}>{{$country->name}}--}}
+{{--                                                </option>--}}
+{{--                                            @endforeach--}}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>State:</label>
+                                        <label>State / Region&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <select class="form-control state_id" id="stat" onchange="getCities(this.value,'cite')"  title="Please choose state" name="state_id" data-live-search="true" required  >
+                                            @if($user->state)
+                                                <option value="{{$user->state->id}}" selected>{{$user->state->name}}
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-5">
+                                        <label>City:</label>
+                                        <select class="form-control city_id" name="city_id" id="cite" title="Please choose city" data-live-search="true" required>
+                                            @if($user->city)
+                                                <option value="{{$user->city->id}}" selected>{{$user->city->name}}
+                                            @endif
+                                        </select>
+                                    </div>
 
                                 </div>
 
@@ -295,7 +321,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-lg-3 offset-9">
                                         <input type="submit" class="btn btn-success" value="Save">
-                                        <button type="button" class="btn btn-secondary cancel">Cancel</button>
+                                        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal" >Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -314,7 +340,6 @@
         @if (\Session::has('success'))
              toastr.success('{!! \Session::get('success') !!}');
         @endif
-
         @if ($errors->has('full_name')||$errors->has('email')||$errors->has('phone')||$errors->has('password'))
             $('#add_user').modal('show')
              toastr.error('Validation error occured');
@@ -334,8 +359,6 @@
             }
             $('#docx').modal('show');
         }
-
-
         function viewShips(data){
             data=JSON.parse(data);
             $('#jqueryTable tbody').html('');
@@ -358,7 +381,39 @@
             $('#drivers').modal('show');
 
         }
+        function getStates(id,clas) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getStates')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose State</option>";
+                    $.each(data.states,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+clas).empty().append(html);
+                    $('#'+clas).selectpicker('refresh');
+                }
+            })
 
+        }
+        function getCities(id,clas) {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getCities')}}",
+                data: {'id': id},
+                success: function (data) {
+                    var html='';
+                    html += "<option value='' selected disabled>Choose City</option>";
+                    $.each(data.cities,function (key,value) {
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+                    $('#'+clas).empty().append(html);
+                    $('#'+clas).selectpicker('refresh');
+                }
+            })
+        }
 
     </script>
 @stop
