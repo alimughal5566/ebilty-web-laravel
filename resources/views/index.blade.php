@@ -1149,10 +1149,10 @@
           @endif
 </script>
 
-<script src="//js.pusher.com/3.1/pusher.min.js"></script> 
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
       <script>
       Pusher.logToConsole = true;
-      var pusher = new Pusher('47441135a7f8bd008495', {
+      var pusher = new Pusher('72b442ca7a1676508340', {
          cluster: 'ap2',
     encrypted: true
 });

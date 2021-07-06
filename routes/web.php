@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('test', function () {
+//    dd('dsasda');
     event(new App\Events\NotificationEvent);
     return "Event has been sent!";
 });
