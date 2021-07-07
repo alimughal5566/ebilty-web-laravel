@@ -40,6 +40,9 @@ class DriverController extends Controller
             })
             ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
         $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+
+
+
         return view('driver.shipment.index', compact('shipments','statuses'));
     }
 
@@ -51,15 +54,12 @@ class DriverController extends Controller
          $q->where('assigned_to', '');
          $q->orWhere( 'assigned_to', $drivers);
         })->where('city_id', auth()->user()->city_id)
-
-//            ->orWhere( 'assigned_to', $drivers)
-//            ->get();
             ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
             ->select('shippments.*','shippments.id as s_id','user_addresses.*')
             ->orderBy('s_id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
-//        dd($shipments[0]['stat']['name']);
+//        dd($shipments);
         return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
     public function myAllShipments(){
@@ -125,7 +125,6 @@ class DriverController extends Controller
 
         $receiver_id=Shipment::where('id',$request['order_id'])->pluck('created_by')->frist();
         sendnote(auth()->user()->id , $receiver_id,'New Bid is Placed On Shipment# '.$request['order_id'] );
-
         return response()->json(['success' =>'Bid created successfully'], 200);
 
     }
