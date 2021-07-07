@@ -75,6 +75,7 @@ class CustomerController extends Controller
         if($request->id) {
             $bid = ShipmentBids::find($request->id);
             $bid->revise_amount_shipper = $request->amt;
+            $bid->rank = $request->rank;
             $bid->revise_status=2;
             $bid->save();
         }
