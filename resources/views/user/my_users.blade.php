@@ -207,7 +207,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-body  p-0">
-                        <form method="post" action="{{route('createDriver')}}">
+                        <form method="post" action="{{route('createDriver')}}" enctype="multipart/form-data">
                             @csrf
                         <!--begin::Invoice-->
                         <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
@@ -288,8 +288,8 @@
 
                                                         @endforeach
                                                     </select>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="">Vehicle</label>
@@ -298,12 +298,40 @@
                                                     <select id="veehicl" required="" name="vehicle" class="" tabindex="-98">
                                                         <option value="" selected="" disabled="">Nothing selected</option>
                                                     </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-                            </div>
+                                    @if(auth()->check())
+                                        @if(auth()->user()->hasRole('company'))
+                                            <div class="row ">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="">License Number</label>
+                                                        <div class="">
+                                                            <input class="form-control" type="text"  name="license_number" placeholder="License Number" required="" value="{{old('license_number')}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="">Licence Image</label>
+                                                        <div class="">
+                                                            <input class="form-control" type="file" accept="image/*"  name="license_image" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="">CNIC Image</label>
+                                                        <div class="">
+                                                            <input class="form-control" type="file" accept="image/*"  name="cnic_image" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
                             <div class="kt-portlet__foot">
                                 <div class="row align-items-center">
                                     <div class="col-lg-4 offset-9">
@@ -335,9 +363,9 @@
         @endif
         function viewDocs(cnic,cnic_image,license,license_image,status,id){
                 $('.cnic').text(cnic);
-                $('.cnic_pic').attr('src',window.location.origin+'/setting/cnic/'+cnic_image);
+                $('.cnic_pic').attr('src',window.location.origin+'/cnic/'+cnic_image);
                 $('.lic').text(license);
-                $('.licence_pic').attr('src',window.location.origin+'/images/license/'+license_image);
+                $('.licence_pic').attr('src',window.location.origin+'/license_image/'+license_image);
             $('.doc_status1,.doc_status').css('display','none');
             if(status==0){
                 $('.doc_status1').css('display','block');

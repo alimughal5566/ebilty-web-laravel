@@ -104,6 +104,8 @@ class AuthController extends Controller
         return redirect()->back()->with(['success' =>'User registered successfully']);
     }
     public function createDriver(Request $request){
+
+//        dd($request->all());
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
@@ -111,6 +113,18 @@ class AuthController extends Controller
             'phone' => ['required', 'unique:users,phone','min:3'],
             'vehicle_number' => ['required']
         ]);
+        if (Auth::user()->hasRole('company')){
+            $request->validate([
+                'email' => ['required', 'string', 'email', 'unique:users,email'],
+                'password' => ['required', 'min:4'],
+                'full_name' => ['required', 'min:3'],
+                'phone' => ['required', 'unique:users,phone','min:3'],
+                'vehicle_number' => ['required'],
+                'cnic_image' => ['required'],
+                'license_image' => ['required'],
+                'license_number' => ['required'],
+            ]);
+        }
 
             if(Auth::user()->hasRole('cracker')){
 
@@ -137,6 +151,22 @@ class AuthController extends Controller
                 $user->assignRole('brocker_driver');
             }
             elseif(Auth::user()->hasRole('company')){
+                $license_image = '';
+                $cnic_image = '';
+                if($request->license_image)
+                {
+                    $file = $request->file('license_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $license_image =time().'.'.$extension;
+                    $file->move('license_image', $license_image);
+                }
+                if($request->cnic_image)
+                {
+                    $file = $request->file('cnic_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $cnic_image =time().'.'.$extension;
+                    $file->move('cnic/', $cnic_image);
+                }
                 $user = new User([
                     'name' => $request->full_name,
                     'email' => $request->email,
@@ -144,6 +174,9 @@ class AuthController extends Controller
                     'password' => bcrypt($request->password),
                     'phone' => $request->phone,
                     'documents_verified' => 1,
+                    'license_number' => $request->license_number,
+                    'cnic_image' => $cnic_image,
+                    'license_image' => $license_image,
                     'created_by' => auth()->user()->id,
                 ]);
                 $user->save();
