@@ -46,12 +46,17 @@ class DriverController extends Controller
     public function myDriverShipments(){
 
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
-        $shipments    = Shippment::where( 'assigned_to', '')
-            ->orWhere( 'assigned_to', $drivers)
+        $shipments    = Shippment::where(function ($q) use ($drivers){
+//         $q->where('city_id', auth()->user()->city_id);
+         $q->where('assigned_to', '');
+         $q->orWhere( 'assigned_to', $drivers);
+        })->where('city_id', auth()->user()->city_id)
+
+//            ->orWhere( 'assigned_to', $drivers)
 //            ->get();
             ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
             ->select('shippments.*','shippments.id as s_id','user_addresses.*')
-            ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+            ->orderBy('s_id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
 //        dd($shipments[0]['stat']['name']);

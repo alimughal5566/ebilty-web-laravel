@@ -458,12 +458,12 @@
             @forelse($shipments as $shipment)
 
                 <tr>
-                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
+                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                     <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                     <td>{{$shipment->total_weight}}</td>
                     <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                    <td>{{$shipment->status->name}}</td>
+                    <td>{{$shipment->stat->name}}</td>
                     <td>
                         @php
                          $percentage=0;
@@ -531,7 +531,7 @@
                     @hasanyrole('company||cracker')
                     @if($shipment->assigned_to == Auth()->id())
                     <td>
-                        <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->id}})"></i>
+                        <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->s_id}})"></i>
 {{--                            <i class="fa fa-user" aria-hidden="true"></i>--}}
                        || <a href="#" class="text-warning" data-toggle="modal" data-target="#add_user"><i class="fas fa-plus"></i></a>
 
