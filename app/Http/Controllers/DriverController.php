@@ -11,6 +11,7 @@ use App\ShipmentStatus;
 use App\Shippment;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class DriverController extends Controller
@@ -43,17 +44,17 @@ class DriverController extends Controller
     }
 
     public function myDriverShipments(){
+
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
-        $shipments    = Shippment::
-        where('assigned_to', $drivers)
-            ->orWhereNull('assigned_to')
-            ->whereHas(
-                'sender', function($q){
-                $q->where('form','sender');
-//              $q->where('city_id', auth()->user()->city_id);
-            })
-            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
+        $shipments    = Shippment::where( 'assigned_to', '')
+            ->orWhere( 'assigned_to', $drivers)
+//            ->get();
+            ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+            ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+            ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+//        dd($shipments[0]['stat']['name']);
         return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
     public function myAllShipments(){
