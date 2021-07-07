@@ -25,12 +25,10 @@ class NotificationListener
      */
     public function handle($event)
     {
-        $data['sender_id'] = 1;
-        $data['message'] = "sdfdsfds";
-        $data['receiver_id'] = 2;
+//        dd($event->data);
+        $data['sender_id'] = $event->data['sender_id'];
+        $data['message'] = $event->data['message'];
+        $data['receiver_id'] = $event->data['receiver_id'];
         sendNotification($data);
-        // $user = \Auth::user();
-        // $user->name = "aaa";
-        // $user->save();
     }
 }

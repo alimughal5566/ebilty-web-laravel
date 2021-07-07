@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Driver;
+use App\Models\Admin\Setting\Shipment;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
 use App\ShipmentBids;
+use App\Events\NotificationEvent;;
 use App\ShipmentStatus;
 use App\Shippment;
 use App\User;
@@ -15,8 +17,9 @@ class DriverController extends Controller
 {
 
     public function __construct() {
-//        dd(Auth::user());
+
         $this->middleware(['auth','role:driver|cracker|brocker_driver|company']);
+
     }
 
 
@@ -53,10 +56,6 @@ class DriverController extends Controller
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
-
-
-
-
     public function myAllShipments(){
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
 
@@ -72,10 +71,7 @@ class DriverController extends Controller
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         return view('user.my-all-shipments', compact('shipments','statuses'));
     }
-
     public function shipmentDriver(Request $request){
-
-
         $users = User::where('created_by',auth()->user()->id)
             ->join('user_vehicles','user_id','users.id')
             ->with('vehicle','vehicle_category')
@@ -83,9 +79,6 @@ class DriverController extends Controller
         return response()->json($users);
 
     }
-
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -111,7 +104,6 @@ class DriverController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -124,7 +116,12 @@ class DriverController extends Controller
         $bid->bid_amount = $request['bid_price'];
         $bid->user_id = auth()->user()->id;
         $bid->save();
+
+        $receiver_id=Shipment::where('id',$request['order_id'])->pluck('created_by')->frist();
+        sendnote(auth()->user()->id , $receiver_id,'New Bid is Placed On Shipment# '.$request['order_id'] );
+
         return response()->json(['success' =>'Bid created successfully'], 200);
+
     }
     public function myVehicles(){
         $vehicles = UserVehicle::with('vehicle','vehicle_category')->where('user_id',auth()->user()->id)->get();
