@@ -20,7 +20,7 @@ class Shippment extends Model
         return $this->hasOne('App\ShipmentStatus','id','status_id');
     }
     public function bids(){
-        return $this->hasMany('App\ShipmentBids','shipment_id','id');
+        return $this->hasMany('App\ShipmentBids','shipment_id','id')->orderBy('bid_amount', 'ASC');
     }
     public function packages(){
         return $this->hasMany('App\ShippmentPackage','shippment_id');

@@ -180,7 +180,7 @@ $percentage=50;
                 <td>
                     <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{$shipment->packages}}','{{$shipment->vehicle->name}}','{{$shipment->vehicleType->name}}','{{$shipment->receiver->address}}','{{$shipment->id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
                     @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper!='')
-                        <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
+                        <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}','{{$shipment->myBid->rank}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
                     @endif
                 </td>
 <td>
@@ -209,7 +209,6 @@ $percentage=50;
 
         </div>
     </div>
-
 
 {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
 {{--     modalOpen--}}
@@ -322,6 +321,11 @@ $percentage=50;
             </div>
 
             <div class="modal-body">
+                <div class="d-none beds">
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                        <h4 id="rank"></h4>
+                    </div>
+                </div>
                 <div class="d-none beds">
                     <lable for="bid_price">My Bidded Amount
                         <input type="number" id="prev" name="prev" class="form-control" min="1" placeholder="My Entered Amount" readonly >
@@ -457,12 +461,13 @@ $percentage=50;
     })
 
 
-    function setStatus2(id,amount,revised_amount,revise_status,revise_comment){
+    function setStatus2(id,amount,revised_amount,revise_status,revise_comment,rank){
         // alert(revise_comment);
         if(revised_amount!=''){
             $('.beds').removeClass('d-none');
             $('#prev').val(amount);
             $('#amt').val(revised_amount);
+            $('#rank').text("Your rank is: "+rank)
 
         }else {
             $('.sbmet').removeClass('d-none');

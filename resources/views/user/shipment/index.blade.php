@@ -273,6 +273,7 @@
                         <lable for="bid_price">Amount to be revised
                             <input type="number" id="amt" name="bid_amt" class="form-control" min="1" placeholder="Revision amount" required>
                             <input type="hidden" id="bedid" name="bedid" >
+                            <input type="hidden" id="rank" name="rank">
                         </lable>
                     </div>
                     <div class="d-none beds">
@@ -325,13 +326,14 @@
         });
         function showBids(data){
             data=JSON.parse(data);
+            console.log(data)
             $('#jqueryTable tbody').html('');
             var html='';
             $.each(data, function (index, value) {
+            let rank = parseInt(index) + parseInt(1);
             let status='';
             let status_text='';
             let txt='';
-// console.log(data)
             if(value.approved_status==0) {
                   status = 1;
                   status_text= "<span class='fa fa-pause-circle text-danger'>&nbsp</span>Accept bid";
@@ -345,8 +347,8 @@
             if(value.approved_status==2){
                 txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
             }
-                html += "<tr class='"+((status==2) ?'bg-success' : '') +"'><td>" + value.user.name + "<td>" + ((value.created_at!=null) ?value.created_at.substring(0, 16) : '') + "</td><td>" + ((value.user.documents_verified ==1) ? 'Verified' : 'Not verified') + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
-                    "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
+                html += "<tr class='"+((status==2) ?'bg-success' : '') +"'><td><input type='hidden' id='rank"+index+"' value='"+ rank +"'> " + value.user.name + "<td>" + ((value.created_at!=null) ?value.created_at.substring(0, 16) : '') + "</td><td>" + ((value.user.documents_verified ==1) ? 'Verified' : 'Not verified') + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
+                    "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','"+ index + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
             });
             $('#jqueryTable').append(html);
             // console.log(data[0]);
@@ -370,7 +372,7 @@
         }
 
 
-        function openReviseModal(id,amount,revised_amount,revise_status,revise_comment){
+        function openReviseModal(id,amount,revised_amount,revise_status, index,revise_comment){
             if(revise_status==2 || revise_status==1 || revise_status==3){
                 // alert('sdf');
                 // alert();
@@ -398,7 +400,9 @@
             }else{
                 $('.comnt').addClass('d-none');
             }
-
+            var vaa = $('#rank'+id).val()
+            index  = parseInt(index) + parseInt(1);
+            $('#rank').val(index)
             $('#bedid').val(id);
             $('#showreviseModal').modal('show')
 
@@ -414,7 +418,7 @@
             $.ajax({
                 url: "{{route('sendBidReviserequest')}}",
                 type: "get",
-                data: {'id': $('#bedid').val() , 'amt': $('#amt').val()},
+                data: {'id': $('#bedid').val() ,'rank': $('#rank').val(), 'amt': $('#amt').val()},
                 success: function (result){
                     toastr.success( 'Revise request send successfully');
                     $('#showreviseModal').modal('hide')
