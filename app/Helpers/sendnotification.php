@@ -8,6 +8,15 @@ function sendNotification($data) {
     $notifications->message = $data['message'];
     $notifications->receiver_id = $data['receiver_id'];
     $notifications->save();
-    return "success";    
+    return "success";
  }
 }
+        if (!function_exists('sendnote')) {
+    function sendnote($s_id,$r_id,$message ) {
+    $data['receiver_id']=$r_id;
+    $data['sender_id']=$s_id;
+    $data['message']=$message;
+    event(new App\Events\NotificationEvent($data));
+    return "success";
+ }
+    }

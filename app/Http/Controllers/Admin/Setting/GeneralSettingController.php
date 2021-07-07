@@ -56,7 +56,6 @@ class GeneralSettingController extends Controller
         Session::flash('message', 'The slider has been updated');
         return redirect()->back();
     }
-
     public function save_homepage_slider1(Request $request){
         $home_slider1 = General_Setting::where('id', 1)->first();
         $json = json_decode($home_slider1->content);
@@ -520,7 +519,6 @@ class GeneralSettingController extends Controller
         );
         return response()->json($response);
     }
-
     public function advertisementStatusUpdate(Request $request){
         if($request->id){
             $UserAddress = General_Setting::find($request->id);

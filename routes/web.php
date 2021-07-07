@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Helper\Helper;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('test', function () {
-//    dd('dsasda');
-    event(new App\Events\NotificationEvent);
+   sendnote(2 , 1,'dadasdasdasdadasdasdasasd' );
     return "Event has been sent!";
 });
 

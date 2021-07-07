@@ -82,280 +82,34 @@
                </svg>
                <span class="kt-pulse__ring"></span>
             </span>
-            <span class=" kt-badge kt-badge--danger">20</span>
+            <span class=" kt-badge kt-badge--danger">{{@$count_noti}}</span>
          </div>
          <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-lg" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(62px, 64px, 0px);">
             <!--begin: Head -->
             <div class="kt-head kt-head--skin-light kt-head--fit-x kt-head--fit-b">
                <h3 class="kt-head__title kt-padding-b-30">
                   Notifications
-                  &nbsp;
-                  <a href="#" class="btn btn-label-danger btn-sm btn-bold btn-font-md">20 new</a>
+                  <a href="#" class="btn btn-label-danger btn-sm btn-bold btn-font-md">{{@$count_noti}} new</a>
                </h3>
             </div>
             <!--end: Head -->
             <div id="topbar_notifications_notifications">
                <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll ps" data-scroll="true" data-height="300" data-mobile-height="200" style="height: 300px; overflow: hidden;">
+                 @foreach($notifications as $notification)
                   <a href="#" class="kt-notification__item">
                      <div class="kt-notification__item-icon">
                         <i class="flaticon-gift kt-font-success"></i>
                      </div>
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
+                           {{$notification->message}}
                         </div>
                         <div class="kt-notification__item-time kt-font-sm">
-                           05/20/2021 08:49:14
+                            {{$notification->created_at->format('d M Y h:i:s a')}}
                         </div>
                      </div>
                   </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/20/2021 08:23:39
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 04:39:25
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 01:02:23
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 01:01:26
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 01:01:10
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 12:30:55
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 08:23:34
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 08:23:23
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 08:23:01
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 08:22:33
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 06:32:25
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 06:31:58
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           The shipment has been assigned, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/12/2021 06:31:35
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/11/2021 05:01:09
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/07/2021 07:09:00
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/07/2021 07:06:09
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/07/2021 07:02:21
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/07/2021 06:57:20
-                        </div>
-                     </div>
-                  </a>
-                  <a href="#" class="kt-notification__item">
-                     <div class="kt-notification__item-icon">
-                        <i class="flaticon-gift kt-font-success"></i>
-                     </div>
-                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">
-                           There is a new shipment, please check it
-                        </div>
-                        <div class="kt-notification__item-time kt-font-sm">
-                           05/07/2021 06:49:14
-                        </div>
-                     </div>
-                  </a>
+                 @endforeach
                   <a href="#" class="kt-notification__item kt-align-center">
                      <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">

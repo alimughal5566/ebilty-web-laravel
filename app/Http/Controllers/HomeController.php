@@ -40,20 +40,20 @@ class HomeController extends Controller
         if(auth()->user()->hasRole('admin')){
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->paginate('15');
         }
-       elseif(auth()->user()->hasAnyRole(['cracker', 'driver'])){
+       elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
 //           $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
 //           $shipments    = Shippment::whereIn('assigned_to',[NUll,auth()->user()->id])->orwhereIn('vehicle_id',$vehicles)->orderBy('updated_at','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('5');
            $shipments    = Shippment::where('assigned_to', auth()->user()->id)
                ->orWhereNull('assigned_to')
                ->whereHas('sender', function($q){
-                   $q->where('form','sender');
+//                   $q->where('form','sender');
                    $q->where('city_id', auth()->user()->city_id);
                })
                ->orderBy('updated_at','desc')
                ->with('myBid','vehicle','vehicleType','packages','receiver')
                ->paginate('5');
 
-
+//dd($shipments);
 
 //           $shipments    = Shippment::Where(function ($q){
 //               $q->Where('assigned_to',Auth::id());
