@@ -447,11 +447,13 @@
             </div>
             <!--end: Head -->
             <!--begin: Navigation -->
-            <div class="kt-notification">
-               <a href="#" class="kt-notification__item">
+             <div class="kt-notification">
+                 @if(!auth()->user()->hasRole(['cracker','brocker_driver','company_driver']))
+                 <a href="#" class="kt-notification__item">
                   <div class="kt-notification__item-icon">
                      <i class="flaticon2-calendar-3 kt-font-success"></i>
                   </div>
+
                   <div class="kt-notification__item-details" onclick="window.location.href='{{route('show.profile',auth()->user()->id)}}'">
                      <div class="kt-notification__item-title kt-font-bold" >
                         My Profile
@@ -514,15 +516,16 @@
                      </div>
                   </div>
                </a>
-               <div class="kt-notification__custom kt-space-between">
+                 @endif
+                 <div class="kt-notification__custom kt-space-between">
                    <a href="{{route('logout')}}" class="btn btn-danger btn-block btn-bold kt-font-light"
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
                    <form id="logout-form"  class=""  action="{{ route('logout') }}" method="POST" class="d-none">
                        @csrf
                    </form>
-{{--                  <a href="#" target="_blank" class="btn btn-clean btn-sm btn-bold kt-hidden">Upgrade Plan</a>--}}
+                   {{--                  <a href="#" target="_blank" class="btn btn-clean btn-sm btn-bold kt-hidden">Upgrade Plan</a>--}}
                </div>
-            </div>
+             </div>
             <!--end: Navigation -->
          </div>
       </div>
