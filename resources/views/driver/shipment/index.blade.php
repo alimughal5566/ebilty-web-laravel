@@ -133,14 +133,14 @@
             <tbody>
             @forelse($shipments as $key=>$shipment)
             <tr>
-                <td scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></td>
+                <td scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></td>
                 <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                 <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                 <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
 
                 <td>{{(isset($shipment->myBid) && $shipment->myBid->bid_amount && $shipment->myBid->revise_status!=1)?$shipment->myBid->bid_amount:(isset($shipment->myBid->revise_amount_shipper)?$shipment->myBid->revise_amount_shipper:'')}}</td>
 
-                <td>{{$shipment->status->name}}</td>
+                <td>{{$shipment->stat->name}}</td>
                 <td>
                     @php $percentage=0;
 if($shipment->status_id==1){
@@ -182,7 +182,7 @@ $percentage=50;
 
                     @else
                     <td>
-                        <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{$shipment->packages}}','{{$shipment->vehicle->name}}','{{$shipment->vehicleType->name}}','{{$shipment->receiver->address}}','{{$shipment->id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
+                        <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{$shipment->packages}}','{{$shipment->vehicle->name}}','{{$shipment->vehicleType->name}}','{{$shipment->receiver->address}}','{{$shipment->s_id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
                         @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper!='')
                             <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
                         @endif
@@ -192,7 +192,7 @@ $percentage=50;
             @if($shipment->assigned_to==auth()->user()->id)
                     <td>
                         <div class="form-group col-lg-12 car_container">
-                            <select class="form-control" id="car_id_" name="car_id" data-live-search="true" onchange="setStatus('{{$shipment->id}}',this.value)">
+                            <select class="form-control" id="car_id_" name="car_id" data-live-search="true" onchange="setStatus('{{$shipment->s_id}}',this.value)">
                                 @foreach($statuses as $status)
                                     <option value="{{$status->id}}" {{($status->id==$shipment->status_id)?"selected":""}} {{($shipment->status_id>=$status->id)?"disabled":""}}>
                                     {{$status->name}}</option>

@@ -184,6 +184,7 @@ $percentage=50;
                     @endif
                         @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper!='')
                         <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
+
                     @endif
                 </td>
 <td>

@@ -31,18 +31,14 @@ class DriverController extends Controller
      */
     public function index(){
 //        $vehicles = UserVehicle::where('user_id',auth()->user()->id)->where('is_verified',1)->select('vehicle_id')->get()->toArray();
-        $shipments    = Shippment::
-        where('assigned_to', auth()->user()->id)
-            ->orWhereNull('assigned_to')
-            ->whereHas('sender', function($q){
-                $q->where('form','sender');
-                $q->where('city_id', auth()->user()->city_id);
+        $shipments    = Shippment::where(function ($q){
+            $q->Where( 'assigned_to', \auth()->id());
             })
-            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
-        $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
-
-
-
+            ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+            ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+            ->orderBy('shippments.updated_at','desc')
+            ->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate('15');
+            $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         return view('driver.shipment.index', compact('shipments','statuses'));
     }
 
@@ -50,7 +46,6 @@ class DriverController extends Controller
 
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
         $shipments    = Shippment::where(function ($q) use ($drivers){
-//         $q->where('city_id', auth()->user()->city_id);
          $q->where('assigned_to', '');
          $q->orWhere( 'assigned_to', $drivers);
         })->where('city_id', auth()->user()->city_id)
@@ -150,6 +145,7 @@ class DriverController extends Controller
             $bid->status_id = $request->status;
             $bid->save();
         }
+
         $receiver_id=Shipment::where('id',$request->id)->pluck('user_id')->first();
         sendnote(auth()->user()->id , $receiver_id,'Shipment # '.$request['order_id'].' status update' );
 

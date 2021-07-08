@@ -8,6 +8,7 @@ use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
+use App\Notification;
 use App\phoneVerification;
 use App\ShipmentArea;
 use App\Shippment;
@@ -308,5 +309,13 @@ class HomeController extends Controller
             return response()->json(['success' =>'true'], 200);
     }
 
+    public function getAllNotfication(){
+        $allnotfications=Notification::where('receiver_id',\auth()->id())->orderBy('id','DESC')->paginate(4);
+        return response()->json($allnotfications);
+    }
+    public function countAllNotification(){
+        $noti_count=Notification::where('receiver_id',\auth()->id())->count();
 
+        return response()->json($noti_count);
+    }
 }

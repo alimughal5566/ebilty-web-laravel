@@ -109,6 +109,8 @@ Route::prefix('admin')->group(function() {
 
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
+        Route::get('/get/notifications', 'HomeController@getAllNotfication')->name('get.all.notification');
+        Route::get('/count/notifications', 'HomeController@countAllNotification')->name('count.all.notification');
         Route::get('/profile/{id}', 'HomeController@profile')->name('show.profile');
         Route::get('/shipment/create', 'CustomerController@create')->name('create.shippment');
         Route::post('/shipment/create', 'ShippmentController@store')->name('create.shipment');

@@ -44,7 +44,57 @@
     <script src="{{asset('assets/js/framework.js')}}"></script>
     <script src="{{asset('assets/js/framework.extras.js')}}"></script>
     <link rel="stylesheet" property="stylesheet" href="#">
-  
 
+    <script>
+        // channel.bind('App\\Events\\NotificationEvent', function(data) {
+        //     console.log('sfddsfdsfsdf')
+        //     // this is called when the event notification is received...
+        // });
+
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+
+
+
+        function getnotification(){
+
+
+
+            $.get( '{{route('count.all.notification')}}', function( data ) {
+                $('.noticount').text(data)
+            });
+            $.get( '{{route('get.all.notification')}}', function( data ) {
+                $('#notificationlist').empty();
+                        // console.log(data.data)
+                var html='';
+                $.each(data.data, function (index, value) {
+                    html +=`<a href="" class="kt-notification__item">
+                     <div class="kt-notification__item-icon">
+                        <i class="flaticon-gift kt-font-success"></i>
+                     </div>
+                     <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">`+value.message+`</div>
+                    <div class="kt-notification__item-time kt-font-sm">`+formatDate(value.created_at)+`
+                    </div>
+                 </div>
+              </a>`
+                })
+                $('#notificationlist').append(html);
+
+            });
+        }
+
+
+    </script>
  </body>
  </html>

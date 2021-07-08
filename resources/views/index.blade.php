@@ -1161,10 +1161,10 @@
 var channel = pusher.subscribe('notification');
 
 // Bind a function to a Event (the full Laravel class)
-channel.bind('App\\Events\\NotificationEvent', function(data) {
-   console.log('sfddsfdsfsdf')
-    // this is called when the event notification is received...
-});
+// channel.bind('App\\Events\\NotificationEvent', function(data) {
+//    console.log('sfddsfdsfsdf')
+//     // this is called when the event notification is received...
+// });
       </script>
 
 

@@ -70,7 +70,7 @@
       </div>
       <!--end: Search -->
       <!--begin: Notifications -->
-      <div id="notificationsmenu" class="kt-header__topbar-item dropdown">
+      <div id="notificationsmenu" onclick="getnotification()" class="kt-header__topbar-item dropdown">
          <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="30px,0px" aria-expanded="false">
             <span class="kt-header__topbar-icon kt-pulse kt-pulse--brand">
                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -82,19 +82,19 @@
                </svg>
                <span class="kt-pulse__ring"></span>
             </span>
-            <span class=" kt-badge kt-badge--danger">{{@$count_noti}}</span>
+            <span id="noticountt" class=" kt-badge kt-badge--danger noticount">{{@$count_noti}}</span>
          </div>
          <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-lg" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(62px, 64px, 0px);">
             <!--begin: Head -->
             <div class="kt-head kt-head--skin-light kt-head--fit-x kt-head--fit-b">
                <h3 class="kt-head__title kt-padding-b-30">
                   Notifications
-                  <a href="#" class="btn btn-label-danger btn-sm btn-bold btn-font-md">{{@$count_noti}} new</a>
+                  <a href="#"  class="btn btn-label-danger btn-sm btn-bold btn-font-md noticount">{{@$count_noti}} new</a>
                </h3>
             </div>
             <!--end: Head -->
             <div id="topbar_notifications_notifications">
-               <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll ps" data-scroll="true" data-height="300" data-mobile-height="200" style="height: 300px; overflow: hidden;">
+               <div id="notificationlist" class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll ps" data-scroll="true" data-height="300" data-mobile-height="200" style="height: 300px; overflow: hidden;">
                  @foreach($notifications as $notification)
                   <a href="#" class="kt-notification__item">
                      <div class="kt-notification__item-icon">
