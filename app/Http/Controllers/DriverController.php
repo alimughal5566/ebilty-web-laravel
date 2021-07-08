@@ -123,8 +123,9 @@ class DriverController extends Controller
         $bid->user_id = auth()->user()->id;
         $bid->save();
 
-        $receiver_id=Shipment::where('id',$request['order_id'])->pluck('created_by')->frist();
+        $receiver_id=Shipment::where('id',$request['order_id'])->pluck('user_id')->first();
         sendnote(auth()->user()->id , $receiver_id,'New Bid is Placed On Shipment# '.$request['order_id'] );
+
         return response()->json(['success' =>'Bid created successfully'], 200);
 
     }
@@ -149,6 +150,9 @@ class DriverController extends Controller
             $bid->status_id = $request->status;
             $bid->save();
         }
+        $receiver_id=Shipment::where('id',$request->id)->pluck('user_id')->first();
+        sendnote(auth()->user()->id , $receiver_id,'Shipment # '.$request['order_id'].' status update' );
+
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
     public function vehicleStatusUpdate(Request $request){
