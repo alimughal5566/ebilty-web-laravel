@@ -44,6 +44,7 @@ class DriverController extends Controller
 
     public function myDriverShipments(){
 
+//        dd(\auth()->user()->id);
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
         $shipments    = Shippment::where(function ($q) use ($drivers){
          $q->where('assigned_to', '');
@@ -136,6 +137,8 @@ class DriverController extends Controller
             $bid->revise_comment = $request->comment;
             $bid->revise_status=($request->status==1)?'1':'3';
             $bid->save();
+
+            sendnote($request->id , $bid->shipment->user_id, 'Bid revise request updated for shipment # '.$bid->shipment->shipment_id );
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
@@ -145,7 +148,6 @@ class DriverController extends Controller
             $bid->status_id = $request->status;
             $bid->save();
         }
-
         $receiver_id=Shipment::where('id',$request->id)->pluck('user_id')->first();
         sendnote(auth()->user()->id , $receiver_id,'Shipment # '.$request['order_id'].' status update' );
 

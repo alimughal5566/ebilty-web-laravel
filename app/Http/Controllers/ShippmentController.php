@@ -127,6 +127,7 @@ class ShippmentController extends Controller
                     ->update(['assigned_to'=>$request->driver_id]);
 //        dd($shipment);
 //            if($shipment){
+            sendnote(\auth()->user()->id , $request->id, 'Shipment # '.$request->shipment_id.' assigned to you.');
             return response()->json(['success' =>'Assign Successfully'], 200);
 
     }

@@ -458,7 +458,7 @@
             @forelse($shipments as $shipment)
 {{--@dd($shipment)--}}
                 <tr>
-                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
+                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                     <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                     <td>{{$shipment->total_weight}}</td>

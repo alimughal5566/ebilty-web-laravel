@@ -53,6 +53,7 @@ class CustomerController extends Controller
             $ship->assigned_at=now();
             $ship->status_id=1;
             $ship->save();
+            sendnote(auth()->user()->id , $ship->user_id, 'Bid status updated. ' );
         }
         if($request->approved_status==2) {
             $bid = ShipmentBids::find($request->id);
@@ -67,6 +68,7 @@ class CustomerController extends Controller
             $ship->assigned_at=Null;
             $ship->status_id=9;
             $ship->save();
+            sendnote(auth()->user()->id , $ship->user_id, 'Bid status updated. ' );
         }
         return response()->json(['success' =>'status updated  successfully'], 200);
     }
@@ -78,6 +80,7 @@ class CustomerController extends Controller
             $bid->rank = $request->rank;
             $bid->revise_status=2;
             $bid->save();
+            sendnote(auth()->user()->id , $bid->user_id, 'Revise bid request created. ' );
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
