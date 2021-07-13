@@ -180,7 +180,7 @@ $percentage=50;
 
                 @role('brocker_driver')
 
-                    @else
+
                     <td>
                         <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{$shipment->packages}}','{{$shipment->vehicle->name}}','{{$shipment->vehicleType->name}}','{{$shipment->receiver->address}}','{{$shipment->s_id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
                         @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper!='')

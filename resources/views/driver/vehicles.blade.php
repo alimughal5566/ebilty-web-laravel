@@ -110,11 +110,15 @@
                                     Vehicles
                                 </h3>
                             </div>
-                            <div class="kt-portlet__head-label" >
-                                <h3 class="kt-portlet__head-title">
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_vehicle"><i class="fas fa-plus"></i></button>
-                                </h3>
-                            </div>
+                            @hasanyrole('driver|company_driver|brocker_driver')
+                                @if(count($vehicles)<1)
+                                    <div class="kt-portlet__head-label" >
+                                        <h3 class="kt-portlet__head-title">
+                                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_vehicle"><i class="fas fa-plus"></i></button>
+                                        </h3>
+                                    </div>
+                                @endif
+                            @endhasanyrole
                         </div>
                         <div id="save_msg" style="margin-top: 5px !important; background-color: #c2ffcc !important; display: none; color: #08751a !important; border: 1px solid; border-radius: 8px !important; border-color: green !important; padding: 5px!important; text-align: center; font-size: 25px !important;"></div>
                         <div class="kt-portlet__body kt-portlet__body--fit-x">

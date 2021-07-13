@@ -43,7 +43,7 @@ class HomeController extends Controller
         }
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
            $shipments    = Shippment::where(function ($q){
-               $q->where('assigned_to', '');
+               $q->where('assigned_to', NULL);
                $q->orWhere( 'assigned_to', \auth()->id());
            })->where('city_id', auth()->user()->city_id)
                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
@@ -51,6 +51,7 @@ class HomeController extends Controller
                ->orderBy('shippments.updated_at','desc')
                ->with('myBid','vehicle','vehicleType','packages','receiver')
                ->paginate('5');
+
        }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
@@ -59,21 +60,16 @@ class HomeController extends Controller
         elseif(auth()->user()->hasRole('brocker_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
 
-        }elseif(auth()->user()->hasRole('company')){
-            $shipments    = Shippment::where('assigned_to', auth()->user()->id)
-                ->orWhereNull('assigned_to')
-                ->whereHas('sender', function($q){
-                    $q->where('form','sender');
-                    $q->where('city_id', auth()->user()->city_id);
-                })
-                ->orderBy('updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','packages','receiver')
+        }elseif(auth()->user()->hasRole('company_driver')){
+            $shipments= Shippment::orderBy('updated_at','desc')
+                ->where('assigned_to',auth()->user()->id)
+                ->with('sender.user','packages','receiver.user','status','bids.user')
                 ->paginate('5');
-
 
         }
 
         $vehicles_cat=VehicleCategory::all();
+//        dd($shipments);
         return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
 
@@ -164,7 +160,19 @@ class HomeController extends Controller
             $q->where('name', 'driver');
         }
         )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+//        dd($users);
         return view('admin.drivers', compact('users'));
+
+    }
+    public function companies(){
+        $users = User::whereHas(
+            'roles', function($q){
+            $q->where('name', 'company');
+        }
+        )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+//        dd($users);
+        return view('admin.company', compact('users'));
+
     }
     public function customers(){
         $users = User::whereHas(
@@ -217,6 +225,12 @@ class HomeController extends Controller
         $user->documents_verified=1;
         $user->edit_request=0;
         $user->save();
+
+        $user_vehicle = UserVehicle::where('user_id', $user->id)->first();
+        if($user_vehicle){
+            $user_vehicle->is_verified = 1;
+            $user_vehicle->update();
+        }
         return redirect()->back()->with(['success' =>'Documents verified successfully'], 200);
     }
     public function approveEditRequest($id){

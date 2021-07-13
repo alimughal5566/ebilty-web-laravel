@@ -44,6 +44,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/crackers', 'HomeController@crackers')->name('admin.crackers');
 
     Route::get('/drivers', 'HomeController@drivers')->name('admin.drivers');
+    Route::get('/companies', 'HomeController@companies')->name('admin.companies');
     Route::get('/shipments', 'HomeController@shipments')->name('admin.shipments');
     Route::get('/doc_verify/{id?}', 'HomeController@docVerify')->name('docVerify');
     Route::get('/edit-request-approve/{id?}', 'HomeController@approveEditRequest')->name('approveEditRequest');

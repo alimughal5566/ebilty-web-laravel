@@ -19,7 +19,7 @@ class DriverController extends Controller
 
     public function __construct() {
 
-        $this->middleware(['auth','role:driver|cracker|brocker_driver|company']);
+        $this->middleware(['auth','role:driver|cracker|brocker_driver|company|company_driver']);
 
     }
 
@@ -39,6 +39,7 @@ class DriverController extends Controller
             ->orderBy('shippments.updated_at','desc')
             ->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate('15');
             $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+//            dd($shipments);
         return view('driver.shipment.index', compact('shipments','statuses'));
     }
 
@@ -47,12 +48,12 @@ class DriverController extends Controller
 //        dd(\auth()->user()->id);
         $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
         $shipments    = Shippment::where(function ($q) use ($drivers){
-         $q->where('assigned_to', '');
+         $q->where('assigned_to', NULL);
          $q->orWhere( 'assigned_to', $drivers);
         })->where('city_id', auth()->user()->city_id)
             ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
-            ->select('shippments.*','shippments.id as s_id','user_addresses.*')
-            ->orderBy('s_id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+            ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
+            ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
 //        dd($shipments);

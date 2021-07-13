@@ -111,8 +111,8 @@ class ShippmentController extends Controller
             ->join('user_vehicles','user_id','users.id')
             ->whereHas(
                 'roles', function($q){
-                $q->where('name', 'company_driver');
-            }
+                    $q->where('name', 'company_driver');
+                }
             )
             ->with('vehicle','vehicle_category')
             ->get();
@@ -125,9 +125,8 @@ class ShippmentController extends Controller
 
         $shipment= Shippment::where('id',$request->shipment_id)
                     ->update(['assigned_to'=>$request->driver_id]);
-//        dd($shipment);
-//            if($shipment){
-            sendnote(\auth()->user()->id , $request->id, 'Shipment # '.$request->shipment_id.' assigned to you.');
+
+            sendnote(\auth()->user()->id , $request->driver_id, 'Shipment # '.$request->shipment_id.' assigned to you.');
             return response()->json(['success' =>'Assign Successfully'], 200);
 
     }

@@ -458,7 +458,11 @@
             @forelse($shipments as $shipment)
 {{--@dd($shipment)--}}
                 <tr>
-                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
+                    @if(auth()->user()->hasRole('customer') || auth()->user()->hasRole('brocker_driver') || auth()->user()->hasRole('company_driver') || auth()->user()->hasRole('admin'))
+                        <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
+                    @else
+                        <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
+                    @endif
                     <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
                     <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
                     <td>{{$shipment->total_weight}}</td>
@@ -531,7 +535,11 @@
                     @hasanyrole('company||cracker')
                     @if($shipment->assigned_to == Auth()->id())
                     <td>
-                        <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->s_id}})"></i>
+                        @if(auth()->user()->hasRole('customer') || auth()->user()->hasRole('brocker_driver') || auth()->user()->hasRole('company_driver') )
+                            <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->id}})"></i>
+                        @else
+                            <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->s_id}})"></i>
+                        @endif
 {{--                            <i class="fa fa-user" aria-hidden="true"></i>--}}
                        || <a href="#" class="text-warning" data-toggle="modal" data-target="#add_user"><i class="fas fa-plus"></i></a>
 
@@ -973,7 +981,6 @@
             // $("#package_table tbody tr").remove();
             var data = {id:id};
             $('#showDriverList').modal('show');
-            // alert(data);
             $.get( '{{route("shipment.assign")}}',data, function( response ) {
                console.log(response);
                 if(Object.keys(response).length == 0){
@@ -982,11 +989,22 @@
                 $('#show_DriverList tbody').empty();
                 let shipment_id;
                 let driver_id;
+                let html;
                 for(var i = 0; i < Object.keys(response).length; i++ ){
                     shipment_id = id;
-                    driver_id = response[i].id;
-                    $('#show_DriverList').append(`<tr><td>`+ response[i].name +`</td><td>`+response[i].email+`</td><td>`+response[i].phone+`</td><td>`+response[i].vehicle.name+`</td><td>`+response[i].vehicle_category.name+`</td><td>`+response[i].vehicle_number+`</td><td><a class=" btn btn-sm btn-outline-danger" onclick="assignShipnemt(${shipment_id},${driver_id})">Assign</a></td></tr>`);
+                    driver_id = response[i].user_id;
+                    html += `<tr>
+                        <td>`+ response[i].name +`</td>
+                        <td>`+ response[i].email +`</td>
+                        <td>`+ response[i].phone +`</td>
+                        <td>`+ response[i].vehicle.name +`</td>
+                        <td>`+ response[i].vehicle_category.name +`</td>
+                        <td>`+ response[i].vehicle_number +`</td>
+                        <td> <a class="btn btn-sm btn-outline-danger" onclick="assignShipnemt(${shipment_id}, ${driver_id})">Assign</a> </td>
+                    `;
                 }
+                $('#show_DriverList tbody').html(html);
+
             });
 
         }
@@ -998,8 +1016,8 @@
             let data={'shipment_id':shipment_id,'driver_id':driver_id}
             console.log(data);
             $.get( '{{route("assign.driver")}}',data, function( response ) {
-                    toastr.success( 'shipment assigned successfully ');
-                    setTimeout(function(){ location.reload() },1000);
+                toastr.success( 'shipment assigned successfully ');
+                setTimeout(function(){ location.reload() },1000);
             })
 
         }
