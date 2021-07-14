@@ -109,6 +109,10 @@ $(document).ready(function() {
                 e.preventDefault();
                 displaySignInForm();
             });
+            $('#kt_login_signin').click(function(e) {
+                e.preventDefault();
+                displaySignInForm();
+            });
         }
 
         $(document).on('change', '#vehicle_category', function(){

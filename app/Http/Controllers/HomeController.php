@@ -54,7 +54,9 @@ class HomeController extends Controller
 
        }
         elseif(auth()->user()->hasRole('customer')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
+
+                ->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
 
         }
         elseif(auth()->user()->hasRole('brocker_driver')){
@@ -188,8 +190,9 @@ class HomeController extends Controller
             $q->where('name', 'cracker');
         }
         )->with('city','myDrivers')->get();
+        $countries=Country::all();
 
-        return view('admin.crackers', compact('users'));
+        return view('admin.crackers', compact('users', 'countries'));
     }
     public function myDrivers(){
         if (Auth::user()->hasRole('cracker')){

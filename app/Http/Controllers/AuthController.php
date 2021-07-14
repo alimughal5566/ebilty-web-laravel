@@ -97,6 +97,9 @@ class AuthController extends Controller
             'documents_verified' => 1,
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
+            'country_id' => $request->country_id,
+            'state_id' => $request->state_id,
+            'city_id' => $request->city_id
         ]);
         $user->save();
         $user->assignRole('cracker');
@@ -104,7 +107,6 @@ class AuthController extends Controller
         return redirect()->back()->with(['success' =>'User registered successfully']);
     }
     public function createDriver(Request $request){
-
 //        dd($request->all());
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users,email'],
@@ -127,6 +129,7 @@ class AuthController extends Controller
         }
 
             if(Auth::user()->hasRole('cracker')){
+
 
                 $user = new User([
                     'name' => $request->full_name,
@@ -199,7 +202,9 @@ class AuthController extends Controller
         $address->address=$request->address;
         $address->lat=$request->lat;
         $address->lng=$request->lng;
-        $address->area_id=$request->area;
+        if ($request->area){
+            $address->area_id=$request->area;
+        }
         $address->state_id=$request->state;
         $address->city_id=$request->city;
         $address->country_id=$request->country;

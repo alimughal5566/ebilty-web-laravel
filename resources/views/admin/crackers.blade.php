@@ -37,6 +37,7 @@
                         <div class="kt-portlet__head">
                             <div class="kt-portlet__head-label">
                                 <h3 class="kt-portlet__head-title">
+                                    Brokers List
                                 </h3>
 
                             </div>
@@ -290,10 +291,10 @@
                                     <div class="form-group col-lg-5">
                                         <label>Country:</label>
                                         <select class="form-control country_id" id="contry" onchange="getStates(this.value,'stat')" required title="Please choose country" data-live-search="true" name="country_id" >
-{{--                                            @foreach($countries as $country)--}}
-{{--                                                <option value="{{$country->id}}" {{($user->country && $user->country->id==$country->id)?'selected':''}}>{{$country->name}}--}}
-{{--                                                </option>--}}
-{{--                                            @endforeach--}}
+                                            @foreach($countries as $country)
+                                                <option value="{{$country->id}}" {{($user->country && $user->country->id==$country->id)?'selected':''}}>{{$country->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-5">

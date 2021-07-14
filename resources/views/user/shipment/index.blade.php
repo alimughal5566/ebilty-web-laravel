@@ -144,25 +144,25 @@
                     <td>
                         @php $percentage=0;
                         if($shipment->status_id==1){
+                        $percentage=15;
+                        }
+                        if($shipment->status_id==2){
                         $percentage=30;
                         }
-                        if($shipment->status_id==6){
-                        $percentage=20;
+                        if($shipment->status_id==3){
+                        $percentage=45;
                         }
                         if($shipment->status_id==4){
-                        $percentage=40;
+                        $percentage=60;
                         }
                         if($shipment->status_id==6){
-                        $percentage=35;
-                        }
-                        if($shipment->status_id==8){
-                        $percentage=100;
+                        $percentage=75;
                         }
                         if($shipment->status_id==7){
                         $percentage=90;
                         }
-                        if($shipment->status_id==3){
-                        $percentage=50;
+                        if($shipment->status_id==8){
+                        $percentage=100;
                         }
                         @endphp
                         <div class="progress mx-auto" data-value='{{$percentage}}'>
@@ -341,14 +341,19 @@
             }
             if(value.approved_status==1){
                  status = 2;
-                 status_text= "<span class='fa fa-check-circle text-success'> &nbsp</span>Reject bid";
+                 status_text= "<span class='fa fa-check-circle text-success'> &nbsp</span>Bid Accepted";
                  txt= " ";
             }
             if(value.approved_status==2){
                 txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
             }
+            if(value.approved_status==1){
+                html += "<tr class='"+((status==2) ?'bg-success' : '') +"'><td><input type='hidden' id='rank"+index+"' value='"+ rank +"'> " + value.user.name + "<td>" + ((value.created_at!=null) ?value.created_at.substring(0, 16) : '') + "</td><td>" + ((value.user.documents_verified ==1) ? 'Verified' : 'Not verified') + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
+                    "<td ><a href='#' > " + status_text + "</a>"+txt+" </td><tr>";
+            }else{
                 html += "<tr class='"+((status==2) ?'bg-success' : '') +"'><td><input type='hidden' id='rank"+index+"' value='"+ rank +"'> " + value.user.name + "<td>" + ((value.created_at!=null) ?value.created_at.substring(0, 16) : '') + "</td><td>" + ((value.user.documents_verified ==1) ? 'Verified' : 'Not verified') + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
                     "<td ><a href='#' onclick=\"setStatus('" + value.id+ "','" + value.shipment_id + "','" + status + "')\" > " + status_text + "</a>"+txt+" <br><a href='#' onclick=\"openReviseModal('" + value.id+ "','" + value.bid_amount+ "','" + value.revise_amount_shipper + "','" + value.revise_status + "','"+ index + "','" + value.revise_comment + "')\" >"+((value.revise_status ==0) ? 'request to revise' : ((value.revise_status ==2) ?'<span class="fa fa-pause-circle text-warning"></span> request to revise': ((value.revise_status ==3) ?'<span class="fa fa-times-circle text-danger"></span> request to revise':'')))+" </a></td><tr>";
+            }
             });
             $('#jqueryTable').append(html);
             // console.log(data[0]);
