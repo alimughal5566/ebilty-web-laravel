@@ -145,25 +145,25 @@
                     <td>
                         @php $percentage=0;
                         if($shipment->status_id==1){
+                        $percentage=15;
+                        }
+                        if($shipment->status_id==2){
                         $percentage=30;
                         }
-                        if($shipment->status_id==6){
-                        $percentage=20;
+                        if($shipment->status_id==3){
+                        $percentage=45;
                         }
                         if($shipment->status_id==4){
-                        $percentage=40;
+                        $percentage=60;
                         }
                         if($shipment->status_id==6){
-                        $percentage=35;
-                        }
-                        if($shipment->status_id==8){
-                        $percentage=100;
+                        $percentage=75;
                         }
                         if($shipment->status_id==7){
                         $percentage=90;
                         }
-                        if($shipment->status_id==3){
-                        $percentage=50;
+                        if($shipment->status_id==8){
+                        $percentage=100;
                         }
                         @endphp
                         <div class="progress mx-auto" data-value='{{$percentage}}'>
@@ -353,7 +353,7 @@
                  txt= " ";
             }
             if(value.approved_status==2){
-                txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>cancelled ";
+                txt= "<span class='fa fa-times-circle text-warning'> &nbsp</span>";
             }
                 html += "<tr><td>" + value.user.name + "<td>" + value.created_at + "</td><td >" + ((value.revise_amount_shipper !=null) ? value.revise_amount_shipper : '') + "</td><td >" + value.bid_amount + "</td><td >" + ((value.route!=null) ? value.route : '') +  "</td><td >" + value.last_updated + "</td></td>" +
                     "<td > " + status_text + ""+txt+"</td><tr>";

@@ -143,31 +143,31 @@
                 <td>
                     @php $percentage=0;
 if($shipment->status_id==1){
+$percentage=15;
+}
+if($shipment->status_id==2){
 $percentage=30;
 }
-if($shipment->status_id==6){
-$percentage=20;
+if($shipment->status_id==3){
+$percentage=45;
 }
 if($shipment->status_id==4){
-$percentage=40;
+$percentage=60;
 }
 if($shipment->status_id==6){
-$percentage=35;
-}
-if($shipment->status_id==8){
-$percentage=100;
+$percentage=75;
 }
 if($shipment->status_id==7){
 $percentage=90;
 }
-if($shipment->status_id==3){
-$percentage=50;
+if($shipment->status_id==8){
+$percentage=100;
 }
  @endphp
                     <div class="progress mx-auto" data-value='{{$percentage}}'>
-                                          <span class="progress-left">
-                                              <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
-                                          </span>
+                      <span class="progress-left">
+                          <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
+                      </span>
                         <span class="progress-right">
                                                  <span class="progress-bar {{($percentage<21)?'border-warning':(($percentage<51)?'border-info':(($percentage<81)?'border-danger':'border-success'))}}"></span>
                                           </span>

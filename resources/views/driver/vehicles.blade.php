@@ -273,6 +273,9 @@
                                             <div class="col-lg-9 col-xl-9">
                                                 <select id="veehicel" required name="vehicle">
                                                     <option value="" selected disabled>Nothing selected</option>
+                                                    @foreach($vehs as $cat)
+                                                        <option value="{{$cat->id}}" >{{$cat->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

@@ -23,6 +23,9 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
+    public function new_signup(){
+        
+    }
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -107,7 +110,6 @@ class AuthController extends Controller
         return redirect()->back()->with(['success' =>'User registered successfully']);
     }
     public function createDriver(Request $request){
-
 //        dd($request->all());
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users,email'],
@@ -130,6 +132,7 @@ class AuthController extends Controller
         }
 
             if(Auth::user()->hasRole('cracker')){
+
 
                 $user = new User([
                     'name' => $request->full_name,

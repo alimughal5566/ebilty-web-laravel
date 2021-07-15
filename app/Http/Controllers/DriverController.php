@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Driver;
 use App\Models\Admin\Setting\Shipment;
+use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\Models\UserVehicle;
 use App\ShipmentBids;
@@ -44,18 +45,26 @@ class DriverController extends Controller
     }
 
     public function myDriverShipments(){
+        $shipments = '';
+        if (Auth::user()->hasRole('company_driver') ||Auth::user()->hasRole('brocker_driver')){
+            $shipments    = Shippment::where('assigned_to',Auth::id())
+                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+                ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
+                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
-//        dd(\auth()->user()->id);
-        $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
-        $shipments    = Shippment::where(function ($q) use ($drivers){
-         $q->where('assigned_to', NULL);
-         $q->orWhere( 'assigned_to', $drivers);
-        })->where('city_id', auth()->user()->city_id)
-            ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
-            ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
-            ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+            $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+        }else{
+            $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
+            $shipments    = Shippment::where(function ($q) use ($drivers){
+                $q->where('assigned_to', NULL);
+                $q->orWhere( 'assigned_to', $drivers);
+            })->where('city_id', auth()->user()->city_id)
+                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+                ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
+                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
-        $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+            $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
+        }
 //        dd($shipments);
         return view('driver.shipment.mydrivershipments', compact('shipments','statuses'));
     }
@@ -129,7 +138,8 @@ class DriverController extends Controller
     public function myVehicles(){
         $vehicles = UserVehicle::with('vehicle','vehicle_category')->where('user_id',auth()->user()->id)->get();
         $cats = VehicleCategory::all();
-        return view('driver.vehicles', compact('vehicles','cats'));
+        $vehs = Vehicle::all();
+        return view('driver.vehicles', compact('vehicles','cats', 'vehs'));
     }
 
     public function updateBidReviserequest(Request $request){

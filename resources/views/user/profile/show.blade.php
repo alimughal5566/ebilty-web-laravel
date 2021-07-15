@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-xl-3">
                 <!--begin:: Widgets/Order Statistics-->
-                <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet kt-portlet--heightApplied at-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
