@@ -23,6 +23,9 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
+    public function new_signup(){
+        
+    }
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
