@@ -1724,10 +1724,7 @@
                 return;
             }
 
-            if (area == '') {
-                toastr.warning("Fill area field");
-                return;
-            }
+
             $('.saved').css('opacity','0.5');
             $('.loadr').removeClass('d-none');
             $.ajax({
@@ -1799,10 +1796,7 @@
                 return;
             }
 
-            if (area == '') {
-                toastr.warning("Fill area field");
-                return;
-            }
+
 
             $('.saveed').css('opacity','0.5');
             $('.loadir').removeClass('d-none');

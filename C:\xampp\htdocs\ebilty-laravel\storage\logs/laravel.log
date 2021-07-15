@@ -1,0 +1,23 @@
+[2021-07-14 14:29:30] local.ERROR: Command "config:cace" is not defined.
+
+Did you mean one of these?
+    config:cache
+    config:clear
+    event:cache
+    route:cache
+    view:cache {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"config:cace\" is not defined.
+
+Did you mean one of these?
+    config:cache
+    config:clear
+    event:cache
+    route:cache
+    view:cache at /home/admin/web/ebilty.com/public_html/vendor/symfony/console/Application.php:682)
+[stacktrace]
+#0 /home/admin/web/ebilty.com/public_html/vendor/symfony/console/Application.php(255): Symfony\\Component\\Console\\Application->find()
+#1 /home/admin/web/ebilty.com/public_html/vendor/symfony/console/Application.php(167): Symfony\\Component\\Console\\Application->doRun()
+#2 /home/admin/web/ebilty.com/public_html/vendor/laravel/framework/src/Illuminate/Console/Application.php(93): Symfony\\Component\\Console\\Application->run()
+#3 /home/admin/web/ebilty.com/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#4 /home/admin/web/ebilty.com/public_html/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#5 {main}
+"} 
