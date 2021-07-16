@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Requests\front\signup\SignupOtp;
+use App\Models\Admin\Setting\Vehicle;
 use App\Models\UserVehicle;
 use App\Patient;
 use App\UserAddress;
@@ -11,6 +12,7 @@ use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+
 
 class AuthController extends Controller
 {
@@ -23,8 +25,179 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
-    public function new_signup(){
-        
+    public function mobileSignup(Request $request){
+        $validator = Validator::make($request->all(), [
+            'full_name' => ['required', 'min:3'],
+            'postal_code' => ['required', 'min:3'],
+            'phone' => ['required', 'unique:users,phone'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:4'],
+            'register_as' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        if ($request->register_as == '1'){
+            $user = new User([
+                'name' => $request->full_name,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'email' => $request->email,
+            ]);
+            $user->save();
+            $user->assignRole('customer');
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->expires_at = Carbon::now()->addWeeks(10);
+            $token->save();
+            event(new Registered($user));
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString(),
+                'user' => $user
+            ],200);
+        }elseif($request->register_as == '2'){
+            $user = new User([
+                'name' => $request->full_name,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'email' => $request->email,
+            ]);
+            $user->save();
+
+            $veh = new UserVehicle([
+                'user_id' => $user->id
+            ]);
+            $veh->save();
+
+            $user->assignRole('driver');
+
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->expires_at = Carbon::now()->addWeeks(10);
+            $token->save();
+            event(new Registered($user));
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString(),
+                'user' => $user
+            ],200);
+        }elseif($request->register_as == '3'){
+            $user = new User([
+                'name' => $request->full_name,
+                'postal_code' => $request->postal_code,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'email' => $request->email,
+            ]);
+            $user->save();
+            $user->assignRole('company');
+            $veh = new UserVehicle([
+                'user_id' => $user->id
+            ]);
+            $veh->save();
+
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->expires_at = Carbon::now()->addWeeks(10);
+            $token->save();
+            event(new Registered($user));
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString(),
+                'user' => $user
+            ],200);
+        }
+    }
+    public  function updateProfile(Request $request){
+        $validator = Validator::make($request->all(), [
+            'profile_picture' => ['required'],
+            'cnic_image_front' => ['required'],
+            'cnic_image_back' => ['required'],
+            'license_front_image' => ['required'],
+            'license_back_image' => ['required'],
+            'vehicle_registration_image' => ['required'],
+            'model' => ['required'],
+            'name' => ['required'],
+            'category_id' => ['required'],
+            'vehicle_id' => ['required'],
+            'vehicle_number' => ['required'],
+            'registration_city' => ['required'],
+            'body_size' => ['required'],
+            'capacity' => ['required'],
+            'owner_name' => ['required'],
+            'phone' => ['required']
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        if (Auth::check()){
+            $user = User::where('id', \auth()->user()->id)->first();
+            $user_vehicle = UserVehicle::where('user_id', \auth()->user()->id)->first();
+            if ($user){
+                $pp = '';
+                $cf = '';
+                $cb = '';
+                if ($request->profile_picture && $request->cnic_image_front && $request->cnic_image_back){
+                    $pp = image($request->profile_picture);
+                    $cf = image($request->cnic_image_front);
+                    $cb = image($request->cnic_image_back);
+                }
+                $user->profile_image = $pp;
+                $user->cnic_image = $cf;
+                $user->cnic_back_image = $cb;
+                $user->update();
+            }
+            if ($user_vehicle){
+                $lf ='';
+                $lb = '';
+                $vi = '';
+                if ($request->license_front_image && $request->license_back_image && $request->vehicle_registration_image){
+                    $lf = image($request->license_front_image);
+                    $lb = image($request->license_back_image);
+                    $vi = image($request->vehicle_registration_image);
+                }
+                $user_vehicle->license_front_image = $lf;
+                $user_vehicle->license_back_image = $lb;
+                $user_vehicle->vehicle_registration_image = $vi;
+                $user_vehicle->model = $request->model;
+                $user_vehicle->name = $request->name;
+                $user_vehicle->category_id = $request->category_id;
+                $user_vehicle->vehicle_id = $request->vehicle_id;
+                $user_vehicle->vehicle_number = $request->vehicle_number;
+                $user_vehicle->registration_city = $request->registration_city;
+                $user_vehicle->body_size = $request->body_size;
+                $user_vehicle->capacity = $request->capacity;
+                $user_vehicle->owner_name = $request->owner_name;
+                $user_vehicle->phone = $request->phone;
+                $user_vehicle->update();
+            }
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile Updated Successfully',
+                'user' => $user,
+                'user_vehicle' => $user_vehicle
+            ]);
+        }
+    }
+    public function image($image){
+        $file = base64_decode($image);
+        $folderName = 'public/uploads/';
+        $safeName = str_random(10).'.'.'png';
+        $destinationPath = public_path() . $folderName;
+        $success = file_put_contents(public_path().'/uploads/'.$safeName, $file);
+        return $safeName;
     }
     public function signup(Request $request)
     {
@@ -85,7 +258,7 @@ class AuthController extends Controller
 //        $address->save();
         $user->assignRole('customer');
         event(new Registered($user));
-        return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);;
+        return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);
     }
     public function createCracker(Request $request){
         $request->validate([

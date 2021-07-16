@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
+    Route::post('updateProfile', 'AuthController@updateProfile');
 //    Route::post('user-detail', 'AuthController@userUpdate');
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');
@@ -24,7 +25,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 });
 
 
+Route::get('getVehicleCatorgies', 'ApiController@getVehicleCatorgies');
+Route::get('vehicles/{id}', 'ApiController@vehicles');
 Route::post('login', 'AuthController@login');
-Route::post('signup', 'AuthController@signup');
+Route::post('signup', 'AuthController@mobileSignup');
 //Route::post('send-otp', 'HomeController@sendOtpApi');
 //Route::post('verify-otp', 'HomeController@verifySmsApi');
