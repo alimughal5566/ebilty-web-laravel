@@ -16,6 +16,8 @@ use App\Http\Controllers\ApiController;
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
     Route::post('updateProfile', 'AuthController@updateProfile');
+    Route::get('getProfile', 'AuthController@getProfile');
+    Route::post('store-shipment', 'ShippmentController@mobilestore');
 //    Route::post('user-detail', 'AuthController@userUpdate');
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');

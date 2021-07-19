@@ -51,14 +51,23 @@ class AuthController extends Controller
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
-            event(new Registered($user));
+//            event(new Registered($user));
+            $role = 0;
+            if ($user->hasRole('customer')){
+                $role = 1;
+            }elseif ($user->hasRole('driver')){
+                $role = 2;
+            }elseif ($user->hasRole('company')){
+                $role = 3;
+            }
             return response()->json([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
                 'expires_at' => Carbon::parse(
                     $tokenResult->token->expires_at
                 )->toDateTimeString(),
-                'user' => $user
+                'user' => $user,
+                'role' => $role,
             ],200);
         }elseif($request->register_as == '2'){
             $user = new User([
@@ -81,14 +90,23 @@ class AuthController extends Controller
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
-            event(new Registered($user));
+            $role = 0;
+            if ($user->hasRole('customer')){
+                $role = 1;
+            }elseif ($user->hasRole('driver')){
+                $role = 2;
+            }elseif ($user->hasRole('company')){
+                $role = 3;
+            }
+//            event(new Registered($user));
             return response()->json([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
                 'expires_at' => Carbon::parse(
                     $tokenResult->token->expires_at
                 )->toDateTimeString(),
-                'user' => $user
+                'user' => $user,
+                'role' => $role
             ],200);
         }elseif($request->register_as == '3'){
             $user = new User([
@@ -109,15 +127,51 @@ class AuthController extends Controller
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
-            event(new Registered($user));
+            $role = 0;
+            if ($user->hasRole('customer')){
+                $role = 1;
+            }elseif ($user->hasRole('driver')){
+                $role = 2;
+            }elseif ($user->hasRole('company')){
+                $role = 3;
+            }
+//            event(new Registered($user));
             return response()->json([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
                 'expires_at' => Carbon::parse(
                     $tokenResult->token->expires_at
                 )->toDateTimeString(),
-                'user' => $user
+                'user' => $user,
+                'role' => $role
             ],200);
+        }else{
+            return response()->json([
+                'message' => 'Wrong flag for User Type'
+            ], 422);
+        }
+        return response()->json([
+            'message' => 'Wrong flag for User Type'
+        ], 422);
+    }
+    public function getProfile(){
+        if (Auth::check()){
+            $user = User::with('vehicle')->where('id', \auth()->user()->id)->first();
+            if (!empty($user)){
+                return response()->json([
+                    'success' => true,
+                    'profile' => $user
+                ], 200);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not found'
+                ], 404);
+            }
+        }else{
+            return response()->json([
+                'message' => 'Unauthorised'
+            ], 422);
         }
     }
     public  function updateProfile(Request $request){
@@ -150,9 +204,9 @@ class AuthController extends Controller
                 $cf = '';
                 $cb = '';
                 if ($request->profile_picture && $request->cnic_image_front && $request->cnic_image_back){
-                    $pp = image($request->profile_picture);
-                    $cf = image($request->cnic_image_front);
-                    $cb = image($request->cnic_image_back);
+                    $pp = $this->image($request->profile_picture);
+                    $cf = $this->image($request->cnic_image_front);
+                    $cb = $this->image($request->cnic_image_back);
                 }
                 $user->profile_image = $pp;
                 $user->cnic_image = $cf;
@@ -164,9 +218,9 @@ class AuthController extends Controller
                 $lb = '';
                 $vi = '';
                 if ($request->license_front_image && $request->license_back_image && $request->vehicle_registration_image){
-                    $lf = image($request->license_front_image);
-                    $lb = image($request->license_back_image);
-                    $vi = image($request->vehicle_registration_image);
+                    $lf = $this->image($request->license_front_image);
+                    $lb = $this->image($request->license_back_image);
+                    $vi = $this->image($request->vehicle_registration_image);
                 }
                 $user_vehicle->license_front_image = $lf;
                 $user_vehicle->license_back_image = $lb;
@@ -192,12 +246,15 @@ class AuthController extends Controller
         }
     }
     public function image($image){
-        $file = base64_decode($image);
-        $folderName = 'public/uploads/';
-        $safeName = str_random(10).'.'.'png';
-        $destinationPath = public_path() . $folderName;
-        $success = file_put_contents(public_path().'/uploads/'.$safeName, $file);
-        return $safeName;
+        $filename = rand().$image->getClientOriginalExtension();
+        $image->move(public_path('/uploads/'), $filename);
+
+//        $file = base64_decode($image);
+//        $folderName = 'public/uploads/';
+//        $safeName =   $this->generateRandomString().'.'.'png';
+//        $destinationPath = public_path() . $folderName;
+//        $success = file_put_contents(public_path().'/uploads/'.$safeName, $file);
+        return $filename;
     }
     public function signup(Request $request)
     {
@@ -219,7 +276,7 @@ class AuthController extends Controller
 
 //        $user->assignRole('Patient');
         $user->save();
-        event(new Registered($user));
+//        event(new Registered($user));
         return $this->login($request);
 //        dd('dd');
 //        return response()->json([
@@ -257,7 +314,7 @@ class AuthController extends Controller
 //        $address->form=$request->form;
 //        $address->save();
         $user->assignRole('customer');
-        event(new Registered($user));
+//        event(new Registered($user));
         return response()->json(['success' => 'User registered successfully','user_id'=>$user->id]);
     }
     public function createCracker(Request $request){
@@ -279,7 +336,7 @@ class AuthController extends Controller
         ]);
         $user->save();
         $user->assignRole('cracker');
-        event(new Registered($user));
+//        event(new Registered($user));
         return redirect()->back()->with(['success' =>'User registered successfully']);
     }
     public function createDriver(Request $request){
@@ -368,7 +425,7 @@ class AuthController extends Controller
                 $veh->save();
                 $user->assignRole('company_driver');
             }
-        event(new Registered($user));
+//        event(new Registered($user));
         return redirect()->back()->with(['success' =>'Driver registered successfully']);
     }
     public function createSenderAddress(Request $request){
@@ -431,13 +488,24 @@ class AuthController extends Controller
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
+            $role = 0;
+
+            if ($user->hasRole('customer')){
+                $role = 1;
+            }elseif ($user->hasRole('driver')){
+                $role = 2;
+            }elseif ($user->hasRole('company')){
+                $role = 3;
+            }
             return response()->json([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
-//                'token' => $token,
+                'user' => $user,
+                'role' => $role,
                 'expires_at' => Carbon::parse(
                     $tokenResult->token->expires_at
-                )->toDateTimeString()
+                )->toDateTimeString(),
+                ''
             ],200);
         } else
             return response()->json(['error' =>'User not exist'], 422);
@@ -498,5 +566,14 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Data updated successfully',
             'success'=>'true'],200);
+    }
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
