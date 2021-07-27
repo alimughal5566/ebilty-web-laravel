@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updateProfile', 'AuthController@updateProfile');
     Route::get('getProfile', 'AuthController@getProfile');
     Route::post('store-shipment', 'ShippmentController@mobilestore');
+    Route::get('my-drivers', 'HomeController@myDriversApi');
+    Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
 //    Route::post('user-detail', 'AuthController@userUpdate');
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');

@@ -1,9 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+use App\City;
+use App\Country;
 use App\Http\Requests\front\signup\SignupOtp;
 use App\Models\Admin\Setting\Vehicle;
 use App\Models\UserVehicle;
 use App\Patient;
+use App\State;
 use App\UserAddress;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -33,10 +36,40 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
             'register_as' => ['required'],
+            'lat' => ['required'],
+            'long' => ['required'],
         ]);
+
+
+
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
+        $geolocation = $request->lat . ',' . $request->long;
+        $ct = '';
+        $st = '';
+        $cit = '';
+        $map_cdn = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $geolocation . '&sensor=true&key=AIzaSyCoM2N8BXBveNHlX96-EjCkpaQDd7mVrLI';
+        $file_contents = file_get_contents($map_cdn);
+        $json_decode = json_decode($file_contents);
+        if (isset($json_decode->results[0])) {
+            for ($i = 0; $i < count($json_decode->results[0]->address_components); $i++){
+                if ($json_decode->results[0]->address_components[$i]->types[0] == 'locality'){
+                    $cit = $json_decode->results[0]->address_components[$i]->long_name;
+                }
+                if ($json_decode->results[0]->address_components[$i]->types[0] == 'administrative_area_level_1'){
+                    $st = $json_decode->results[0]->address_components[$i]->long_name;
+                }
+                if ($json_decode->results[0]->address_components[$i]->types[0] == 'country'){
+                    $ct = $json_decode->results[0]->address_components[$i]->long_name;
+                }
+            }
+        }
+        $country = Country::where('name',$ct)->first();
+        $state = State::where('name',$st)->first();
+        $city = City::where('name',$cit)->first();
+//        dd($json_decode->results[0]->address_components, $country, $state, $city, $cit, $st, $ct,$geolocation);
         if ($request->register_as == '1'){
             $user = new User([
                 'name' => $request->full_name,
@@ -44,6 +77,11 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
+                'country_id' => isset($country->id) ? $country->id : '' ,
+                'state_id' => isset($state->id)  ? $state->id : '',
+                'city_id' => isset($city->id) ? $city->id : '',
+                'latitude' => $request->lat,
+                'longitude' => $request->long
             ]);
             $user->save();
             $user->assignRole('customer');
@@ -76,6 +114,11 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
+                'country_id' => $country->id,
+                'state_id' => $state->id,
+                'city_id' => $city->id,
+                'latitude' => $request->lat,
+                'longitude' => $request->long
             ]);
             $user->save();
 
@@ -115,13 +158,18 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
+                'country_id' => $country->id,
+                'state_id' => $state->id,
+                'city_id' => $city->id,
+                'latitude' => $request->lat,
+                'longitude' => $request->long
             ]);
             $user->save();
             $user->assignRole('company');
-            $veh = new UserVehicle([
-                'user_id' => $user->id
-            ]);
-            $veh->save();
+//            $veh = new UserVehicle([
+//                'user_id' => $user->id
+//            ]);
+//            $veh->save();
 
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
@@ -174,32 +222,113 @@ class AuthController extends Controller
             ], 422);
         }
     }
-    public  function updateProfile(Request $request){
-        $validator = Validator::make($request->all(), [
-            'profile_picture' => ['required'],
-            'cnic_image_front' => ['required'],
-            'cnic_image_back' => ['required'],
-            'license_front_image' => ['required'],
-            'license_back_image' => ['required'],
-            'vehicle_registration_image' => ['required'],
-            'model' => ['required'],
-            'name' => ['required'],
-            'category_id' => ['required'],
-            'vehicle_id' => ['required'],
-            'vehicle_number' => ['required'],
-            'registration_city' => ['required'],
-            'body_size' => ['required'],
-            'capacity' => ['required'],
-            'owner_name' => ['required'],
-            'phone' => ['required']
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+    public function updateProfile(Request $request){
+
+    }
+    public  function updateDriverProfile(Request $request){
+        if (\auth()->user()->hasRoles('driver')){
+            $validator = Validator::make($request->all(), [
+                'country_id' => ['required'],
+                'state_id' => ['required'],
+                'city_id' => ['required'],
+                'profile_picture' => ['required'],
+                'cnic_image_front' => ['required'],
+                'cnic_image_back' => ['required'],
+                'license_front_image' => ['required'],
+                'license_back_image' => ['required'],
+                'vehicle_registration_image' => ['required'],
+                'model' => ['required'],
+                'name' => ['required'],
+                'category_id' => ['required'],
+                'vehicle_id' => ['required'],
+                'vehicle_number' => ['required'],
+                'registration_city' => ['required'],
+                'body_size' => ['required'],
+                'capacity' => ['required'],
+                'owner_name' => ['required'],
+                'phone' => ['required']
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+            if (Auth::check()){
+                $user = User::where('id', \auth()->user()->id)->first();
+                $user_vehicle = UserVehicle::where('user_id', \auth()->user()->id)->first();
+                if ($user){
+                    $pp = '';
+                    $cf = '';
+                    $cb = '';
+                    if ($request->profile_picture && $request->cnic_image_front && $request->cnic_image_back){
+                        $pp = $this->image($request->profile_picture);
+                        $cf = $this->image($request->cnic_image_front);
+                        $cb = $this->image($request->cnic_image_back);
+                    }
+                    $user->country_id = $request->country_id;
+                    $user->state_id = $request->state_id;
+                    $user->city_id = $request->city_id;
+                    $user->profile_image = $pp;
+                    $user->cnic_image = $cf;
+                    $user->cnic_back_image = $cb;
+                    $user->update();
+                }
+                if ($user_vehicle){
+                    $lf ='';
+                    $lb = '';
+                    $vi = '';
+                    if ($request->license_front_image && $request->license_back_image && $request->vehicle_registration_image){
+                        $lf = $this->image($request->license_front_image);
+                        $lb = $this->image($request->license_back_image);
+                        $vi = $this->image($request->vehicle_registration_image);
+                    }
+                    $user_vehicle->license_front_image = $lf;
+                    $user_vehicle->license_back_image = $lb;
+                    $user_vehicle->vehicle_registration_image = $vi;
+                    $user_vehicle->model = $request->model;
+                    $user_vehicle->name = $request->name;
+                    $user_vehicle->category_id = $request->category_id;
+                    $user_vehicle->vehicle_id = $request->vehicle_id;
+                    $user_vehicle->vehicle_number = $request->vehicle_number;
+                    $user_vehicle->registration_city = $request->registration_city;
+                    $user_vehicle->body_size = $request->body_size;
+                    $user_vehicle->capacity = $request->capacity;
+                    $user_vehicle->owner_name = $request->owner_name;
+                    $user_vehicle->phone = $request->phone;
+                    $user_vehicle->update();
+                }
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Profile Updated Successfully',
+                    'user' => $user,
+                    'user_vehicle' => $user_vehicle
+                ]);
+            }
         }
-        if (Auth::check()){
-            $user = User::where('id', \auth()->user()->id)->first();
-            $user_vehicle = UserVehicle::where('user_id', \auth()->user()->id)->first();
-            if ($user){
+    }
+
+    public function addCompanyDriver(Request $request){
+        if (\auth()->user()->hasRoles('company')){
+            $validator = Validator::make($request->all(), [
+                'profile_picture' => ['required'],
+                'cnic_image_front' => ['required'],
+                'cnic_image_back' => ['required'],
+                'license_front_image' => ['required'],
+                'license_back_image' => ['required'],
+                'vehicle_registration_image' => ['required'],
+                'model' => ['required'],
+                'name' => ['required'],
+                'category_id' => ['required'],
+                'vehicle_id' => ['required'],
+                'vehicle_number' => ['required'],
+                'registration_city' => ['required'],
+                'body_size' => ['required'],
+                'capacity' => ['required'],
+                'owner_name' => ['required'],
+                'phone' => ['required']
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+            if (Auth::check()){
                 $pp = '';
                 $cf = '';
                 $cb = '';
@@ -208,12 +337,18 @@ class AuthController extends Controller
                     $cf = $this->image($request->cnic_image_front);
                     $cb = $this->image($request->cnic_image_back);
                 }
-                $user->profile_image = $pp;
-                $user->cnic_image = $cf;
-                $user->cnic_back_image = $cb;
-                $user->update();
-            }
-            if ($user_vehicle){
+                $user = new User([
+                    'name' => $request->full_name,
+                    'postal_code' => $request->postal_code,
+                    'phone' => $request->phone,
+                    'password' => bcrypt($request->password),
+                    'email' => $request->email,
+                    'profile_image' => $pp,
+                    'cnic_image' => $cf,
+                    'cnic_back_image' => $cb,
+                    'created_by' => \auth()->user()->id
+                ]);
+
                 $lf ='';
                 $lb = '';
                 $vi = '';
@@ -222,6 +357,7 @@ class AuthController extends Controller
                     $lb = $this->image($request->license_back_image);
                     $vi = $this->image($request->vehicle_registration_image);
                 }
+                $user_vehicle = new UserVehicle();
                 $user_vehicle->license_front_image = $lf;
                 $user_vehicle->license_back_image = $lb;
                 $user_vehicle->vehicle_registration_image = $vi;
@@ -235,14 +371,15 @@ class AuthController extends Controller
                 $user_vehicle->capacity = $request->capacity;
                 $user_vehicle->owner_name = $request->owner_name;
                 $user_vehicle->phone = $request->phone;
-                $user_vehicle->update();
+                $user_vehicle->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Profile Updated Successfully',
+                    'user' => $user,
+                    'user_vehicle' => $user_vehicle
+                ]);
             }
-            return response()->json([
-                'success' => true,
-                'message' => 'Profile Updated Successfully',
-                'user' => $user,
-                'user_vehicle' => $user_vehicle
-            ]);
         }
     }
     public function image($image){
