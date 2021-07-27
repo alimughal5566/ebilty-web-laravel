@@ -31,7 +31,6 @@ class AuthController extends Controller
     public function mobileSignup(Request $request){
         $validator = Validator::make($request->all(), [
             'full_name' => ['required', 'min:3'],
-            'postal_code' => ['required', 'min:3'],
             'phone' => ['required', 'unique:users,phone'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:4'],
@@ -40,11 +39,8 @@ class AuthController extends Controller
             'long' => ['required'],
         ]);
 
-
-
-
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()], 200);
         }
         $geolocation = $request->lat . ',' . $request->long;
         $ct = '';
@@ -69,21 +65,20 @@ class AuthController extends Controller
         $country = Country::where('name',$ct)->first();
         $state = State::where('name',$st)->first();
         $city = City::where('name',$cit)->first();
-//        dd($json_decode->results[0]->address_components, $country, $state, $city, $cit, $st, $ct,$geolocation);
+        $user = new User([
+            'name' => $request->full_name,
+            'postal_code' => $request->postal_code,
+            'phone' => $request->phone,
+            'password' => bcrypt($request->password),
+            'email' => $request->email,
+            'country_id' => isset($country->id) ? $country->id : '' ,
+            'state_id' => isset($state->id)  ? $state->id : '',
+            'city_id' => isset($city->id) ? $city->id : '',
+            'latitude' => $request->lat,
+            'longitude' => $request->long
+        ]);
+        $user->save();
         if ($request->register_as == '1'){
-            $user = new User([
-                'name' => $request->full_name,
-                'postal_code' => $request->postal_code,
-                'phone' => $request->phone,
-                'password' => bcrypt($request->password),
-                'email' => $request->email,
-                'country_id' => isset($country->id) ? $country->id : '' ,
-                'state_id' => isset($state->id)  ? $state->id : '',
-                'city_id' => isset($city->id) ? $city->id : '',
-                'latitude' => $request->lat,
-                'longitude' => $request->long
-            ]);
-            $user->save();
             $user->assignRole('customer');
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
@@ -108,70 +103,17 @@ class AuthController extends Controller
                 'role' => $role,
             ],200);
         }elseif($request->register_as == '2'){
-            $user = new User([
-                'name' => $request->full_name,
-                'postal_code' => $request->postal_code,
-                'phone' => $request->phone,
-                'password' => bcrypt($request->password),
-                'email' => $request->email,
-                'country_id' => $country->id,
-                'state_id' => $state->id,
-                'city_id' => $city->id,
-                'latitude' => $request->lat,
-                'longitude' => $request->long
-            ]);
-            $user->save();
+            
 
             $veh = new UserVehicle([
                 'user_id' => $user->id
             ]);
             $veh->save();
-
             $user->assignRole('driver');
-
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            $token->expires_at = Carbon::now()->addWeeks(10);
-            $token->save();
-            $role = 0;
-            if ($user->hasRole('customer')){
-                $role = 1;
-            }elseif ($user->hasRole('driver')){
-                $role = 2;
-            }elseif ($user->hasRole('company')){
-                $role = 3;
-            }
-//            event(new Registered($user));
-            return response()->json([
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString(),
-                'user' => $user,
-                'role' => $role
-            ],200);
         }elseif($request->register_as == '3'){
-            $user = new User([
-                'name' => $request->full_name,
-                'postal_code' => $request->postal_code,
-                'phone' => $request->phone,
-                'password' => bcrypt($request->password),
-                'email' => $request->email,
-                'country_id' => $country->id,
-                'state_id' => $state->id,
-                'city_id' => $city->id,
-                'latitude' => $request->lat,
-                'longitude' => $request->long
-            ]);
-            $user->save();
             $user->assignRole('company');
-//            $veh = new UserVehicle([
-//                'user_id' => $user->id
-//            ]);
-//            $veh->save();
-
-            $tokenResult = $user->createToken('Personal Access Token');
+        }
+        $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
@@ -193,14 +135,6 @@ class AuthController extends Controller
                 'user' => $user,
                 'role' => $role
             ],200);
-        }else{
-            return response()->json([
-                'message' => 'Wrong flag for User Type'
-            ], 422);
-        }
-        return response()->json([
-            'message' => 'Wrong flag for User Type'
-        ], 422);
     }
     public function getProfile(){
         if (Auth::check()){
