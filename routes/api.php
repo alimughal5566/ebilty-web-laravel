@@ -15,17 +15,18 @@ use App\Http\Controllers\ApiController;
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
-    Route::post('updateProfile', 'AuthController@updateProfile');
+    Route::post('updateProfile', 'Api\HomeController@updateProfile');
+    Route::post('add_driver' , 'Api\HomeController@addDriver');
     Route::get('getProfile', 'AuthController@getProfile');
     Route::post('store-shipment', 'ShippmentController@mobilestore');
     Route::get('my-drivers', 'HomeController@myDriversApi');
     Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
+    Route::get('/get-company-drivers', 'Api\HomeController@getCompanyDrivers');
+    Route::post('/add-company-driver', 'Api\HomeController@addDriver');
 //    Route::post('user-detail', 'AuthController@userUpdate');
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');
 //    Route::post('store/patient-record-api', 'ApiController@storeMedRecords');
-
-
 });
 
 

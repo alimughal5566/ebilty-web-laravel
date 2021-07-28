@@ -80,31 +80,8 @@ class AuthController extends Controller
         $user->save();
         if ($request->register_as == '1'){
             $user->assignRole('customer');
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            $token->expires_at = Carbon::now()->addWeeks(10);
-            $token->save();
-//            event(new Registered($user));
-            $role = 0;
-            if ($user->hasRole('customer')){
-                $role = 1;
-            }elseif ($user->hasRole('driver')){
-                $role = 2;
-            }elseif ($user->hasRole('company')){
-                $role = 3;
-            }
-            return response()->json([
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString(),
-                'user' => $user,
-                'role' => $role,
-            ],200);
         }elseif($request->register_as == '2'){
             
-
             $veh = new UserVehicle([
                 'user_id' => $user->id
             ]);
@@ -114,7 +91,7 @@ class AuthController extends Controller
             $user->assignRole('company');
         }
         $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
+        $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addWeeks(10);
             $token->save();
             $role = 0;
@@ -319,12 +296,6 @@ class AuthController extends Controller
     public function image($image){
         $filename = rand().$image->getClientOriginalExtension();
         $image->move(public_path('/uploads/'), $filename);
-
-//        $file = base64_decode($image);
-//        $folderName = 'public/uploads/';
-//        $safeName =   $this->generateRandomString().'.'.'png';
-//        $destinationPath = public_path() . $folderName;
-//        $success = file_put_contents(public_path().'/uploads/'.$safeName, $file);
         return $filename;
     }
     public function signup(Request $request)
