@@ -17,6 +17,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class ShippmentController extends Controller
 {
     public function store(Request $request){
+
         $this->validate($request, [
             'ship_date' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
@@ -29,6 +30,7 @@ class ShippmentController extends Controller
             'shipping_fee' => ['required', 'string', 'max:255'],
             'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
         ]);
+
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
         $shipment->book_as= $request->book_as;
@@ -54,7 +56,9 @@ class ShippmentController extends Controller
             $request->invoice_image->move(public_path('images/shipment-invoices'), $invoice_image);
             $shipment->invoice_image=$invoice_image;
         }
+
         $shipment->save();
+
         QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
                 if($request->category_id) {
                     for($i=0; $i<count($request->category_id);$i++) {
@@ -73,7 +77,16 @@ class ShippmentController extends Controller
         Session::flash('success', 'Shipment created successfully');
         return redirect()->route('shipmentDetail',$shipment->id)->with('success', 'Shippment created successfully');
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function mobilestore(Request $request){
+
+dd($request);
+
         $this->validate($request, [
             'ship_date' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
@@ -86,9 +99,10 @@ class ShippmentController extends Controller
             'shipping_fee' => ['required', 'string', 'max:255'],
             'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
         ]);
+
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
-        $shipment->book_as= $request->book_as;
+        $shipment->book_as= 1;
         $shipment->ship_date= $request->ship_date;
         $shipment->ship_time= $request->ship_time;
         $shipment->dilivery_type= $request->dilivery_type;
@@ -104,6 +118,21 @@ class ShippmentController extends Controller
         $shipment->package_cost= $request->package_cost;
         $shipment->vehicle_type_id= $request->vehicle_type;
         $shipment->vehicle_id= $request->vehicle;
+        $shipment->sender_name = $request->sender_name
+        $shipment->s_lat = $request->s_lat
+        $shipment->s_long = $request->s_long
+        $shipment->s_floor = $request->s_floor
+        $shipment->s_building = $request->s_building
+        $shipment->s_street = $request->s_street
+        $shipment->receiver_name = $request->receiver_name
+        $shipment->r_lat = $request->r_lat
+        $shipment->r_long = $request->r_long
+        $shipment->r_floor = $request->r_floor
+        $shipment->r_building = $request->r_building
+        $shipment->r_floor = $request->r_floor
+        $shipment->r_street = $request->r_street
+        $shipment->payment_mode = $request->payment_mode
+        $shipment->extra_info = $request->extra_info
         $shipment->status_id=9;
 
         if ($request->invoice_image) {

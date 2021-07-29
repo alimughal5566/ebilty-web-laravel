@@ -14,8 +14,7 @@ class AddFieldsToUserVehiclesTable extends Migration
     public function up()
     {
         Schema::table('user_vehicles', function (Blueprint $table) {
-            $table->string('license_front_image')->nullable();
-            $table->string('license_back_image')->nullable();
+
             $table->string('vehicle_registration_image')->nullable();
             $table->string('model')->nullable();
             $table->string('name')->nullable();
