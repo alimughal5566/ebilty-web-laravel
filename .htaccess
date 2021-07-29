@@ -1,34 +1,26 @@
-IndexIgnore *
-Options All -Indexes
-RedirectMatch 404 /\..*$
-
-<Files log.txt>
-order allow,deny
-deny from all
-</Files>
-<Files *.log>
-order allow,deny
-deny from all
-</Files>
-<Files log*.txt>
-order allow,deny
-deny from all
-</Files>
-<Files *.yml>
-order allow,deny
-deny from all
-</Files>
-<FilesMatch "(\.(bak|config|dist|inc|swp|xml|sql|sh|xsl|conf|ini|json)|~)$">
-    ## Apache 2.2
-    order allow,deny
-    deny from all
-
-    ## Apache 2.4
-    # Require all denied
-</FilesMatch>
-
 <IfModule mod_rewrite.c>
-  RewriteEngine On
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
 
-  RewriteRule (/)?(build|lib|license|tests|test|apps|cache|config|data|log|plugins)(/.*)?$ - [F,NC]
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on    
+    RewriteCond %{REQUEST_URI} !^public
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L] 
+
 </IfModule>
