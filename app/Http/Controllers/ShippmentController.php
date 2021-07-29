@@ -85,7 +85,7 @@ class ShippmentController extends Controller
      */
     public function mobilestore(Request $request){
 
-dd($request);
+        dd($request);
 
         $this->validate($request, [
             'ship_date' => ['required', 'string', 'max:255'],
@@ -118,21 +118,21 @@ dd($request);
         $shipment->package_cost= $request->package_cost;
         $shipment->vehicle_type_id= $request->vehicle_type;
         $shipment->vehicle_id= $request->vehicle;
-        $shipment->sender_name = $request->sender_name
-        $shipment->s_lat = $request->s_lat
-        $shipment->s_long = $request->s_long
-        $shipment->s_floor = $request->s_floor
-        $shipment->s_building = $request->s_building
-        $shipment->s_street = $request->s_street
-        $shipment->receiver_name = $request->receiver_name
-        $shipment->r_lat = $request->r_lat
-        $shipment->r_long = $request->r_long
-        $shipment->r_floor = $request->r_floor
-        $shipment->r_building = $request->r_building
-        $shipment->r_floor = $request->r_floor
-        $shipment->r_street = $request->r_street
-        $shipment->payment_mode = $request->payment_mode
-        $shipment->extra_info = $request->extra_info
+        $shipment->sender_name = $request->sender_name;
+        $shipment->s_lat = $request->s_lat;
+        $shipment->s_long = $request->s_long;
+        $shipment->s_floor = $request->s_floor;
+        $shipment->s_building = $request->s_building;
+        $shipment->s_street = $request->s_street;
+        $shipment->receiver_name = $request->receiver_name;
+        $shipment->r_lat = $request->r_lat;
+        $shipment->r_long = $request->r_long;
+        $shipment->r_floor = $request->r_floor;
+        $shipment->r_building = $request->r_building;
+        $shipment->r_floor = $request->r_floor;
+        $shipment->r_street = $request->r_street;
+        $shipment->payment_mode = $request->payment_mode;
+        $shipment->extra_info = $request->extra_info;
         $shipment->status_id=9;
 
         if ($request->invoice_image) {
