@@ -85,20 +85,6 @@ class ShippmentController extends Controller
      */
     public function mobilestore(Request $request){
 
-        dd($request);
-
-        $this->validate($request, [
-            'ship_date' => ['required', 'string', 'max:255'],
-            'sender_name' => ['required', 'string', 'max:255'],
-            'sender_address' => ['required', 'string', 'max:255'],
-            'receiver_name' => ['required', 'string', 'max:255'],
-            'receiver_address' => ['required', 'string', 'max:255'],
-//            'package_cost' => ['integer', 'max:255'],
-            'vehicle' => ['required', 'string', 'max:255'],
-            'vehicle_type' => ['required', 'string', 'max:255'],
-            'shipping_fee' => ['required', 'string', 'max:255'],
-            'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
-        ]);
 
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
