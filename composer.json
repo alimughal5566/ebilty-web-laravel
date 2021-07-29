@@ -20,7 +20,8 @@
         "pusher/pusher-php-server": "3.1",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-permission": "^4.2",
-        "twilio/sdk": "^6.25"
+        "twilio/sdk": "^6.25",
+        "lcobucci/jwt": "^3.3.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -44,7 +45,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/sendnotification.php"
+            "app/Helpers/sendnotification.php",
+            "app/Helpers/storeImage.php"
         ],
         "classmap": [
             "database/seeds",

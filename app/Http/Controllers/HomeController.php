@@ -213,6 +213,20 @@ class HomeController extends Controller
         $vehicles_cat= VehicleCategory::all();
         return view('user.my_users', compact('users','vehicles_cat'));
     }
+    public function myDriversApi(){
+        $users = array();
+        if (Auth::user()->hasRole('company')){
+            $users = User::where('created_by',auth()->user()->id)->whereHas(
+                'roles', function($q){
+                $q->where('name', 'company_driver');
+            }
+            )->with('assignedShipments.sender.user','assignedShipments.receiver.user','assignedShipments.status','city')->get();
+
+        }
+        return response()->json([
+            'drivers' => $users
+        ], 200);
+    }
     public function shipments(){
         $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user')->paginate('15');
         return view('admin.shipment.index', compact('shipments'));
