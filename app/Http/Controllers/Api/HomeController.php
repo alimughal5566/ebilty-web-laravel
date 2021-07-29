@@ -42,8 +42,6 @@ class HomeController extends Controller
     }
     public function addDriver(Request $request){
         if (\auth()->user()->id){
-
-
             if (Auth::check()){
                 $pp = '';
                 $cf = '';
@@ -80,26 +78,10 @@ class HomeController extends Controller
             }
         }
     }
-    public function addDriverVehicle(Request $request, $id){
-        $user = User::find($id);
-        if ($user && \auth()->user()->id){
-            $validator = Validator::make($request->all(), [
+    public function addDriverVehicle(Request $request){
 
-                'vehicle_registration_image' => ['required'],
-                'model' => ['required'],
-                'name' => ['required'],
-                'category_id' => ['required'],
-                'vehicle_id' => ['required'],
-                'vehicle_number' => ['required'],
-                'registration_city' => ['required'],
-                'body_size' => ['required'],
-                'capacity' => ['required'],
-                'owner_name' => ['required'],
-                'phone' => ['required']
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()] , 200);
-            }
+//        if (\auth()->user()->id){
+
             $lf ='';
             $lb = '';
             $vi = '';
@@ -107,7 +89,7 @@ class HomeController extends Controller
                 $vi = storeImage($request->vehicle_registration_image);
             }
             $user_vehicle = new UserVehicle();
-            $user_vehicle->user_id = $id;
+//            $user_vehicle->user_id = '';
             $user_vehicle->license_front_image = $lf;
             $user_vehicle->license_back_image = $lb;
             $user_vehicle->vehicle_registration_image = $vi;
@@ -125,15 +107,13 @@ class HomeController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Vehicle created and assigned Successfully',
-                'driver' => $user,
+
                 'vehicle' => $user_vehicle
             ]);
-        }else{
-            return response()->json([
-                'message' => 'Driver does not exist',
-            ],404);
         }
-    }
+
+
+//    }
 
 
 }
