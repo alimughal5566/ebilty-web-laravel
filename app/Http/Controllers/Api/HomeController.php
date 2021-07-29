@@ -42,20 +42,8 @@ class HomeController extends Controller
     }
     public function addDriver(Request $request){
         if (\auth()->user()->id){
-            $validator = Validator::make($request->all(), [
-                'license_image' => ['required'],
-                'license_back_image' => ['required'],
-                'profile_picture' => ['required'],
-                'cnic_image_front' => ['required'],
-                'cnic_image_back' => ['required'],
-                'phone' => ['required', 'unique:users,phone'],
-                'full_name' => ['required'],
-                'password' => ['required'],
-                'email' => ['required', 'string', 'email', 'unique:users,email'],
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()] , 200);
-            }
+
+
             if (Auth::check()){
                 $pp = '';
                 $cf = '';
@@ -65,7 +53,6 @@ class HomeController extends Controller
                 if ($request->profile_picture && $request->cnic_image_front && $request->cnic_image_back){
                     $lf = storeImage($request->license_image);
                     $lb = storeImage($request->license_back_image);
-
                     $pp = storeImage($request->profile_picture);
                     $cf = storeImage($request->cnic_image_front);
                     $cb = storeImage($request->cnic_image_back);
