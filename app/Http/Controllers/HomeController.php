@@ -37,8 +37,8 @@ class HomeController extends Controller
      */
     public function index(){
 
-        $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
-        if(auth()->user()->hasRole('admin')){
+       $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
+       if(auth()->user()->hasRole('admin')){
             $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->paginate('15');
         }
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
@@ -53,25 +53,24 @@ class HomeController extends Controller
                ->paginate('5');
 
        }
-        elseif(auth()->user()->hasRole('customer')){
+       elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
 
                 ->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
 
         }
-        elseif(auth()->user()->hasRole('brocker_driver')){
+       elseif(auth()->user()->hasRole('brocker_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
 
-        }elseif(auth()->user()->hasRole('company_driver')){
+        }
+       elseif(auth()->user()->hasRole('company_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')
                 ->where('assigned_to',auth()->user()->id)
                 ->with('sender.user','packages','receiver.user','status','bids.user')
                 ->paginate('5');
 
         }
-
         $vehicles_cat=VehicleCategory::all();
-//        dd($shipments);
         return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
 
