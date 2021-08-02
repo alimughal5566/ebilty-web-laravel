@@ -151,8 +151,6 @@ class HomeController extends Controller
             'shipments' => $shipments,
             ]);
     }
-
-
     public function getAllDrivers(){
 
         $all_drivers=User::where('created_by',Auth::id())->get();
@@ -162,18 +160,46 @@ class HomeController extends Controller
             'all_drivers' => $all_drivers,
         ]);
     }
-
-
     public function getAllVehicles(){
 
         $all_Vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
-//dd($all_Vehicles);
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
             'all_drivers' => $all_Vehicles,
         ]);
     }
+
+
+   public function assignDriver(Request $request){
+//        dd($request);
+       $user=new User();
+       $getUser=$user->where('id',$request->user_id)->first();
+       $vehicle=new UserVehicle();
+       $getVehicle=$vehicle->where('id',$request->vehicle_id)->first();
+        if($getUser->is_available==1){
+            if($getVehicle->assign_id == 0) {
+                $user->where('id',$request->user_id)->update(['is_available'=>0]);
+                $vehicle->where('id',$request->vehicle_id)->update(['assign_id'=>$request->user_id]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Driver Is Assigned Successfully',
+                ]);
+        }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'vehicle is Not Available',
+                ]);
+        }
+
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Driver is Not Available',
+            ]);
+        }
+
+   }
 
 
 
