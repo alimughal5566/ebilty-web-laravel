@@ -91,7 +91,7 @@ class HomeController extends Controller
                 $vi = storeImage($request->vehicle_registration_image);
             }
             $user_vehicle = new UserVehicle();
-//            $user_vehicle->user_id = '';
+            $user_vehicle->user_id =Auth::id();
             $user_vehicle->license_front_image = $lf;
             $user_vehicle->license_back_image = $lb;
             $user_vehicle->vehicle_registration_image = $vi;
@@ -155,7 +155,6 @@ class HomeController extends Controller
 
     public function getAllDrivers(){
 
-
         $all_drivers=User::where('created_by',Auth::id())->get();
         return response()->json([
             'success' => true,
@@ -163,6 +162,19 @@ class HomeController extends Controller
             'all_drivers' => $all_drivers,
         ]);
     }
+
+
+    public function getAllVehicles(){
+
+        $all_Vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
+//dd($all_Vehicles);
+        return response()->json([
+            'success' => true,
+            'message' => 'all vehicles',
+            'all_drivers' => $all_Vehicles,
+        ]);
+    }
+
 
 
 }

@@ -19,6 +19,7 @@ class CreateUserVehiclesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->integer('vehicle_id')->unsigned();
+            $table->string('assign_id')->nullable();
             $table->timestamps();
 //            $table->foreign('user_id')->references('id')->on('users');
 //            $table->foreign('category_id')->references('id')->on('vehicle_categories');
