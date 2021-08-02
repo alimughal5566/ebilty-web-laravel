@@ -51,6 +51,4 @@ class ApiController extends Controller
             ], 422);
         }
     }
-
-
 }

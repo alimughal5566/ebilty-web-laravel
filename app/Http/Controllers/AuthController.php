@@ -81,7 +81,7 @@ class AuthController extends Controller
         if ($request->register_as == '1'){
             $user->assignRole('customer');
         }elseif($request->register_as == '2'){
-            
+
             $veh = new UserVehicle([
                 'user_id' => $user->id
             ]);
@@ -552,7 +552,6 @@ class AuthController extends Controller
         } else
             return response()->json(['error' =>'User not exist'], 422);
     }
-
     /**
      * Logout user (Revoke the token)
      *
@@ -565,8 +564,6 @@ class AuthController extends Controller
             'success'=>'true'
         ]);
     }
-
-
     /**
      * Get the authenticated User
      *

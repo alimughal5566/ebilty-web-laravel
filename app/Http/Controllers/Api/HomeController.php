@@ -113,7 +113,6 @@ class HomeController extends Controller
                 'vehicle' => $user_vehicle
             ]);
         }
-
     public function allShipments(){
 
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
@@ -151,6 +150,18 @@ class HomeController extends Controller
             'message' => 'all shipments',
             'shipments' => $shipments,
             ]);
+    }
+
+
+    public function getAllDrivers(){
+
+
+        $all_drivers=User::where('created_by',Auth::id())->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'all Drivers',
+            'all_drivers' => $all_drivers,
+        ]);
     }
 
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\ApiController;
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
+    Route::get('get-all-drivers', 'Api\HomeController@getAllDrivers');
     Route::post('updateProfile', 'Api\HomeController@updateProfile');
     Route::post('add_driver' , 'Api\HomeController@addDriver');
     Route::get('getProfile', 'AuthController@getProfile');

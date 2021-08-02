@@ -43,7 +43,6 @@ class DriverController extends Controller
 //            dd($shipments);
         return view('driver.shipment.index', compact('shipments','statuses'));
     }
-
     public function myDriverShipments(){
         $shipments = '';
         if (Auth::user()->hasRole('company_driver') ||Auth::user()->hasRole('brocker_driver')){
@@ -141,7 +140,6 @@ class DriverController extends Controller
         $vehs = Vehicle::all();
         return view('driver.vehicles', compact('vehicles','cats', 'vehs'));
     }
-
     public function updateBidReviserequest(Request $request){
         if($request->id) {
             $bid = ShipmentBids::find($request->id);
@@ -172,7 +170,6 @@ class DriverController extends Controller
         }
         return response()->json(['success' =>'Status updated  successfully'], 200);
     }
-
     public function addVehicle(Request $request){
 
             $vehicle = new UserVehicle;

@@ -77,7 +77,6 @@ class ShippmentController extends Controller
         Session::flash('success', 'Shipment created successfully');
         return redirect()->route('shipmentDetail',$shipment->id)->with('success', 'Shippment created successfully');
     }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -148,9 +147,6 @@ class ShippmentController extends Controller
             'shipment' => $shipment,
         ]);
     }
-
-
-
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
 //        dd($shipment);
@@ -168,7 +164,6 @@ class ShippmentController extends Controller
             ]);
         }
     }
-
     public function downloadPdf($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state')->first();
            view()->share('shipment',$shipment);
@@ -178,7 +173,6 @@ class ShippmentController extends Controller
 
         return view('pdfview');
     }
-
     public function shipmentAssign(Request $request)
     {
         if (Auth::user()->hasRole('cracker')){
@@ -207,7 +201,6 @@ class ShippmentController extends Controller
         }
         return response()->json($users);
     }
-
     public function assignDriver(Request $request){
 
         $shipment= Shippment::where('id',$request->shipment_id)

@@ -73,7 +73,6 @@ class HomeController extends Controller
         $vehicles_cat=VehicleCategory::all();
         return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
-
     public function getVehicles(Request $request)
     {
         $vehicles= Vehicle::where('vehicle_category_id',$request->id)->get();
@@ -99,7 +98,6 @@ class HomeController extends Controller
         $address = UserAddress::where('user_id', $request->id)->get();
         return response()->json(['address'=>$address]) ;
     }
-
     public function profile($id){
         $user = User::where('id', $id)->with('country','state','city')->first();
         $countries=Country::all();
@@ -338,7 +336,6 @@ class HomeController extends Controller
             }
             return response()->json(['success' =>'true'], 200);
     }
-
     public function getAllNotfication(){
         $allnotfications=Notification::where('receiver_id',\auth()->id())->orderBy('id','DESC')->paginate(4);
         return response()->json($allnotfications);
