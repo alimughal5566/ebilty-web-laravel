@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
     Route::get('get-all-drivers', 'Api\HomeController@getAllDrivers');
     Route::get('get-all-vehicles', 'Api\HomeController@getAllVehicles');
+    Route::post('/bid-store', 'Api\HomeController@bidStore');
     Route::post('/assign-driver', 'Api\HomeController@assignDriver');
     Route::post('updateProfile', 'Api\HomeController@updateProfile');
     Route::post('add_driver' , 'Api\HomeController@addDriver');
