@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 use App\Models\Admin\Setting\General_setting;
+use App\Models\Admin\Setting\Shipment;
+use App\Models\Admin\Setting\Vehicle;
+use App\ShipmentBids;
 use App\Shippment;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -162,12 +165,12 @@ class HomeController extends Controller
     }
     public function getAllVehicles(){
 
-        $all_Vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
+        $all_vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
             'vehicles' => $all_Vehicles,
-        ]);
+            ]);
     }
 
 
@@ -201,6 +204,32 @@ class HomeController extends Controller
 
    }
 
+    public function bidStore(Request $request){
+        $bid= new ShipmentBids;
+        $bid->shipment_id = $request['order_id'];
+        $bid->bid_amount = $request['bid_price'];
+        $bid->user_id = auth()->user()->id;
+        $bid->save();
+
+        $receiver_id=Shipment::where('id',$request['order_id'])->pluck('user_id')->first();
+        sendnote(auth()->user()->id , $receiver_id,'New Bid is Placed On Shipment# '.$request['order_id'] );
+
+        return response()->json(['success' =>'Bid created successfully'], 200);
+
+    }
+
+
+    public function allVehicles(){
+        if(Auth::check()){
+            $vechiles=Vehicle::where('status',1)->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Driver is Not Available',
+                'vechiles' =>$vechiles,
+            ],200);
+        }
+        return response()->json(['success' =>false,'message' => 'Something Went Wrong' ]);
+    }
 
 
 }
