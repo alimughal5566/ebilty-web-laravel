@@ -221,11 +221,11 @@ class HomeController extends Controller
 
     public function allVehicles(){
         if(Auth::check()){
-            $vechiles=Vehicle::where('status',1)->get();
+            $vehicles=Vehicle::where('status',1)->get();
             return response()->json([
                 'success' => true,
-                'message' => 'Driver is Not Available',
-                'vechiles' =>$vechiles,
+                'message' => 'all vehicles',
+                'vehicles' =>$vehicles,
             ],200);
         }
         return response()->json(['success' =>false,'message' => 'Something Went Wrong' ]);
