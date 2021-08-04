@@ -21,7 +21,7 @@ class GeneralSettingController extends Controller
     }
     public function index(){
         $settings = General_setting::where('page_name','!=','dashboard')->get();
-        return view('admin.setting.General_setting', compact('settings'));
+        return view('admin.setting.general_setting', compact('settings'));
     }
     public function dashboard(){
         $settings = General_setting::where('page_name','=','dashboard')->get();
