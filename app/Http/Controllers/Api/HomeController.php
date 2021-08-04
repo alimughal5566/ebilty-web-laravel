@@ -206,8 +206,8 @@ class HomeController extends Controller
 
     public function bidStore(Request $request){
         $bid= new ShipmentBids;
-        $bid->shipment_id = $request['order_id'];
-        $bid->bid_amount = $request['bid_price'];
+        $bid->shipment_id = $request['shipment_id'];
+        $bid->bid_amount = $request['bid_amount'];
         $bid->user_id = auth()->user()->id;
         $bid->save();
 
