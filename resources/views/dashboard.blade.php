@@ -463,11 +463,11 @@
                     @else
                         <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
                     @endif
-                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
-                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
-                    <td>{{$shipment->total_weight}}</td>
-                    <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                    <td>{{$shipment->stat->name}}</td>
+                    <td>{{@$shipment->sender->address}}<small> ({{@$shipment->sender->user->name}})</small></td>
+                    <td>{{@$shipment->receiver->address}}<small> ({{@$shipment->receiver->user->name}})</small></td>
+                    <td>{{@$shipment->total_weight}}</td>
+                    <td>{{@$shipment->ship_date}}<br>{{@$shipment->ship_time}}</td>
+                    <td>{{@$shipment->stat->name}}</td>
                     <td>
                         @php
                          $percentage=0;
