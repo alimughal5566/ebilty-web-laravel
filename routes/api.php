@@ -15,6 +15,7 @@ use App\Http\Controllers\ApiController;
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user-detail', 'AuthController@user');
+    Route::get('all-vehicles', 'Api\HomeController@allVehicles');
     Route::get('get-all-drivers', 'Api\HomeController@getAllDrivers');
     Route::get('get-all-vehicles', 'Api\HomeController@getAllVehicles');
     Route::post('/bid-store', 'Api\HomeController@bidStore');

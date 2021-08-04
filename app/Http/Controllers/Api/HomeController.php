@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Shipment;
+use App\Models\Admin\Setting\Vehicle;
 use App\ShipmentBids;
 use App\Shippment;
 use Illuminate\Support\Facades\Auth;
@@ -216,5 +217,19 @@ class HomeController extends Controller
         return response()->json(['success' =>'Bid created successfully'], 200);
 
     }
+
+
+    public function allVehicles(){
+        if(Auth::check()){
+            $vechiles=Vehicle::where('status',1)->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Driver is Not Available',
+                'vechiles' =>$vechiles,
+            ],200);
+        }
+        return response()->json(['success' =>false,'message' => 'Something Went Wrong' ]);
+    }
+
 
 }
