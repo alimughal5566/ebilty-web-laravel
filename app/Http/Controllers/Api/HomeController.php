@@ -211,7 +211,7 @@ class HomeController extends Controller
         $bid->user_id = auth()->user()->id;
         $bid->save();
 
-        $receiver_id=Shipment::where('id',$request['order_id'])->pluck('user_id')->first();
+        $receiver_id=Shipment::where('id',$request['shipment_id'])->pluck('user_id')->first();
         sendnote(auth()->user()->id , $receiver_id,'New Bid is Placed On Shipment# '.$request['order_id'] );
 
         return response()->json(['success' =>'Bid created successfully'], 200);
