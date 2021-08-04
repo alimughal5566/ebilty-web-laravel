@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
-use App\Models\Admin\Setting\General_Setting;
+use App\Models\Admin\Setting\General_setting;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Setting\Qas;
 use Illuminate\Http\Request;
@@ -20,16 +20,16 @@ class GeneralSettingController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        $settings = General_Setting::where('page_name','!=','dashboard')->get();
-        return view('admin.setting.general_setting', compact('settings'));
+        $settings = General_setting::where('page_name','!=','dashboard')->get();
+        return view('admin.setting.General_setting', compact('settings'));
     }
     public function dashboard(){
-        $settings = General_Setting::where('page_name','=','dashboard')->get();
+        $settings = General_setting::where('page_name','=','dashboard')->get();
         return view('admin.setting.dashboard_setting', compact('settings'));
     }
     public function save_homepage_slider(Request $request){
 //        dd($request->all());
-        $home_slider1 = General_Setting::where('id', $request->id)->first();
+        $home_slider1 = General_setting::where('id', $request->id)->first();
         $json = json_decode($home_slider1->content);
         $filename = $json->image;
         if($request->image)
@@ -57,7 +57,7 @@ class GeneralSettingController extends Controller
         return redirect()->back();
     }
     public function save_homepage_slider1(Request $request){
-        $home_slider1 = General_Setting::where('id', 1)->first();
+        $home_slider1 = General_setting::where('id', 1)->first();
         $json = json_decode($home_slider1->content);
         $filename = $json->image;
         if($request->image1)
@@ -88,7 +88,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_slider2(Request $request){
 //        dd($request->all());
-        $home_slider2 = General_Setting::where('id', 2)->first();
+        $home_slider2 = General_setting::where('id', 2)->first();
         $filename = '';
         $json = json_decode($home_slider2->content);
         $filename = $json->image;
@@ -119,7 +119,7 @@ class GeneralSettingController extends Controller
 
     }
     public function save_homepage_slider3(Request $request){
-        $home_slider3 = General_Setting::where('id', 3)->first();
+        $home_slider3 = General_setting::where('id', 3)->first();
         $filename = '';
         $json = json_decode($home_slider3->content);
         $filename = $json->image;
@@ -150,7 +150,7 @@ class GeneralSettingController extends Controller
 
     }
     public function addAdvertisement(Request $request){
-        $home_slider3 = new General_Setting;
+        $home_slider3 = new General_setting;
 //        dd($request);
         if($request->image) {
             $file = $request->file('image');
@@ -169,7 +169,7 @@ class GeneralSettingController extends Controller
     }
     public function save_about_us_banner(Request $request){
 //        dd($request->all());
-        $about = General_Setting::where('id', 5)->first();
+        $about = General_setting::where('id', 5)->first();
         $json = json_decode($about->content);
         $filename = '';
         $filename = $json->banner_image;
@@ -207,7 +207,7 @@ class GeneralSettingController extends Controller
     }
     public function save_about_us_body(Request $request){
 //        dd($request->all());
-        $about = General_Setting::where('id', 10)->first();
+        $about = General_setting::where('id', 10)->first();
         $json = json_decode($about->content);
 //        $filename = '';
 //        $filename = $json->banner_image;
@@ -246,7 +246,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_slider4(Request $request){
 //        dd($request->all());
-        $home_slider4 = General_Setting::where('id', 4)->first();
+        $home_slider4 = General_setting::where('id', 4)->first();
         $filename = '';
         $json = json_decode($home_slider4->content);
         $filename = $json->image;
@@ -278,7 +278,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_card1(Request $request){
 //        dd($request->all());
-        $card = General_Setting::where('id', 6)->first();
+        $card = General_setting::where('id', 6)->first();
         $filename = '';
         $json = json_decode($card->content);
         $filename = $json->icon;
@@ -306,7 +306,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_card2(Request $request){
 //        dd($request->all());
-        $card = General_Setting::where('id', 7)->first();
+        $card = General_setting::where('id', 7)->first();
         $filename = '';
         $json = json_decode($card->content);
         $filename = $json->icon;
@@ -334,7 +334,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_card3(Request $request){
 //        dd($request->all());
-        $card = General_Setting::where('id', 8)->first();
+        $card = General_setting::where('id', 8)->first();
         $filename = '';
         $json = json_decode($card->content);
         $filename = $json->icon;
@@ -362,7 +362,7 @@ class GeneralSettingController extends Controller
     }
     public function save_homepage_card4(Request $request){
 //        dd($request->all());
-        $card = General_Setting::where('id', 9)->first();
+        $card = General_setting::where('id', 9)->first();
         $filename = '';
         $json = json_decode($card->content);
         $filename = $json->icon;
@@ -390,7 +390,7 @@ class GeneralSettingController extends Controller
     }
     public function save_faq_banner(Request $request){
 //        dd($request->all());
-        $card = General_Setting::where('id', 11)->first();
+        $card = General_setting::where('id', 11)->first();
         $filename = '';
         $json = json_decode($card->content);
         $filename = $json->icon;
@@ -417,7 +417,7 @@ class GeneralSettingController extends Controller
     }
     public function make_status_active_setting(){
         $id = $_GET['id'];
-        $type = General_Setting::where('id',$id)->first();
+        $type = General_setting::where('id',$id)->first();
         $type->status = 1;
         $type->update();
         $response = array(
@@ -428,7 +428,7 @@ class GeneralSettingController extends Controller
     }
     public function make_status_inactive_setting(){
         $id = $_GET['id'];
-        $type = General_Setting::where('id',$id)->first();
+        $type = General_setting::where('id',$id)->first();
         $type->status = 0;
         $type->update();
         $response = array(
@@ -499,7 +499,7 @@ class GeneralSettingController extends Controller
     public function homepage_update_status(){
         $id = $_GET['id'];
         $status = $_GET['status'];
-        $type = General_Setting::where('id',$id)->first();
+        $type = General_setting::where('id',$id)->first();
         $type->status = $status;
         $type->update();
         $response = array(
@@ -521,7 +521,7 @@ class GeneralSettingController extends Controller
     }
     public function advertisementStatusUpdate(Request $request){
         if($request->id){
-            $UserAddress = General_Setting::find($request->id);
+            $UserAddress = General_setting::find($request->id);
             $UserAddress->status =$request->status;
             $UserAddress->save();
         }
