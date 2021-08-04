@@ -166,7 +166,7 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
-            'all_drivers' => $all_Vehicles,
+            'vehicles' => $all_Vehicles,
         ]);
     }
 
