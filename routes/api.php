@@ -23,7 +23,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updateProfile', 'Api\HomeController@updateProfile');
     Route::post('add_driver' , 'Api\HomeController@addDriver');
     Route::get('getProfile', 'AuthController@getProfile');
-    Route::post('store-shipment', 'ShippmentController@mobilestore');
+//    Route::post('store-shipment', 'ShippmentController@mobilestore');
+    Route::post('/store-shipment', 'Api\HomeController@storeShipment');
     Route::get('my-drivers', 'HomeController@myDriversApi');
     Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
     Route::get('/get-company-drivers', 'Api\HomeController@getCompanyDrivers');

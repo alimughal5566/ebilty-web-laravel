@@ -6,13 +6,17 @@ use App\Models\Admin\Setting\Shipment;
 use App\Models\Admin\Setting\Vehicle;
 use App\ShipmentBids;
 use App\Shippment;
+use App\ShippmentPackage;
+use App\UserAddress;
+use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserVehicle;
 use App\Models\Admin\Setting\VehicleCategory;
-use Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -172,9 +176,7 @@ class HomeController extends Controller
             'vehicles' => $all_Vehicles,
             ]);
     }
-
-
-   public function assignDriver(Request $request){
+    public function assignDriver(Request $request){
 //        dd($request);
        $user=new User();
        $getUser=$user->where('id',$request->user_id)->first();
@@ -203,7 +205,6 @@ class HomeController extends Controller
         }
 
    }
-
     public function bidStore(Request $request){
         $bid= new ShipmentBids;
         $bid->shipment_id = $request['shipment_id'];
@@ -217,8 +218,6 @@ class HomeController extends Controller
         return response()->json(['success' =>'Bid created successfully'], 200);
 
     }
-
-
     public function allVehicles(){
         if(Auth::check()){
             $vehicles=Vehicle::where('status',1)->get();
@@ -229,6 +228,81 @@ class HomeController extends Controller
             ],200);
         }
         return response()->json(['success' =>false,'message' => 'Something Went Wrong' ]);
+    }
+
+    public function storeShipment(Request $request){
+
+
+        $savepickup=UserAddress::create([
+            'user_id'=>Auth::id(),
+            'lat'=>$request->p_lat,
+            'lng'=>$request->p_lng,
+            'country_id'=>$request->pcountry_id,
+            'state_id'=>$request->pstate_id,
+            'city_id'=>$request->pcity_id,
+            'address'=>$request->paddress,
+            'user_name'=>$request->sender_name,
+            'floor'=>$request->pfloor,
+            'building'=>$request->pbuilding,
+            'street'=>$request->pstreet,
+        ]);
+        $savedropof=UserAddress::create([
+            'user_id'=>Auth::id(),
+            'user_name'=>$request->receiver_name,
+            'lat'=>$request->d_lat,
+            'lng'=>$request->d_lng,
+            'country_id'=>$request->dcountry_id,
+            'state_id'=>$request->dstate_id,
+            'city_id'=>$request->dcity_id,
+            'address'=>$request->daddress,
+            'floor'=>$request->dfloor,
+            'building'=>$request->dbuilding,
+            'street'=>$request->dstreet,
+        ]);
+        $shipment=new Shippment;
+        $shipment->user_id= auth()->user()->id;
+        $shipment->ship_date= $request->ship_date;
+        $shipment->pickupaddress_id= $savepickup->id;
+        $shipment->dropofupaddress_id=$savedropof->id;
+        $shipment->ship_time= $request->ship_time;
+        $shipment->dilivery_type= $request->dilivery_type;
+        $shipment->is_insured= $request->is_insured;
+        $shipment->payment_type= $request->payment_type;
+        $shipment->package_cost= $request->package_cost;
+        $shipment->vehicle_id= $request->vehicle_id;
+        $shipment->extra_info = $request->extra_info;
+        $shipment->status_id=9;
+
+        if ($request->invoice_image) {
+            $invoice_image = time() . '.' . $request->invoice_image->extension();
+            $request->invoice_image->move(public_path('images/shipment-invoices'), $invoice_image);
+            $shipment->invoice_image=$invoice_image;
+        }
+        $shipment->save();
+        QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
+        if($request->category_id) {
+
+                $package = new ShippmentPackage;
+                $package->shippment_id = $shipment->id;
+                $package->package_category_id = $request->category_id;
+                $package->description = $request->description;
+                $package->quantity = $request->quantity;
+                $package->weight = $request->weight;
+                $package->length = $request->length;
+                $package->width = $request->width;
+                $package->height = $request->height;
+                $package->save();
+
+
+        }
+        $shipment= Shippment::where('id',$shipment->id)->with('status','bids','packages')->first();
+
+        return response()->json([
+            'shipment' => $shipment,
+            'pickup' => $savepickup,
+            'dropof' => $savedropof,
+        ]);
+
     }
 
 
