@@ -15,15 +15,17 @@ class CreateUserAddressesTable extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('created_by')->nullable();
             $table->string('user_id')->nullable();
-            $table->string('area_id')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->string('country_id')->nullable();
             $table->string('state_id')->nullable();
             $table->string('city_id')->nullable();
             $table->string('address')->nullable();
-            $table->string('status')->default('1')->nullable();
-            $table->string('zip')->default('1')->nullable();
+            $table->string('floor')->nullable();
+            $table->string('building')->nullable();
+            $table->string('street')->nullable();
             $table->string('is_default')->default('0')->nullable();
             $table->string('form')->nullable();
             $table->timestamps();
