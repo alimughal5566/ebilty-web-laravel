@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Shippment extends Model
 {
     public function sender(){
-        return $this->belongsTo('App\UserAddress','sender_address_id','id');
+        return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
     }
     public function user()
     {
         return $this->hasOne('App\User','id','user_id');
     }
     public function receiver(){
-        return $this->belongsTo('App\UserAddress','receiver_address_id','id');
+        return $this->belongsTo('App\UserAddress','dropofupaddress_id','id');
     }
     public function status(){
         return $this->hasOne('App\ShipmentStatus','id','status_id');
@@ -25,8 +25,8 @@ class Shippment extends Model
     public function bids(){
         return $this->hasMany('App\ShipmentBids','shipment_id','id')->orderBy('bid_amount', 'ASC');
     }
-    public function packages(){
-        return $this->hasMany('App\ShippmentPackage','shippment_id');
+    public function package(){
+        return $this->hasOne('App\ShippmentPackage','shippment_id','id');
     }
     public function myBid(){
         return $this->hasOne('App\ShipmentBids','shipment_id','id')->where('user_id',auth()->user()->id);
