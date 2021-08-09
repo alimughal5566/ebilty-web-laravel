@@ -135,7 +135,7 @@ class HomeController extends Controller
                 ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','shippments.id as s_id','user_addresses.*')
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','packages','receiver')
+                ->with('myBid','vehicle','vehicleType','package','receiver')
                 ->get();
 
         }
