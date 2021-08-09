@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Shippment extends Model
 {
     public function sender(){
-        return $this->belongsTo('App\UserAddress','sender_address_id','id');
+        return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
     }
     public function user()
     {
         return $this->hasOne('App\User','id','user_id');
     }
     public function receiver(){
-        return $this->belongsTo('App\UserAddress','receiver_address_id','id');
+        return $this->belongsTo('App\UserAddress','dropofupaddress_id','id');
     }
     public function status(){
         return $this->hasOne('App\ShipmentStatus','id','status_id');
