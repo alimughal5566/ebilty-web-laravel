@@ -230,7 +230,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>false,'message' => 'Something Went Wrong' ]);
     }
-
     public function storeShipment(Request $request){
 
 
@@ -306,5 +305,72 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * approve bid and accept and reject bit
+     */
+    public function bidStatusUpdate(Request $request){
+        if($request->approved_status==1) {
+            $bid = ShipmentBids::find($request->id);
+            $bid->approved_status = 1;
+            $bid->save();
+            ShipmentBids::where('shipment_id' , $bid->shipment_id)
+                ->where('id' ,'!=', $request['id'])
+                ->update(['approved_status' =>2]);
+            $ship=Shippment::find($request->shipment_id);
+            $ship->assigned_to=$bid->user_id;
+            $ship->assigned_at=now();
+            $ship->status_id=1;
+            $ship->save();
+            sendnote(auth()->user()->id , $ship->user_id, 'Bid status updated. ' );
+        }
+        if($request->approved_status==2) {
+            $bid = ShipmentBids::find($request->id);
+            $bid->approved_status = 2;
+            $bid->save();
+
+            ShipmentBids::where('shipment_id' , $bid->shipment_id)
+                ->where('id' ,'!=', $request['id'])
+                ->update(['approved_status' =>0]);
+            $ship=Shippment::find($request->shipment_id);
+            $ship->assigned_to=Null;
+            $ship->assigned_at=Null;
+            $ship->status_id=9;
+            $ship->save();
+            sendnote(auth()->user()->id , $ship->user_id, 'Bid status updated. ' );
+        }
+        return response()->json(['success' =>'status updated  successfully'], 200);
+    }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * send revision
+     */
+    public function sendBidReviserequest(Request $request){
+        if($request->id) {
+            $bid = ShipmentBids::find($request->id);
+            $bid->revise_amount_shipper = $request->amt;
+            $bid->rank = $request->rank;
+            $bid->revise_status=2;
+            $bid->save();
+            sendnote(auth()->user()->id , $bid->user_id, 'Revise bid request created. ' );
+        }
+        return response()->json(['success' =>'Data updated  successfully'], 200);
+    }
+
+    public function updateBidReviserequest(Request $request){
+        if($request->id) {
+            $bid = ShipmentBids::find($request->id);
+            $bid->revise_comment = $request->comment;
+            $bid->revise_status=($request->status==1)?'1':'3';
+            $bid->save();
+
+            sendnote($request->id , $bid->shipment->user_id, 'Bid revise request updated for shipment # '.$bid->shipment->shipment_id );
+        }
+        return response()->json(['success' =>'Data updated  successfully'], 200);
+    }
 
 }

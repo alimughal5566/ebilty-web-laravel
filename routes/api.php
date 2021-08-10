@@ -14,23 +14,36 @@ use App\Http\Controllers\ApiController;
 */
 
 Route::group(['middleware' => 'auth:api'], function(){
+
     Route::get('user-detail', 'AuthController@user');
     Route::get('all-vehicles', 'Api\HomeController@allVehicles');
     Route::get('get-all-drivers', 'Api\HomeController@getAllDrivers');
     Route::get('get-all-vehicles', 'Api\HomeController@getAllVehicles');
+    Route::get('getProfile', 'AuthController@getProfile');
+
     Route::post('/bid-store', 'Api\HomeController@bidStore');
     Route::post('/assign-driver', 'Api\HomeController@assignDriver');
     Route::post('updateProfile', 'Api\HomeController@updateProfile');
     Route::post('add_driver' , 'Api\HomeController@addDriver');
-    Route::get('getProfile', 'AuthController@getProfile');
-//    Route::post('store-shipment', 'ShippmentController@mobilestore');
     Route::post('/store-shipment', 'Api\HomeController@storeShipment');
+
+//    Route::post('store-shipment', 'ShippmentController@mobilestore');
     Route::get('my-drivers', 'HomeController@myDriversApi');
     Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
     Route::get('/get-company-drivers', 'Api\HomeController@getCompanyDrivers');
+    Route::get('/all-shipments', 'Api\HomeController@allShipments');
+
     Route::post('/add-company-driver', 'Api\HomeController@addDriver');
     Route::post('/add-driver-vehicle', 'Api\HomeController@addDriverVehicle');
-    Route::get('/all-shipments', 'Api\HomeController@allShipments');
+    Route::post('/send-bid-revise-request', 'Api\HomeController@sendBidReviserequest');
+    Route::post('/update-bid-revise-request', 'Api\HomeController@updateBidReviserequest');
+    Route::post('/bid-status-update', 'Api\HomeController@bidStatusUpdate');
+
+
+
+
+
+
 //    Route::post('user-detail', 'AuthController@userUpdate');
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');
