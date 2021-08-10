@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserVehicle;
 use App\Models\Admin\Setting\VehicleCategory;
+use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,11 +32,11 @@ class HomeController extends Controller
         }
     }
     public function updateProfile(Request $request){
-        if(\Auth::check()){
-            $user  = \Auth::user();
+        if(Auth::check()){
+            $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
-            if(\Hash::check($request->current_pass , $user->password)){
+            if(Hash::check($request->current_pass , $user->password)){
                 $user->password = bcrypt($request->new_pass);
             }
             else{
@@ -374,6 +375,18 @@ class HomeController extends Controller
             sendnote($request->id , $bid->shipment->user_id, 'Bid revise request updated for shipment # '.$bid->shipment->shipment_id );
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
+    }
+
+
+
+    public function show($id){
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
+//        dd($shipment);
+        return response()->json([
+            'success' =>'Data updated  successfully',
+            'shipment' =>$shipment,
+
+            ], 200);
     }
 
 }
