@@ -122,6 +122,7 @@
             </div>
         </div>
     </div>
+
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid bg-white">
         <table class="table table-fluid " style="font-size: initial" >
             <thead>
@@ -137,32 +138,32 @@
             <tbody>
             @forelse($shipments as $shipment)
                 <tr>
-                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
-                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
-                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
-                    <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                    <td>{{$shipment->status->name}}</td>
+                    <th scope="row"><a href="{{route('shipmentDetail',[@$shipment->id])}}">{{@$shipment->id}}</a></th>
+                    <td>{{@$shipment->sender->address}}<small> ({{@$shipment->sender->user->name}})</small></td>
+                    <td>{{@$shipment->receiver->address}}<small> ({{@$shipment->receiver->user->name}})</small></td>
+                    <td>{{@$shipment->ship_date}}<br>{{@$shipment->ship_time}}</td>
+                    <td>{{@$shipment->status->name}}</td>
                     <td>
                         @php $percentage=0;
-                        if($shipment->status_id==1){
+                        if(@$shipment->status_id==1){
                         $percentage=15;
                         }
-                        if($shipment->status_id==2){
+                        if(@$shipment->status_id==2){
                         $percentage=30;
                         }
-                        if($shipment->status_id==3){
+                        if(@$shipment->status_id==3){
                         $percentage=45;
                         }
-                        if($shipment->status_id==4){
+                        if(@$shipment->status_id==4){
                         $percentage=60;
                         }
-                        if($shipment->status_id==6){
+                        if(@$shipment->status_id==6){
                         $percentage=75;
                         }
-                        if($shipment->status_id==7){
+                        if(@$shipment->status_id==7){
                         $percentage=90;
                         }
-                        if($shipment->status_id==8){
+                        if(@$shipment->status_id==8){
                         $percentage=100;
                         }
                         @endphp
@@ -180,9 +181,9 @@
                     </td>
 
                     <td>
-                        @if(count($shipment->bids)>0)
+                        @if(count(@$shipment->bids)>0)
                             <span class="example-tools justify-content-center">
-                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
+                            <a class=" btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon" onclick="showBids('{{@$shipment->bids}}')" data-toggle="modal" data-target="#myModal"   style="position: relative; cursor: pointer" aria-describedby="tooltip797420">
                                  <span class=" text-success" style=" position: absolute;top: -6px; right: -2px;">●</span>
                            <i class="la la-car"></i></a>
                        </span>

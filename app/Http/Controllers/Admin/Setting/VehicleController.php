@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class VehicleController extends Controller
 {
@@ -26,20 +27,23 @@ class VehicleController extends Controller
         return view('admin.setting.vehicle', compact('types', 'cats'));
     }
     public function add_vehicle(Request $request){
-        dd($request->all());
+
         $type = new Vehicle();
         $type->name = $request->name;
-        $type->vehicle_category_id = $request->cat;
+        $type->vehicle_category_id = 1;
+        $filename = '';
+        if ($request->image){
+            $name = rand().'.'.$request->image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/vehicles');
+            $request->image->move($destinationPath, $name);
+            $filename =  $name;
+        }
+        $type->image = $filename;
         $type->status = 1;
         $type->save();
-        $cat = VehicleCategory::where('id', $type->vehicle_category_id)->first();
-        $response = array(
-            'status' => 'success',
-            'msg' => 'Vehicle created successfully',
-            'row' => $type,
-            'cat_name' => $cat->name
-        );
-        return response()->json($response);
+        Session::flash('message', 'Vehicle Added!');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->back();
     }
     public function edit_vehicle(){
         $id = $_GET['id'];
@@ -48,19 +52,30 @@ class VehicleController extends Controller
         return response()->json($type);
     }
     public function update_vehicle(Request $request){
-        $type = Vehicle::where('id',$_GET['id'])->first();
+//        dd($request->all());
+        $type = Vehicle::where('id',$request->id)->first();
         $type->name = $request->name;
-        $type->vehicle_category_id = $request->cat;
-        $type->status = 1;
-        $type->save();
-        $cat = VehicleCategory::where('id', $type->vehicle_category_id)->first();
-        $response = array(
-            'status' => 'success',
-            'msg' => 'Vehicle created successfully',
-            'row' => $type,
-            'cat_name' => $cat->name
-        );
-        return response()->json($response);
+        $filename = $type->image;
+        if ($request->image){
+            $name = rand().'.'.$request->image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/vehicles');
+            $request->image->move($destinationPath, $name);
+            $filename =  $name;
+        }
+        $type->image = $filename;
+        $type->update();
+        Session::flash('message', 'Vehicle Updated!');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+    public function vehicle_status(Request $request){
+        $veh = Vehicle::where('id', $request->id)->first();
+
+        $veh->status = $request->status;
+        $veh->update();
+        return response()->json([
+            'success' => true
+        ]);
     }
     public function delete_vehicle(){
         $id = $_GET['id'];

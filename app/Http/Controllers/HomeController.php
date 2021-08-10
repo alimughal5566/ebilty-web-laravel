@@ -39,7 +39,7 @@ class HomeController extends Controller
 
        $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
        if(auth()->user()->hasRole('admin')){
-            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->paginate('15');
+            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','package.category')->paginate('15');
         }
        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
            $shipments    = Shippment::where(function ($q){
@@ -49,24 +49,24 @@ class HomeController extends Controller
                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
                ->select('shippments.*','shippments.id as s_id','user_addresses.*')
                ->orderBy('shippments.updated_at','desc')
-               ->with('myBid','vehicle','vehicleType','packages','receiver')
+               ->with('myBid','vehicle','vehicleType','package','receiver')
                ->paginate('5');
 
        }
        elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
 
-                ->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+                ->with('sender.user','package','receiver.user','status','bids.user')->paginate('5');
 
         }
        elseif(auth()->user()->hasRole('brocker_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','packages','receiver.user','status','bids.user')->paginate('5');
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->paginate('5');
 
         }
        elseif(auth()->user()->hasRole('company_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')
                 ->where('assigned_to',auth()->user()->id)
-                ->with('sender.user','packages','receiver.user','status','bids.user')
+                ->with('sender.user','package','receiver.user','status','bids.user')
                 ->paginate('5');
 
         }

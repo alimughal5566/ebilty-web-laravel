@@ -8,6 +8,7 @@ class UserAddress extends Model
 {
 
     protected $guarded=[''];
+    protected $with =['state', 'city', 'country'];
 
     public function user()
     {
@@ -21,6 +22,10 @@ class UserAddress extends Model
     public function city()
     {
         return $this->belongsTo('App\City','city_id','id');
+    }
+    public function country()
+    {
+        return $this->belongsTo('App\Country','country_id','id');
     }
 
 

@@ -117,6 +117,9 @@
                             </div>
                         </div>
                         <div id="save_msg" style="margin-top: 5px !important; background-color: #c2ffcc !important; display: none; color: #08751a !important; border: 1px solid; border-radius: 8px !important; border-color: green !important; padding: 5px!important; text-align: center; font-size: 25px !important;"></div>
+                        @if(Session::has('message'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                        @endif
                         <div class="kt-portlet__body kt-portlet__body--fit-x">
                             <div class="col-lg-12">
                                 <table class="table" id="vehicle_table">
@@ -124,7 +127,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Vehicle Category Name</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -135,23 +138,23 @@
                                         <tr>
                                             <td class="count">{{ $count++ }}</td>
                                             <td class="name">{{$type->name}}</td>
-                                            <td class="name">{{$type->vehicle_category->name}}</td>
+                                            <td class="name"><img height="50px" width="70px" src="{{asset('images/vehicles').'/'.$type->image}}"> </td>
                                             <td >
                                                 @if($type->status == 0)
                                                     <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$type->id}}" onchange="make_status_active({{$type->id}})">
+                                                        <input type="checkbox" id="type_status{{$type->id}}" onchange="update_status({{$type->id}})">
                                                         <span class="slider round"></span>
                                                     </label>
                                                 @else
                                                     <label class="switch">
-                                                        <input type="checkbox" id="type_status{{$type->id}}" checked onchange="make_status_inactive({{$type->id}})">
+                                                        <input type="checkbox" id="type_status{{$type->id}}" checked onchange="update_status({{$type->id}})">
                                                         <span class="slider round"></span>
                                                     </label>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a onclick="edit_vehicle({{$type->id}})" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a>
-                                                <a onclick="delete_vehicle({{$type->id}})" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a>
+                                                <a onclick="edit_vehicle({{$type}})" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a>
+                                                <a onclick="delete_vehicle({{$type->id}})" id="vehicle_{{$type->id}}" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a>
                                             </td>
                                         </tr>
                                     @empty
@@ -180,7 +183,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="add_vehicle_form" method="get" enctype="multipart/form-data">
+                    <form id="add_vehicle_form" action="{{route('admin.setting.add_vehicle')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-2"></div>
@@ -195,20 +198,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label">Image</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <input class="form-control" accept="image/png" type="file" id="image" name="image" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label">Vehicle Category</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <select id="veh_cat" required>
-                                                    <option value="">Nothing selected</option>
-                                                    @foreach($cats as $cat)
-                                                        <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                                    @endforeach
-                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -238,7 +230,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit_vehicle_form" method="get" >
+                    <form id="edit_vehicle_form2" method="post" action="{{route('admin.setting.update_vehicle')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-2"></div>
@@ -248,20 +240,21 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <input class="form-control" type="text" id="edit_name" name="edit_name" placeholder="Enter Vehicle" required="">
-                                                <input class="form-control" type="hidden" id="edit_status" name="edit_status" value="1" >
-                                                <input class="form-control" type="hidden" id="vehicle_id" name="vehicle_id" >
+                                                <input class="form-control" type="text" id="edit_name" name="name" placeholder="Enter Vehicle" required="">
+                                                <input class="form-control" type="hidden" id="edit_status" name="status" value="1" >
+                                                <input class="form-control" type="hidden" id="vehicle_id" name="id" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label">Vehicle Category</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label">Image</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <select id="edit_veh_cat" required>
-                                                    <option value="">Nothing selected</option>
-                                                    @foreach($cats as $cat)
-                                                        <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="file" name="image" id="edit_image">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <img src="" id="image_show"  height="50px" width="70px">
                                             </div>
                                         </div>
                                     </div>
@@ -281,10 +274,25 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
 
     <script>
-        $('#add_vehicle_form').on('submit', function(e) {
+        $("#add_vehicle_form2").submit(function (e) {
+            e.preventDefault();
+            let url = $(this).attr("action");
+            let data = new FormData();
+            data = {
+                'image': $('#image')[0].files[0],
+                'name': $('#name').val(),
+            }
+            console.log(data);
+            $.post(url,data,function (response) {
+                $("#winner-data").html(response)
+            })
+        });
+        $('#add_vehicle_form2').on('submit', function(e) {
             e.preventDefault();
             const fileInput = document.querySelector("#cnic");
             fileInput.addEventListener("change", (e) => {
@@ -323,7 +331,6 @@
                     markup = '<tr><td>'+ msg.row.name + '</td><td>'+ msg.cat_name +'</td><td>'+ toggle_button +'</td><td> <a onclick="delete_vehicle('+ msg.row.id +')" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i>  </a> <a onclick="edit_vehicle('+ msg.row.id +')" class="btn btn-danger btn-sm"> <i class="far fa-trash-alt"></i>  </a></td></tr>';
                     tableBody = $("#vehicle_table tbody");
                     tableBody.append(markup);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
                 }
             });
         });
@@ -375,40 +382,38 @@
                 }
             });
         });
-        function edit_vehicle(id) {
-            var url = '{{route('admin.setting.edit_vehicle')}}'
-            $.ajax({
-                type: "get",
-                url: url,
-                data: {id:id},
-                success: function( msg ) {
-                    $("#save_msg").html()
-                    console.log(msg)
-                    $('#edit_vehicle_modal').modal('show');
-                    $('#edit_name').val(msg.name);
-                    $('#vehicle_id').val(msg.id);
-                    // $('#edit_veh_cat').val(msg.vehicle_category_id);
-
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
-                }
-            });
+        function edit_vehicle(veh) {
+            $('#vehicle_id').val(veh.id)
+            $('#edit_name').val(veh.name)
+            var path = '{{asset('images/vehicles')}}'+'/'+veh.image;
+            $('#image_show').attr("src", path)
+            $('#edit_vehicle_modal').modal('show')
         }
         function delete_vehicle(id) {
-            $(this).parents('tr').first().remove();
             var url = '{{route('admin.setting.delete_vehicle')}}'
             $.ajax({
                 type: "get",
                 url: url,
                 data: {id:id},
                 success: function( msg ) {
-                    $("#save_msg").html()
-                    $('#save_msg').css('display','block');
-                    $('#save_msg').css('background-color','#c2ffcc');
-                    var whichtr = $(this).closest("tr");
-                    // alert('worked'); // Alert does not work
-                    whichtr.remove();
-                    $("#save_msg").append(msg.msg);
-                    setTimeout(function(){ $("#save_msg").remove(); }, 3000);
+                    $('#vehicle_'+id).closest('tr').remove();
+                    toastr.success('Vehicle has been deleted')
+                }
+            });
+        }
+        function update_status(id){
+
+            var url = '{{route('admin.setting.vehicle_status')}}'
+            var status = 0;
+            if($('#type_status'+id).is(':checked')){
+                status = 1;
+            }
+            $.ajax({
+                type: "get",
+                url: url,
+                data: {id:id, status: status},
+                success: function( msg ) {
+                    toastr.success('Status has been updated')
                 }
             });
         }
