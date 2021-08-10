@@ -35,7 +35,7 @@ class DriverController extends Controller
         $shipments    = Shippment::where(function ($q){
             $q->Where( 'assigned_to', \auth()->id());
             })
-            ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+            ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
             ->select('shippments.*','shippments.id as s_id','user_addresses.*')
             ->orderBy('shippments.updated_at','desc')
             ->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate('15');
@@ -47,7 +47,7 @@ class DriverController extends Controller
         $shipments = '';
         if (Auth::user()->hasRole('company_driver') ||Auth::user()->hasRole('brocker_driver')){
             $shipments    = Shippment::where('assigned_to',Auth::id())
-                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
                 ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
@@ -58,7 +58,7 @@ class DriverController extends Controller
                 $q->where('assigned_to', NULL);
                 $q->orWhere( 'assigned_to', $drivers);
             })->where('city_id', auth()->user()->city_id)
-                ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
                 ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
 
