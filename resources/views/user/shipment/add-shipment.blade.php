@@ -14,7 +14,7 @@
 
         #carousel {
             position: relative;
-            height: 400px;
+            height: 250px;
             top: 50%;
             transform: translateY(-50%);
             overflow: hidden;
@@ -53,7 +53,7 @@
 
         #carousel div.prev {
             z-index: 5;
-            left: 27%;
+            left: 24%;
             transform: translateY(50px) translateX(-50%);
         }
 
@@ -63,7 +63,7 @@
 
         #carousel div.prevLeftSecond {
             z-index: 4;
-            left: 10%;
+            left: 7%;
             transform: translateY(50%) translateX(-50%);
             opacity: 0.7;
         }
@@ -74,7 +74,7 @@
 
         #carousel div.selected {
             z-index: 10;
-            left: 50%;
+            left: 49%;
             transform: translateY(0px) translateX(-50%);
             border: 1px solid black;
             border-radius: 8px;
@@ -348,7 +348,6 @@
                                                     </div>
 
                                             <div class="col-lg-12 packege-cost" style="display: none">
-                                                <label>package Cost </label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend"><span class="input-group-text">package price</span></div>
                                                     <input type="number" class="form-control budget_client"  value="{{old('package_cost')}}" name="package_cost" min="1" placeholder="Price">
@@ -424,7 +423,6 @@
 {{--                                                </div>--}}
 {{--                                            </div>--}}
                                             <div class="col-md-12" id="showpickupaddress"></div>
-                                            <form id="pickupform">
                                                 <div class="col-md-12" id="addnewsenderaddress">
                                                     <div class="kt-portlet__body">
                                                         <div class="location-senderaddress">
@@ -450,6 +448,7 @@
 
                                                             </div>
 
+                                                            <input id="pickupaddress_id" name="pickupaddress_id" type="hidden">
                                                             <div class="row">
                                                                 <div class="form-group col-lg-4">
                                                                     <label>State / Region&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
@@ -493,7 +492,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
 
                                             <div class="col-md-10 offset-1 d-none p-1" id="addnewsender">
                                                 <div class="kt-portlet kt-portlet--bordered kt-portlet--head--noborder kt-margin-b-0">
@@ -653,39 +651,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Payment Type&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="dropdown bootstrap-select form-control">
-                                                <select class="form-control" name="payment_type" id="payment_type"  tabindex="-98">
-                                                    <option data-hidden="true"></option>
-                                                    <option value="1"  {{(old('payment_type')==1)?'selected':''}} selected>Postpaid </option>
-                                                    <option value="2" {{(old('payment_type')==2)?'selected':''}} >Prepaid </option>
-                                                </select>
-                                                <div class="dropdown-menu ">
-                                                    <div class="inner show" role="listbox" id="bs-select-11" tabindex="-1">
-                                                        <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row type_1">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Record receiver information ?&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="kt-radio-inline">
-                                                <label class="kt-radio">
-                                                    <input type="radio"  {{(old('show_receiver_info')==1)?'checked':''}} name="show_receiver_info" class="show_receiver_info" value="1" checked="" > Yes
-                                                    <span></span>
-                                                </label>
-                                                <label class="kt-radio">
-                                                    <input type="radio" {{(old('show_receiver_info')==2)?'checked':''}} name="show_receiver_info" class="show_receiver_info" value="2" > No
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>--}}
+{{--                                    --}}
+{{--                                    <div class="form-group row type_1">--}}
+{{--                                        <label class="col-xl-3 col-lg-3 col-form-label">Record receiver information ?&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                        <div class="col-lg-9 col-xl-6">--}}
+{{--                                            <div class="kt-radio-inline">--}}
+{{--                                                <label class="kt-radio">--}}
+{{--                                                    <input type="radio"  {{(old('show_receiver_info')==1)?'checked':''}} name="show_receiver_info" class="show_receiver_info" value="1" checked="" > Yes--}}
+{{--                                                    <span></span>--}}
+{{--                                                </label>--}}
+{{--                                                <label class="kt-radio">--}}
+{{--                                                    <input type="radio" {{(old('show_receiver_info')==2)?'checked':''}} name="show_receiver_info" class="show_receiver_info" value="2" > No--}}
+{{--                                                    <span></span>--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
                         </div>
@@ -750,7 +732,6 @@
 
                                         <div class="col-md-12 d-none" id="showDropOff"></div>
                                         <div class="col-md-12" id="addnewreceivr">
-                                            <form id="dropOffForm">
                                                 <div class="location-senderaddress">
                                                     <div class="row">
                                                         <div class="form-group col-lg-4">
@@ -804,6 +785,7 @@
                                                         </div>
                                                     </div>
 
+                                                    <input id="dropofupaddress_id" name="dropofupaddress_id" type="hidden">
                                                     <div class="row">
                                                         <div class="form-group col-lg-12">
                                                             <label>Google Map</label>
@@ -823,7 +805,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
                                         </div>
 
 
@@ -1127,11 +1108,22 @@
                                                                     <div class="col-md-6">
                                                                         <div class="kt-form__group--inline">
                                                                             <div class="kt-form__label">
+                                                                                <label>Name:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
+                                                                                <input class="form-control" name="package_name" type="text" placeholder="Enter name">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
                                                                                 <label>Package type:</label>
                                                                             </div>
                                                                             <div class="kt-form__control">
 
-                                                                                <select class="form-control selectpicker" data-live-search="true" name="category_id[]" >
+                                                                                <select class="form-control selectpicker" data-live-search="true" name="category_id" >
                                                                                     <option data-hidden="true">Choose package type</option>
                                                                                     @foreach($shipment_packages as $package)
                                                                                         <option value="{{$package->id}}">{{$package->name}}</option>
@@ -1147,7 +1139,7 @@
                                                                                 <label class="kt-label m-label--single">Description:</label>
                                                                             </div>
                                                                             <div class="kt-form__control">
-                                                                                <input type="text" class="form-control" name="description[]"  placeholder="package description">
+                                                                                <input type="text" class="form-control" name="description"  placeholder="package description">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1158,7 +1150,7 @@
                                                                                 <label class="kt-label m-label--single">Quantity:</label>
                                                                             </div>
                                                                             <div class="kt-form__control">
-                                                                                <input type="text" class="form-control bootstrap-touchspin-vertical-btn" name="quantity[]"  placeholder="package quantity" >
+                                                                                <input type="text" class="form-control bootstrap-touchspin-vertical-btn" name="quantity"  placeholder="package quantity" >
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1171,13 +1163,32 @@
                                                                             <div class="kt-form__control">
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>
-                                                                                    <input type="text" class="form-control bootstrap-touchspin-vertical-btn sub_weight" name="weight[]"  placeholder="Weight" >
+                                                                                    <input type="text" class="form-control bootstrap-touchspin-vertical-btn sub_weight" name="weight"  placeholder="Weight" >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="kt-form__group--inline">
+                                                                            <div class="kt-form__label">
+                                                                                <label>Package type:</label>
+                                                                            </div>
+                                                                            <div class="kt-form__control">
 
-                                                                    <div class="col-md-12">
+                                                                                <select class="form-control selectpicker" data-live-search="true" name="payment_type" >
+                                                                                    <option data-hidden="true">Choose payment type</option>
+                                                                                    <option value="1"  {{(old('payment_type')==1)?'selected':''}} selected>Cash on Delivery </option>
+                                                                                    <option value="2" {{(old('payment_type')==2)?'selected':''}} >Online Payment </option>
+                                                                                </select>
+                                                                                <div class="dropdown-menu ">
+                                                                                    <div class="inner show" role="listbox" id="bs-select-11" tabindex="-1">
+                                                                                        <ul class="dropdown-menu inner show" role="presentation"></ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
                                                                         <div class="kt-form__group--inline">
                                                                             <div class="kt-form__label">
                                                                                 <label class="kt-label m-label--single">Dimensions&nbsp;<i class="flaticon2-delivery-package"></i>&nbsp;[Length&nbsp;x&nbsp;Width&nbsp;x&nbsp;Height] (cm):</label>
@@ -1186,28 +1197,38 @@
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                 <span class="input-group-text">
-                                                                                    <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="length[]" style="max-width: 100px;" >
+                                                                                    <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="length" style="max-width: 100px;" >
                                                                                 </span>
                                                                                     </div>
                                                                                     <div class="input-group-prepend"><span class="input-group-text">x</span></div>
                                                                                     <div class="input-group-prepend">
                                                                                     <span class="input-group-text">
-                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="width[]" style="max-width: 100px;" >
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="width" style="max-width: 100px;" >
                                                                                     </span>
                                                                                     </div>
                                                                                     <div class="input-group-prepend"><span class="input-group-text">x</span></div>
                                                                                     <div class="input-group-append">
                                                                                     <span class="input-group-text">
-                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="height[]" style="max-width: 100px;" >
+                                                                                        <input type="text" class="form-control form-control-sm bootstrap-touchspin-vertical-btn" name="height" style="max-width: 100px;" >
                                                                                     </span>
                                                                                     </div>
 
 
                                                                                 </div>
                                                                             </div>
-
-                                                                    </div> </div>
-
+                                                                        </div>
+                                                                    </div>
+{{--                                                                    <div class="form-group col-lg-6">--}}
+{{--                                                                        <label>Shipping Fee <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                                        <div class="input-group">--}}
+{{--                                                                            <div class="input-group-prepend">--}}
+{{--                                                                              <span class="input-group-text">--}}
+{{--                                                                              $--}}
+{{--                                                                              </span>--}}
+{{--                                                                            </div>--}}
+{{--                                                                            <input type="text" class="form-control decimal" data-type="currency" name="shipping_fee" id="delivery_cost" value="{{old('courier_fee',30)}}" >--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1217,11 +1238,11 @@
                                         </div>
 
                                         <div class="packagerepeatorText"></div>
-                                        <span class="fa fa-plus text-warning pl-2" style="cursor: pointer" onclick="packagerepeator()"> Add more</span>
+{{--                                        <span class="fa fa-plus text-warning pl-2" style="cursor: pointer" onclick="packagerepeator()"> Add more</span>--}}
                                     </div>
-                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>
-                                    <div class="kt-section">
-                                        <div class="kt-section__content">
+{{--                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit"></div>--}}
+{{--                                    <div class="kt-section">--}}
+{{--                                        <div class="kt-section__content">--}}
                                             {{--                              <div class="row">--}}
                                             {{--                                 <div class="form-group col-lg-6">--}}
                                             {{--                                    <label>Insurance</label>--}}
@@ -1292,30 +1313,19 @@
                                             {{--                                    </div>--}}
                                             {{--                                 </div>--}}
                                             {{--                              </div>--}}
-                                            <div class="row">
-                                                <div class="form-group col-lg-6">
-                                                    <label>Shipping Fee <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">
-                                          $
-                                          </span>
-                                                        </div>
-                                                        <input type="text" class="form-control decimal" data-type="currency" name="shipping_fee" id="delivery_cost" value="{{old('courier_fee',30)}}" >
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-lg-6">
-                                                    <label>Total Weight&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>
-                                                        <input  type="text" class="form-control total_weight" name="total_weight" value="{{old('total_weight')}}" placeholder="Packages total weight">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                            <div class="row">--}}
+{{--                                                <div class="form-group col-lg-6">--}}
+{{--                                                    <label>Total Weight&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                                    <div class="input-group">--}}
+{{--                                                        <div class="input-group-prepend"><span class="input-group-text">Kg</span></div>--}}
+{{--                                                        <input  type="text" class="form-control total_weight" name="total_weight" value="{{old('total_weight')}}" placeholder="Packages total weight">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -1344,13 +1354,13 @@
 {{--                                            </div>--}}
 {{--                                        </div>--}}
 
-                                        <div class="form-group col-lg-8 offset-2">
-                                            <label>Upload invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text">Invoice Image</span></div>
-                                                <input type="file" class="form-control budget_client" accept="image/png, image/gif, image/jpeg"  name="invoice_image" min="1" placeholder="package Value">
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group col-lg-8 offset-2">--}}
+{{--                                            <label>Upload invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>--}}
+{{--                                            <div class="input-group">--}}
+{{--                                                <div class="input-group-prepend"><span class="input-group-text">Invoice Image</span></div>--}}
+{{--                                                <input type="file" class="form-control budget_client" accept="image/png, image/gif, image/jpeg"  name="invoice_image" min="1" placeholder="package Value">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 {{--                                        <div class="form-group col-lg-8 offset-2">--}}
 {{--                                            <div class="dropdown bootstrap-select form-control">--}}
 {{--                                                <select class="form-control" onchange="getVehicles(this.value)" name="vehicle_type" id="vehicle_category" tabindex="-98">--}}
@@ -1368,10 +1378,6 @@
 {{--                                        </div>--}}
                                     </div><br>
                                     <div class="row">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-10 form-group">
-                                            <label>Upload invoice <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
-                                        </div>
                                         <div class="col-md-12">
                                             <main>
                                                 <div id="carousel">
@@ -2019,6 +2025,7 @@
                               </tbody>
                             </table>
                         `;
+                        $('#pickupaddress_id').val(data.address.id);
                         $('#showpickupaddress').removeClass('d-none');
                         $('#addnewsenderaddress').addClass('d-none');
                         $('#showpickupaddress').html(html);
@@ -2027,7 +2034,7 @@
                         // $('#sender_address_id').prepend(html);
                         // $('#sender_address_id').selectpicker('refresh');
                         // $('#addnewsenderaddress').addClass('d-none');
-                        $('#sender_address_id').val(data.address_id);
+                        // $('#sender_address_id').val(data.address_id);
                         // $('#sender_address_id').change();
                         toastr.success(data.success);
                     }
@@ -2044,6 +2051,11 @@
                 success: function (data) {
                     $('#showpickupaddress').addClass('d-none');
                     $('#addnewsenderaddress').removeClass('d-none');
+                    $(':input','#addnewsenderaddress')
+                        .not(':button, :submit, :reset, :hidden')
+                        .val('')
+                        .prop('checked', false)
+                        .prop('selected', false);
                     toastr.success(data);
                 }
             })
@@ -2058,14 +2070,11 @@
                 success: function (data) {
                     $('#showDropOff').addClass('d-none');
                     $('#addnewreceivr').removeClass('d-none');
-                    $(':input','#dropOffForm')
+                    $(':input','#addnewreceivr')
                         .not(':button, :submit, :reset, :hidden')
                         .val('')
                         .prop('checked', false)
                         .prop('selected', false);
-                    $("#mySelect option[value='']").attr('selected', true)
-                    $("#mySelect option[value='']").attr('selected', true)
-                    $("#mySelect option[value='']").attr('selected', true)
                     // $('#dropOffForm').find("input[type=text], textarea").val('').prop('checked', false).prop('selected', false);;
                     toastr.success(data);
                 }
@@ -2164,6 +2173,7 @@
                               </tbody>
                             </table>
                         `;
+                        $('#pickupaddress_id').val(data.address.id);
                         $('#addnewsenderaddress').addClass('d-none');
                         $('#showpickupaddress').html(html);
 
@@ -2171,7 +2181,7 @@
                         // $('#sender_address_id').prepend(html);
                         // $('#sender_address_id').selectpicker('refresh');
                         // $('#addnewsenderaddress').addClass('d-none');
-                        $('#sender_address_id').val(data.address_id);
+                        // $('#sender_address_id').val(data.address_id);
                         // $('#sender_address_id').change();
                         toastr.success(data.success);
                     }
@@ -2301,6 +2311,7 @@
                               </tbody>
                             </table>
                         `;
+                        $('#dropofupaddress_id').val(data.address.id);
                         $('#showDropOff').removeClass('d-none');
                         $('#addnewreceivr').addClass('d-none');
                         $('#showDropOff').html(html);
@@ -2409,6 +2420,7 @@
                               </tbody>
                             </table>
                         `;
+                        $('#dropofupaddress_id').val(data.address.id);
                         $('#showDropOff').removeClass('d-none');
                         $('#addnewreceivr').addClass('d-none');
                         $('#showDropOff').html(html);

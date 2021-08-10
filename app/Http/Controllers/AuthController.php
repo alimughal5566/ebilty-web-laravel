@@ -488,7 +488,7 @@ class AuthController extends Controller
         $address->save();
         $add = UserAddress::find($address->id);
         return response()->json([
-            'success' => 'Address updated successfully',
+            'success' => 'Address saved successfully',
             'user_id'=>$request->user_id,
             'address'=>$add
         ]);;
@@ -517,7 +517,7 @@ class AuthController extends Controller
         $address->update();
         $add = UserAddress::find($address->id);
         return response()->json([
-            'success' => 'Address saved successfully',
+            'success' => 'Address updated successfully',
             'user_id'=>$request->user_id,
             'address'=>$add
         ]);;

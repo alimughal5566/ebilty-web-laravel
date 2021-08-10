@@ -15,6 +15,7 @@ class CreateShippmentPackagesTable extends Migration
     {
         Schema::create('shippment_packages', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('shippment_id')->nullable();
             $table->string('package_category_id')->nullable();
             $table->string('description')->nullable();

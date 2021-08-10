@@ -46,7 +46,7 @@ class HomeController extends Controller
                $q->where('assigned_to', NULL);
                $q->orWhere( 'assigned_to', \auth()->id());
            })->where('city_id', auth()->user()->city_id)
-               ->join('user_addresses','shippments.sender_address_id','user_addresses.id')
+               ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                ->select('shippments.*','shippments.id as s_id','user_addresses.*')
                ->orderBy('shippments.updated_at','desc')
                ->with('myBid','vehicle','vehicleType','package','receiver')
