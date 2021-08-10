@@ -56,8 +56,6 @@ class ShippmentController extends Controller
         $shipment->save();
 
         QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
-                if($request->category_id) {
-                    for($i=0; $i<count($request->category_id);$i++) {
                         $package = new ShippmentPackage;
                         $package->shippment_id = $shipment->id;
                         $package->package_category_id = $request->category_id[$i];
@@ -68,8 +66,7 @@ class ShippmentController extends Controller
                         $package->width = $request->width[$i];
                         $package->height = $request->height[$i];
                         $package->save();
-                    }
-                }
+
         Session::flash('success', 'Shipment created successfully');
         return redirect()->route('shipmentDetail',$shipment->id)->with('success', 'Shippment created successfully');
     }
