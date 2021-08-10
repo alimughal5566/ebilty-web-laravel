@@ -17,7 +17,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class ShippmentController extends Controller
 {
     public function store(Request $request){
-
+        dd($request->all());
         $this->validate($request, [
             'ship_date' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
@@ -26,20 +26,15 @@ class ShippmentController extends Controller
             'receiver_address' => ['required', 'string', 'max:255'],
 //            'package_cost' => ['integer', 'max:255'],
             'vehicle' => ['required', 'string', 'max:255'],
-            'vehicle_type' => ['required', 'string', 'max:255'],
-            'shipping_fee' => ['required', 'string', 'max:255'],
-            'invoice_image' => [ 'max:10000', 'mimes:png,gif,jpeg'],
         ]);
 
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
-        $shipment->book_as= $request->book_as;
+//        $shipment->book_as= $request->book_as;
         $shipment->ship_date= $request->ship_date;
         $shipment->ship_time= $request->ship_time;
         $shipment->dilivery_type= $request->dilivery_type;
         $shipment->is_insured= $request->is_insured;
-        $shipment->sender_id= $request->sender_name;
-        $shipment->sender_address_id= $request->sender_address;
         $shipment->payment_type= $request->payment_type;
         $shipment->show_receiver_info= $request->show_receiver_info;
         $shipment->receiver_id= $request->receiver_name;
@@ -47,15 +42,16 @@ class ShippmentController extends Controller
         $shipment->shipping_fee= $request->shipping_fee;
         $shipment->total_weight= $request->total_weight;
         $shipment->package_cost= $request->package_cost;
-        $shipment->vehicle_type_id= $request->vehicle_type;
         $shipment->vehicle_id= $request->vehicle;
+        $shipment->pickupaddress_id= $request->pickupaddress_id;
+        $shipment->dropofupaddress_id= $request->dropofupaddress_id;
         $shipment->status_id=9;
 
-        if ($request->invoice_image) {
-            $invoice_image = time() . '.' . $request->invoice_image->extension();
-            $request->invoice_image->move(public_path('images/shipment-invoices'), $invoice_image);
-            $shipment->invoice_image=$invoice_image;
-        }
+//        if ($request->invoice_image) {
+//            $invoice_image = time() . '.' . $request->invoice_image->extension();
+//            $request->invoice_image->move(public_path('images/shipment-invoices'), $invoice_image);
+//            $shipment->invoice_image=$invoice_image;
+//        }
 
         $shipment->save();
 
