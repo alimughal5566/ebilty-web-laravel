@@ -40,6 +40,7 @@ class CustomerController extends Controller
 //        $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
         return view('user.shipment.add-shipment', compact('vehicles','vehicle_types','shipment_packages','countries','users','addresses'));
     }
+
     public function bidStatusUpdate(Request $request){
         if($request->approved_status==1) {
             $bid = ShipmentBids::find($request->id);
@@ -83,4 +84,5 @@ class CustomerController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
+
 }

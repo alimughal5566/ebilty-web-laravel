@@ -152,6 +152,7 @@ class DriverController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
+
     public function updateshipmentStatus(Request $request){
         if($request->id) {
             $bid = Shippment::find($request->id);
