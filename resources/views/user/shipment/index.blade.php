@@ -136,11 +136,10 @@
             <tbody>
             @forelse($shipments as $shipment)
                 <tr>
-                    <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
-                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
-                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
-                    <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
-                    <td>{{$shipment->status->name}}</td>
+                    <th scope="row"><a href="{{route('shipmentDetail',[@$shipment->id])}}">{{$shipment->id}}</a></th>
+                    <td>{{@$shipment->sender->address}}<small> ({{@$shipment->receiver->user->name}})</small></td>
+                    <td>{{@$shipment->ship_date}}<br>{{@$shipment->ship_time}}</td>
+                    <td>{{@$shipment->status->name}}</td>
                     <td>
                         @php $percentage=0;
                         if($shipment->status_id==1){
