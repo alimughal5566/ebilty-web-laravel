@@ -472,21 +472,55 @@ class AuthController extends Controller
     }
     public function createSenderAddress(Request $request){
         $address=new UserAddress;
-        $address->user_id = $request->user_id;
-        $address->created_by = auth()->user()->id;
+        $address->user_name = $request->name;
+        $address->user_id = \auth()->user()->id;
         $address->address=$request->address;
         $address->lat=$request->lat;
         $address->lng=$request->lng;
-        if ($request->area){
-            $address->area_id=$request->area;
-        }
+        $address->floor = $request->floor;
+        $address->building = $request->building;
+        $address->street = $request->street;
+
         $address->state_id=$request->state;
         $address->city_id=$request->city;
         $address->country_id=$request->country;
-        $address->zip=$request->zip;
         $address->form=$request->form;
         $address->save();
-        return response()->json(['success' => 'Address saved successfully','user_id'=>$request->user_id,'address_id'=>$address->id]);;
+        $add = UserAddress::find($address->id);
+        return response()->json([
+            'success' => 'Address updated successfully',
+            'user_id'=>$request->user_id,
+            'address'=>$add
+        ]);;
+    }
+    public function deleteAddress(Request $request){
+        $add = UserAddress::find($request->id);
+        $add->delete();
+        return response()->json('Deleted successfully');
+    }
+    public function updateSenderAddress(Request $request){
+//        dd($request->all());
+        $address= UserAddress::find($request->id);
+        $address->user_name = $request->name;
+        $address->user_id = \auth()->user()->id;
+        $address->address=$request->address;
+        $address->lat=$request->lat;
+        $address->lng=$request->lng;
+        $address->floor = $request->floor;
+        $address->building = $request->building;
+        $address->street = $request->street;
+
+        $address->state_id=$request->state;
+        $address->city_id=$request->city;
+        $address->country_id=$request->country;
+        $address->form=$request->form;
+        $address->update();
+        $add = UserAddress::find($address->id);
+        return response()->json([
+            'success' => 'Address saved successfully',
+            'user_id'=>$request->user_id,
+            'address'=>$add
+        ]);;
     }
     public function sendOtpApi(SignupOtp $request){
         $validator = Validator::make($request->all(), [
@@ -614,5 +648,9 @@ class AuthController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+    function getAddress(Request $request){
+        $add = UserAddress::find($request->id);
+        return response()->json($add);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\Models\Admin\Setting\PackageType;
+use App\Models\Admin\Setting\Vehicle;
 use App\Models\Admin\Setting\VehicleCategory;
 use App\ShipmentBids;
 use App\Shippment;
@@ -34,10 +35,12 @@ class CustomerController extends Controller
             $q->where('name', 'customer');
         }
         )->get();
+        $vehicles = Vehicle::all();
 
 //        $receivers= UserAddress::where('created_by',auth()->user()->id)->where('form','receiver')->with('user')->get();
-        return view('user.shipment.add-shipment', compact('vehicle_types','shipment_packages','countries','users','addresses'));
+        return view('user.shipment.add-shipment', compact('vehicles','vehicle_types','shipment_packages','countries','users','addresses'));
     }
+
     public function bidStatusUpdate(Request $request){
         if($request->approved_status==1) {
             $bid = ShipmentBids::find($request->id);
@@ -81,4 +84,5 @@ class CustomerController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
+
 }
