@@ -141,19 +141,19 @@ class ShippmentController extends Controller
                 $package->save();
             }
         }
-        $shipment= Shippment::where('id',$shipment->id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
+        $shipment= Shippment::where('id',$shipment->id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 
         return response()->json([
             'shipment' => $shipment,
         ]);
     }
     public function show($id){
-        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 //        dd($shipment);
         return view('user.shipment.show', compact('shipment'));
     }
     public function shipmentDetails($id){
-        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','packages.category')->first();
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
         if ($shipment != NULL){
             return response()->json([
                 'shipment'=> $shipment
