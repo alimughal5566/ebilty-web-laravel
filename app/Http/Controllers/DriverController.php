@@ -38,7 +38,7 @@ class DriverController extends Controller
             ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
             ->select('shippments.*','shippments.id as s_id','user_addresses.*')
             ->orderBy('shippments.updated_at','desc')
-            ->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate('15');
+            ->with('myBid','vehicle','vehicleType','package','receiver','stat')->paginate('15');
             $statuses    = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
 //            dd($shipments);
         return view('driver.shipment.index', compact('shipments','statuses'));
@@ -49,7 +49,7 @@ class DriverController extends Controller
             $shipments    = Shippment::where('assigned_to',Auth::id())
                 ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
-                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','package','receiver','stat')->paginate(6);
 
             $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         }else{
@@ -60,7 +60,7 @@ class DriverController extends Controller
             })->where('city_id', auth()->user()->city_id)
                 ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
-                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','packages','receiver','stat')->paginate(6);
+                ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','package','receiver','stat')->paginate(6);
 
             $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         }
@@ -78,7 +78,7 @@ class DriverController extends Controller
                 $q->where('form','sender');
 //              $q->where('city_id', auth()->user()->city_id);
             })
-            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','packages','receiver')->paginate('15');
+            ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','package','receiver')->paginate('15');
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         return view('user.my-all-shipments', compact('shipments','statuses'));
     }
