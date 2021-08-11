@@ -14,7 +14,7 @@
 
         #carousel {
             position: relative;
-            height: 250px;
+            height: 300px;
             top: 50%;
             transform: translateY(-50%);
             overflow: hidden;
@@ -1428,7 +1428,17 @@
 {{--                                                    <button id="prev">Prev</button>--}}
 {{--                                                    <button id="next">Next</button>--}}
 {{--                                                </div>--}}
+                                                <br>
+                                                <div class="col-md-12">
+                                                    <div class="col-md-4">
+                                                        <label>Add Note</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <textarea class="form-control" name="extra_info" ></textarea>
+                                                    </div>
+                                                </div>
                                             </main>
+
                                         </div>
                                     </div>
 {{--                                    <div class="row">--}}
@@ -1962,7 +1972,6 @@
             var building = $('#building').val();
             var street = $('#street').val();
             var user_id = $('#sendr option:selected').val();
-            alert('asdf')
 
             $.ajax({
                 type: 'post',

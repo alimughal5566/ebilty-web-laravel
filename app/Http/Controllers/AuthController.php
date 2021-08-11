@@ -388,7 +388,6 @@ class AuthController extends Controller
             'password' => ['required', 'min:4'],
             'full_name' => ['required', 'min:3'],
             'phone' => ['required', 'unique:users,phone','min:3'],
-            'vehicle_number' => ['required']
         ]);
         if (Auth::user()->hasRole('company')){
             $request->validate([
@@ -396,10 +395,6 @@ class AuthController extends Controller
                 'password' => ['required', 'min:4'],
                 'full_name' => ['required', 'min:3'],
                 'phone' => ['required', 'unique:users,phone','min:3'],
-                'vehicle_number' => ['required'],
-                'cnic_image' => ['required'],
-                'license_image' => ['required'],
-                'license_number' => ['required'],
             ]);
         }
 
@@ -431,6 +426,8 @@ class AuthController extends Controller
             elseif(Auth::user()->hasRole('company')){
                 $license_image = '';
                 $cnic_image = '';
+                $license_image_back = '';
+                $cnic_image_back = '';
                 if($request->license_image)
                 {
                     $file = $request->file('license_image');
@@ -445,6 +442,20 @@ class AuthController extends Controller
                     $cnic_image =time().'.'.$extension;
                     $file->move('cnic/', $cnic_image);
                 }
+                if($request->cnic_back_image)
+                {
+                    $file = $request->file('cnic_back_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $cnic_image_back =time().'.'.$extension;
+                    $file->move('cnic/', $cnic_image_back);
+                }
+                if($request->license_back_image)
+                {
+                    $file = $request->file('license_back_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $license_image_back =time().'.'.$extension;
+                    $file->move('license_image/', $license_image_back);
+                }
                 $user = new User([
                     'name' => $request->full_name,
                     'email' => $request->email,
@@ -452,19 +463,13 @@ class AuthController extends Controller
                     'password' => bcrypt($request->password),
                     'phone' => $request->phone,
                     'documents_verified' => 1,
-                    'license_number' => $request->license_number,
                     'cnic_image' => $cnic_image,
+                    'cnic_back_image' => $cnic_image_back,
                     'license_image' => $license_image,
+                    'license_back_image' => $license_image_back,
                     'created_by' => auth()->user()->id,
                 ]);
                 $user->save();
-                $veh = new UserVehicle([
-                    'user_id' => $user->id,
-                    'category_id' => $request->veh_cat,
-                    'vehicle_id' => $request->vehicle,
-                    'vehicle_number' => $request->vehicle_number,
-                ]);
-                $veh->save();
                 $user->assignRole('company_driver');
             }
 //        event(new Registered($user));
