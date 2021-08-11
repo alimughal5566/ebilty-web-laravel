@@ -173,11 +173,11 @@ class HomeController extends Controller
     }
     public function getAllVehicles(){
 
-        $all_vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
+        $all_vehicles=UserVehicle::with('vehicle')->where('user_id',Auth::id())->get();
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
-            'vehicles' => $all_Vehicles,
+            'vehicles' => $all_vehicles,
             ]);
     }
     public function assignDriver(Request $request){
