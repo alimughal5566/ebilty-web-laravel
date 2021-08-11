@@ -113,9 +113,9 @@ class AuthController extends Controller
                 'role' => $role
             ],200);
     }
-    public function getProfile(){
+    public function getProfile($id){
         if (Auth::check()){
-            $user = User::with('vehicle')->where('id', \auth()->user()->id)->first();
+            $user = User::with('vehicle')->where('id', $id)->first();
             if (!empty($user)){
                 return response()->json([
                     'success' => true,
