@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/update-bid-revise-request', 'Api\HomeController@updateBidReviserequest');
     Route::post('/bid-status-update', 'Api\HomeController@bidStatusUpdate');
     Route::get('shipment/{id}', 'Api\HomeController@show');
-    Route::get('shipment/filer', 'Api\HomeController@shipmentStatusFilter');
+    Route::get('shipment/by/status','Api\HomeController@shipmentStatusFilter');
 
 
 

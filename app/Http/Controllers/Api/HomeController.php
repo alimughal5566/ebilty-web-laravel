@@ -142,15 +142,15 @@ class HomeController extends Controller
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')->get();
+                ->with('sender.user','package','vehicle','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole('brocker_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->get();
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','vehicle','package','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole('company_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')
                 ->where('assigned_to',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')
+                ->with('sender.user','vehicle','package','receiver.user','status','bids.user')
                 ->get();
         }
         $vehicles_cat=VehicleCategory::all();
@@ -393,40 +393,38 @@ class HomeController extends Controller
     public function shipmentStatusFilter(){
 
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
-        if(auth()->user()->hasRole('admin')){
-            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->get();
-        }
-        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
+
+        if(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
+
             $shipments    = Shippment::where(function ($q){
-                $q->where('assigned_to', NULL);
+                $q->where('assigned_by', \auth()->id());
                 $q->orWhere( 'assigned_to', \auth()->id());
+
             })
-//                ->where('city_id', auth()->user()->city_id)
-                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
+                ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','shippments.id as s_id','user_addresses.*')
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','package','receiver')
-                ->get();
+                ->with('myBid','vehicle','vehicleType','package','receiver')->get()
+                ;
 
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')->get();
+                ->with('sender.user','package','receiver.user','status','bids.user');
         }
-        elseif(auth()->user()->hasRole('brocker_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->get();
-        }
-        elseif(auth()->user()->hasRole('company_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')
-                ->where('assigned_to',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')
-                ->get();
+        elseif(auth()->user()->hasRole(['company_driver','brocker_driver'])){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
         }
         $vehicles_cat=VehicleCategory::all();
+        $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9]);
+        $assigned =$shipments->where('status_id','1');
+        $delivered =$shipments->where('status_id','7');
+
         return response()->json([
-            'success' => true,
-            'message' => 'all shipments',
-            'shipments' => $shipments,
+            'message' => 'filter shipments',
+            'inprocess' => $inprocess,
+            'delivered' => $delivered,
+            'assigned' => $assigned,
         ]);
     }
 
