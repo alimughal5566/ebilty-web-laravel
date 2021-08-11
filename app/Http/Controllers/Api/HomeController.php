@@ -399,12 +399,12 @@ class HomeController extends Controller
             $shipments    = Shippment::where(function ($q){
                 $q->where('assigned_by', \auth()->id());
                 $q->orWhere( 'assigned_to', \auth()->id());
-
             })
                 ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','shippments.id as s_id','user_addresses.*')
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','package','receiver')->get()
+                ->with('myBid','vehicle','vehicleType','package','receiver')
+                ->get()
                 ;
 
         }
@@ -416,10 +416,16 @@ class HomeController extends Controller
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
         }
         $vehicles_cat=VehicleCategory::all();
-        $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9]);
-        $assigned =$shipments->where('status_id','1');
-        $delivered =$shipments->where('status_id','7');
-
+//        $ship = $shipments;
+//        $d = $ship
+//            ->whereNotIn('status_id',[1,7,8,9])
+//            ->get();
+//        $d2 = $shipments->where('status_id' , 1)->get();
+//        dd( $d2);
+        $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
+        $assigned =$shipments->where('status_id','1')->values();
+        $delivered =$shipments->where('status_id','7')->values();
+//dd($inprocess);
         return response()->json([
             'message' => 'filter shipments',
             'inprocess' => $inprocess,
