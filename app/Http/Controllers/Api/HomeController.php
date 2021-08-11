@@ -36,17 +36,19 @@ class HomeController extends Controller
             $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
-            if(Hash::check($request->current_pass , $user->password)){
-                $user->password = bcrypt($request->new_pass);
-            }
-            else{
-                return response()->json(['error' => 'Password Not matched with current Password']);
+            if(!empty($request->current_pass) && !empty($request->new_pass)){
+              if(Hash::check($request->current_pass , $user->password)){
+                  $user->password = bcrypt($request->new_pass);
+              }
+              else{
+                  return response()->json(['error' => 'Password Not matched with current Password']);
+              }
             }
             if($request->hasFile('profile_pic')){
                 $path = storeImage($request->profile_pic);
                 $user->profile_image = $path;
             }
-            $user->save();
+            $user->update();
             return response()->json(['data' => ['message' => 'user Update Successfuly' , 'user' => $user]]);
         }
     }
@@ -175,8 +177,8 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
-            'all_vehicles' => $all_vehicles,
-        ]);
+            'vehicles' => $all_Vehicles,
+            ]);
     }
     public function assignDriver(Request $request){
 //        dd($request);
