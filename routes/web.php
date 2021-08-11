@@ -21,6 +21,8 @@ Route::get('test', function () {
     return "Event has been sent!";
 });
 
+Route::get('show/tracking/{id}' ,'HomeController@showTracking');
+Route::get('get/trackingpoints/{id}' , 'HomeController@getTrackingPoints');
 
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');

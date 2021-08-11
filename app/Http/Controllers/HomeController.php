@@ -345,4 +345,11 @@ class HomeController extends Controller
 
         return response()->json($noti_count);
     }
+    public function showTracking(){
+        return view('user.tracking.showmap');
+    }
+
+    public function getTrackingPoints(){
+
+    }
 }

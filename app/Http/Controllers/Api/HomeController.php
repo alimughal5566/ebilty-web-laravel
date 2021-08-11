@@ -8,7 +8,6 @@ use App\ShipmentBids;
 use App\Shippment;
 use App\ShippmentPackage;
 use App\UserAddress;
-use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -375,5 +374,7 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
+
+    
 
 }
