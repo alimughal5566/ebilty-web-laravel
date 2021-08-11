@@ -650,10 +650,10 @@
                               </div>
                               <div class="modal-body">
                                  <!--                <p>bid your truct</p>-->
-                                 <div class="row col-md-12">
-                                    <lable for="truck_type">Vehicle Category</lable>
-                                    <input type="text" id="category" name="category" class="form-control" readonly="">
-                                 </div>
+{{--                                 <div class="row col-md-12">--}}
+{{--                                    <lable for="truck_type">Vehicle Category</lable>--}}
+{{--                                    <input type="text" id="category" name="category" class="form-control" readonly="">--}}
+{{--                                 </div>--}}
                                  <div class="row col-md-12">
                                     <lable for="ve_name">Vehicle Name</lable>
                                     <input type="text" id="ve_name" name="ve_name" class="form-control" readonly="">

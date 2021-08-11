@@ -35,17 +35,19 @@ class HomeController extends Controller
             $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
-            if(Hash::check($request->current_pass , $user->password)){
-                $user->password = bcrypt($request->new_pass);
-            }
-            else{
-                return response()->json(['error' => 'Password Not matched with current Password']);
+            if(!empty($request->current_pass) && !empty($request->new_pass)){
+              if(Hash::check($request->current_pass , $user->password)){
+                  $user->password = bcrypt($request->new_pass);
+              }
+              else{
+                  return response()->json(['error' => 'Password Not matched with current Password']);
+              }
             }
             if($request->hasFile('profile_pic')){
                 $path = storeImage($request->profile_pic);
                 $user->profile_image = $path;
             }
-            $user->save();
+            $user->update();
             return response()->json(['data' => ['message' => 'user Update Successfuly' , 'user' => $user]]);
         }
     }
@@ -133,23 +135,23 @@ class HomeController extends Controller
             })
 //                ->where('city_id', auth()->user()->city_id)
                 ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
-                ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+                ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','package','receiver')
+                ->with('myBid','vehicle','package','receiver')
                 ->get();
 
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')->get();
+                ->with('sender.user','package','vehicle','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole('brocker_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->get();
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','vehicle','package','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole('company_driver')){
             $shipments= Shippment::orderBy('updated_at','desc')
                 ->where('assigned_to',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')
+                ->with('sender.user','vehicle','package','receiver.user','status','bids.user')
                 ->get();
         }
         $vehicles_cat=VehicleCategory::all();
@@ -170,12 +172,12 @@ class HomeController extends Controller
     }
     public function getAllVehicles(){
 
-        $all_vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
+        $all_vehicles=UserVehicle::with('vehicle')->where('user_id',Auth::id())->get();
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
-            'all_vehicles' => $all_vehicles,
-        ]);
+            'vehicles' => $all_vehicles,
+            ]);
     }
     public function assignDriver(Request $request){
 //        dd($request);
@@ -304,7 +306,6 @@ class HomeController extends Controller
         ]);
 
     }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -363,7 +364,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
-
     public function updateBidReviserequest(Request $request){
         if($request->id) {
             $bid = ShipmentBids::find($request->id);
@@ -375,9 +375,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
-
-
-
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 //        dd($shipment);
@@ -387,45 +384,50 @@ class HomeController extends Controller
 
             ], 200);
     }
-
-
     public function shipmentStatusFilter(){
 
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
-        if(auth()->user()->hasRole('admin')){
-            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->get();
-        }
-        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
+
+        if(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
+
             $shipments    = Shippment::where(function ($q){
-                $q->where('assigned_to', NULL);
+                $q->where('assigned_by', \auth()->id());
                 $q->orWhere( 'assigned_to', \auth()->id());
             })
-//                ->where('city_id', auth()->user()->city_id)
-                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
-                ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+                ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
+                ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','vehicleType','package','receiver')
-                ->get();
+                ->with('myBid','vehicle','package','receiver')
+                ->get()
+                ;
 
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')->get();
+                ->with('sender.user','package','receiver.user','status','bids.user');
         }
-        elseif(auth()->user()->hasRole('brocker_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->get();
-        }
-        elseif(auth()->user()->hasRole('company_driver')){
-            $shipments= Shippment::orderBy('updated_at','desc')
-                ->where('assigned_to',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user')
-                ->get();
+        elseif(auth()->user()->hasRole(['company_driver','brocker_driver'])){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
         }
         $vehicles_cat=VehicleCategory::all();
+        $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
+        $assigned =$shipments->where('status_id','1')->values();
+        $delivered =$shipments->where('status_id','7')->values();
+//dd($inprocess);
         return response()->json([
-            'success' => true,
-            'message' => 'all shipments',
-            'shipments' => $shipments,
+            'message' => 'filter shipments',
+            'inprocess' => $inprocess,
+            'delivered' => $delivered,
+            'assigned' => $assigned,
+        ]);
+    }
+
+    public function myBids($id){
+        $myBids=ShipmentBids::where('shipment_id',$id)->where('user_id',Auth::id())->first();
+        return response()->json([
+            'success'=>'My All Bids',
+            'myBids'=>$myBids
+
         ]);
     }
 

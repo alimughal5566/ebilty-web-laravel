@@ -49,9 +49,9 @@ class HomeController extends Controller
                $q->orWhere( 'assigned_to', \auth()->id());
            })->where('city_id', auth()->user()->city_id)
                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
-               ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+               ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                ->orderBy('shippments.updated_at','desc')
-               ->with('myBid','vehicle','vehicleType','package','receiver')
+               ->with('myBid','vehicle','package','receiver')
                ->paginate('5');
 
        }
@@ -73,6 +73,7 @@ class HomeController extends Controller
 
         }
         $vehicles_cat=VehicleCategory::all();
+//dd($shipments);
         return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
     public function getVehicles(Request $request)
@@ -211,6 +212,75 @@ class HomeController extends Controller
         }
         $vehicles_cat= VehicleCategory::all();
         return view('user.my_users', compact('users','vehicles_cat'));
+    }
+    public function myVehicles(){
+        if (Auth::user()->hasRole('cracker')){
+            $vehicles = UserVehicle::where('user_id',auth()->user()->id)->with('vehicle')->get();
+
+        }elseif (Auth::user()->hasRole('company')){
+            $vehicles = UserVehicle::where('user_id',auth()->user()->id)->with('vehicle')->get();
+
+        }
+        $vehs = Vehicle::all();
+        return view('user.my_vehicles', compact('vehicles','vehs'));
+    }
+    public function getCompanyDrivers(){
+        $drivers = User::where('created_by', \auth()->user()->id)->get();
+        $vehicles = UserVehicle::where('user_id', \auth()->user()->id)->get();
+        return response()->json([
+            'success' => true,
+            'drivers' => $drivers,
+            'vehicles'=> $vehicles
+        ]);
+    }
+    public function assignShipment(Request $request){
+//        dd($request->all());
+        $shipment = Shippment::find($request->shipment_id);
+        $shipment->assigned_to = $request->driver_id;
+        $shipment->assigned_by = Auth::id();
+        $shipment->assigned_vehicle_id = $request->driver_vehicle_id;
+        $shipment->update();
+        $driver = User::find($request->driver_id);
+        $driver->is_available = 0;
+        $driver->update();
+        return redirect()->back()->with('success', 'Vehicle assigned successfully');
+    }
+    public function createVehicle(Request $request){
+        $vehicle = new UserVehicle();
+        $vehicle->user_id = \auth()->user()->id;
+        $vehicle->vehicle_id = $request->vehicle_id;
+        $vehicle->vehicle_number = $request->vehicle_number;
+        $vehicle->model = $request->model;
+        $vehicle->name = $request->name;
+        $vehicle->registration_city = $request->registration_city;
+        $vehicle->body_size = $request->body_size;
+        $vehicle->capacity = $request->capacity;
+        $vehicle->owner_name = $request->owner_name;
+        $vehicle->phone = $request->phone;
+        $l_f ='';
+        $l_b ='';
+        $v_r ='';
+        if ($request->license_front_image){
+            $l_f = $this->storeVehicleimage($request->license_front_image);
+        }
+        if ($request->license_back_image){
+            $l_b = $this->storeVehicleimage($request->license_back_image);
+        }
+        if ($request->vehicle_registration_image){
+            $v_r = $this->storeVehicleimage($request->vehicle_registration_image);
+        }
+        $vehicle->license_front_image = $l_f;
+        $vehicle->license_back_image = $l_b;
+        $vehicle->vehicle_registration_image = $v_r;
+        $vehicle->save();
+        return redirect()->back()->with(['success' =>'Vehicle registered successfully']);
+
+    }
+    public function storeVehicleimage($file){
+        $extension = $file->getClientOriginalExtension(); // getting image extension
+        $filename =time().'.'.$extension;
+        $file->move('images/user_vehicles', $filename);
+        return $filename;
     }
     public function myDriversApi(){
         $users = array();

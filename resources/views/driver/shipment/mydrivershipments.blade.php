@@ -178,10 +178,10 @@ $percentage=100;
                 </td>
                 <td>
                     @if($shipment->assigned_to == "" )
-                    <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{@$shipment->packages}}','{{@$shipment->vehicle->name}}','{{@$shipment->vehicleType->name}}','{{@$shipment->receiver->address}}','{{@$shipment->id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
+                    <button style="border-radius: 14px" type="button" onclick="openBid('{{$shipment->myBid}}','{{@$shipment->package}}','{{@$shipment->vehicle->name}}','{{@$shipment->vehicleType->name}}','{{@$shipment->receiver->address}}','{{@$shipment->id}}')" class=" w-40 btn btn-brand btn-sm btn-icon bid" data-toggle="kt-tooltip" data-placement="top" title="Place a Bid">bid<span></span></button>
                     @endif
                     @if(isset($shipment->myBid) && $shipment->myBid->revise_amount_shipper != '')
-                        <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
+                        <a style="border-radius: 2px !important;" href="javascript:void(0);" onclick="setStatus2('{{$shipment->myBid->id}}','{{$shipment->myBid->bid_amount}}','{{$shipment->myBid->revise_amount_shipper}}','{{$shipment->myBid->revise_status}}','{{$shipment->myBid->revise_comment}}', '{{$shipment->myBid->rank}}')" class="btn btn-font-danger {{($shipment->myBid->revise_status==1)?'btn-success':(($shipment->myBid->revise_status==3)?'btn-danger':'btn-warning')}} px-2 w-auto delete_record kt-font-light btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="{{($shipment->myBid->revise_status==1)?'Price revision accepted':(($shipment->myBid->revise_status==3)?'Price revision rejected':'Revision request received')}}">revision</a>
                     @endif
                 </td>
                 <td>
@@ -267,10 +267,10 @@ $percentage=100;
             </div>
             <div class="modal-body">
                 <!--                <p>bid your truct</p>-->
-                <div class="row col-md-12">
-                    <lable for="truck_type">Vehicle Category</lable>
-                    <input type="text" id="category" name="category" class="form-control" readonly>
-                </div>
+{{--                <div class="row col-md-12">--}}
+{{--                    <lable for="truck_type">Vehicle Category</lable>--}}
+{{--                    <input type="text" id="category" name="category" class="form-control" readonly>--}}
+{{--                </div>--}}
                 <div class="row col-md-12">
                     <lable for="ve_name">Vehicle Name</lable>
                     <input type="text" id="ve_name" name="ve_name" class="form-control" readonly>
@@ -405,8 +405,9 @@ $percentage=100;
         // console.log(data[0]);
     }
 
-    function openBid(bid,packages,vehicle,category,address,shipment_id) {
-        packages=JSON.parse(packages);
+    function openBid(bid,package,vehicle,category,address,shipment_id) {
+        package=JSON.parse(package);
+        console.log(package)
         if(bid){
             bid=JSON.parse(bid);
             $('.bidsave').addClass('d-none');
@@ -419,14 +420,17 @@ $percentage=100;
 
         }
         $('#jqueryTable2 tbody').html('');
-        var html='';
-        $.each(packages, function (index, value) {
-            $('#jqueryTable2 tbody').append(`<tr><td>${value.description}</td><td>${value.quantity}</td><td>${value.weight}</td></tr>`)
-        });
-        if(packages.length==0){
+        let html2;
+        html2 = '<tr><td>'+package.description+'</td><td>'+package.quantity+'</td><td>'+package.weight+'</td></tr>';
+        $('#jqueryTable2 tbody').append(html2)
+        // var html='';
+        // $.each(packages, function (index, value) {
+        //     $('#jqueryTable2 tbody').append(``)
+        // });
+        if(package.length==0){
             $('#jqueryTable2 tbody').append(`<tr><td colspan="3">No Package found</td></tr>`)
         }
-        $('#jqueryTable2').append(html);
+        // $('#jqueryTable2').append(html);
                 $('#ve_name').empty().val(vehicle);
                 $('#category').empty().val(category);
                 $('#route').empty().val(address);

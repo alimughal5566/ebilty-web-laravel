@@ -146,6 +146,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::post('/update-location-details', 'HomeController@updateLocationInfo')->name('updateLocationInfo');
         Route::get('/request-to-edit-profile', 'HomeController@requestToEdit')->name('requestToEdit');
         Route::get('/my-drivers', 'HomeController@myDrivers')->name('myDrivers');
+        Route::get('my-vehicles', 'HomeController@myVehicles')->name('myVehicles');
+        Route::get('getCompanyDrivers', 'HomeController@getCompanyDrivers')->name('getCompanyDrivers');
+        Route::post('createVehicle', 'HomeController@createVehicle')->name('createVehicle');
+        Route::post('assignShipment', 'HomeController@assignShipment')->name('assignShipment');
 
 });
 
