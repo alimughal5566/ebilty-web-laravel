@@ -423,4 +423,9 @@ class HomeController extends Controller
         ]);
     }
 
+    public function myBids($id){
+        $myBids=ShipmentBids::where('shipment_id',$id)->where('user_id',Auth::id())->first();
+        dd($myBids);
+    }
+
 }
