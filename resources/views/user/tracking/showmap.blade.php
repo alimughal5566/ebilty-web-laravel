@@ -288,6 +288,37 @@ function createMarker(map, latlng, label, html, color) {
 <script type="text/javascript">
 _uacct = "UA-162157-1";
 urchinTracker();
+setTimeout(function () { 
+    retrieveLocation();
+ }, 500);
+function retrieveLocation(){
+    $.ajax({
+        url: "{{url('get/trackingpoints/1')}}",
+        success: function(res){
+            let key = 0;
+            let stopData = [];
+            let s = [];
+            $.each(res , function(index , i){
+                if(key % 2 == 0){
+                    stopData[key] = ['Geometry']
+                    stopData[key]['Geometry'] = {lat: 'asdassad'}
+                    // stopData.push({'Geometry': i})
+                    // stopData.push('Geometry')
+                    console.log(i , 'odd' , index)
+                }
+                else{
+                    stopData[key-1] = ['Geometry']
+                    stopData[key-1]['Geometry'] = {lat: 'asdassad'}
+                    console.log(i , 'even' , index)
+                }
+                key++;
+            })
+            console.log(stopData);
+           
+            console.log(res , 'sdfsdfsfdsf')
+        }
+    })
+}
 </script>
 </body>
 </html>

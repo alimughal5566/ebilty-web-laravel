@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserVehicle;
 use App\Models\Admin\Setting\VehicleCategory;
+use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,11 +31,11 @@ class HomeController extends Controller
         }
     }
     public function updateProfile(Request $request){
-        if(\Auth::check()){
-            $user  = \Auth::user();
+        if(Auth::check()){
+            $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
-            if(\Hash::check($request->current_pass , $user->password)){
+            if(Hash::check($request->current_pass , $user->password)){
                 $user->password = bcrypt($request->new_pass);
             }
             else{
@@ -375,6 +376,57 @@ class HomeController extends Controller
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
 
-    
+
+
+    public function show($id){
+        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
+//        dd($shipment);
+        return response()->json([
+            'success' =>'Data updated  successfully',
+            'shipment' =>$shipment,
+
+            ], 200);
+    }
+
+
+    public function shipmentStatusFilter(){
+
+        $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
+        if(auth()->user()->hasRole('admin')){
+            $shipments= Shippment::orderBy('updated_at','desc')->with('sender.user','receiver.user','status','bids.user','packages.category')->get();
+        }
+        elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
+            $shipments    = Shippment::where(function ($q){
+                $q->where('assigned_to', NULL);
+                $q->orWhere( 'assigned_to', \auth()->id());
+            })
+//                ->where('city_id', auth()->user()->city_id)
+                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
+                ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+                ->orderBy('shippments.updated_at','desc')
+                ->with('myBid','vehicle','vehicleType','package','receiver')
+                ->get();
+
+        }
+        elseif(auth()->user()->hasRole('customer')){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
+                ->with('sender.user','package','receiver.user','status','bids.user')->get();
+        }
+        elseif(auth()->user()->hasRole('brocker_driver')){
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user')->get();
+        }
+        elseif(auth()->user()->hasRole('company_driver')){
+            $shipments= Shippment::orderBy('updated_at','desc')
+                ->where('assigned_to',auth()->user()->id)
+                ->with('sender.user','package','receiver.user','status','bids.user')
+                ->get();
+        }
+        $vehicles_cat=VehicleCategory::all();
+        return response()->json([
+            'success' => true,
+            'message' => 'all shipments',
+            'shipments' => $shipments,
+        ]);
+    }
 
 }

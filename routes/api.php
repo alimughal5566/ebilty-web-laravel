@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('all-vehicles', 'Api\HomeController@allVehicles');
     Route::get('get-all-drivers', 'Api\HomeController@getAllDrivers');
     Route::get('get-all-vehicles', 'Api\HomeController@getAllVehicles');
-    Route::get('getProfile', 'AuthController@getProfile');
+    Route::get('getProfile/{id}', 'AuthController@getProfile');
 
     Route::post('/bid-store', 'Api\HomeController@bidStore');
     Route::post('/assign-driver', 'Api\HomeController@assignDriver');
@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/send-bid-revise-request', 'Api\HomeController@sendBidReviserequest');
     Route::post('/update-bid-revise-request', 'Api\HomeController@updateBidReviserequest');
     Route::post('/bid-status-update', 'Api\HomeController@bidStatusUpdate');
+    Route::get('shipment/{id}', 'Api\HomeController@show');
+    Route::get('shipment/filer', 'Api\HomeController@shipmentStatusFilter');
 
 
 
@@ -48,6 +50,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 //    Route::get('records', 'ApiController@records');
 //    Route::get('logout', 'AuthController@logout');
 //    Route::post('store/patient-record-api', 'ApiController@storeMedRecords');
+
 });
 
 
