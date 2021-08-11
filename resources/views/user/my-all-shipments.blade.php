@@ -184,10 +184,14 @@ $percentage=50;
                     </td>
 
                     <td>
+                        @if($shipment->assigned_to != \auth()->user()->id && \auth()->user()->hasRole(['company']))
                         <i class="fa fa-user" aria-hidden="true" onclick="showDriver({{$shipment->assigned_to}})"></i>
+                        @elseif(\auth()->user()->hasRole(['company']))
+                        <i class="fa fa-user" aria-hidden="true" onclick="showDriverListModal({{$shipment->id}})"></i>
+                        @endif
                     </td>
                     <td>
-                        @if($shipment->assigned_to==auth()->user()->id)
+                        @if($shipment->assigned_to==auth()->user()->id && \auth()->user()->hasRole(['driver', 'companydriver']))
                             <div class="form-group col-lg-12 car_container">
                                 <select class="form-control" id="car_id_" name="car_id" data-live-search="true" onchange="setStatus('{{$shipment->id}}',this.value)">
                                     @foreach($statuses as $status)
@@ -213,6 +217,49 @@ $percentage=50;
         </div>
     </div>
 
+    <div class="modal fade" id="showDriverList_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Assign Driver</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{route('assignShipment')}}" method="post">
+                    @csrf
+                    <input type="hidden" name="shipment_id" id="assigned_shipment_id">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label class="">Choose Driver</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <div class="dropdown bootstrap-select">
+                                        <select id="driver_id" required="" name="driver_id" class="" tabindex="-98">
+                                            <option value="" selected="" disabled="">Nothing selected</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="">Choose Vehicle</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <div class="dropdown bootstrap-select">
+                                        <select id="driver_vehicle_id" required="" name="driver_vehicle_id" class="" tabindex="-98">
+                                            <option value="" selected="" disabled="">Nothing selected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     {{--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">--}}
     {{--     modalOpen--}}
@@ -261,7 +308,7 @@ $percentage=50;
     </div>
     <div class="modal fade" id="showBidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content">F
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Place a bid</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -270,10 +317,10 @@ $percentage=50;
                 </div>
                 <div class="modal-body">
                     <!--                <p>bid your truct</p>-->
-                    <div class="row col-md-12">
-                        <lable for="truck_type">Vehicle Category</lable>
-                        <input type="text" id="category" name="category" class="form-control" readonly>
-                    </div>
+{{--                    <div class="row col-md-12">--}}
+{{--                        <lable for="truck_type">Vehicle Category</lable>--}}
+{{--                        <input type="text" id="category" name="category" class="form-control" readonly>--}}
+{{--                    </div>--}}
                     <div class="row col-md-12">
                         <lable for="ve_name">Vehicle Name</lable>
                         <input type="text" id="ve_name" name="ve_name" class="form-control" readonly>
@@ -367,21 +414,18 @@ $percentage=50;
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Drivers List</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Assigned Driver</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="showDrivermodal">
                     <table class="table" id="show_DriverList">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Driver Contact</th>
-                            <th scope="col">vehicle Name</th>
-                            <th scope="col">vehicle Type</th>
-                            <th scope="col">vehicle Number</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -397,6 +441,29 @@ $percentage=50;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <script>
+        @if (\Session::has('success'))
+            toastr.success('{!! \Session::get('success') !!}');
+        @endif
+        function showDriverListModal(id){
+            $('#assigned_shipment_id').val(id);
+            $.get( '{{route("getCompanyDrivers")}}', function( response ) {
+                $('#showDriverList_modal').modal('show')
+                var html = '';
+                var html2 = '';
+                html += '<option value="">Nothing Selected</option>';
+                html2 += '<option value="">Nothing Selected</option>';
+                $.each(response.drivers, function (key,driver) {
+                    html += '<option value="'+ driver.id +'">'+ driver.name +'</option>';
+                })
+                $.each(response.vehicles, function (key,vehicle) {
+                    html2 += '<option value="'+ vehicle.id +'">' + vehicle.name +'</option>';
+                })
+                $('#driver_id').append(html)
+                $('#driver_vehicle_id').html(html2);
+                $('#driver_id').selectpicker('refresh', true);
+                $('#driver_vehicle_id').selectpicker('refresh', true);
+            })
+        }
         $(function() {
             $(".progress").each(function() {
 
@@ -571,10 +638,9 @@ $percentage=50;
 
        function showDriver(id)
        {
-               // $("#package_table tbody tr").remove();
+           if(id){
                var data = {id:id};
                $('#showDriverList').modal('show');
-
                $.get( '{{route("shipment.driver")}}',data, function( response ) {
                    console.log(response);
                    $('#show_DriverList tbody').empty();
@@ -583,14 +649,12 @@ $percentage=50;
                             <td>`+ response.name +`</td>
                             <td>`+response.email+`</td>
                             <td>`+response.phone+`</td>
-                            <td>`+response.vehicle.name+`</td>
-                            <td>`+response.vehicle_category.name+`</td>
-                            <td>`+response.vehicle_number+`</td>
                             </tr>`);
-
                });
+           }else{
 
            }
+       }
 
 
 

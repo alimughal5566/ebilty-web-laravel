@@ -564,7 +564,7 @@
                 </div>
                 <!--end:: Widgets/Order Statistics-->
             </div>
-            @if($shipment->packages->count()>0)
+            @if($shipment->package->count()>0)
             <div class="col-xl-12">
                 <!--begin:: Widgets/Order Statistics-->
                 <div class="kt-portlet kt-portlet--height-fluid">
@@ -580,23 +580,19 @@
                         <div class="kt-widget12">
                             <table class="table table-bordered">
                                 <tr>
-                                    <th>#</th>
                                     <th>Package Type</th>
                                     <th>Description</th>
                                     <th>weight</th>
                                     <th>Quantity</th>
                                     <th>Dimensions</th>
                                 </tr>
-                            @foreach($shipment->packages as $i=>$package)
                                     <tr>
-                                      <td>{{++$i}}</td>
-                                      <td>{{ @$package->category->name}}</td>
-                                      <td>{{ $package->description}}</td>
-                                      <td>{{ $package->weight}}</td>
-                                      <td>{{ $package->quantity}}</td>
-                                      <td>{{ $package->length}}x{{ $package->width}}x{{ $package->height}}</td>
+                                      <td>{{ @$shipment->package->category->name}}</td>
+                                      <td>{{ @$shipment->package->description}}</td>
+                                      <td>{{ @$shipment->package->weight}}</td>
+                                      <td>{{ @$shipment->package->quantity}}</td>
+                                      <td>{{ @$shipment->package->length}}x{{ @$shipment->package->width}}x{{ @$shipment->package->height}}</td>
                                   </tr>
-                          @endforeach
                             </table>
                         </div>
                     </div>
