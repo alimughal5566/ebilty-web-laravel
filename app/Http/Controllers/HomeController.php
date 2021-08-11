@@ -47,9 +47,9 @@ class HomeController extends Controller
                $q->orWhere( 'assigned_to', \auth()->id());
            })->where('city_id', auth()->user()->city_id)
                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
-               ->select('shippments.*','shippments.id as s_id','user_addresses.*')
+               ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                ->orderBy('shippments.updated_at','desc')
-               ->with('myBid','vehicle','vehicleType','package','receiver')
+               ->with('myBid','vehicle','package','receiver')
                ->paginate('5');
 
        }
@@ -71,6 +71,7 @@ class HomeController extends Controller
 
         }
         $vehicles_cat=VehicleCategory::all();
+//dd($shipments);
         return view('dashboard', compact('vehicles_cat','shipments','add'));
     }
     public function getVehicles(Request $request)

@@ -461,35 +461,35 @@
                     @if(auth()->user()->hasRole('customer') || auth()->user()->hasRole('brocker_driver') || auth()->user()->hasRole('company_driver') || auth()->user()->hasRole('admin'))
                         <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
                     @else
-                        <th scope="row"><a href="{{route('shipmentDetail',[$shipment->s_id])}}">{{$shipment->s_id}}</a></th>
+                        <th scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></th>
                     @endif
-                    <td>{{@$shipment->sender->address}}<small> ({{@$shipment->sender->user->name}})</small></td>
-                    <td>{{@$shipment->receiver->address}}<small> ({{@$shipment->receiver->user->name}})</small></td>
-                    <td>{{@$shipment->total_weight}}</td>
+                    <td>{{@$shipment->sender->address}}<small> ({{@$shipment->sender->user_name}})</small></td>
+                    <td>{{@$shipment->receiver->address}}<small> ({{@$shipment->receiver->user_name}})</small></td>
+                    <td>{{@$shipment->package->weight}}</td>
                     <td>{{@$shipment->ship_date}}<br>{{@$shipment->ship_time}}</td>
                     <td>{{@$shipment->stat->name}}</td>
                     <td>
                         @php
                          $percentage=0;
-                        if($shipment->status_id==1){
+                        if($shipment->statuid==1){
                         $percentage=30;
                         }
-                        if($shipment->status_id==6){
+                        if($shipment->statuid==6){
                         $percentage=20;
                         }
-                        if($shipment->status_id==4){
+                        if($shipment->statuid==4){
                         $percentage=40;
                         }
-                        if($shipment->status_id==6){
+                        if($shipment->statuid==6){
                         $percentage=35;
                         }
-                        if($shipment->status_id==8){
+                        if($shipment->statuid==8){
                         $percentage=100;
                         }
-                        if($shipment->status_id==7){
+                        if($shipment->statuid==7){
                         $percentage=90;
                         }
-                        if($shipment->status_id==3){
+                        if($shipment->statuid==3){
                         $percentage=50;
                         }
                         @endphp
@@ -538,7 +538,7 @@
                         @if(auth()->user()->hasRole('customer') || auth()->user()->hasRole('brocker_driver') || auth()->user()->hasRole('company_driver') )
                             <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->id}})"></i>
                         @else
-                            <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->s_id}})"></i>
+                            <i class="fa fa-user" aria-hidden="true" onclick="showDriverList({{$shipment->id}})"></i>
                         @endif
 {{--                            <i class="fa fa-user" aria-hidden="true"></i>--}}
                        || <a href="#" class="text-warning" data-toggle="modal" data-target="#add_user"><i class="fas fa-plus"></i></a>
