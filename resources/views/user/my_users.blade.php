@@ -79,7 +79,7 @@
                                             <td class="name">{{($user->assignedShipments->count())}}</td>
                                             <td class="name">{{($user->email_verified_at)?'Yes':'No'}}</td>
                                             <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>
-                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
+                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->cnic_back_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->license_back_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
                                             <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>
 {{--                                        <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>--}}
                                         </tr>
@@ -122,7 +122,7 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-check">
-                                                        <label>Cnic Number: </label>
+                                                        <label>Cnic Image: </label>
                                                         <span class="cnic"></span>
                                                     </div>
                                                 </div>
@@ -135,7 +135,7 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-check">
-                                                        <label>License Number: </label>
+                                                        <label>License Image: </label>
                                                         <span class="lic"></span>
                                                     </div>
                                                 </div>
@@ -143,6 +143,30 @@
                                                     <div class="form-check">
 {{--                                                        <label>License Picture:</label>--}}
                                                         <img alt="" width="600px" height="420px" class="licence_pic">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-check">
+                                                        <label>Cnic Back Image: </label>
+                                                        <span class="lic"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-10 offset-1">
+                                                    <div class="form-check">
+{{--                                                        <label>License Picture:</label>--}}
+                                                        <img alt="" width="600px" height="420px" class="cnic_back_pic">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-check">
+                                                        <label>License Back Image: </label>
+                                                        <span class="lic"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-10 offset-1">
+                                                    <div class="form-check">
+{{--                                                        <label>License Picture:</label>--}}
+                                                        <img alt="" width="600px" height="420px" class="licence_back_pic">
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,96 +266,40 @@
                                     </div>
                                 <div class="row">
 
-                                    <div class="form-group col-lg-5">
+                                    <div class="form-group col-lg-4">
                                         <label>Name <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input type="text" class="form-control name" value="{{old('full_name')}}" name="full_name" required placeholder="Full name">
                                     </div>
-                                    <div class="form-group col-lg-5">
+                                    <div class="form-group col-lg-4">
                                         <label>Email <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input class="form-control mobile" name="email"  value="{{old('email')}}"  type="email" required placeholder="Email">
                                     </div>
-                                    <div class="form-group col-lg-5">
+                                    <div class="form-group col-lg-4">
                                         <label>Mobile <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input type="number" class="form-control mobile" value="{{old('phone')}}"  name="phone"  required placeholder="Number">
                                     </div>
-                                    <div class="form-group col-lg-5">
+                                    <div class="form-group col-lg-4">
                                         <label>Password <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <input type="password" class="form-control" value="{{old('password')}}"  name="password" required placeholder="Password">
                                     </div>
+                                    <div class="form-group col-lg-4">
+                                        <label>Cnic Front Image <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="file" class="form-control"  name="cnic_image" required >
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label>Cnic Back Image<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="file" class="form-control"  name="cnic_back_image" required >
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label>License Front Image <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="file" class="form-control"  name="license_image" required >
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label>License Back Image <span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
+                                        <input type="file" class="form-control"  name="license_back_image" required >
+                                    </div>
                                 </div>
-                                    <div class="kt-portlet__head border bg-warning mb-3">
-                                        <div class="kt-portlet__head-label">
-                                           <span class="kt-portlet__head-icon">
-                                               <i class="flaticon2-user"></i>
-                                           </span>
-                                            <h3 class="kt-portlet__head-title ">
-                                                Driver vehicle Details
-                                            </h3>
-                                        </div>
-                                    </div>
 
-                                    <div class="row ">
-                                        <div class="form-group">
-                                            <label class="">Vehicle Number</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <input class="form-control" type="text" name="vehicle_number" placeholder="Vehicle Number" required="" value="{{old('vehicle_number')}}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Vehicle Category</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <div class="dropdown bootstrap-select">
-                                                    <select id="veh_cat" required="" name="veh_cat" onchange="getVehicles(this.value,'veehicl')" class="" tabindex="-98">
-                                                        <option value="" selected="" disabled="">Nothing selected</option>
-                                                        @foreach($vehicles_cat as $cat)
-                                                            <option value="{{$cat->id}}"  {{($cat->id==old('veh_cat'))?'selected':''}}>{{$cat->name}}</option>
-
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Vehicle</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <div class="dropdown bootstrap-select">
-                                                    <select id="veehicl" required="" name="vehicle" class="" tabindex="-98">
-                                                        <option value="" selected="" disabled="">Nothing selected</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @if(auth()->check())
-                                        @if(auth()->user()->hasRole('company'))
-                                            <div class="row ">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="">License Number</label>
-                                                        <div class="">
-                                                            <input class="form-control" type="text"  name="license_number" placeholder="License Number" required="" value="{{old('license_number')}}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="">Licence Image</label>
-                                                        <div class="">
-                                                            <input class="form-control" type="file" accept="image/*"  name="license_image" required="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="">CNIC Image</label>
-                                                        <div class="">
-                                                            <input class="form-control" type="file" accept="image/*"  name="cnic_image" required="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endif
                             <div class="kt-portlet__foot">
                                 <div class="row align-items-center">
                                     <div class="col-lg-4 offset-9">
@@ -361,11 +329,11 @@
             $('#add_user').modal('show')
              toastr.error('Validation error occured');
         @endif
-        function viewDocs(cnic,cnic_image,license,license_image,status,id){
-                $('.cnic').text(cnic);
+        function viewDocs(cnic,cnic_back_image,cnic_image,license,license_image,license_back_image,status,id){
                 $('.cnic_pic').attr('src',window.location.origin+'/cnic/'+cnic_image);
-                $('.lic').text(license);
+                $('.cnic_back_pic').attr('src',window.location.origin+'/cnic/'+cnic_back_image);
                 $('.licence_pic').attr('src',window.location.origin+'/license_image/'+license_image);
+                $('.licence_back_pic').attr('src',window.location.origin+'/license_image/'+license_back_image);
             $('.doc_status1,.doc_status').css('display','none');
             if(status==0){
                 $('.doc_status1').css('display','block');

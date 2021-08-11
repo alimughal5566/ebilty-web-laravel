@@ -565,36 +565,35 @@
                 <!--end:: Widgets/Order Statistics-->
             </div>
             @if($shipment->package->count()>0)
-                <div class="col-xl-12">
-                    <!--begin:: Widgets/Order Statistics-->
-                    <div class="kt-portlet kt-portlet--height-fluid">
-                        <div class="kt-portlet__head">
-                            <div class="kt-portlet__head-label">
-                                <h3 class="kt-portlet__head-title">
-                                    Package Information
-                                </h3>
-                            </div>
+
+            <div class="col-xl-12">
+                <!--begin:: Widgets/Order Statistics-->
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Package Information
+                            </h3>
                         </div>
                         <div class="kt-portlet__body kt-portlet__body--fluid">
 
-                            <div class="kt-widget12">
-                                <table class="table table-bordered">
+                        <div class="kt-widget12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Package Type</th>
+                                    <th>Description</th>
+                                    <th>weight</th>
+                                    <th>Quantity</th>
+                                    <th>Dimensions</th>
+                                </tr>
                                     <tr>
-                                        <th>Package Type</th>
-                                        <th>Description</th>
-                                        <th>weight</th>
-                                        <th>Quantity</th>
-                                        <th>Dimensions</th>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ @$shipment->package->category->name}}</td>
-                                        <td>{{ @$shipment->package->description}}</td>
-                                        <td>{{ @$shipment->package->weight}}</td>
-                                        <td>{{ @$shipment->package->quantity}}</td>
-                                        <td>{{ @$shipment->package->length}}x{{ @$shipment->package->width}}x{{ @$shipment->package->height}}</td>
-                                    </tr>
-                                </table>
-                            </div>
+                                      <td>{{ @$shipment->package->category->name}}</td>
+                                      <td>{{ @$shipment->package->description}}</td>
+                                      <td>{{ @$shipment->package->weight}}</td>
+                                      <td>{{ @$shipment->package->quantity}}</td>
+                                      <td>{{ @$shipment->package->length}}x{{ @$shipment->package->width}}x{{ @$shipment->package->height}}</td>
+                                  </tr>
+                            </table>
                         </div>
                     </div>
                     <!--end:: Widgets/Order Statistics-->

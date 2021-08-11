@@ -888,7 +888,7 @@
                 }
                 if(value.approved_status==1){
                     status = 2;
-                    status_text= "<span class='fa fa-check-circle text-success'> &nbsp</span>Reject bid";
+                    status_text= "<span class='fa fa-check-circle text-success'> &nbsp</span>Bid Accepted";
                     txt= " ";
                 }
                 if(value.approved_status==2){

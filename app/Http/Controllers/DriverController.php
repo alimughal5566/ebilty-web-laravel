@@ -47,6 +47,7 @@ class DriverController extends Controller
         $shipments = '';
         if (Auth::user()->hasRole('company_driver') ||Auth::user()->hasRole('brocker_driver')){
             $shipments    = Shippment::where('assigned_to',Auth::id())
+
                 ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as u_id','shippments.id as id')
                 ->orderBy('shippments.id','desc')->with('myBid','vehicle','vehicleType','package','receiver','stat')->paginate(6);
@@ -54,7 +55,7 @@ class DriverController extends Controller
             $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         }else{
             $drivers= User::where('created_by',auth()->user()->id)->get()->toArray();
-            $shipments    = Shippment::where(function ($q) use ($drivers){
+            $shipments    = Shippment::where('status_id',9 )->where(function ($q) use ($drivers){
                 $q->where('assigned_to', NULL);
                 $q->orWhere( 'assigned_to', $drivers);
             })->where('city_id', auth()->user()->city_id)
@@ -72,19 +73,14 @@ class DriverController extends Controller
 
         $shipments    = Shippment::
         where('assigned_to', $drivers)
-            ->orWhereNull('assigned_to')
-            ->whereHas(
-                'sender', function($q){
-                $q->where('form','sender');
-//              $q->where('city_id', auth()->user()->city_id);
-            })
+            ->orWhere('assigned_to', Auth::id())
             ->orderBy('id','desc')->with('myBid','vehicle','vehicleType','package','receiver')->paginate('15');
         $statuses = ShipmentStatus::where('id', '!=',9)->orderBy('id','asc')->get();
         return view('user.my-all-shipments', compact('shipments','statuses'));
     }
+
     public function shipmentDriver(Request $request){
-        $users = User::where('created_by',auth()->user()->id)
-            ->join('user_vehicles','user_id','users.id')
+        $users = User::where('id',$request->id)
             ->with('vehicle','vehicle_category')
             ->first();
         return response()->json($users);
@@ -154,6 +150,11 @@ class DriverController extends Controller
     }
 
     public function updateshipmentStatus(Request $request){
+        if($request->id && $request->status == 8){
+            $user = User::where('id', \auth()->user()->id)->first();
+            $user->is_available = 1;
+            $user->update();
+        }
         if($request->id) {
             $bid = Shippment::find($request->id);
             $bid->status_id = $request->status;
