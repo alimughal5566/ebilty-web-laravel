@@ -54,6 +54,17 @@ class HomeController extends Controller
     }
     public function addDriver(Request $request){
         if (\auth()->user()->id){
+
+
+            $validator = Validator::make($request->all(), [
+                'phone' => ['required', 'unique:users,phone'],
+                'email' => ['required', 'string', 'email', 'unique:users,email'],
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 200);
+            }
+
+
             if (Auth::check()){
                 $pp = '';
                 $cf = '';
