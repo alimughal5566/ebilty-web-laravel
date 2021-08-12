@@ -195,9 +195,11 @@ class HomeController extends Controller
 
        $user=new User();
 
-       $getUser=$user->where('id',$request->user_id)->first();
+       $getUser=$user->where('id',$request->driver_id)->first();
+//dd($getUser);
        $vehicle=new UserVehicle();
        $getVehicle=$vehicle->where('id',$request->vehicle_id)->first();
+//       dd($getUser);
         if($getUser->is_available==1){
 
             $user->where('id',$request->user_id)->update(['is_available'=>0]);
