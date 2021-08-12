@@ -8,7 +8,6 @@ use App\ShipmentBids;
 use App\Shippment;
 use App\ShippmentPackage;
 use App\UserAddress;
-use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -173,11 +172,11 @@ class HomeController extends Controller
     }
     public function getAllVehicles(){
 
-        $all_vehicles=UserVehicle::with('vehicle_category','vehicle')->where('user_id',Auth::id())->get();
+        $all_vehicles=UserVehicle::with('vehicle')->where('user_id',Auth::id())->get();
         return response()->json([
             'success' => true,
             'message' => 'all vehicles',
-            'vehicles' => $all_Vehicles,
+            'vehicles' => $all_vehicles,
             ]);
     }
     public function assignDriver(Request $request){
@@ -307,7 +306,6 @@ class HomeController extends Controller
         ]);
 
     }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -366,7 +364,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
-
     public function updateBidReviserequest(Request $request){
         if($request->id) {
             $bid = ShipmentBids::find($request->id);
@@ -378,9 +375,6 @@ class HomeController extends Controller
         }
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
-
-
-
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 //        dd($shipment);
@@ -390,8 +384,6 @@ class HomeController extends Controller
 
             ], 200);
     }
-
-
     public function shipmentStatusFilter(){
 
         $add=General_setting::where('status',1)->where('section_name','advertisement_section')->inRandomOrder()->first();
@@ -418,12 +410,6 @@ class HomeController extends Controller
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
         }
         $vehicles_cat=VehicleCategory::all();
-//        $ship = $shipments;
-//        $d = $ship
-//            ->whereNotIn('status_id',[1,7,8,9])
-//            ->get();
-//        $d2 = $shipments->where('status_id' , 1)->get();
-//        dd( $d2);
         $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
         $assigned =$shipments->where('status_id','1')->values();
         $delivered =$shipments->where('status_id','7')->values();
@@ -433,6 +419,15 @@ class HomeController extends Controller
             'inprocess' => $inprocess,
             'delivered' => $delivered,
             'assigned' => $assigned,
+        ]);
+    }
+
+    public function myBids($id){
+        $myBids=ShipmentBids::where('shipment_id',$id)->where('user_id',Auth::id())->first();
+        return response()->json([
+            'success'=>'My All Bids',
+            'myBids'=>$myBids
+
         ]);
     }
 

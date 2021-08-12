@@ -18,6 +18,8 @@ use App\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
+use App\ShipmentTracking;
+
 class HomeController extends Controller
 {
     /**
@@ -426,5 +428,36 @@ class HomeController extends Controller
         $noti_count=Notification::where('receiver_id',\auth()->id())->count();
 
         return response()->json($noti_count);
+    }
+    public function showTracking(){
+        return view('user.tracking.showmap');
+    }
+
+    public function getTrackingPoints(){
+        $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->first();
+        return response()->json($shipment);
+    }
+
+    public function setTrackingPoints(Request $request){
+        $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->first();
+        if(!$shipment){
+            $shipment = new ShipmentTracking;
+            $shipment->shipment_id = $request->id;
+            $shipment->start_lat = $request->start_lat;
+            $shipment->start_lng = $request->start_lng;
+            $shipment->end_lat = $request->end_lat;
+            $shipment->end_lng = $request->end_lng;
+            $shipment->mid_lat = $request->mid_lng;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save();
+        }
+        else{
+            $shipment->mid_lat = $request->mid_lat;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save(); 
+        }
+        return response()->json($shipment);
     }
 }
