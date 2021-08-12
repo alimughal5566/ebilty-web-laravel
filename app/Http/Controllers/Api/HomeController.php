@@ -17,6 +17,7 @@ use App\Models\Admin\Setting\VehicleCategory;
 use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
+use App\ShipmentTracking;
 
 class HomeController extends Controller
 {
@@ -429,6 +430,28 @@ class HomeController extends Controller
             'myBids'=>$myBids
 
         ]);
+    }
+
+    public function setCordinates(Request $request){
+        $shipment = ShipmentTracking::where('shipment_id' , $request->shipment_id)
+        ->first();
+        if(!$shipment){
+            $shipment = new ShipmentTracking;
+            $shipment->shipment_id = $request->id;
+            $shipment->start_lat = $request->start_lat;
+            $shipment->start_lng = $request->start_lng;
+            $shipment->end_lat = $request->end_lat;
+            $shipment->end_lng = $request->end_lng;
+            $shipment->mid_lat = $request->mid_lng;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save();
+        }
+        else{
+            $shipment->mid_lat = $request->mid_lat;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save(); 
+        }
+        return response()->json($shipment);
     }
 
 }
