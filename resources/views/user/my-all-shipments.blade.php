@@ -129,19 +129,19 @@
                 <th scope="col">#</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
-                <th scope="col">Shipment Time</th>
+                <th scope="col">Departure Time</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Status</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Progress bar</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
             @forelse($shipments as $shipment)
                 <tr>
                     <td scope="row"><a href="{{route('shipmentDetail',[$shipment->id])}}">{{$shipment->id}}</a></td>
-                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user->name}})</small></td>
-                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user->name}})</small></td>
+                    <td>{{$shipment->sender->address}}<small> ({{$shipment->sender->user_name}})</small></td>
+                    <td>{{$shipment->receiver->address}}<small> ({{$shipment->receiver->user_name}})</small></td>
                     <td>{{$shipment->ship_date}}<br>{{$shipment->ship_time}}</td>
 
                     <td>{{(isset($shipment->myBid) && $shipment->myBid->bid_amount && $shipment->myBid->revise_status!=1)?$shipment->myBid->bid_amount:(isset($shipment->myBid->revise_amount_shipper)?$shipment->myBid->revise_amount_shipper:'')}}</td>
