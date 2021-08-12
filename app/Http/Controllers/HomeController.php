@@ -18,6 +18,8 @@ use App\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
+use App\ShipmentTracking;
+
 class HomeController extends Controller
 {
     /**
@@ -111,6 +113,11 @@ class HomeController extends Controller
             $request->license_image->move(public_path('images/license/'), $license_image);
             $user->license_image= $license_image;
         }
+        if ($request->license_back_image) {
+            $license_back_image = time() . '.' . $request->license_back_image->extension();
+            $request->license_back_image->move(public_path('images/license/'), $license_image);
+            $user->license_back_image= $license_back_image;
+        }
         $user->documents_verified=0;
         $user->license_number= $request->license_number;
         $user->save();
@@ -138,10 +145,17 @@ class HomeController extends Controller
     }
     public function updateCnic(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
+        $cnic_image = '';
         if ($request->cnic_image) {
             $cnic_image = time() . '.' . $request->cnic_image->extension();
             $request->cnic_image->move(public_path('/setting/cnic/'), $cnic_image);
             $user->cnic_image= $cnic_image;
+        }
+        $cnic_back_image = '';
+        if ($request->cnic_back_image) {
+            $cnic_back_image = time() . '.' . $request->cnic_back_image->extension();
+            $request->cnic_back_image->move(public_path('/setting/cnic/'), $cnic_image);
+            $user->cnic_back_image = $cnic_back_image;
         }
         $user->documents_verified=0;
         $user->cnic_number= $request->cnic_number;
@@ -414,5 +428,36 @@ class HomeController extends Controller
         $noti_count=Notification::where('receiver_id',\auth()->id())->count();
 
         return response()->json($noti_count);
+    }
+    public function showTracking(){
+        return view('user.tracking.showmap');
+    }
+
+    public function getTrackingPoints(){
+        $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->first();
+        return response()->json($shipment);
+    }
+
+    public function setTrackingPoints(Request $request){
+        $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->first();
+        if(!$shipment){
+            $shipment = new ShipmentTracking;
+            $shipment->shipment_id = $request->id;
+            $shipment->start_lat = $request->start_lat;
+            $shipment->start_lng = $request->start_lng;
+            $shipment->end_lat = $request->end_lat;
+            $shipment->end_lng = $request->end_lng;
+            $shipment->mid_lat = $request->mid_lng;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save();
+        }
+        else{
+            $shipment->mid_lat = $request->mid_lat;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save(); 
+        }
+        return response()->json($shipment);
     }
 }

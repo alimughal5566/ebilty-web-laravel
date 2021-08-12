@@ -78,7 +78,7 @@
                                             <td class="name">{{($user->assignedShipments->count())}}</td>
                                             <td class="name">{{($user->email_verified_at)?'Yes':'No'}}</td>
                                             <td class="name">{{($user->documents_verified)?'Verified':'Not Verified'}}</td>
-                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
+                                            <td class="name"><a href="#" onclick="viewDocs('{{$user->cnic_number}}','{{$user->cnic_image}}','{{$user->cnic_back_image}}','{{$user->license_number}}','{{$user->license_image}}','{{$user->license_back_image}}','{{$user->documents_verified}}','{{$user->id}}')"  ><span class="fa fa-eye text-warning"></span></a></td>
                                             <td class="name"><span class="fa fa-eye text-info"  onclick="viewShips('{{$user->assignedShipments}}')" style="cursor: pointer"></span></td>
                                             <td class="name"><a href="{{route('approveEditRequest',$user->id)}}">{{($user->edit_request==3)?'request received':''}}</a></td>
                                             {{--                                            <td>--}}
@@ -136,23 +136,40 @@
                                                     <span class="cnic"></span>
                                                 </div>
                                             </div>
+                                            <br>
                                             <div class="col-lg-10 offset-1">
                                                 <div class="form-check">
-                                                    {{--                                                        <label>Cnic Picture:</label>--}}
+                                                    <label>Cnic Front Image:</label>
                                                     <img alt="" width="600px"  height="420px" class="cnic_pic">
 
                                                 </div>
                                             </div>
+                                            <div class="col-lg-10 offset-1">
+                                                <div class="form-check">
+                                                    <label>Cnic Back Image:</label>
+                                                    <img alt="" width="600px"  height="420px" class="cnic_back_pic">
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
                                             <div class="col-lg-12">
                                                 <div class="form-check">
                                                     <label>License Number: </label>
                                                     <span class="lic"></span>
                                                 </div>
                                             </div>
+                                            <br>
                                             <div class="col-lg-10 offset-1">
                                                 <div class="form-check">
-                                                    {{--                                                        <label>License Picture:</label>--}}
+                                                    <label>License Front Image:</label>
                                                     <img alt="" width="600px" height="420px" class="licence_pic">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-10 offset-1">
+                                                <div class="form-check">
+                                                    <label>License Back Image:</label>
+                                                    <img alt="" width="600px" height="420px" class="licence_back_pic">
                                                 </div>
                                             </div>
                                         </div>
@@ -214,11 +231,13 @@
         @if (\Session::has('success'))
         toastr.success('{!! \Session::get('success') !!}');
         @endif
-        function viewDocs(cnic,cnic_image,license,license_image,status,id){
+        function viewDocs(cnic,cnic_image,cnic_back_image, license,license_image, license_back_image,status,id){
             $('.cnic').text(cnic);
             $('.cnic_pic').attr('src',window.location.origin+'/setting/cnic/'+cnic_image);
+            $('.cnic_back_pic').attr('src',window.location.origin+'/setting/cnic/'+cnic_back_image);
             $('.lic').text(license);
             $('.licence_pic').attr('src',window.location.origin+'/images/license/'+license_image);
+            $('.licence_back_pic').attr('src',window.location.origin+'/images/license/'+license_back_image);
             $('.doc_status1,.doc_status').css('display','none');
             if(status==0){
                 $('.doc_status1').css('display','block');
