@@ -62,7 +62,7 @@
                                 @role('admin|driver|cracker|company')
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info ">
-                                        <span class="kt-widget12__desc d-inline-flex "><b>License</b></span>
+                                        <span class="kt-widget12__desc d-inline-flex "><b>License Front Image</b></span>
                                         <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
                                              @if($user->edit_request==1 && $user->id==auth()->user()->id)
@@ -75,10 +75,26 @@
                                         <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
                                     </div>
                                 </div>
+                                <div class="kt-widget12__item">
+                                    <div class="kt-widget12__info ">
+                                        <span class="kt-widget12__desc d-inline-flex "><b>License Back Image</b></span>
+                                        <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+
+                                        @if($user->edit_request==1 && $user->id==auth()->user()->id)
+                                            <span data-toggle="modal" data-target="#edit2" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                        @endif
+                                        @php $license='/images/noimage.jpg'; @endphp
+                                        @if($user->license_back_image)
+                                            @php    $license= '/images/license/'.$user->license_back_image; @endphp
+                                        @endif
+                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
+                                    </div>
+                                </div>
+
 
                                 <div class="kt-widget12__item">
                                         <div class="kt-widget12__info">
-                                            <span class="kt-widget12__desc d-inline-flex"><b>Identity Card</b></span>
+                                            <span class="kt-widget12__desc d-inline-flex"><b>Identity Card Front</b></span>
                                             <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
 
                                             @if( $user->edit_request==1 && $user->id==auth()->user()->id)
@@ -87,6 +103,23 @@
                                             @php $cnic='/images/noimage.jpg'; @endphp
                                             @if($user->cnic_image)
                                                 @php  $cnic= '/setting/cnic/'.$user->cnic_image; @endphp
+                                            @endif
+                                            <span class="kt-widget12__value">
+                                                <img src="{{url($cnic)}}"  alt="" width="300">
+                                            </span>
+                                        </div>
+                                </div>
+                                <div class="kt-widget12__item">
+                                        <div class="kt-widget12__info">
+                                            <span class="kt-widget12__desc d-inline-flex"><b>Identity Card Back</b></span>
+                                            <span class="fa {{($user->documents_verified==1)?'fa-check-circle text-success':'fa-times-circle text-danger'}}"></span>
+
+                                            @if( $user->edit_request==1 && $user->id==auth()->user()->id)
+                                               <span data-toggle="modal" data-target="#edit" title="Edit" class="text-right float-right fa fa-edit" style="cursor: pointer"></span>
+                                             @endif
+                                            @php $cnic='/images/noimage.jpg'; @endphp
+                                            @if($user->cnic_back_image)
+                                                @php  $cnic= '/setting/cnic/'.$user->cnic_back_image; @endphp
                                             @endif
                                             <span class="kt-widget12__value">
                                                 <img src="{{url($cnic)}}"  alt="" width="300">
@@ -287,8 +320,14 @@
                                                 </div>
                                                 <div class="col-lg-11">
                                                     <div class="form-check">
-                                                        <label>License Picture:</label>
+                                                        <label>License Front Image:</label>
                                                         <input name="license_image" class="form-control"  type="file" accept="image/*" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>License Back Image:</label>
+                                                        <input name="license_back_image" class="form-control"  type="file" accept="image/*" required/>
                                                     </div>
                                                 </div>
 
@@ -343,8 +382,14 @@
                                                 </div>
                                                 <div class="col-lg-11">
                                                     <div class="form-check">
-                                                        <label>Cnic Picture:</label>
+                                                        <label>Cnic Front Image:</label>
                                                         <input name="cnic_image" class="form-control"  type="file" accept="image/*" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <div class="form-check">
+                                                        <label>Cnic Back Image:</label>
+                                                        <input name="cnic_back_image" class="form-control"  type="file" accept="image/*" required/>
                                                     </div>
                                                 </div>
 

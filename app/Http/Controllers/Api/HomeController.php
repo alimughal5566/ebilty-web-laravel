@@ -54,6 +54,17 @@ class HomeController extends Controller
     }
     public function addDriver(Request $request){
         if (\auth()->user()->id){
+
+
+            $validator = Validator::make($request->all(), [
+                'phone' => ['required', 'unique:users,phone'],
+                'email' => ['required', 'string', 'email', 'unique:users,email'],
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 200);
+            }
+
+
             if (Auth::check()){
                 $pp = '';
                 $cf = '';
@@ -182,24 +193,28 @@ class HomeController extends Controller
     }
     public function assignDriver(Request $request){
 //        dd($request);
+
        $user=new User();
-       $getUser=$user->where('id',$request->user_id)->first();
+
+       $getUser=$user->where('id',$request->driver_id)->first();
+//dd($getUser);
        $vehicle=new UserVehicle();
        $getVehicle=$vehicle->where('id',$request->vehicle_id)->first();
+//       dd($getUser);
         if($getUser->is_available==1){
-            if($getVehicle->assign_id == 0) {
-                $user->where('id',$request->user_id)->update(['is_available'=>0]);
-                $vehicle->where('id',$request->vehicle_id)->update(['assign_id'=>$request->user_id]);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Driver Is Assigned Successfully',
-                ]);
-        }else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'vehicle is Not Available',
-                ]);
-        }
+
+            $user->where('id',$request->user_id)->update(['is_available'=>0]);
+            $shipment = Shippment::find($request->shipment_id);
+            $shipment->assigned_to = $request->driver_id;
+            $shipment->assigned_by = Auth::id();
+            $shipment->assigned_vehicle_id = $request->driver_vehicle_id;
+            $shipment->update();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Driver Is Assigned Successfully',
+            ]);
+
 
         }else{
             return response()->json([

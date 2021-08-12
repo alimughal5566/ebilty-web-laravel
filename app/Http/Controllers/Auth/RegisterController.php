@@ -107,8 +107,8 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'postal_code' => $request->postal_code,
                 'phone' => $request->mobile,
-                'cnic_image' => $filename,
-                'bussiness_type' => $request->bussiness_type,
+//                'cnic_image' => $filename,
+//                'bussiness_type' => $request->bussiness_type,
                 'password' => bcrypt($request->password),
             ]);
             $user->save();
@@ -121,22 +121,22 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'postal_code' => $request->postal_code,
                 'phone' => $request->mobile,
-                'cnic_image' => $filename,
-                'bussiness_type' => $request->bussiness_type,
+//                'cnic_image' => $filename,
+//                'bussiness_type' => $request->bussiness_type,
                 'password' => bcrypt($request->password),
             ]);
             $user->save();
             $user->assignRole('driver');
-            if($request->vehicle_category) {
-                foreach ($request->vehicle_category as $key => $cat) {
-                    $user_vehicle = new UserVehicle([
-                        'user_id' => $user->id,
-                        'category_id' => $cat,
-                        'vehicle_id' => $request->truck_used[$key]
-                    ]);
-                    $user_vehicle->save();
-                }
-            }
+//            if($request->vehicle_category) {
+//                foreach ($request->vehicle_category as $key => $cat) {
+//                    $user_vehicle = new UserVehicle([
+//                        'user_id' => $user->id,
+//                        'category_id' => $cat,
+//                        'vehicle_id' => $request->truck_used[$key]
+//                    ]);
+//                    $user_vehicle->save();
+//                }
+//            }
         }
         elseif($request->user_role_id == 3){
             $user = new User([
@@ -144,8 +144,8 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'postal_code' => $request->postal_code,
                 'phone' => $request->mobile,
-                'cnic_image' => $filename,
-                'bussiness_type' => $request->bussiness_type,
+//                'cnic_image' => $filename,
+//                'bussiness_type' => $request->bussiness_type,
                 'password' => bcrypt($request->password),
             ]);
             $user->save();

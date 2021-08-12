@@ -205,20 +205,20 @@
                              <a href="#" class="verify" style="text-decoration: underline;display: none" onclick="verify()">Send verification code</a>
                              <a  class="text-danger mobile-error" style="display: none" ></a>
                              <a  class="text-success mobile-success" style="display: none" ></a>
-                            <div class="input-group upload-btn-wrapper">
-                                <label for="cnic" class="sr-only"></label>
-                                <span class="upload-wrap px-3 w-100 d-flex align-items-center justify-content-between">
-                                <span class="upload-txt ont-weight-bold">CNIC</span>
-                                <a class="btn">Upload Image</a>
-                                </span>
-                                <input class="" type="file" placeholder="CNIC" name="cnic" autocomplete="off" id="cnic" {{(old('cnic_image'))?'':'required'}} accept="image/*">
-                                <input type="hidden" name="cnic_image" id="cnic_image" value="{{old('cnic_image')}}">
-                            </div>
-                            <div class="input-group">
-                                <label for="bussiness_type" class="sr-only"></label>
-                                <input class="form-control" type="text" value="{{old('bussiness_type')}}" placeholder="Bussiness Type" name="bussiness_type" id="bussiness_type" autocomplete="off" required="">
-                                <i class="fa fa-user-cog field-icon"></i>
-                            </div>
+{{--                            <div class="input-group upload-btn-wrapper">--}}
+{{--                                <label for="cnic" class="sr-only"></label>--}}
+{{--                                <span class="upload-wrap px-3 w-100 d-flex align-items-center justify-content-between">--}}
+{{--                                <span class="upload-txt ont-weight-bold">CNIC</span>--}}
+{{--                                <a class="btn">Upload Image</a>--}}
+{{--                                </span>--}}
+{{--                                <input class="" type="file" placeholder="CNIC" name="cnic" autocomplete="off" id="cnic" {{(old('cnic_image'))?'':'required'}} accept="image/*">--}}
+{{--                                <input type="hidden" name="cnic_image" id="cnic_image" value="{{old('cnic_image')}}">--}}
+{{--                            </div>--}}
+{{--                            <div class="input-group">--}}
+{{--                                <label for="bussiness_type" class="sr-only"></label>--}}
+{{--                                <input class="form-control" type="text" value="{{old('bussiness_type')}}" placeholder="Bussiness Type" name="bussiness_type" id="bussiness_type" autocomplete="off" required="">--}}
+{{--                                <i class="fa fa-user-cog field-icon"></i>--}}
+{{--                            </div>--}}
                             <div class="input-group">
                                 <label for="user_role_id" class="sr-only"></label>
                                 <div class="dropdown bootstrap-select form-control">
@@ -242,12 +242,12 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="input-group vehicle_category2" style="display: none">
-                                <label for="vehicle_category" class="sr-only"></label>
+{{--                            <div class="input-group vehicle_category2" style="display: none">--}}
+{{--                                <label for="vehicle_category" class="sr-only"></label>--}}
 {{--                                <div class="dropdown bootstrap-select form-control">--}}
-                                    <select name="vehicle_category[]" class="form-control"   id="vehicle_category_list0">
-                                        <option value="" selected="" disabled="">Vehicle category</option>
-                                    </select>
+{{--                                    <select name="vehicle_category[]" class="form-control"   id="vehicle_category_list0">--}}
+{{--                                        <option value="" selected="" disabled="">Vehicle category</option>--}}
+{{--                                    </select>--}}
 {{--                                    <button type="button" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="vehicle_category" title="Vehicle category">--}}
 {{--                                        <div class="filter-option">--}}
 {{--                                            <div class="filter-option-inner">--}}
@@ -264,14 +264,14 @@
 {{--                                <div class="option_min_add sec_min">--}}
 {{--                                    <span class="fa fa-plus-circle plos text-dark " id="first" data-placement="top" data-toggle="kt-tooltip" data-skin="dark" data-original-title="Add More Vehincle"></span>--}}
 {{--                                </div>--}}
-                            </div>
-                            <div class="input-group vehicle_type veh" style="display:none">
-                                <label for="vehicle_category" class="sr-only"></label>
-                                <select name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used0" autocomplete="off">
-                                </select>
-                            </div>
-                            <div class="divs">
-                            </div>
+{{--                            </div>--}}
+{{--                            <div class="input-group vehicle_type veh" style="display:none">--}}
+{{--                                <label for="vehicle_category" class="sr-only"></label>--}}
+{{--                                <select name="truck_used[]" class="form-control" data-dropup-auto="false" id="truck_used0" autocomplete="off">--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                            <div class="divs">--}}
+{{--                            </div>--}}
                             <div class="input-group">
                                 <label for="registerPassword" class="sr-only"></label>
                                 <input class="form-control" type="password" placeholder="Password" id="registerPassword" name="password" required="">

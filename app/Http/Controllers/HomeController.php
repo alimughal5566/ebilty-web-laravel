@@ -113,6 +113,11 @@ class HomeController extends Controller
             $request->license_image->move(public_path('images/license/'), $license_image);
             $user->license_image= $license_image;
         }
+        if ($request->license_back_image) {
+            $license_back_image = time() . '.' . $request->license_back_image->extension();
+            $request->license_back_image->move(public_path('images/license/'), $license_image);
+            $user->license_back_image= $license_back_image;
+        }
         $user->documents_verified=0;
         $user->license_number= $request->license_number;
         $user->save();
@@ -140,10 +145,17 @@ class HomeController extends Controller
     }
     public function updateCnic(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
+        $cnic_image = '';
         if ($request->cnic_image) {
             $cnic_image = time() . '.' . $request->cnic_image->extension();
             $request->cnic_image->move(public_path('/setting/cnic/'), $cnic_image);
             $user->cnic_image= $cnic_image;
+        }
+        $cnic_back_image = '';
+        if ($request->cnic_back_image) {
+            $cnic_back_image = time() . '.' . $request->cnic_back_image->extension();
+            $request->cnic_back_image->move(public_path('/setting/cnic/'), $cnic_image);
+            $user->cnic_back_image = $cnic_back_image;
         }
         $user->documents_verified=0;
         $user->cnic_number= $request->cnic_number;
