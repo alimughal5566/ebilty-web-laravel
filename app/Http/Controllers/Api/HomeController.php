@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Shipment;
