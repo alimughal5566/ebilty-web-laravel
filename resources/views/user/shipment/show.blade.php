@@ -373,31 +373,31 @@
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Name</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->name}}</span>
+                                        <span class="kt-widget12__value">{@$shipment->package->name}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Category</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->category->name}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->category->name}}</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Quantity</span>
-                                            <span class="kt-widget12__value">{{$shipment->package->quantity}}</span>
+                                            <span class="kt-widget12__value">{{@$shipment->package->quantity}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Weight</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->weight}} (kg)</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->weight}} (kg)</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Dimensions</span>
-                                            <span class="kt-widget12__value">{{$shipment->package->length}} x {{$shipment->package->width}} x {{$shipment->package->height}} (cm)</span>
+                                            <span class="kt-widget12__value">{{@$shipment->package->length}} x {{$shipment->package->width}} x {{$shipment->package->height}} (cm)</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package description</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->description}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->description}}</span>
                                     </div>
                                 </div>
 
