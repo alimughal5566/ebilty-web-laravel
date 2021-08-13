@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Shipment;
@@ -452,7 +451,7 @@ class HomeController extends Controller
         ->first();
         if(!$shipment){
             $shipment = new ShipmentTracking;
-            $shipment->shipment_id = $request->id;
+            $shipment->shipment_id = $request->shipment_id;
             $shipment->start_lat = $request->start_lat;
             $shipment->start_lng = $request->start_lng;
             $shipment->end_lat = $request->end_lat;
