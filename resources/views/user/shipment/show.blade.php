@@ -333,7 +333,7 @@
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Departure Time</span>
-                                        <span class="kt-widget12__value">{{$shipment->ship_date}} {{$shipment->ship_time->format('h:i A')}}</span>
+                                        <span class="kt-widget12__value">{{$shipment->ship_date}} | {{date('h:i A', strtotime($shipment->ship_time))}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Insurance </span>

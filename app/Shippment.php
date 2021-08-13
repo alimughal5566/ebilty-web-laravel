@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shippment extends Model
 {
+
 //    protected $dates = ['ship_time'];
     public function sender(){
         return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
@@ -27,7 +28,7 @@ class Shippment extends Model
         return $this->hasMany('App\ShipmentBids','shipment_id','id')->orderBy('bid_amount', 'ASC');
     }
     public function package(){
-        return $this->hasOne('App\ShippmentPackage','shippment_id','id');
+        return $this->hasOne('App\ShippmentPackage','shippment_id','id')->sum('comm');
     }
     public function myBid(){
         return $this->hasOne('App\ShipmentBids','shipment_id','id')->where('user_id',auth()->user()->id);
