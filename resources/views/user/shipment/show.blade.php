@@ -538,9 +538,12 @@
                                 Location
                             </h3>
                         </div>
-                        <button type="button" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" onclick="getLatlong()">
+                        <a href="{{route('tracking',[$shipment->id])}}" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" >
                             Get Directions
-                        </button>
+                        </a>
+{{--                        <a href="{{route('tracking',[$shipment->id])}}" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" onclick="getLatlong()">--}}
+{{--                            Get Directions--}}
+{{--                        </a>--}}
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
                         <div class="kt-widget12">

@@ -28,7 +28,7 @@ class Shippment extends Model
         return $this->hasMany('App\ShipmentBids','shipment_id','id')->orderBy('bid_amount', 'ASC');
     }
     public function package(){
-        return $this->hasOne('App\ShippmentPackage','shippment_id','id')->sum('comm');
+        return $this->hasOne('App\ShippmentPackage','shippment_id','id');
     }
     public function myBid(){
         return $this->hasOne('App\ShipmentBids','shipment_id','id')->where('user_id',auth()->user()->id);
