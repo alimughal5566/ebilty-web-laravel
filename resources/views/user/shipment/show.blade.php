@@ -373,7 +373,7 @@
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Name</span>
-                                        <span class="kt-widget12__value">{@$shipment->package->name}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->name}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Category</span>
