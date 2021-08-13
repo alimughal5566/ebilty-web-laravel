@@ -73,5 +73,28 @@
             @yield('content')
         </main>
     </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyByXmtlmyneEgUUCmifZBYSePIebpTjpkU",
+            authDomain: "ebilty-d1df5.firebaseapp.com",
+            projectId: "ebilty-d1df5",
+            storageBucket: "ebilty-d1df5.appspot.com",
+            messagingSenderId: "605159892414",
+            appId: "1:605159892414:web:f8684d823258a998bb45ef",
+            measurementId: "G-C5S1MTN8RH"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
 </body>
 </html>

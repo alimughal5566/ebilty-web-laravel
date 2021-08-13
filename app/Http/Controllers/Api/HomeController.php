@@ -391,10 +391,10 @@ class HomeController extends Controller
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
     public function show($id){
-        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
+        $shipment= Shippment::where('id',$id)->with('vehicle','sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 //        dd($shipment);
         return response()->json([
-            'success' =>'Data updated  successfully',
+            'success' =>'All shipments',
             'shipment' =>$shipment,
 
             ], 200);
@@ -463,7 +463,7 @@ class HomeController extends Controller
         else{
             $shipment->mid_lat = $request->mid_lat;
             $shipment->mid_lng = $request->mid_lng;
-            $shipment->save(); 
+            $shipment->save();
         }
         return response()->json($shipment);
     }
