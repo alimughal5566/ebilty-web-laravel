@@ -12,7 +12,7 @@ use App\Http\Controllers\ApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::post('set/cordination' , 'Api\HomeController@setCordinates');
 Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('user-detail', 'AuthController@user');

@@ -435,29 +435,10 @@ class HomeController extends Controller
 
     public function getTrackingPoints(){
         $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->select('end_lat' , 'end_lng' ,  'mid_lat' , 'mid_lng','start_lat' , 'start_lng'  )
         ->first();
         return response()->json($shipment);
     }
 
-    public function setTrackingPoints(Request $request){
-        $shipment = ShipmentTracking::where('shipment_id' , 1)
-        ->first();
-        if(!$shipment){
-            $shipment = new ShipmentTracking;
-            $shipment->shipment_id = $request->id;
-            $shipment->start_lat = $request->start_lat;
-            $shipment->start_lng = $request->start_lng;
-            $shipment->end_lat = $request->end_lat;
-            $shipment->end_lng = $request->end_lng;
-            $shipment->mid_lat = $request->mid_lng;
-            $shipment->mid_lng = $request->mid_lng;
-            $shipment->save();
-        }
-        else{
-            $shipment->mid_lat = $request->mid_lat;
-            $shipment->mid_lng = $request->mid_lng;
-            $shipment->save(); 
-        }
-        return response()->json($shipment);
-    }
+    
 }
