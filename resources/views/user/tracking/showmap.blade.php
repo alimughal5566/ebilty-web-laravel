@@ -288,36 +288,74 @@ function createMarker(map, latlng, label, html, color) {
 <script type="text/javascript">
 _uacct = "UA-162157-1";
 urchinTracker();
-setTimeout(function () { 
+    retrieveLocation()
+  // Initial function call
+  setInterval(function () {
+    // Invoke function every 10 minutes
     retrieveLocation();
- }, 500);
+  }, 10000);
+
 function retrieveLocation(){
     $.ajax({
         url: "{{url('get/trackingpoints/1')}}",
         success: function(res){
             let key = 0;
             let stopData = [];
-            let s = [];
+            console.log(res)
             $.each(res , function(index , i){
+                s = returnKey(index);
+                console.log(index , s)
                 if(key % 2 == 0){
-                    stopData[key] = ['Geometry']
-                    stopData[key]['Geometry'] = {lat: 'asdassad'}
+                    stopData[s] = {'Geometry' : {'Latitude' : i , 'Longitude':i}}
                     // stopData.push({'Geometry': i})
                     // stopData.push('Geometry')
-                    console.log(i , 'odd' , index)
                 }
                 else{
-                    stopData[key-1] = ['Geometry']
-                    stopData[key-1]['Geometry'] = {lat: 'asdassad'}
-                    console.log(i , 'even' , index)
+                    stopData[s].Geometry.Longitude= i
                 }
                 key++;
             })
-            console.log(stopData);
-           
+            var stops = [
+                        {"Geometry":{"Latitude":31.520919,"Longitude":74.258196}},
+                        {"Geometry":{"Latitude":31.522919,"Longitude":74.259696}},
+                        {"Geometry":{"Latitude":31.531919,"Longitude":74.26196}}
+                    ];
+                console.log(stops , stopData)
+                stops = stopData
+    var map = new window.google.maps.Map(document.getElementById("map"));
+
+    // new up complex objects before passing them around
+    var directionsDisplay = new window.google.maps.DirectionsRenderer({suppressMarkers: true});
+    var directionsService = new window.google.maps.DirectionsService();
+
+    Tour_startUp(stops);
+    
+    window.tour.loadMap(map, directionsDisplay);
+    window.tour.fitBounds(map);
+
+    if (stops.length > 1)
+        window.tour.calcRoute(directionsService, directionsDisplay);
             console.log(res , 'sdfsdfsfdsf')
         }
+        
     })
+
+    function returnKey(val){
+        switch(val){
+            case "end_lat":
+            return 2;
+            case "end_lng":
+            return 2;
+            case "start_lat":
+            return 0;
+            case "start_lng":
+            return 0;
+            case "mid_lat":
+            return 1;
+            case "mid_lng":
+            return 1;
+        }
+    }
 }
 </script>
 </body>

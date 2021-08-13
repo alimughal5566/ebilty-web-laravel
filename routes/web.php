@@ -21,9 +21,9 @@ Route::get('test', function () {
     return "Event has been sent!";
 });
 
-Route::get('show/tracking/{id}' ,'HomeController@showTracking');
+Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking');
+Route::get('send/noti' , 'HomeController@sendNotification');
 Route::get('get/trackingpoints/{id}' , 'HomeController@getTrackingPoints');
-
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
@@ -110,9 +110,6 @@ Route::prefix('admin')->group(function() {
 
     });
 });
-
-
-
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/get/notifications', 'HomeController@getAllNotfication')->name('get.all.notification');
         Route::get('/count/notifications', 'HomeController@countAllNotification')->name('count.all.notification');
@@ -150,10 +147,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('getCompanyDrivers', 'HomeController@getCompanyDrivers')->name('getCompanyDrivers');
         Route::post('createVehicle', 'HomeController@createVehicle')->name('createVehicle');
         Route::post('assignShipment', 'HomeController@assignShipment')->name('assignShipment');
-
 });
-
-
 Route::get('/getStates', 'HomeController@getStates')->name('getStates');
 Route::get('/getCities', 'HomeController@getCities')->name('getCities');
 Route::get('/getArea', 'HomeController@getArea')->name('getArea');

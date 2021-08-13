@@ -12,7 +12,7 @@ use App\Http\Controllers\ApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::post('set/cordination' , 'Api\HomeController@setCordinates');
 Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('user-detail', 'AuthController@user');
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 //    Route::post('store-shipment', 'ShippmentController@mobilestore');
     Route::get('my-drivers', 'HomeController@myDriversApi');
-    Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
+//    Route::get('/shipment/{id}', 'ShippmentController@shipmentDetails');
     Route::get('/get-company-drivers', 'Api\HomeController@getCompanyDrivers');
     Route::get('/all-shipments', 'Api\HomeController@allShipments');
 

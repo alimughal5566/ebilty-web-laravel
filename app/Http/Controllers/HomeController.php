@@ -435,29 +435,47 @@ class HomeController extends Controller
 
     public function getTrackingPoints(){
         $shipment = ShipmentTracking::where('shipment_id' , 1)
+        ->select('end_lat' , 'end_lng' ,  'mid_lat' , 'mid_lng','start_lat' , 'start_lng'  )
         ->first();
         return response()->json($shipment);
     }
 
-    public function setTrackingPoints(Request $request){
-        $shipment = ShipmentTracking::where('shipment_id' , 1)
-        ->first();
-        if(!$shipment){
-            $shipment = new ShipmentTracking;
-            $shipment->shipment_id = $request->id;
-            $shipment->start_lat = $request->start_lat;
-            $shipment->start_lng = $request->start_lng;
-            $shipment->end_lat = $request->end_lat;
-            $shipment->end_lng = $request->end_lng;
-            $shipment->mid_lat = $request->mid_lng;
-            $shipment->mid_lng = $request->mid_lng;
-            $shipment->save();
-        }
-        else{
-            $shipment->mid_lat = $request->mid_lat;
-            $shipment->mid_lng = $request->mid_lng;
-            $shipment->save(); 
-        }
-        return response()->json($shipment);
+    public function sendNotification()
+    {
+        $device_token = "aaaaaaaaaa";
+        $message = json_encode(['data' => 'sdfsdfdsf']);
+        $SERVER_API_KEY = 'AAAAkRnZ1MY:APA91bExiBK7S_yDRa1j6gE1NenpP5WQsglvMPvzBCREUgP02t75oNI2ML56VSMe1AVBSmZbByiP55r0Fi2NcsBwEN3vS6rouVtkQ7pU2D1DzWG7pLk7qYb6TRhla23wmlOkBiCCGA52';
+        // payload data, it will vary according to requirement
+        $data = [
+            "to" => array(
+                "shndfkjlsdfkljsdhfkjsd"), // for single device id
+            "data" => array(
+                "title" => "Sample Message", 
+                "body" => "This is Test message body"
+              )
+        ];
+        $dataString = json_encode($data);
+    
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+    
+        $ch = curl_init();
+      
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+               
+        $response = curl_exec($ch);
+      
+        curl_close($ch);
+      
+        return $response;
     }
+
+    
 }

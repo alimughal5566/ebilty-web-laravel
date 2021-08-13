@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shippment extends Model
 {
-    protected $dates = ['ship_time'];
+
+//    protected $dates = ['ship_time'];
     public function sender(){
         return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
     }

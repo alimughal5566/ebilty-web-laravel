@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Shipment;
@@ -17,6 +16,7 @@ use App\Models\Admin\Setting\VehicleCategory;
 use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
+use App\ShipmentTracking;
 
 class HomeController extends Controller
 {
@@ -391,10 +391,10 @@ class HomeController extends Controller
         return response()->json(['success' =>'Data updated  successfully'], 200);
     }
     public function show($id){
-        $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
+        $shipment= Shippment::where('id',$id)->with('vehicle','sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
 //        dd($shipment);
         return response()->json([
-            'success' =>'Data updated  successfully',
+            'success' =>'All shipments',
             'shipment' =>$shipment,
 
             ], 200);
@@ -444,6 +444,28 @@ class HomeController extends Controller
             'myBids'=>$myBids
 
         ]);
+    }
+
+    public function setCordinates(Request $request){
+        $shipment = ShipmentTracking::where('shipment_id' , $request->shipment_id)
+        ->first();
+        if(!$shipment){
+            $shipment = new ShipmentTracking;
+            $shipment->shipment_id = $request->shipment_id;
+            $shipment->start_lat = $request->start_lat;
+            $shipment->start_lng = $request->start_lng;
+            $shipment->end_lat = $request->end_lat;
+            $shipment->end_lng = $request->end_lng;
+            $shipment->mid_lat = $request->mid_lng;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save();
+        }
+        else{
+            $shipment->mid_lat = $request->mid_lat;
+            $shipment->mid_lng = $request->mid_lng;
+            $shipment->save();
+        }
+        return response()->json($shipment);
     }
 
 }
