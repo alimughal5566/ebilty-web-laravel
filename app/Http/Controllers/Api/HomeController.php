@@ -35,6 +35,8 @@ class HomeController extends Controller
             $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
+            $user->fcm_token = $request->fcm_token;
+            $user->plate_form = $request->plate_form;
             if(!empty($request->current_pass) && !empty($request->new_pass)){
               if(Hash::check($request->current_pass , $user->password)){
                   $user->password = bcrypt($request->new_pass);
