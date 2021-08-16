@@ -286,6 +286,7 @@ class HomeController extends Controller
                 $package->shippment_id = $shipment->id;
                 $package->package_category_id = $request->category_id;
                 $package->description = $request->description;
+                $package->name = $request->product_name;
                 $package->quantity = $request->quantity;
                 $package->weight = $request->weight;
                 $package->length = $request->length;
@@ -450,8 +451,6 @@ class HomeController extends Controller
         }
         return response()->json($shipment);
     }
-
-
 
     public function updateStatus(Request $request){
 
