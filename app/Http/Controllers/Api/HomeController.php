@@ -191,37 +191,20 @@ class HomeController extends Controller
             ]);
     }
     public function assignDriver(Request $request){
-//        dd($request);
 
-       $user=new User();
 
-       $getUser=$user->where('id',$request->driver_id)->first();
-//dd($getUser);
-       $vehicle=new UserVehicle();
-       $getVehicle=$vehicle->where('id',$request->vehicle_id)->first();
-//       dd($getUser);
-        if($getUser->is_available==1){
-
-            $user->where('id',$request->user_id)->update(['is_available'=>0]);
-            $shipment = Shippment::find($request->shipment_id);
-            $shipment->assigned_to = $request->driver_id;
-            $shipment->assigned_by = Auth::id();
-            $shipment->assigned_vehicle_id = $request->driver_vehicle_id;
-            $shipment->update();
-
-            return response()->json([
+       $getUser=User::where('id',$request->driver_id)
+       ->update(['is_available'=>0]);
+        $shipment = Shippment::find($request->shipment_id);
+        $shipment->assigned_to = $request->driver_id;
+        $shipment->assigned_by = Auth::id();
+        $shipment->assigned_at = now();
+        $shipment->assigned_vehicle_id = $request->vehicle_id;
+        $shipment->update();
+        return response()->json([
                 'success' => true,
                 'message' => 'Driver Is Assigned Successfully',
             ]);
-
-
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Driver is Not Available',
-            ]);
-        }
-
    }
     public function bidStore(Request $request){
         $bid= new ShipmentBids;
