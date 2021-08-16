@@ -13,6 +13,7 @@ use App\Http\Controllers\ApiController;
 |
 */
 Route::post('set/cordination' , 'Api\HomeController@setCordinates');
+Route::post('send/noti' , 'Api\HomeController@sendNotification');
 Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('user-detail', 'AuthController@user');

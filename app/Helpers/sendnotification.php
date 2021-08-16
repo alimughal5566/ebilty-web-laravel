@@ -1,4 +1,6 @@
 <?php
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 if (!function_exists('sendNotification')) {
 
 
@@ -20,3 +22,26 @@ function sendNotification($data) {
     return "success";
  }
     }
+
+
+    if (!function_exists('sendPushNotification')) {
+      function sendPushNotification($data) {
+         $device_token = $data['device_token'];
+         $title = $data['title'];
+         $body = $data['body'];
+         $imageUrl = $data['image_url'];
+         $notification = Notification::fromArray([
+         'title' => $title,
+         'body' => $body,
+         'image' => $imageUrl,
+         ]);
+         $data = [
+         'first_key' => 'First Value',
+         'second_key' => 'Second Value',
+         ];
+         $message = CloudMessage::withTarget('token', $device_token)
+         ->withNotification($notification)
+         ->withData($data);
+         return $message;
+   }
+      }

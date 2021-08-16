@@ -17,9 +17,20 @@ use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 use App\ShipmentTracking;
+use Kreait\Firebase\Messaging;
+
+
+
+
 
 class HomeController extends Controller
 {
+    protected $messaging;
+
+    public function __construct(Messaging $messaging)
+    {
+        $this->messaging = $messaging;
+    }
     public function getCompanyDrivers(){
         if(\Auth::check()){
             $drivers = User::where('created_by', \auth()->user()->id)->get();
@@ -467,5 +478,17 @@ class HomeController extends Controller
         }
         return response()->json($shipment);
     }
+
+    public function sendNotification(Request $request)
+    {
+        $data['device_token'] = 'dk0B3l9_QxOkw1Ar7qaRAY:APA91bH91WJQ7VyRwBCYT8riH9kfuf2sotAOVxq4FBxpjZzqLgvQpIFfIcXGzp3UWk0wxal4hzAMffCZFgW9iGzpaSmESWMLjTV1IbTcqz0EFFYGilraK7K4eAkoD-dE6dieSVjz3L6C';
+        $data['title'] = 'Your bid has been updated';
+        $data['body'] = 'User has placed bid for RS 500';
+        $data['image_url'] = 'http://lorempixel.com/200/50/';
+        $message = sendPushNotification($data);
+        $this->messaging->send($message);
+        return "message sent";
+    }
+
 
 }

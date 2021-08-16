@@ -22,12 +22,11 @@ Route::get('test', function () {
 });
 
 Route::get('show/tracking/{id}' ,'HomeController@showTracking');
-Route::get('send/noti' , 'HomeController@sendNotification');
+
 Route::get('get/trackingpoints/{id}' , 'HomeController@getTrackingPoints');
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
-
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
