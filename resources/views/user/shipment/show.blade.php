@@ -333,7 +333,7 @@
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Departure Time</span>
-                                        <span class="kt-widget12__value">{{$shipment->ship_date}} {{$shipment->ship_time->format('h:i A')}}</span>
+                                        <span class="kt-widget12__value">{{$shipment->ship_date}} | {{date('h:i A', strtotime($shipment->ship_time))}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Insurance </span>
@@ -373,31 +373,31 @@
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Name</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->name}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->name}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Category</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->category->name}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->category->name}}</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Quantity</span>
-                                            <span class="kt-widget12__value">{{$shipment->package->quantity}}</span>
+                                            <span class="kt-widget12__value">{{@$shipment->package->quantity}}</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Weight</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->weight}} (kg)</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->weight}} (kg)</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Dimensions</span>
-                                            <span class="kt-widget12__value">{{$shipment->package->length}} x {{$shipment->package->width}} x {{$shipment->package->height}} (cm)</span>
+                                            <span class="kt-widget12__value">{{@$shipment->package->length}} x {{$shipment->package->width}} x {{$shipment->package->height}} (cm)</span>
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package description</span>
-                                        <span class="kt-widget12__value">{{$shipment->package->description}}</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->description}}</span>
                                     </div>
                                 </div>
 
@@ -538,9 +538,12 @@
                                 Location
                             </h3>
                         </div>
-                        <button type="button" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" onclick="getLatlong()">
+                        <a href="{{route('tracking',[$shipment->id])}}" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" >
                             Get Directions
-                        </button>
+                        </a>
+{{--                        <a href="{{route('tracking',[$shipment->id])}}" class="float-right text-right btn btn-warning btn-sm mb-1 mt-4"   style="max-height: 30px" onclick="getLatlong()">--}}
+{{--                            Get Directions--}}
+{{--                        </a>--}}
                     </div>
                     <div class="kt-portlet__body kt-portlet__body--fluid">
                         <div class="kt-widget12">

@@ -128,15 +128,15 @@
                                     @forelse($addresses as $address)
                                         <tr>
                                             <td class="count">{{ $count++ }}</td>
-                                            <td class="name">{{ucfirst($address->address)}}</td>
-                                            <td class="name">{{ucfirst($address->state->name)}}</td>
-                                            <td class="name">{{ucfirst($address->city->name)}}</td>
-                                            <td class="">{{$address->zip}}</td>
-                                            <td class="">{{($address->is_default==1)?"Yes":"No"}}</td>
+                                            <td class="name">{{ucfirst(@$address->address)}}</td>
+                                            <td class="name">{{ucfirst(@$address->state->name)}}</td>
+                                            <td class="name">{{ucfirst(@$address->city->name)}}</td>
+                                            <td class="">{{@$address->zip}}</td>
+                                            <td class="">{{(@$address->is_default==1)?"Yes":"No"}}</td>
                                             <td>
                                                 <label class="switch">
                                                     <input type="checkbox" id="type_status{{$address->id}}" class="chk"
-                                                           {{($address->is_default == 1)?'checked':''}} onchange="updatestatus({{$address->id}})">
+                                                           {{(@$address->is_default == 1)?'checked':''}} onchange="updatestatus({{@$address->id}})">
                                                     <span class="slider round"></span>
                                                 </label>
                                             </td>

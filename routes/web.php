@@ -16,13 +16,16 @@ use Symfony\Component\Console\Helper\Helper;
 |
 */
 
+
+
+
 Route::get('test', function () {
    sendnote(2 , 1,'dadasdasdasdadasdasdasasd' );
     return "Event has been sent!";
 });
 
-Route::get('show/tracking/{id}' ,'HomeController@showTracking');
-
+Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking');
+Route::get('send/noti' , 'HomeController@sendNotification');
 Route::get('get/trackingpoints/{id}' , 'HomeController@getTrackingPoints');
 Route::get('/', 'FrontEndController@index')->name('index');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');

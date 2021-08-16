@@ -46,6 +46,8 @@ class HomeController extends Controller
             $user  = Auth::user();
             $user->name = $request->name;
             $user->phone = $request->phone;
+            $user->fcm_token = $request->fcm_token;
+            $user->plate_form = $request->plate_form;
             if(!empty($request->current_pass) && !empty($request->new_pass)){
               if(Hash::check($request->current_pass , $user->password)){
                   $user->password = bcrypt($request->new_pass);
@@ -202,37 +204,20 @@ class HomeController extends Controller
             ]);
     }
     public function assignDriver(Request $request){
-//        dd($request);
 
-       $user=new User();
 
-       $getUser=$user->where('id',$request->driver_id)->first();
-//dd($getUser);
-       $vehicle=new UserVehicle();
-       $getVehicle=$vehicle->where('id',$request->vehicle_id)->first();
-//       dd($getUser);
-        if($getUser->is_available==1){
-
-            $user->where('id',$request->user_id)->update(['is_available'=>0]);
-            $shipment = Shippment::find($request->shipment_id);
-            $shipment->assigned_to = $request->driver_id;
-            $shipment->assigned_by = Auth::id();
-            $shipment->assigned_vehicle_id = $request->driver_vehicle_id;
-            $shipment->update();
-
-            return response()->json([
+       $getUser=User::where('id',$request->driver_id)
+       ->update(['is_available'=>0]);
+        $shipment = Shippment::find($request->shipment_id);
+        $shipment->assigned_to = $request->driver_id;
+        $shipment->assigned_by = Auth::id();
+        $shipment->assigned_at = now();
+        $shipment->assigned_vehicle_id = $request->vehicle_id;
+        $shipment->update();
+        return response()->json([
                 'success' => true,
                 'message' => 'Driver Is Assigned Successfully',
             ]);
-
-
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Driver is Not Available',
-            ]);
-        }
-
    }
     public function bidStore(Request $request){
         $bid= new ShipmentBids;
@@ -314,6 +299,7 @@ class HomeController extends Controller
                 $package->shippment_id = $shipment->id;
                 $package->package_category_id = $request->category_id;
                 $package->description = $request->description;
+                $package->name = $request->product_name;
                 $package->quantity = $request->quantity;
                 $package->weight = $request->weight;
                 $package->length = $request->length;
@@ -430,7 +416,7 @@ class HomeController extends Controller
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user');
+                ->with('sender.user','package','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole(['company_driver','brocker_driver'])){
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
@@ -488,6 +474,16 @@ class HomeController extends Controller
         $message = sendPushNotification($data);
         $this->messaging->send($message);
         return "message sent";
+    }
+    public function updateStatus(Request $request){
+
+
+        $getUser=Shipment::where('id',$request->shipment_id)
+            ->update(['status_id'=>$request->status_id]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Status Changed Successfully',
+        ]);
     }
 
 
