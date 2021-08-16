@@ -402,7 +402,7 @@ class HomeController extends Controller
         }
         elseif(auth()->user()->hasRole('customer')){
             $shipments= Shippment::orderBy('updated_at','desc')->where('user_id',auth()->user()->id)
-                ->with('sender.user','package','receiver.user','status','bids.user');
+                ->with('sender.user','package','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole(['company_driver','brocker_driver'])){
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user');
