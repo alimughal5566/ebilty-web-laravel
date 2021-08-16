@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::post('/bid-store', 'Api\HomeController@bidStore');
     Route::post('/assign-driver', 'Api\HomeController@assignDriver');
+    Route::post('/status-update', 'Api\HomeController@updateStatus');
     Route::post('updateProfile', 'Api\HomeController@updateProfile');
     Route::post('add_driver' , 'Api\HomeController@addDriver');
     Route::post('/store-shipment', 'Api\HomeController@storeShipment');

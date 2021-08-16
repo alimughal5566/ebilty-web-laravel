@@ -451,4 +451,18 @@ class HomeController extends Controller
         return response()->json($shipment);
     }
 
+
+
+    public function updateStatus(Request $request){
+
+
+        $getUser=Shipment::where('id',$request->shipment_id)
+            ->update(['status_id'=>$request->status_id]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Status Changed Successfully',
+        ]);
+    }
+
+
 }
