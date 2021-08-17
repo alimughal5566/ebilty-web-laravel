@@ -25,12 +25,12 @@ use App\ShipmentTracking;
 
 class HomeController extends Controller
 {
-    protected $messaging;
-
-    public function __construct(Messaging $messaging)
-    {
-        $this->messaging = $messaging;
-    }
+//    protected $messaging;
+//
+//    public function __construct(Messaging $messaging)
+//    {
+//        $this->messaging = $messaging;
+//    }
 
     public function getCompanyDrivers(){
         if(\Auth::check()){
