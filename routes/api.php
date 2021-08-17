@@ -13,6 +13,8 @@ use App\Http\Controllers\ApiController;
 |
 */
 Route::post('set/cordination' , 'Api\HomeController@setCordinates');
+Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking');
+
 Route::post('send/noti' , 'Api\HomeController@sendNotification');
 Route::group(['middleware' => 'auth:api'], function(){
 

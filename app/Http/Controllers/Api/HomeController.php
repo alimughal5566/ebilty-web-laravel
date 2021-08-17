@@ -31,6 +31,7 @@ class HomeController extends Controller
     {
         $this->messaging = $messaging;
     }
+
     public function getCompanyDrivers(){
         if(\Auth::check()){
             $drivers = User::where('created_by', \auth()->user()->id)->get();
@@ -433,7 +434,6 @@ class HomeController extends Controller
             'assigned' => $assigned,
         ]);
     }
-
     public function myBids($id){
         $myBids=ShipmentBids::where('shipment_id',$id)->where('user_id',Auth::id())->first();
         return response()->json([
@@ -442,7 +442,6 @@ class HomeController extends Controller
 
         ]);
     }
-
     public function setCordinates(Request $request){
         $shipment = ShipmentTracking::where('shipment_id' , $request->shipment_id)
         ->first();
@@ -453,7 +452,7 @@ class HomeController extends Controller
             $shipment->start_lng = $request->start_lng;
             $shipment->end_lat = $request->end_lat;
             $shipment->end_lng = $request->end_lng;
-            $shipment->mid_lat = $request->mid_lng;
+            $shipment->mid_lat = $request->mid_lat;
             $shipment->mid_lng = $request->mid_lng;
             $shipment->save();
         }
@@ -475,6 +474,7 @@ class HomeController extends Controller
         $this->messaging->send($message);
         return "message sent";
     }
+
     public function updateStatus(Request $request){
 
 
