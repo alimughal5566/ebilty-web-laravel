@@ -183,7 +183,7 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'all shipments',
-            'shipments' => $shipments,
+            'shipments' => @$shipments,
             ]);
     }
     public function getAllDrivers(){
