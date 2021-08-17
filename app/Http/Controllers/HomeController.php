@@ -433,13 +433,13 @@ class HomeController extends Controller
         return view('user.tracking.showmap');
     }
 
-    public function getTrackingPoints(){
-        $shipment = ShipmentTracking::where('shipment_id' , 1)
+    public function getTrackingPoints($id){
+        $shipment = ShipmentTracking::where('shipment_id' , $id)
         ->select('end_lat' , 'end_lng' ,  'mid_lat' , 'mid_lng','start_lat' , 'start_lng'  )
         ->first();
         return response()->json($shipment);
     }
 
- 
-    
+
+
 }
