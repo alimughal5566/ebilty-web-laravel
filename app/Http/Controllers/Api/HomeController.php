@@ -466,13 +466,20 @@ class HomeController extends Controller
 
     public function sendNotification(Request $request)
     {
-        $data['device_token'] = 'dk0B3l9_QxOkw1Ar7qaRAY:APA91bH91WJQ7VyRwBCYT8riH9kfuf2sotAOVxq4FBxpjZzqLgvQpIFfIcXGzp3UWk0wxal4hzAMffCZFgW9iGzpaSmESWMLjTV1IbTcqz0EFFYGilraK7K4eAkoD-dE6dieSVjz3L6C';
+
+        if (Auth::check()){
+        $data['device_token'] = Auth::user()->fcm_token;
         $data['title'] = 'Your bid has been updated';
         $data['body'] = 'User has placed bid for RS 500';
         $data['image_url'] = 'http://lorempixel.com/200/50/';
         $message = sendPushNotification($data);
         $this->messaging->send($message);
         return "message sent";
+        }
+        else{
+            return "Login please";
+        }
+
     }
 
     public function updateStatus(Request $request){
