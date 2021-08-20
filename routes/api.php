@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('shipment/{id}', 'Api\HomeController@show');
     Route::get('shipment/by/status','Api\HomeController@shipmentStatusFilter');
     Route::get('mybids/{id}','Api\HomeController@myBids');
+    Route::get('get/get-all-notifications' , 'Api\HomeController@getAllNotifications');
 
 
 

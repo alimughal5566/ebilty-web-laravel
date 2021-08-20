@@ -492,6 +492,10 @@ class HomeController extends Controller
             'message' => 'Status Changed Successfully',
         ]);
     }
+    public function getAllNotfication(){
+        $allnotfications=Notification::where('receiver_id',Auth::id())->orderBy('id','DESC')->paginate(4);
+        return response()->json($allnotfications);
+    }
 
 
 }
