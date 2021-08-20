@@ -17,11 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 use App\ShipmentTracking;
+use App\Notification;
 //use Kreait\Firebase\Messaging;
-
-
-
-
 
 class HomeController extends Controller
 {
