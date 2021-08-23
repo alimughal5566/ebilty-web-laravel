@@ -10,6 +10,7 @@ function sendNotification($data) {
     $notifications->message = $data['message'];
     $notifications->receiver_id = $data['receiver_id'];
     $notifications->save();
+
     return "success";
  }
 }

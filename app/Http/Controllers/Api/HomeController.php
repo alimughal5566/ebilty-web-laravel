@@ -18,16 +18,16 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 use App\ShipmentTracking;
 use App\Notification;
-//use Kreait\Firebase\Messaging;
+use Kreait\Firebase\Messaging;
 
 class HomeController extends Controller
 {
-//    protected $messaging;
-//
-//    public function __construct(Messaging $messaging)
-//    {
-//        $this->messaging = $messaging;
-//    }
+    protected $messaging;
+
+    public function __construct(Messaging $messaging)
+    {
+        $this->messaging = $messaging;
+    }
 
     public function getCompanyDrivers(){
         if(\Auth::check()){
@@ -461,23 +461,23 @@ class HomeController extends Controller
         return response()->json($shipment);
     }
 
-//    public function sendNotification(Request $request)
-//    {
-//
-//        if (Auth::check()){
-//        $data['device_token'] = Auth::user()->fcm_token;
-//        $data['title'] = 'Your bid has been updated';
-//        $data['body'] = 'User has placed bid for RS 500';
-//        $data['image_url'] = 'http://lorempixel.com/200/50/';
-//        $message = sendPushNotification($data);
-//        $this->messaging->send($message);
-//        return "message sent";
-//        }
-//        else{
-//            return "Login please";
-//        }
-//
-//    }
+    public function sendNotification(Request $request)
+    {
+
+        if (Auth::check()){
+        $data['device_token'] = Auth::user()->fcm_token;
+        $data['title'] = 'Your bid has been updated';
+        $data['body'] = 'User has placed bid for RS 500';
+        $data['image_url'] = 'http://lorempixel.com/200/50/';
+        $message = sendPushNotification($data);
+        $this->messaging->send($message);
+        return "message sent";
+        }
+        else{
+            return "Login please";
+        }
+
+    }
 
     public function updateStatus(Request $request){
 
