@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Classes;
-use Google\Cloud\Storage\Notification;
 use Kreait\Firebase\Messaging\CloudMessage;
 
 class Firebase{
