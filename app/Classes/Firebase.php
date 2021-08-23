@@ -2,7 +2,6 @@
 
 namespace App\Classes;
 use Kreait\Firebase\Messaging\CloudMessage;
-use Kreait\Firebase\Messaging\Notification;
 
 class Firebase{
     protected $messaging;
@@ -12,7 +11,6 @@ class Firebase{
         $title = $data['title'];
         $body = $data['body'];
         $imageUrl = $data['image_url'];
-        $revi = $data['image_url'];
         $notification = Notification::fromArray([
             'title' => $title,
             'body' => $body,
