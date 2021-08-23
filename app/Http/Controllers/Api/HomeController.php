@@ -463,10 +463,10 @@ class HomeController extends Controller
         return response()->json($shipment);
     }
 
-    public function sendNotification($data)
+    public function sendNotification(Request $request)
     {
-        $firebaseClass = Firebase::sendNotification($data);
-        dd($firebaseClass);
+        $firebaseClass = Firebase::sendNotification($request);
+//        dd($firebaseClass);
 
 //        if (Auth::check()){
 //        $data['device_token'] = Auth::user()->fcm_token;
