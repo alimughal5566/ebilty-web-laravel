@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Classes\Firebase;
 use App\Models\Admin\Setting\General_setting;
 use App\Models\Admin\Setting\Shipment;
 use App\Models\Admin\Setting\Vehicle;
@@ -24,10 +25,10 @@ class HomeController extends Controller
 {
     protected $messaging;
 
-    public function __construct(Messaging $messaging)
-    {
-        $this->messaging = $messaging;
-    }
+//    public function __construct(Messaging $messaging)
+//    {
+//        $this->messaging = $messaging;
+//    }
 
     public function getCompanyDrivers(){
         if(\Auth::check()){
@@ -354,6 +355,7 @@ class HomeController extends Controller
             $ship->status_id=9;
             $ship->save();
             sendnote(auth()->user()->id , $ship->user_id, 'Bid status updated. ' );
+
         }
         return response()->json(['success' =>'status updated  successfully'], 200);
     }
@@ -461,21 +463,23 @@ class HomeController extends Controller
         return response()->json($shipment);
     }
 
-    public function sendNotification(Request $request)
+    public function sendNotification($data)
     {
+        $firebaseClass = Firebase::sendNotification($data);
+        dd($firebaseClass);
 
-        if (Auth::check()){
-        $data['device_token'] = Auth::user()->fcm_token;
-        $data['title'] = 'Your bid has been updated';
-        $data['body'] = 'User has placed bid for RS 500';
-        $data['image_url'] = 'http://lorempixel.com/200/50/';
-        $message = sendPushNotification($data);
-        $this->messaging->send($message);
-        return "message sent";
-        }
-        else{
-            return "Login please";
-        }
+//        if (Auth::check()){
+//        $data['device_token'] = Auth::user()->fcm_token;
+//        $data['title'] = 'Your bid has been updated';
+//        $data['body'] = 'User has placed bid for RS 500';
+//        $data['image_url'] = 'http://lorempixel.com/200/50/';
+//        $message = sendPushNotification($data);
+//        $this->messaging->send($message);
+//        return "message sent";
+//        }
+//        else{
+//            return "Login please";
+//        }
 
     }
 

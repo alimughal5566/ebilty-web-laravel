@@ -18,6 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->integer('sender_id');
             $table->string('message');
             $table->integer('receiver_id');
+            $table->integer('redirect_id');
+            $table->integer('type');
             $table->tinyinteger('read_status')->default(0);
             $table->tinyInteger('open_status')->default(0);
             $table->timestamps();

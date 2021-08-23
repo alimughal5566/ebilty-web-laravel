@@ -1,28 +1,33 @@
 <?php
 
 namespace App\Classes;
-use Kreait\Firebase\Messaging;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 class Firebase{
     protected $messaging;
+    public static function sendNotification($data)
+    {
+        $device_token = $data['device_token'];
+        $title = $data['title'];
+        $body = $data['body'];
+        $imageUrl = $data['image_url'];
+        $notification = Notification::fromArray([
+            'title' => $title,
+            'body' => $body,
+            'image' => $imageUrl,
+        ]);
+        $data = [
+            'first_key' => 'First Value',
+            'second_key' => 'Second Value',
+        ];
 
-    public function __construct(Messaging $messaging)
-    {
-        $this->messaging = $messaging;
-    }
-    public function sendNotification(Request $request)
-    {
-        if (Auth::check()){
-        $data['device_token'] = Auth::user()->fcm_token;
-        $data['title'] = 'Your bid has been updated';
-        $data['body'] = 'User has placed bid for RS 500';
-        $data['image_url'] = 'http://lorempixel.com/200/50/';
-        $message = sendPushNotification($data);
-        $this->messaging->send($message);
-        return "message sent";
-        }
-        else{
-            return "Login please";
-        }
+        $message = CloudMessage::withTarget('token', $device_token)
+            ->withNotification($notification)
+            ->withData($data);
+        $messaging = app('firebase.messaging');
+        $messaging->send($message);
+
+        return "true";
     }
 }
