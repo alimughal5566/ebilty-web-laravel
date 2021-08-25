@@ -424,7 +424,7 @@ class HomeController extends Controller
         $vehicles_cat=VehicleCategory::all();
         $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
         $assigned =$shipments->where('status_id','1')->values();
-        $delivered =$shipments->where('status_id','7')->values();
+        $delivered =$shipments->whereIn('status_id',[7,8])->values();
 //dd($inprocess);
         return response()->json([
             'message' => 'filter shipments',
