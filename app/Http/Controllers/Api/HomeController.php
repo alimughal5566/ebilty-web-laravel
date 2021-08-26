@@ -7,6 +7,7 @@ use App\Models\Admin\Setting\Vehicle;
 use App\ShipmentBids;
 use App\Shippment;
 use App\ShippmentPackage;
+use App\StatusChangeFile;
 use App\UserAddress;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -485,9 +486,19 @@ class HomeController extends Controller
 
     public function updateStatus(Request $request){
 
-
+        if($request->hasFile('file')){
+        $image=$request->file('file');
+        $imageName = time().'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('assets/img/statusimages'), $imageName);
+        }
         $getUser=Shipment::where('id',$request->shipment_id)
             ->update(['status_id'=>$request->status_id]);
+         StatusChangeFile::create([
+             'shipment_id'=>$request->shipment_id,
+             'status_id'=>$request->status_id,
+             'file'=>$imageName??null,
+             'user_id'=>Auth::id()
+         ]);
         return response()->json([
             'success' => true,
             'message' => 'Status Changed Successfully',

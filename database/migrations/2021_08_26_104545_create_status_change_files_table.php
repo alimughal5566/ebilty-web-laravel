@@ -16,6 +16,7 @@ class CreateStatusChangeFilesTable extends Migration
         Schema::create('status_change_files', function (Blueprint $table) {
             $table->id();
             $table->string('status_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('file')->nullable();
             $table->string('shipment_id')->nullable();
             $table->timestamps();
