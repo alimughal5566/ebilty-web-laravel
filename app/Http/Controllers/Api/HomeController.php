@@ -419,7 +419,7 @@ class HomeController extends Controller
                 ->with('sender.user','vehicle','package','receiver.user','status','bids.user')->get();
         }
         elseif(auth()->user()->hasRole(['company_driver','brocker_driver'])){
-            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user','vehicle');
+            $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user','vehicle')->get();
         }
         $vehicles_cat=VehicleCategory::all();
         $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
