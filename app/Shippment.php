@@ -42,5 +42,5 @@ class Shippment extends Model
     public function assignedto(){
         return $this->hasOne('App\User','id','assigned_to');    }
 
-
+protected $guarded=[''];
 }

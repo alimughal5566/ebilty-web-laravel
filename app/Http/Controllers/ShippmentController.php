@@ -26,6 +26,8 @@ class ShippmentController extends Controller
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
 //        $shipment->book_as= $request->book_as;
+        $shipment->loading= $request->loading??0;
+        $shipment->unloading= $request->unloading??0;
         $shipment->ship_date= $request->ship_date;
         $shipment->ship_time= $request->ship_time;
         $shipment->dilivery_type= $request->dilivery_type;
@@ -69,11 +71,12 @@ class ShippmentController extends Controller
      */
     public function mobilestore(Request $request){
 
-
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
         $shipment->book_as= 1;
         $shipment->ship_date= $request->ship_date;
+        $shipment->loading= $request->loading;
+        $shipment->unloading= $request->unloading;
         $shipment->ship_time= $request->ship_time;
         $shipment->dilivery_type= $request->dilivery_type;
         $shipment->is_insured= $request->is_insured;
