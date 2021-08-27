@@ -275,6 +275,8 @@ class HomeController extends Controller
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
         $shipment->ship_date= $request->ship_date;
+        $shipment->loading= $request->loading;
+        $shipment->unloading= $request->unloading;
         $shipment->pickupaddress_id= $savepickup->id;
         $shipment->dropofupaddress_id=$savedropof->id;
         $shipment->ship_time= $request->ship_time;

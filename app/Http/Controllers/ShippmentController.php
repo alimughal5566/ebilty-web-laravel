@@ -70,7 +70,7 @@ class ShippmentController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function mobilestore(Request $request){
-
+dd($request);
         $shipment=new Shippment;
         $shipment->user_id= auth()->user()->id;
         $shipment->book_as= 1;
