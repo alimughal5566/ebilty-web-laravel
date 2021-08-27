@@ -376,7 +376,7 @@
                                        <span class="kt-option__control">
                                        <span class="kt-radio kt-radio--state-brand">
                                        <input type="checkbox" name="loading" class="loading" value="1"
-                                              checked="" {{(old('loading')=='1')?'checked':''}}  >
+                                               {{(old('loading')=='1')?'checked':''}}  >
                                        <span></span>
                                        </span>
                                        </span>
