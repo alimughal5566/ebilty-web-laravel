@@ -365,6 +365,35 @@ $percentage=100;
     </div>
 </div>
 
+<div class="modal fade" id="avedance-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Avedance Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+      <form action="{{route('updateshipmentStatus')}}" enctype="multipart/form-data" method="post">
+          @csrf
+            <input type="hidden" name="status" id="sta_id">
+            <input type="hidden" name="id" id="ship_id">
+            <div class="modal-body">
+                <div>
+                    <lable for="bid_price">Image Upload
+                        <input type="file" name="file" class="form-control" required  >
+                    </lable>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+            <button type="submit" class="btn btn-primary" >Save</button>
+        </div>
+     </form>
+        </div>
+    </div>
+</div>
 
 
 
@@ -528,20 +557,26 @@ $percentage=100;
 
 
     function setStatus(id,status) {
-        $.ajax({
-            url: "{{route('updateshipmentStatus')}}",
-            type: "get",
-            data: {'id': id,'status': status},
-            success: function (result) {
-                toastr.success( 'Action successfull');
-                setTimeout(function(){ location.reload() },1000);
-            },
-            error: function (request, status, error) {
-                alert(request.responseText);
-                // $('#showBidModal').modal('hide')
-            }
-        })
+            $('#ship_id').val(id)
+            $('#sta_id').val(status)
+        $('#avedance-modal').modal().toggle();
+        {{--$.ajax({--}}
+        {{--    url: "{{route('updateshipmentStatus')}}",--}}
+        {{--    type: "get",--}}
+        {{--    data: {'id': id,'status': status},--}}
+        {{--    success: function (result) {--}}
+        {{--        toastr.success( 'Action successfull');--}}
+        {{--        setTimeout(function(){ location.reload() },1000);--}}
+        {{--    },--}}
+        {{--    error: function (request, status, error) {--}}
+        {{--        alert(request.responseText);--}}
+        {{--        // $('#showBidModal').modal('hide')--}}
+        {{--    }--}}
+        {{--})--}}
     }
+
+
+    // toastr.success( 'Action successfull');
 
 </script>
 @endsection

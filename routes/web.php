@@ -128,7 +128,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/update/bid/status', 'CustomerController@bidStatusUpdate')->name('update.bid.status');
         Route::get('/send/bid/revise/request', 'CustomerController@sendBidReviserequest')->name('sendBidReviserequest');
         Route::get('/update/bid/revise/request', 'DriverController@updateBidReviserequest')->name('updateBidReviserequest');
-        Route::get('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
+        Route::post('/update/shipment/status', 'DriverController@updateshipmentStatus')->name('updateshipmentStatus');
         Route::get('/shipment/{id}', 'ShippmentController@show')->name('shipmentDetail');
         Route::get('/vehicles', 'DriverController@myVehicles')->name('my.vehicles');
         Route::get('/my-locations', 'HomeController@mysavedlocations')->name('my.locations');

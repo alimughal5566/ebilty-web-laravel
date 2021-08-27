@@ -10,6 +10,7 @@ use App\ShipmentBids;
 use App\Events\NotificationEvent;;
 use App\ShipmentStatus;
 use App\Shippment;
+use App\StatusChangeFile;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,6 +151,19 @@ class DriverController extends Controller
     }
 
     public function updateshipmentStatus(Request $request){
+
+        if($request->hasFile('file')){
+            $image=$request->file('file');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('assets/img/statusimages'), $imageName);
+        }
+        StatusChangeFile::create([
+            'shipment_id'=>$request->id,
+            'status_id'=>$request->status,
+            'file'=>$imageName??null,
+            'user_id'=>Auth::id()
+        ]);
+
         if($request->id && $request->status == 8){
             $user = User::where('id', \auth()->user()->id)->first();
             $user->is_available = 1;
@@ -163,7 +177,8 @@ class DriverController extends Controller
         $receiver_id=Shipment::where('id',$request->id)->pluck('user_id')->first();
         sendnote(auth()->user()->id , $receiver_id,'Shipment # '.$request['order_id'].' status update' );
 
-        return response()->json(['success' =>'Data updated  successfully'], 200);
+//        dd('done');
+        return redirect()->back()->with(['message' =>'Data updated  successfully']);
     }
     public function vehicleStatusUpdate(Request $request){
         if($request->id) {
