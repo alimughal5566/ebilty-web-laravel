@@ -501,6 +501,11 @@ class HomeController extends Controller
              'file'=>$imageName??null,
              'user_id'=>Auth::id()
          ]);
+         if ($request->status_id == '7'){
+            $avalible=User::where('id',Auth::user())->update([
+                'is_available'=>1
+            ]);
+         }
         return response()->json([
             'success' => true,
             'message' => 'Status Changed Successfully',
