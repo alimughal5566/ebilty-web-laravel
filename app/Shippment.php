@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shippment extends Model
 {
 
-//    protected $dates = ['ship_time'];
+    protected $with = ['assignvehicle'];
     public function sender(){
         return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
     }
@@ -41,6 +41,11 @@ class Shippment extends Model
     }
     public function assignedto(){
         return $this->hasOne('App\User','id','assigned_to');    }
+
+
+    public function assignvehicle(){
+        return $this->hasOne('App\Models\UserVehicle','assigned_vehicle_id','id');
+    }
 
 protected $guarded=[''];
 }
