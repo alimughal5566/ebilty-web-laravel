@@ -44,7 +44,7 @@ class Shippment extends Model
 
 
     public function assignvehicle(){
-        return $this->hasOne('App\Models\UserVehicle','assigned_vehicle_id','id');
+        return $this->hasOne('App\Models\UserVehicle','id','assigned_vehicle_id');
     }
 
 protected $guarded=[''];
