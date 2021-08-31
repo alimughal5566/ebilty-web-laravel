@@ -154,6 +154,7 @@ class HomeController extends Controller
         }
         elseif(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
             $shipments    = Shippment::where(function ($q){
+
                 $q->where('assigned_to', NULL);
                 $q->orWhere( 'assigned_to', \auth()->id());
             })
@@ -408,8 +409,9 @@ class HomeController extends Controller
             $shipments    = Shippment::where(function ($q){
                 $q->where('assigned_by', \auth()->id());
                 $q->orWhere( 'assigned_to', \auth()->id());
+                $q->orWhere( 'assigned_to', NULL);
             })
-                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
+                ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
                 ->with('myBid','vehicle','package','receiver')
