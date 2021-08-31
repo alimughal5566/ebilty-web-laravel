@@ -409,7 +409,7 @@ class HomeController extends Controller
                 $q->where('assigned_by', \auth()->id());
                 $q->orWhere( 'assigned_to', \auth()->id());
             })
-                ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
+                ->join('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
                 ->with('myBid','vehicle','package','receiver')
