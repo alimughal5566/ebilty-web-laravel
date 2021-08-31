@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shippment extends Model
 {
 
-    protected $with = ['assignvehicle'];
+    protected $with = ['assignvehicle','allStatuses'];
     public function sender(){
         return $this->belongsTo('App\UserAddress','pickupaddress_id','id');
     }
@@ -46,6 +46,8 @@ class Shippment extends Model
     public function assignvehicle(){
         return $this->hasOne('App\Models\UserVehicle','id','assigned_vehicle_id');
     }
-
+    public function allStatuses(){
+        return $this->hasMany('App\StatusChangeFile','shipment_id','id');
+    }
 protected $guarded=[''];
 }
