@@ -425,12 +425,14 @@ class HomeController extends Controller
             $shipments= Shippment::orderBy('updated_at','desc')->where('assigned_to',auth()->user()->id)->with('sender.user','package','receiver.user','status','bids.user','vehicle')->get();
         }
         $vehicles_cat=VehicleCategory::all();
+        $newshipmnets =$shipments->where('status_id',9)->values();
         $inprocess =$shipments->whereNotIn('status_id',[1,7,8,9])->values();
         $assigned =$shipments->where('status_id','1')->values();
         $delivered =$shipments->whereIn('status_id',[7,8])->values();
 //dd($inprocess);
         return response()->json([
             'message' => 'filter shipments',
+            'newshipmnets' => $newshipmnets,
             'inprocess' => $inprocess,
             'delivered' => $delivered,
             'assigned' => $assigned,
