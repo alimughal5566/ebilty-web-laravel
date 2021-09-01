@@ -107,7 +107,7 @@
                      </svg>
                   </span>
                   <span class="kt-menu__link-text">Shipments List</span>
-                  <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                  {{-- <i class="kt-menu__ver-arrow la la-angle-right"></i> --}}
                </a>
 {{--               <div class="kt-menu__submenu " kt-hidden-height="412" style="display: none; overflow: hidden;">--}}
 {{--                  <span class="kt-menu__arrow"></span>--}}

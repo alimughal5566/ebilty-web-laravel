@@ -131,6 +131,7 @@
                                     <a href="{{route('downloadPdf',$shipment->id)}}" class="btn btn-label-brand btn-bold btn-sm" >
                                         <small class="fa fa-download"></small> Download
                                     </a>
+
                                 {{--                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-fit dropdown-menu-md">--}}
                                 <!--begin::Nav-->
                                 {{--                                        <ul class="kt-nav">--}}
@@ -271,7 +272,7 @@
                                     @endphp
                                     <div class="kt-widget__item flex-fill">
                                         <span class="kt-widget__subtitel">Progress</span>
-                                        <div class="kt-widget__progress d-flex  align-items-center">
+                                        <div class="kt-widget__progress d-flex  align-items-center custom_setting_align_progress" >
                                             <div class="progress" style="height: 5px;width: 100%;">
                                                 <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 30%;" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>

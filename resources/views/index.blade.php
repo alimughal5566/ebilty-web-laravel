@@ -280,7 +280,13 @@
                   </p>
                   <!--/ Big Title -->
                   <!-- Link more button -->
-                      <div class="button_more text-center">
+
+                  <div class="button_more text-center">
+                          <a href="#" class="more btn-gradient btn-gradient-blue"> Join US </a>
+
+                      </div>
+
+                      {{-- <div class="button_more text-center">
                           @if($slider->button1_link )
                             <a href="{{ $slider->button1_link }}" target="_self" class="more btn-gradient btn-gradient-orange">  <!-- http://ebilty.com/en/about -->
                                 {{ $slider->button1_title }}
@@ -292,7 +298,7 @@
                               </a>
                           @endif
 
-                      </div>
+                      </div> --}}
                   <!--/ Link more button -->
                   </div>
               <!--/ Captions animateme wrapper -->
@@ -366,12 +372,10 @@
       <!-- Sub-title with custom color -->
       <h6 class="gray">WELCOME TO</h6>
       <!-- Title with custom size, weight and color -->
-      <h3 class="tbk__title custom-title fs-xl fw-extrabold text-center">
-      eBilty
-      </h3>
+        <img src="{{ asset('uploads/logos/company-logo.png') }}" class="img-fluid aboutUsLogo" >
       <!--/ Title -->
       <!-- Detail -->
-      <p class="pt-30 pb-30  mx-auto px-3 px-lg-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi assumenda deserunt ea earum excepturi fuga hic, laborum libero magnam nesciunt numquam pariatur perspiciatis porro sit sunt suscipit unde vero.</p>
+      <p class="pt-30 pb-30  mx-auto px-3 px-lg-5">eBilty Connects all range of Road Freight Transport Vehicles to all types of Goods “senders / receivers”. Instant next bookings especially for return vehicles after completing first service covering Ports, Factories, Warehouses, Markets, Shops, Offices, Household shifting, Individuals, Your simple click on eBilty app by describing Goods nature and load / volume with Pick up & Drop off locations within country, relevant vehicles will respond you instantly with most favorable rates on your smart phones & on web with live tracking facility. Digitalize road logistics’ solution on simple clicks with ease to access, track, and record keeping for both users and transporters who can monitor their drivers on eBilty free.</p>
       <!--/ Detail -->
       </div>
       <!--/ Title element wit custom paddings -->
@@ -765,7 +769,7 @@
       </h3>
       <!--/ Title -->
       <!-- Detail -->
-      <p class="pt-30 pb-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi assumenda deserunt ea earum excepturi fuga hic, laborum libero magnam nesciunt numquam pariatur perspiciatis porro sit sunt suscipit unde vero.</p>
+     {{--  <p class="pt-30 pb-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi assumenda deserunt ea earum excepturi fuga hic, laborum libero magnam nesciunt numquam pariatur perspiciatis porro sit sunt suscipit unde vero.</p> --}}
       <!--/ Detail -->
       </div>
       <div>
@@ -789,7 +793,10 @@
       </div>
       </div>
       </div>
-      <div class="col-12 col-lg-6 order-first order-lg-last img-col ">
+      <div class="col-12 col-lg-6 order-first order-lg-last img-col p-lg-0 pl-md-0">
+        <video controls class="main_video_contact">
+          <source src="{{ asset('assets/video/video.mp4') }}" type="video/mp4">
+        </video>
       </div>
       </div>
       </div>
@@ -834,10 +841,10 @@
       <!--										<h4 class="footer-title">Download<br>-->
       <!--											App</h4>-->
       <!--									</div>-->
-      <div class="footer-detail-wrap">
+      <div class="footer-detail-wrap mt-0">
       <div class="footer-logo-wrap">
       <a href="http://ebilty.com">
-      <img src="http://ebilty.com/storage/app/uploads/public/605/b24/19b/605b2419bf83e815997404.png" alt="eBilty" class="footer-logo" title="eBilty">
+        <img src="{{ asset ('uploads/logos/company-logo.png') }}">
       </a>
       </div>
       <div class="mt-30 footer-about-wrap">
@@ -888,7 +895,7 @@
       <i class="glyphicon glyphicon-user icon-size-xxs"></i>
       <span>info@ebilty.com</span>
       </a>
-      <a href="tel:03000123456" target="_blank" class="footer-links">
+     {{--  <a href="tel:03000123456" target="_blank" class="footer-links">
       <i class="glyphicon glyphicon-earphone icon-size-xxs"></i>
       <span>03000123456</span>
       </a>
@@ -899,7 +906,7 @@
       <a href="tel:03330123456" target="_blank" class="footer-links">
       <i class="glyphicon glyphicon-earphone icon-size-xxs"></i>
       <span>03330123456</span>
-      </a>
+      </a> --}}
       </div>
       <div class="d-flex">
       <!-- Social icons colored background, aligned center and rounded style -->
@@ -929,10 +936,10 @@
       <div class="footer-detail-wrap">
       <div class="download-app-wrap d-flex flex-column">
       <span class="app-wrap mb-4">
-      <img class="" src="./front/images/app-google-play.png" alt="Google Play Store">
+        <a href="#"> <img class="" src="{{ asset('assets/img/playstore.png') }}" alt="Google Play Store"> </a>
       </span>
       <span class="app-wrap mb-4">
-      <img class="" src="./front/images/app-google-play.png" alt="Apple App Store">
+        <a href="#"> <img class="" src="{{ asset('assets/img/appstore.png') }}" alt="Apple App Store"> </a>
       </span>
       </div>
       </div>

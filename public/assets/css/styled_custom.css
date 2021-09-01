@@ -528,3 +528,21 @@ body.sticky-header #header {
         margin: 15px auto !important;
     }
 }
+
+
+
+
+/*1 September*/
+.footer-logo-wrap img {
+    width: 150px;
+}
+.aboutUsLogo {
+    width: 250px;
+}
+.elm-social-icons.sh--circle .elm-sc-icon {
+    font-size: 20px !important;
+}
+video.main_video_contact {
+    width: 100%;
+    height: 100%;
+}
