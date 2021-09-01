@@ -244,6 +244,9 @@
                                         </div>
                                     </div>
                                     @php $percentage=0;
+                        if($shipment->status_id==9){
+                        $percentage=10;
+                        }
                         if($shipment->status_id==1){
                         $percentage=30;
                         }
@@ -270,7 +273,7 @@
                                         <span class="kt-widget__subtitel">Progress</span>
                                         <div class="kt-widget__progress d-flex  align-items-center">
                                             <div class="progress" style="height: 5px;width: 100%;">
-                                                <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 30%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 30%;" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <span class="kt-widget__stat">
                                         {{$percentage}}%
@@ -387,7 +390,7 @@
                                     </div>
                                     <div class="kt-widget12__info">
                                         <span class="kt-widget12__desc">Package Weight</span>
-                                        <span class="kt-widget12__value">{{@$shipment->package->weight}} (kg)</span>
+                                        <span class="kt-widget12__value">{{@$shipment->package->weight}} (Tons)</span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
