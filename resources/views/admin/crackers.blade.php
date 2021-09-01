@@ -102,6 +102,7 @@
             </div>
         </div>
     </div>
+
     <!-- end:: Content -->
     <div class="modal fade show" id="docx" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -161,44 +162,6 @@
             </div>
         </div>
     </div>
-
-
-{{--    <div class="modal fade show" id="ships" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">--}}
-{{--        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title">Shipments</h5>--}}
-{{--                    --}}{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                    --}}{{--                        <i aria-hidden="true" class="ki ki-close"></i>--}}
-{{--                    --}}{{--                    </button>--}}
-
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <div class="card-body  p-0">--}}
-{{--                        <!--begin::Invoice-->--}}
-{{--                        <div class="col-md-10 offset-1 ">--}}
-{{--                            <table class="table" id="jqueryTable">--}}
-{{--                                <thead>--}}
-{{--                                <tr>--}}
-{{--                                    <th>Id</th>--}}
-{{--                                    <th>From</th>--}}
-{{--                                    <th>To</th>--}}
-{{--                                    <th>From Address</th>--}}
-{{--                                    <th>To Address</th>--}}
-{{--                                    <th>Delivered date</th>--}}
-{{--                                    <th>Status</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody id="bid_list"><tr>--}}
-{{--                                </tr>--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
     <div class="modal fade show" id="drivers" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -292,7 +255,7 @@
                                         <label>Country:</label>
                                         <select class="form-control country_id" id="contry" onchange="getStates(this.value,'stat')" required title="Please choose country" data-live-search="true" name="country_id" >
                                             @foreach($countries as $country)
-                                                <option value="{{$country->id}}" {{($user->country && $user->country->id==$country->id)?'selected':''}}>{{$country->name}}
+                                                <option value="{{$country->id}}"> {{$country->name}}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -301,17 +264,13 @@
                                         <label>State:</label>
                                         <label>State / Region&nbsp;<span class="kt-badge kt-badge--danger kt-badge--dot"></span></label>
                                         <select class="form-control state_id" id="stat" onchange="getCities(this.value,'cite')"  title="Please choose state" name="state_id" data-live-search="true" required  >
-                                            @if($user->state)
-                                                <option value="{{$user->state->id}}" selected>{{$user->state->name}}
-                                            @endif
+
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-5">
                                         <label>City:</label>
                                         <select class="form-control city_id" name="city_id" id="cite" title="Please choose city" data-live-search="true" required>
-                                            @if($user->city)
-                                                <option value="{{$user->city->id}}" selected>{{$user->city->name}}
-                                            @endif
+
                                         </select>
                                     </div>
 
@@ -334,7 +293,6 @@
             </div>
         </div>
     </div>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <script>

@@ -295,8 +295,8 @@ class HomeController extends Controller
             $shipment->invoice_image=$invoice_image;
         }
         $shipment->save();
+
         QrCode::size(125)->format('svg')->generate($shipment->id, public_path('images/qrcodes/'.$shipment->id.'.svg'));
-//        if($request->category_id) {
 
                 $package = new ShippmentPackage;
                 $package->shippment_id = $shipment->id;
@@ -310,8 +310,6 @@ class HomeController extends Controller
                 $package->height = $request->height;
                 $package->save();
 
-
-//        }
         $shipment= Shippment::where('id',$shipment->id)->with('status','bids','package')->first();
 
         return response()->json([
