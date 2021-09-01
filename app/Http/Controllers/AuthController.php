@@ -401,6 +401,38 @@ class AuthController extends Controller
             if(Auth::user()->hasRole('cracker')){
 
 
+                $license_image = '';
+                $cnic_image = '';
+                $license_image_back = '';
+                $cnic_image_back = '';
+                if($request->license_image)
+                {
+                    $file = $request->file('license_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $license_image =time().'.'.$extension;
+                    $file->move('license_image', $license_image);
+                }
+                if($request->cnic_image)
+                {
+                    $file = $request->file('cnic_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $cnic_image =time().'.'.$extension;
+                    $file->move('cnic/', $cnic_image);
+                }
+                if($request->cnic_back_image)
+                {
+                    $file = $request->file('cnic_back_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $cnic_image_back =time().'.'.$extension;
+                    $file->move('cnic/', $cnic_image_back);
+                }
+                if($request->license_back_image)
+                {
+                    $file = $request->file('license_back_image');
+                    $extension = $file->getClientOriginalExtension(); // getting image extension
+                    $license_image_back =time().'.'.$extension;
+                    $file->move('license_image/', $license_image_back);
+                }
                 $user = new User([
                     'name' => $request->full_name,
                     'email' => $request->email,
@@ -408,19 +440,13 @@ class AuthController extends Controller
                     'password' => bcrypt($request->password),
                     'phone' => $request->phone,
                     'documents_verified' => 1,
+                    'cnic_image' => $cnic_image,
+                    'cnic_back_image' => $cnic_image_back,
+                    'license_image' => $license_image,
+                    'license_back_image' => $license_image_back,
                     'created_by' => auth()->user()->id,
                 ]);
                 $user->save();
-                $veh = new UserVehicle([
-                    'user_id' => $user->id,
-                    'category_id' => $request->veh_cat,
-                    'vehicle_id' => $request->vehicle,
-                    'is_verified' => 1,
-                    'vehicle_number' => $request->vehicle_number,
-                ]);
-                $veh->save();
-
-
                 $user->assignRole('brocker_driver');
             }
             elseif(Auth::user()->hasRole('company')){

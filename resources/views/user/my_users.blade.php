@@ -337,7 +337,7 @@
             $('.doc_status1,.doc_status').css('display','none');
             if(status==0){
                 $('.doc_status1').css('display','block');
-{{--                $('.url').attr('href','{{route('docVerify')}}/'+id);--}}
+                $('.url').attr('href','{{route('docVerify')}}/'+id);
             }
             if(status==1){
                 $('.doc_status').css('display','block');

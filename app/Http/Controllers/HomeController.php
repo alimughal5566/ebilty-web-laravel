@@ -109,13 +109,13 @@ class HomeController extends Controller
     public function updateLicense(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
         if ($request->license_image) {
-            $license_image = time() . '.' . $request->license_image->extension();
+            $license_image = rand() . '.' . $request->license_image->extension();
             $request->license_image->move(public_path('images/license/'), $license_image);
             $user->license_image= $license_image;
         }
         if ($request->license_back_image) {
-            $license_back_image = time() . '.' . $request->license_back_image->extension();
-            $request->license_back_image->move(public_path('images/license/'), $license_image);
+            $license_back_image = rand() . '.' . $request->license_back_image->extension();
+            $request->license_back_image->move(public_path('images/license/'), $license_back_image);
             $user->license_back_image= $license_back_image;
         }
         $user->documents_verified=0;
@@ -126,7 +126,7 @@ class HomeController extends Controller
     public function updateProfilePic(Request $request){
         $user = User::where('id', auth()->user()->id)->first();
         if ($request->profile_image) {
-            $profile_image = time() . '.' . $request->profile_image->extension();
+            $profile_image = rand() . '.' . $request->profile_image->extension();
             $request->profile_image->move(public_path('images/profile/'),$profile_image);
             $user->profile_image= $profile_image;
         }
@@ -147,14 +147,14 @@ class HomeController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         $cnic_image = '';
         if ($request->cnic_image) {
-            $cnic_image = time() . '.' . $request->cnic_image->extension();
+            $cnic_image = rand(). '.' . $request->cnic_image->extension();
             $request->cnic_image->move(public_path('/setting/cnic/'), $cnic_image);
             $user->cnic_image= $cnic_image;
         }
         $cnic_back_image = '';
         if ($request->cnic_back_image) {
-            $cnic_back_image = time() . '.' . $request->cnic_back_image->extension();
-            $request->cnic_back_image->move(public_path('/setting/cnic/'), $cnic_image);
+            $cnic_back_image = rand(). '.' . $request->cnic_back_image->extension();
+            $request->cnic_back_image->move(public_path('/setting/cnic/'), $cnic_back_image);
             $user->cnic_back_image = $cnic_back_image;
         }
         $user->documents_verified=0;
@@ -202,6 +202,7 @@ class HomeController extends Controller
             $q->where('name', 'cracker');
         }
         )->with('city','myDrivers')->get();
+//        dd($users);
         $countries=Country::all();
 
         return view('admin.crackers', compact('users', 'countries'));
@@ -290,7 +291,7 @@ class HomeController extends Controller
     }
     public function storeVehicleimage($file){
         $extension = $file->getClientOriginalExtension(); // getting image extension
-        $filename =time().'.'.$extension;
+        $filename =rand().'.'.$extension;
         $file->move('images/user_vehicles', $filename);
         return $filename;
     }
@@ -433,7 +434,7 @@ class HomeController extends Controller
         return view('user.tracking.showmap');
     }
 
-    
+
 
 
 
