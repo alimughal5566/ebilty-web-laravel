@@ -55,6 +55,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/edit-request-approve/{id?}', 'HomeController@approveEditRequest')->name('approveEditRequest');
 
     Route::prefix('setting')->namespace('Admin\Setting')->group( function() {
+        Route::post('/saveCard', 'GeneralSettingController@saveCard')->name('saveCard');
         Route::get('/general_setting', 'GeneralSettingController@index')->name('admin.setting.general_setting');
         Route::get('/dashboard_setting', 'GeneralSettingController@dashboard')->name('admin.setting.dashboard_setting');
         Route::post('/add-advertisement', 'GeneralSettingController@addAdvertisement')->name('addAdvertisement');
