@@ -412,7 +412,7 @@ class HomeController extends Controller
                 ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','package','receiver')
+                ->with('sender.user','vehicle','package','receiver.user','status','bids.user')
                 ->get()
                 ;
 
