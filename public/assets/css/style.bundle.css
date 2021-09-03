@@ -14762,6 +14762,7 @@ input.btn.btn-label-skype.active {
 .btn-group-sm>.btn.btn-icon {
 	height: 2.5rem;
 	width: 2.5rem;
+	z-index: 1;
 }
 
 .btn.btn-icon.btn-lg,
@@ -50859,6 +50860,7 @@ body {
 
 .kt-aside .kt-aside-menu {
 	margin: 15px 0;
+	height: auto !important;
 }
 
 .kt-aside .kt-aside-menu .ps__rail-y {
@@ -50932,6 +50934,23 @@ body {
 		bottom: 0;
 		left: 0;
 		z-index: 98;
+		overflow-y: scroll;
+	}
+	.kt-aside--fixed .kt-aside::-webkit-scrollbar-track
+	{
+		background-color: #fff;
+	}
+
+	.kt-aside--fixed .kt-aside::-webkit-scrollbar
+	{
+		width: 6px;
+		background-color: #fff;
+	}
+
+	.kt-aside--fixed .kt-aside::-webkit-scrollbar-thumb
+	{
+		background-color: #eeeeee;
+		border-radius: 10px
 	}
 	.kt-aside--static .kt-aside {
 		position: relative;
@@ -50959,6 +50978,7 @@ body {
 	.kt-aside .ps>.ps__rail-y>.ps__thumb-y {
 		width: 4px;
 		border-radius: 4px;
+		display: none;
 	}
 	.kt-aside .ps>.ps__rail-y>.ps__thumb-y:hover,
 	.kt-aside .ps>.ps__rail-y>.ps__thumb-y:focus {
@@ -52333,4 +52353,25 @@ body {
 	.kt-header--fixed.kt-subheader--fixed .kt-subheader {
 		height: 90px !important;
 	}
+}
+
+
+
+/*  1Sep  */
+
+.doc_status span {
+    font-size: 20px;
+}
+.custom_setting_align_progress .progress::after {
+    position: relative !important;
+    border: none !important;
+}
+.custom_setting_align_progress .progress .progress-bar {
+    /*background: transparent !important;*/
+    border-width: initial !important;  
+    border-style: none !important;
+    position: relative !important;
+}
+.custom_setting_align_progress .progress {
+background-color: #ebedf2 !important;
 }

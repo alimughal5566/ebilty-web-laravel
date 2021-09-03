@@ -56,7 +56,7 @@
                                         @if($user->profile_image)
                                             @php    $profile_image= '/images/profile/'.$user->profile_image; @endphp
                                         @endif
-                                        <span class="kt-widget12__value"><img src="{{url($profile_image)}}"  alt="" width="300" ></span>
+                                        <span class="kt-widget12__value"><img src="{{url($profile_image)}}"  alt="" class="img-fluid" ></span>
                                     </div>
                                 </div>
                                 @role('admin|driver|cracker|company')
@@ -72,7 +72,7 @@
                                         @if($user->license_image)
                                             @php    $license= '/images/license/'.$user->license_image; @endphp
                                         @endif
-                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
+                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" class="img-fluid" ></span>
                                     </div>
                                 </div>
                                 <div class="kt-widget12__item">
@@ -87,7 +87,7 @@
                                         @if($user->license_back_image)
                                             @php    $license= '/images/license/'.$user->license_back_image; @endphp
                                         @endif
-                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" width="300" ></span>
+                                        <span class="kt-widget12__value"><img src="{{url($license)}}"  alt="" class="img-fluid" ></span>
                                     </div>
                                 </div>
 
@@ -105,7 +105,7 @@
                                                 @php  $cnic= '/setting/cnic/'.$user->cnic_image; @endphp
                                             @endif
                                             <span class="kt-widget12__value">
-                                                <img src="{{url($cnic)}}"  alt="" width="300">
+                                                <img src="{{url($cnic)}}"  alt="" class="img-fluid">
                                             </span>
                                         </div>
                                 </div>
@@ -122,7 +122,7 @@
                                                 @php  $cnic= '/setting/cnic/'.$user->cnic_back_image; @endphp
                                             @endif
                                             <span class="kt-widget12__value">
-                                                <img src="{{url($cnic)}}"  alt="" width="300">
+                                                <img src="{{url($cnic)}}"  alt="" class="img-fluid">
                                             </span>
                                         </div>
                                 </div>

@@ -137,7 +137,7 @@
 
                         <div class="dashboard-top-container ">
                             <div class="text-center img-container summary_logo">
-                                <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" style="max-height:126px">
+                                <img alt="Logo" src="{{url('/uploads/logos/company-logo.png')}}" class="img-fluid">
 
                             </div>
 
@@ -231,7 +231,7 @@
 
                             <div class="row">
                              @hasrole('admin')
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="dashboardcontainainer a">
                                         <div class="headers">
                                             <h4>Malaysia</h4>
@@ -286,7 +286,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <div class="dashboardcontainainer b">
                                         <div class="headers">
                                             <h4>United Kingdom</h4>
@@ -341,8 +341,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-4">
+                                </div> --}}
+                                <div class="col-6">
                                     <div class="dashboardcontainainer c">
                                         <div class="headers">
                                             <h4>Pakistan</h4>
