@@ -504,8 +504,8 @@ class HomeController extends Controller
              'user_id'=>Auth::id()
          ]);
          if ($request->status_id == '7'){
-            $avalible=User::where('id',Auth::user())->update([
-                'is_available'=>1
+            $avalible=User::where('id',Auth::id())->update([
+                'is_available'=>1,
             ]);
          }
         return response()->json([
