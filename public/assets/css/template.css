@@ -869,8 +869,8 @@ body .kl-ioscaption--style4 .more:hover:before {background: rgba(205,33,34,0.9);
 .topnav.topnav--lang .toplang-item {margin: 1px 0; position: relative; text-transform: uppercase;}
 .topnav.topnav--lang .toplang-item a {display: inline-block; width: 100%; padding-right: 10px !important; padding: 6px 10px !important; font-size: 0.8rem; color: inherit;}
 .topnav.topnav--lang .toplang-item .toplang-flag {float: left; width: 23px; margin-right:9px;}
-.topnav.topnav--lang .toplang-item.active::before {content: "\f00c"; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; right: 10px; top: calc(50% - 12px); font-size: 14px;}
-
+/*.topnav.topnav--lang .toplang-item.active::before {content: "\f00c"; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; right: 10px; top: calc(50% - 12px); font-size: 14px;}
+*/
 /* Site Header & logo contain in header */
 .site-logo {display: inline-block; margin-bottom: 0;}
 .site-logo img {max-height: 60px; max-width: 100%;}
