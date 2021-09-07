@@ -139,8 +139,14 @@
                                             <td>
                                                 @if($setting->id < 5)
                                                     <a data-toggle="modal" onclick="show_data_modal({{$setting->content}}, {{$setting->id}})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
-                                                @else
-                                                    <a data-toggle="modal" data-target="#id_{{$setting->id}}" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @elseif($setting->id > 4 && $setting->id < 9)
+                                                    <a data-toggle="modal" data-target="#cardModal" onclick="cardModalShow({{ $setting }})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @elseif($setting->id == 9)
+                                                    <a data-toggle="modal" data-target="#aboutUsBanner" onclick="aboutBannerModalShow({{ $setting }})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @elseif($setting->id == 10)
+                                                    <a data-toggle="modal" data-target="#aboutUsBody" onclick="aboutUsModalShow({{ $setting }})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
+                                                @elseif($setting->id == 11)
+                                                    <a data-toggle="modal" data-target="#faq" onclick="faqShow({{ $setting }})" class="text-warning"> <i class="fas fa-edit"></i>  </a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -240,18 +246,18 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="id_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="aboutUsBanner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">About us</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update About us (Banner)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post"  action="{{route('admin.setting.save_about_us_banner')}}" enctype="multipart/form-data">
+                    <form  method="post"  action="{{route('admin.setting.save_about_us_banner')}}" id="aboutBannerForm" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -272,10 +278,11 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
-                                                        <td><input type="text" name="tagline" class="form-control"></td>
+                                                        <td><input type="text" name="title" id="about_banner_title" placeholder="Title"  class="form-control"></td>
+                                                        <td><input type="text" name="tagline" id="about_banner_tagline" class="form-control"></td>
                                                         <td>
-                                                            <input type="file" name="body_image" class="form-control">
+                                                            <input type="file" name="banner_image" class="form-control">
+                                                            <img src="" id="about_banner_image" width="100px" height="100px" alt="">
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -299,18 +306,17 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="id_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" style="    width: 1000px;
-    margin-left: -200px;">
+            <div class="modal-content" style="    width: 1000px; margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Home page Card 1</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update Card</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post"  action="{{route('admin.setting.save_homepage_card1')}}" enctype="multipart/form-data">
+                    <form  method="post" enctype="multipart/form-data" id="cardForm">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -318,25 +324,33 @@
                                     <div class="kt-section__body">
                                         <div class="form-group row">
                                             <div class="col-lg-12 col-xl-12">
-
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">Icon</th>
-                                                        <th scope="col">Title</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">Status</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td><input type="file" name="icon" class="form-control"></td>
-                                                        <td><input type="text" name="title"   placeholder="Title"  class="form-control"></td>
-                                                        <td><textarea name="description" class="form-control" ></textarea></td>
-                                                        <td><input type="checkbox" name="status"></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                <input type="hidden" id="card_id" name="id">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <label>Icon</label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <input type="file" name="card_icon" id="card_icon" class="form-control">
+                                                        <br>
+                                                        <img src="" id="card_image" width="100px" height="100px" alt="">
+                                                    </div>
+                                                </div><br>
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <label>Title</label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <input type="text" name="card_title" id="card_title" class="form-control">
+                                                    </div>
+                                                </div><br>
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <label>Description</label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <textarea type="text" name="card_description" id="card_description" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -527,18 +541,18 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="id_10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="aboutUsBody" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">About Us (Body)</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update About Us (Body)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post"  action="{{route('admin.setting.save_about_us_body')}}" enctype="multipart/form-data">
+                    <form  method="post" id="aboutUsForm"  action="{{route('admin.setting.save_about_us_body')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -557,9 +571,13 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" placeholder="Title" name="title" class="form-control"></td>
-                                                        <td><textarea name="details" ></textarea></td>
-                                                        <td><input type="file" name="body_image" class="form-control"></td>
+                                                        <td><input type="text" id="about_body_title" placeholder="Title" name="title" class="form-control"></td>
+                                                        <td><textarea id="about_body_details" name="details" ></textarea></td>
+                                                        <td><input type="file" name="body_image" class="form-control">
+                                                            <br>
+                                                        <img src="" id="about_body_image" width="100px" height="100px" alt="">
+                                                        </td>
+
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -582,7 +600,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="id_11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="faq" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="    width: 1000px;
     margin-left: -200px;">
@@ -593,7 +611,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form  method="post"  action="{{route('admin.setting.save_faq_banner')}}" enctype="multipart/form-data">
+                    <form  method="post" id="faqForm" action="{{route('admin.setting.save_faq_banner')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-xl-12">
@@ -612,9 +630,13 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td><input type="text" name="title"   placeholder="Title" class="form-control"></td>
-                                                        <td><input name="details" class="form-control" ></td>
-                                                        <td><input type="file" name="image" class="form-control"></td>
+                                                        <td><input id="faq_title" type="text" name="title"   placeholder="Title" class="form-control"></td>
+                                                        <td><input id="faq_details" name="details" class="form-control" ></td>
+                                                        <td>
+                                                            <input type="file" name="image" class="form-control">
+                                                            <br>
+                                                            <img src="" id="faq_image" width="100px" height="100px" alt="">
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -645,6 +667,70 @@
         @if (\Session::has('success'))
             toastr.success('{!! \Session::get('success') !!}');
         @endif
+        function aboutBannerModalShow(setting){
+            $('#aboutBannerForm').trigger("reset");
+            var content = JSON.parse(setting.content)
+            $('#about_banner_title').val(content.title)
+            $('#about_banner_tagline').val(content.tagline)
+            var path = '{{ asset('/') }}'+content.banner_image
+            $('#about_banner_image').attr('src', path)
+        }
+        function faqShow(setting){
+            $('#faqForm').trigger("reset");
+            var content = JSON.parse(setting.content)
+            $('#faq_title').val(content.title)
+            $('#faq_details').val(content.details)
+            var path = '{{ asset('/') }}'+content.image
+            $('#faq_image').attr('src', path)
+        }
+        function aboutUsModalShow(setting){
+            $('#aboutUsForm').trigger("reset");
+            var content = JSON.parse(setting.content)
+            $('#about_body_title').val(content.title)
+            $('#about_body_details').val(content.details)
+            var path = '{{ asset('/') }}'+content.body_image;
+            $('#about_body_image').attr('src', path)
+        }
+        function cardModalShow(setting){
+            $('#cardForm').trigger("reset");
+            console.log(setting)
+            var content = JSON.parse(setting.content);
+            $('#card_id').val(setting.id)
+            $('#card_title').val(content.title)
+            $('#card_description').val(content.description)
+            var path = '{{ asset('/') }}'+content.icon
+            console.log(content.icon)
+            $("#card_image").attr("src",path);
+        }
+        $(document).ready(function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#cardForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type:'POST',
+                    url: "{{ route('saveCard')}}",
+                    data: formData,
+                    cache:false,
+                    contentType: false,
+                    processData: false,
+                    success: (response) => {
+                        $('#cardForm').trigger("reset");
+                        $('#cardModal').modal('hide')
+                        toastr.success('The card has been updated')
+                        location.reload()
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+        });
+
         function show_data_modal(content, id){
             if(id < 5){
                 $('#homepage_slider').modal('show');

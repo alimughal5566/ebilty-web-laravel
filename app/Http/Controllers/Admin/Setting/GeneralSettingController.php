@@ -169,12 +169,10 @@ class GeneralSettingController extends Controller
     }
     public function save_about_us_banner(Request $request){
 //        dd($request->all());
-        $about = General_setting::where('id', 5)->first();
+        $about = General_setting::where('id', 9)->first();
         $json = json_decode($about->content);
         $filename = '';
         $filename = $json->banner_image;
-//        $filename2 = '';
-//        $filename2 = $json->body_image;
         $bannerfilename = $filename;
         if($request->banner_image)
         {
@@ -182,20 +180,12 @@ class GeneralSettingController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $bannerfilename =time().'.'.$extension;
             $file->move('setting/about/', $bannerfilename);
+            $bannerfilename = 'setting/about/'.$bannerfilename;
         }
-//        $bodyfilename = $filename2;
-//        if($request->body_image)
-//        {
-//            $file = $request->file('body_image');
-//            $extension = $file->getClientOriginalExtension(); // getting image extension
-//            $bodyfilename =time().'.'.$extension;
-//            $file->move('setting/about/', $bodyfilename);
-//        }
         $array = array(
             'title' => $request->title,
             'tagline' => $request->tagline,
-            'banner_image' => 'setting/about/'.$bannerfilename,
-//            'body_image' => 'setting/about/'.$bodyfilename,
+            'banner_image' => $bannerfilename,
         );
 
         $content = json_encode($array);
@@ -209,18 +199,8 @@ class GeneralSettingController extends Controller
 //        dd($request->all());
         $about = General_setting::where('id', 10)->first();
         $json = json_decode($about->content);
-//        $filename = '';
-//        $filename = $json->banner_image;
         $filename2 = '';
         $filename2 = $json->body_image;
-//        $bannerfilename = $filename;
-//        if($request->banner_image)
-//        {
-//            $file = $request->file('banner_image');
-//            $extension = $file->getClientOriginalExtension(); // getting image extension
-//            $bannerfilename =time().'.'.$extension;
-//            $file->move('setting/about/', $bannerfilename);
-//        }
         $bodyfilename = $filename2;
         if($request->body_image)
         {
@@ -228,13 +208,12 @@ class GeneralSettingController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $bodyfilename =time().'.'.$extension;
             $file->move('setting/about/', $bodyfilename);
+            $bodyfilename = 'setting/about/'.$bodyfilename;
         }
         $array = array(
             'title' => $request->title,
-//            'tagline' => $request->tagline,
             'details' => $request->details,
-//            'banner_image' => 'setting/about/'.$bannerfilename,
-            'body_image' => 'setting/about/'.$bodyfilename,
+            'body_image' => $bodyfilename,
         );
 
         $content = json_encode($array);
@@ -274,6 +253,33 @@ class GeneralSettingController extends Controller
         $home_slider4->update();
         Session::flash('message', 'The slider 4 has been updated');
         return redirect()->back();
+
+    }
+    public function saveCard(Request $request){
+        // dd($request->all());
+        $card = General_setting::where('id', $request->id)->first();
+        $filename = '';
+        $json = json_decode($card->content);
+        $filename = $json->icon;
+        if($request->card_icon)
+        {
+            $file = $request->file('card_icon');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('setting/card/', $filename);
+        }
+        $array = array(
+            'icon' => 'setting/card/'.$filename,
+            'title' => $request->card_title,
+            'description' => $request->card_description
+        );
+
+        $content = json_encode($array);
+        $card->content = $content;
+        $card->status = 1;
+        // dd($card);
+        $card->update();
+        return response()->json('The card has been updated');
 
     }
     public function save_homepage_card1(Request $request){
@@ -393,16 +399,17 @@ class GeneralSettingController extends Controller
         $card = General_setting::where('id', 11)->first();
         $filename = '';
         $json = json_decode($card->content);
-        $filename = $json->icon;
+        $filename = $json->image;
         if($request->image)
         {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
             $file->move('setting/faq/', $filename);
+            $filename = 'setting/faq/'.$filename;
         }
         $array = array(
-            'image' => 'setting/faq/'.$filename,
+            'image' => $filename,
             'title' => $request->title,
             'details' => $request->details,
         );
