@@ -412,7 +412,7 @@ class HomeController extends Controller
                 ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
-                ->with('myBid','vehicle','package','receiver')
+                ->with('sender.user','vehicle','package','receiver.user','status','bids.user')
                 ->get()
                 ;
 
@@ -504,8 +504,8 @@ class HomeController extends Controller
              'user_id'=>Auth::id()
          ]);
          if ($request->status_id == '7'){
-            $avalible=User::where('id',Auth::user())->update([
-                'is_available'=>1
+            $avalible=User::where('id',Auth::id())->update([
+                'is_available'=>1,
             ]);
          }
         return response()->json([
