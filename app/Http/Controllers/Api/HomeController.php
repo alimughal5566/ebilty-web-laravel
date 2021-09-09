@@ -405,16 +405,15 @@ class HomeController extends Controller
         if(auth()->user()->hasAnyRole(['cracker', 'driver','company'])){
 
             $shipments    = Shippment::where(function ($q){
-                $q->where('assigned_by', \auth()->id());
-                $q->orWhere( 'assigned_to', \auth()->id());
-                $q->orWhere( 'assigned_to', NULL);
-            })
+                    $q->where('assigned_by', \auth()->id());
+                    $q->orWhere( 'assigned_to', \auth()->id());
+                    $q->orWhere( 'assigned_to', NULL);
+                })
                 ->leftJoin('user_addresses','shippments.pickupaddress_id','user_addresses.id')
                 ->select('shippments.*','user_addresses.*','user_addresses.id as add_id', 'shippments.id as id' )
                 ->orderBy('shippments.updated_at','desc')
                 ->with('sender.user','vehicle','package','receiver.user','status','bids.user')
-                ->get()
-                ;
+                ->get();
 
         }
         elseif(auth()->user()->hasRole('customer')){

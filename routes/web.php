@@ -28,6 +28,7 @@ Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking'
 Route::get('send/noti' , 'HomeController@sendNotification');
 Route::get('get/trackingpoints/{id}' , 'HomeController@getTrackingPoints');
 Route::get('/', 'FrontEndController@index')->name('index');
+Route::get('/get-in-touch', 'FrontEndController@sendMail')->name('get-in-touch');
 Route::post('/send-otp-message', 'HomeController@sendMessage')->name('sendMessage');
 Route::get('/otp-verify', 'HomeController@otpVerifcationCheck')->name('otpVerifcationCheck');
 Route::get('/clear', function () {
