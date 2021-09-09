@@ -116,7 +116,7 @@
                                 <div class="form-group">
                                 <label for="userSigninPassword" class="sr-only"></label>
                                 <input class="form-control form-control-last" type="Password" placeholder="Password" id="userSigninPassword" name="password" required="">
-                                <i class="fa fa-user field-icon"></i>
+                                <i class="fa fa-lock field-icon"></i>
                                 </div>
                                 <div class="row kt-login__extra">
                                 <div class="col kt-align-right ">

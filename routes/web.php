@@ -23,6 +23,7 @@ Route::get('test', function () {
    sendnote(2 , 1,'dadasdasdasdadasdasdasasd' );
     return "Event has been sent!";
 });
+Route::get('/terms-conditions', 'FrontEndController@termcondition')->name('termcondition');
 
 Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking');
 Route::get('send/noti' , 'HomeController@sendNotification');

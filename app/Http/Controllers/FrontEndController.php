@@ -21,6 +21,11 @@ class FrontEndController extends Controller
         return view('index', compact('sliders','cards'));
 
     }
+
+    public function termcondition () {
+        return view ('terms_conditions');
+    }
+
     public function sendMail(Request $request) {
         //dd($request->all());
 

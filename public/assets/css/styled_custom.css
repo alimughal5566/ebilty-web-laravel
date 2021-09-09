@@ -7,6 +7,10 @@
     display: unset !important;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .range-section .slide.slick-slide .slide-body, .kl-bottommask {
     opacity: 0;
     display: none;
@@ -45,6 +49,7 @@
 
 body.sticky-header #header {
     position: fixed !important;
+        padding: 6px;
 }
 
 .site-header {
@@ -633,4 +638,15 @@ video.main_video_contact {
 }
 .screenshot_slider .item img {
     height: 120px;
+}
+
+/*Terms Style*/
+
+.header_term {
+    margin: 2rem 0 1rem;
+}
+
+.header_term h1 {
+    font-size: 3rem;
+    font-weight: 700;
 }

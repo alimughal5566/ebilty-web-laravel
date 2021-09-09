@@ -361,7 +361,7 @@ body {
 
 .kt-login .kt-login__wrapper .kt-form .input-group .field-icon {
     top: 36%;
-    z-index: 0;
+    z-index: 9 !important;
 }
 
 .btn-gradient-default, .upload-btn-wrapper .upload-wrap,

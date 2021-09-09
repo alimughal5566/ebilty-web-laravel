@@ -141,17 +141,17 @@
                                 <!-- Main menu -->
                                 <div id="main-menu" class="main-nav zn_mega_wrapper  collapse navbar-collapse">
                                     <ul id="menu-main-menu" class="main-menu zn_mega_menu navbar-nav flex-md-row">
-                                        <li class=" active">
-                                            <a href="#">Home</a>
+                                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                                            <a href="{{ url ('/') }}">Home</a>
+                                        </li>
+                                        <li class="{{ (request()->is('terms-conditions')) ? 'active' : '' }}">
+                                            <a href="{{ url ('/terms-conditions') }}">Terms & Conditions</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ url('/') }}" id="faq">F.A.Q.</a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">About</a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">F.A.Q.</a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">Contact us</a>
+                                            <a href="{{ url ('/') }}">Contact us</a>
                                         </li>
                                     </ul>
                                 </div>

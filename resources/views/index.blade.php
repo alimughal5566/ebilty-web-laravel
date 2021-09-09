@@ -55,7 +55,7 @@
                   <!-- Link more button -->
 
                   <div class="button_more text-center">
-                          <a href="#" class="more btn-gradient btn-gradient-blue"> Join US </a>
+                          <a href="{{ url ('/login') }}" class="more btn-gradient btn-gradient-blue"> Join US </a>
 
                       </div>
 
@@ -362,7 +362,7 @@
       </div>
       </section>
       <!-- Get In Touch	-->
-      <section class="hg_section contact-section bg-white pt-0 pb-0">
+      <section class="hg_section contact-section bg-white pt-0 pb-0" id="contact">
       <div class="container-fluid">
       <div class="row">
       <div class="col-12 col-lg-6 order-last order-lg-first form-col">
