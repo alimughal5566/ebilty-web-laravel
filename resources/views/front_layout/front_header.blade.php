@@ -148,10 +148,10 @@
                                             <a href="{{ url ('/terms-conditions') }}">Terms & Conditions</a>
                                         </li>
                                         <li class="">
-                                            <a href="{{ url('/') }}" id="faq">F.A.Q.</a>
+                                            <a href="{{ url('/') }}#faq" >F.A.Q.</a>
                                         </li>
                                         <li class=" ">
-                                            <a href="{{ url ('/') }}">Contact us</a>
+                                            <a href="{{ url ('/') }}#contect">Contact us</a>
                                         </li>
                                     </ul>
                                 </div>
