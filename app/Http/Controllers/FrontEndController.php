@@ -41,8 +41,9 @@ class FrontEndController extends Controller
         $email = $request->email;
         $title = 'Get in Touch';
         $content = $request->message;
-        \Mail::send('visitor_email', ['name' => $name, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) {
-            $message->to('your.email@gmail.com')->subject('Subject of the message!');
+        \Mail::send('visitor_email', ['name' => $name, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use($email)  {
+            $message->to('info@ebilty.com')->subject('Get In Touch Mail');
+            $message->from($email);
         });
         return redirect()->back()->with('success', 'You have successfully sent an email to the admin!');
     }

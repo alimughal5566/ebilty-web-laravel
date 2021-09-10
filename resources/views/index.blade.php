@@ -136,8 +136,8 @@
       </div>
       <!--/ Slideshow - iOS Slider element with animateme scroll efect, custom height and bottom mask style 2 -->
       <!-- Title element - section with custom paddings -->
-      <section class="hg_section bg-white pt-100 pb-100">
-      <div class="container">
+      <section id="faq"  class="hg_section bg-white pt-100 pb-100">
+      <div  class="container">
       <div class="row">
       <div class="col-12">
       <!-- Title element wit custom paddings -->
@@ -155,7 +155,7 @@
       </div>
       </div>
       </div>
-      <div class="container">
+      <div  class="container">
       <div class="row">
       <div class="col-md-12">
       <div class="row gutter-md services-row">
@@ -302,10 +302,7 @@
       </div>
       <!--/ row gutter-md -->
       </div>
-      <!--/ col-sm-offset-1 col-md-10 col-sm-10 -->
-      </div>
-      <!--/ row -->
-      </div>
+
       </section>
       <!--/ Title element - section with custom paddings -->
 
@@ -362,7 +359,7 @@
 
 
       <!-- Carousel	-->
-      <section class="hg_section range-section pt-100 pb-100">
+      <section  class="hg_section range-section pt-100 pb-100">
       <div class="container">
       <div class="row">
       <div class="col-12">
@@ -524,7 +521,7 @@
      {{--  <p class="pt-30 pb-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi assumenda deserunt ea earum excepturi fuga hic, laborum libero magnam nesciunt numquam pariatur perspiciatis porro sit sunt suscipit unde vero.</p> --}}
       <!--/ Detail -->
       </div>
-      <div>
+      <div id="contect">
       <form class="contact-form" id="contact-form" action="{{ route('get-in-touch') }}" method=""POST">
       <div class="form-group">
       <label for="userName">Name</label>
