@@ -592,6 +592,8 @@ video.main_video_contact {
     font-weight: 600;
     margin: 0;
     color: #fff;
+    white-space: nowrap;
+    text-transform: capitalize;
 }
      .screenshot_slider .owl-item .item {
    transform: translate3d(0, 0, 0); /* DO NOT REMEMBER WHERE TU PUT THIS, SEARCH FOR 3D ACCELERATION */
@@ -608,6 +610,12 @@ video.main_video_contact {
     -webkit-transform: translate3d(0,0,0);
 }
 
+/*@media screen and (max-width: 580px) {
+    .owl-carousel .owl-stage-outer {
+        width: 100%;
+    }
+} */
+
 .screenshot_slider .owl-item .item img {
     -webkit-transition: 0.3s;
     /*-webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);*/
@@ -623,6 +631,8 @@ video.main_video_contact {
     -webkit-transform: scale(1.15);
     -ms-transform: scale(1.15);
     transform: scale(1.2);
+        filter: drop-shadow(1px 3px 2px black);
+
 }
 
 .screenshot_slider .owl-nav {
@@ -649,4 +659,86 @@ video.main_video_contact {
 .header_term h1 {
     font-size: 3rem;
     font-weight: 700;
+}
+
+/*10 September*/
+.section_content a {
+    margin-top: 2rem;
+    font-size: 16px;
+    border: none;
+    padding: 12px 46px;
+    border-radius: 300px;
+    background-color: #f0aa1d;
+    box-shadow: 0px 4px 6px 0px #8d8b8b57;
+}
+.boxes_signup {
+
+    background: #f27601;
+}
+.section_title {
+    margin-top: 2rem;
+}
+.section_title_heaf h1 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 24px;
+}
+.section_content h2 {
+    font-size: 40px;
+    color: #fff;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+.section_content h3 {
+    font-size: 26px;
+    margin-top: 2rem;
+    color: #fff;
+}
+.section_content a {
+    margin-top: 2rem;
+    font-size: 16px;
+    border: none;
+    padding: 12px 46px;
+    border-radius: 300px;
+    background-color: #f0aa1d;
+    border: 1px solid #f0aa1d;
+    box-shadow: 0px 4px 6px 0px #8d8b8b57;
+}
+.section_content a:hover {
+    background-color: transparent;
+    border: 1px solid #f0aa1d;
+}
+.section_image {
+
+        text-align: center;
+    height: 366px;
+}
+.section_image img {
+    height: 100%
+}
+.boxes_signup.change_positions {
+    background: #4F80C1;
+}
+
+@media screen and (max-width: 580px ) {
+    .site-header-main-center {
+        margin-right: 0 !important;
+    }
+    .topnav .topnav-item {
+        padding: 10px 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .zn-res-trigger  {
+            display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 20px;
+        margin: 0;
+    }
+    .section_image {
+        margin-top: 2rem;
+        text-align: center !important; 
+    }
 }

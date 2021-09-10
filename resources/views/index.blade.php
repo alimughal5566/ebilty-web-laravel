@@ -148,7 +148,7 @@
         <img src="{{ asset('uploads/logos/company-logo.png') }}" class="img-fluid aboutUsLogo" >
       <!--/ Title -->
       <!-- Detail -->
-      <p class="pt-30 pb-30  mx-auto px-3 px-lg-5">eBilty Connects all range of Road Freight Transport Vehicles to all types of Goods “senders / receivers”. Instant next bookings especially for return vehicles after completing first service covering Ports, Factories, Warehouses, Markets, Shops, Offices, Household shifting, Individuals, Your simple click on eBilty app by describing Goods nature and load / volume with Pick up & Drop off locations within country, relevant vehicles will respond you instantly with most favorable rates on your smart phones & on web with live tracking facility. Digitalize road logistics’ solution on simple clicks with ease to access, track, and record keeping for both users and transporters who can monitor their drivers on eBilty free.</p>
+      <p class="pt-30 pb-30  mx-auto px-3 px-lg-5 text_lmobile text-justify">eBilty Connects all range of Road Freight Transport Vehicles to all types of Goods “senders / receivers”. Instant next bookings especially for return vehicles after completing first service covering Ports, Factories, Warehouses, Markets, Shops, Offices, Household shifting, Individuals, Your simple click on eBilty app by describing Goods nature and load / volume with Pick up & Drop off locations within country, relevant vehicles will respond you instantly with most favorable rates on your smart phones & on web with live tracking facility. Digitalize road logistics’ solution on simple clicks with ease to access, track, and record keeping for both users and transporters who can monitor their drivers on eBilty free.</p>
       <!--/ Detail -->
       </div>
       <!--/ Title element wit custom paddings -->
@@ -308,6 +308,59 @@
       </div>
       </section>
       <!--/ Title element - section with custom paddings -->
+
+      <section class="boxes_signup">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="section_title">
+                <div class="section_title_heaf">
+                  <h1>CARRIERS</h1>
+                </div>
+                <div class="section_content">
+                  <h2>Call your own shots, <br>
+                      chart your own route.</h2>
+                      <h3>Pick the best loads for you.</h3>
+                      <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="section_image">
+                <img src="{{ asset ('assets/img/im2.png') }}" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="boxes_signup change_positions">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 order-2 order-lg-1">
+              <div class="section_image text-left">
+                <img src="{{ asset ('assets/img/img1.png') }}" class="img-fluid">
+              </div>
+            </div>
+            <div class="col-md-6 order-1 order-lg-2">
+              <div class="section_title">
+                <div class="section_title_heaf">
+                  <h1>CARRIERS</h1>
+                </div>
+                <div class="section_content">
+                  <h2>Call your own shots, <br>
+                      chart your own route.</h2>
+                      <h3>Pick the best loads for you.</h3>
+                      <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+
       <!-- Carousel	-->
       <section class="hg_section range-section pt-100 pb-100">
       <div class="container">
@@ -326,35 +379,125 @@
       </div>
       </div>
           <div class="section-padding">
-             <div class="screenshot_slider owl-carousel">
+             {{-- <div class="screenshot_slider owl-carousel">
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 17.svg') }}" alt="" title="">
                  <div class="multi_slider_captions">
-                   <h4>Slider Title</h4>
-                   <p>Slider Desription</p>
+                   <h4>20ft close container</h4>
                  </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 18.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>20ft open top</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 19.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>20ft flat bed</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 20.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>40ft flat bed</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 21.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>Mazda open top</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 22.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>Shazoor</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 23.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>40ft close container</h4>
+                 </div>
                </div>
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 24.svg') }}" alt="" title="">
+                 <div class="multi_slider_captions">
+                   <h4>Shazoor close body</h4>
+                 </div>
                </div>
+            </div> --}}
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 17.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                          <h4>20ft close container</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 18.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                          <h4>20ft open top</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 19.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                          <h4>20ft flat bed</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 20.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                          <h4>40ft flat bed</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 21.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                          <h4>Mazda open top</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 22.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                         <h4>Shazoor</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 23.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                         <h4>40ft close container</h4>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="swiper-slide">
+                    <div class="swiper-slide-container">
+                       <img src="{{ asset ('assets/img/asset 24.svg') }}" alt="" title="">
+                       <div class="multi_slider_captions">
+                         <h4>Shazoor close body</h4>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination"></div>
             </div>
           </div>
       </div>
@@ -441,4 +584,72 @@
       <!--	&lt;!&ndash;/ container &ndash;&gt;-->
       <!--</section>-->
       <!--/ Title with Call to Action Button section with custom paddings -->
+<style>
+      .swiper-container {
+        width: 100%;
+        height: 225px;
+        padding: 20px auto;
+    }
+.swiper-slide-container {
+  text-align: center;
+        font-size: 18px;
+/*        background: #fff;
+  height:100%;*/
+        max-width: 600px;
+  margin:auto;
+        /* Center slide text vertically */
+        display: block;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+}
+.swiper-pagination-bullet-active {
+  background: #fff;
+}
+.swiper-wrapper {
+  align-items: baseline;
+}
+.section-padding {
+  width: 95%;
+    overflow: hidden;
+}
+.swiper-slide.swiper-slide-active img {
+    filter: drop-shadow(2px 4px 6px black);
+    transform: scale(1.2);
+}
+.swiper-slide.swiper-slide-active .multi_slider_captions {
+  display: block;
+}
+</style>
+      <script>
+        var swiper = new Swiper('.swiper-container', {
+  pagination: '.swiper-pagination',
+  slidesPerView: 4,
+  centeredSlides: true,
+  paginationClickable: true,
+  loop: true,
+  spaceBetween: 30,
+  slideToClickedSlide: true,
+  breakpoints: {
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    768: {
+      slidesPerView: 4,
+      spaceBetween: 40,
+    },
+    1024: {
+      slidesPerView: 5,
+      spaceBetween: 50,
+    },
+  },
+});
+      </script>
+
 @include('front_layout.front_footer')

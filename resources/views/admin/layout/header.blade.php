@@ -143,7 +143,7 @@
       </div>
       <!--end: Notifications -->
       <!--begin: Language bar -->
-      <div class="kt-header__topbar-item kt-header__topbar-item--langs">
+      {{-- <div class="kt-header__topbar-item kt-header__topbar-item--langs">
          <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
             <span class="kt-header__topbar-icon kt-header__topbar-icon--info">
             <img class="" src="assets/img/en.svg" alt="">
@@ -165,7 +165,7 @@
                </li>
             </ul>
          </div>
-      </div>
+      </div> --}}
       <!--end: Language bar -->
       <!--begin: User bar -->
       <div class="kt-header__topbar-item kt-header__topbar-item--user">

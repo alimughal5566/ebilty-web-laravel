@@ -505,3 +505,8 @@
 	.flex-xs-wrap {-ms-flex-wrap: wrap !important; flex-wrap: wrap !important;}
 	.flex-xs-row-reverse {-webkit-box-orient: horizontal !important; -webkit-box-direction: reverse !important; -ms-flex-direction: row-reverse !important; flex-direction: row-reverse !important;}
 
+@media screen and (max-width: 580px) {
+    .text_lmobile  {
+        text-align: left !important; 
+    }
+}

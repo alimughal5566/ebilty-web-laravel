@@ -3038,7 +3038,7 @@ a.grayHover img {position:relative;}
 
 
 /*** Icon Box - Default element */
-.kl-iconbox__title {font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.4rem; line-height: 1.7; font-weight: 600; font-style: normal; color: #cd2122;}
+.kl-iconbox__title {font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; white-space: nowrap; font-size: 1.4rem; line-height: 1.7; font-weight: 600; font-style: normal; color: #cd2122;}
 .kl-iconbox {margin-bottom: 30px;}
 .kl-iconbox__inner {}
 .kl-iconbox__icon-wrapper,
