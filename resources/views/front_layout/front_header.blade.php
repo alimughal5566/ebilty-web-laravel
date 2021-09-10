@@ -152,7 +152,7 @@
                                             <a href="{{ url('/') }}#faq" >F.A.Q.</a>
                                         </li>
                                         <li class=" ">
-                                            <a href="{{ url ('/') }}#contect">Contact us</a>
+                                            <a href="{{ url ('/') }}#contact">Contact us</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <div class="mt-30 footer-about-wrap">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut quis nostrud exercitation commodo consequat.</p>
+                            <p class="mb-0">eBilty Connects all range of Road Freight Transport Vehicles to all types of Goods “senders / receivers”.</p>
                         </div>
                     </div>
                 </div>
@@ -25,23 +25,17 @@
                         <h4 class="footer-title">Quick<br>Links</h4>
                     </div>
                     <div class="footer-detail-wrap d-flex flex-column">
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>About</span>
+                        <a href="{{ url ('/') }}"  class="footer-links">
+                            <span>Home</span>
                         </a>
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>Shippers</span>
+                        <a href="{{ url ('/terms-conditions') }}"  class="footer-links">
+                            <span>Terms & Conditions</span>
                         </a>
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>Carriers</span>
+                        <a href="{{ url('/') }}#faq"  class="footer-links">
+                            <span>F.A.Q</span>
                         </a>
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>Careers</span>
-                        </a>
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>Legal Section</span>
-                        </a>
-                        <a href="javascript:void(0);" target="_blank" class="footer-links">
-                            <span>Contact</span>
+                        <a href=" {{ url ('/') }}#contact "  class="footer-links">
+                            <span>Contact Us</span>
                         </a>
                     </div>
                 </div>
@@ -53,23 +47,23 @@
                     </div>
                     <div class="footer-detail-wrap d-flex flex-column">
                         <div class="contact-info d-flex flex-column">
-                            <!--                                        <a href="javascript:void(0);" target="_blank" class="footer-links">-->
+                            <!--                                        <a href="javascript:void(0);"  class="footer-links">-->
                             <!--                                            <i class="glyphicon glyphicon-flag icon-size-xxs"></i>-->
                             <!--                                            <span>Gulberg Continental</span>-->
                             <!--                                        </a>-->
-                            <a href="mailto:info@ebilty.com" target="_blank" class="footer-links">
+                            <a href="mailto:info@ebilty.com"  class="footer-links">
                                 <i class="glyphicon glyphicon-user icon-size-xxs"></i>
                                 <span>info@ebilty.com</span>
                             </a>
-                            {{--  <a href="tel:03000123456" target="_blank" class="footer-links">
+                            {{--  <a href="tel:03000123456"  class="footer-links">
                              <i class="glyphicon glyphicon-earphone icon-size-xxs"></i>
                              <span>03000123456</span>
                              </a>
-                             <a href="tel:03210123456" target="_blank" class="footer-links">
+                             <a href="tel:03210123456"  class="footer-links">
                              <i class="glyphicon glyphicon-earphone icon-size-xxs"></i>
                              <span>03210123456</span>
                              </a>
-                             <a href="tel:03330123456" target="_blank" class="footer-links">
+                             <a href="tel:03330123456"  class="footer-links">
                              <i class="glyphicon glyphicon-earphone icon-size-xxs"></i>
                              <span>03330123456</span>
                              </a> --}}
@@ -125,8 +119,8 @@
             <!--/ Left side Copyright -->
             <!-- Right side -->
             <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="d-block text-right">Powered By &nbsp;<a href="https://ivylabtech.com" target="_blank" class="font-weight-bold refer_title">IvyLab Technologies</a>.
-                    <!--                                Developed By &nbsp;<a href="https://ivylabtech.com" target="_blank">Spotlayer</a>.--></div>
+                <div class="d-block text-right">Powered By &nbsp;<a href="https://ivylabtech.com"  class="font-weight-bold refer_title">IvyLab Technologies</a>.
+                    <!--                                Developed By &nbsp;<a href="https://ivylabtech.com" >Spotlayer</a>.--></div>
             </div>
             <!--/ Right side -->
         </div>

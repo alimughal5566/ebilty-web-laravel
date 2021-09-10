@@ -521,7 +521,7 @@
      {{--  <p class="pt-30 pb-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi assumenda deserunt ea earum excepturi fuga hic, laborum libero magnam nesciunt numquam pariatur perspiciatis porro sit sunt suscipit unde vero.</p> --}}
       <!--/ Detail -->
       </div>
-      <div id="contect">
+      <div id="contact">
       <form class="contact-form" id="contact-form" action="{{ route('get-in-touch') }}" method=""POST">
       <div class="form-group">
       <label for="userName">Name</label>
