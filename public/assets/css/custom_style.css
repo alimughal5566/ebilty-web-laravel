@@ -193,7 +193,7 @@ body {
 /*  */
 
 .btn-gradient-default {
-    color: #0D539B;
+    color: #0D539B !important;
     border-color: #E4F7E5;
 }
 

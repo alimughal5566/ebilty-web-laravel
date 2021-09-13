@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <div class="mt-30 footer-about-wrap">
-                            <p class="mb-0">eBilty Connects all range of Road Freight Transport Vehicles to all types of Goods “senders / receivers”.</p>
+                            <p class="mb-0">An online technology company connecting transporters with customers having a broader vision of changing the way how things have been working conventionally and providing end to end solutions.</p>
                         </div>
                     </div>
                 </div>

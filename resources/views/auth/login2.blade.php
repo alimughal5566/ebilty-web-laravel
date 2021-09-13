@@ -132,13 +132,13 @@
                                 &nbsp;&nbsp;
                                 <button type="submit"  id="kt_login_signup" class="kt-login__account-link btn-gradient btn-gradient-orange btn-block w-100">Sign Up!</button>
                                 </div>
-                                <div class="kt-login__actions my-4">
+                                {{-- <div class="kt-login__actions my-4">
                                 <span class="kt-login__account-msg text-white font-weight-bold">
                                 You have tracking number ?
                                 </span>
                                 &nbsp;&nbsp;
                                 <a href="#" class="kt-login__account-link color-secondary font-weight-bold">Track shipment</a>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                         <div class="kt-login__actionsCustom">
@@ -150,13 +150,13 @@
                                 <span class="text-center text-white font-weight-bold">Login As</span>
                                 </div>
                                 <div class="login-item-type d-flex flex-wrap justify-content-between">
-                                <a href="#" class="btn btn-gradient flex-column half">
+                                <a href="{{ url ('/login') }}" class="btn btn-gradient flex-column half">
                                 <i class="fa fa-industry fa-2x"></i>
-                                <span>VENDOR</span>
+                                <span>CUSTOMER</span>
                                 </a>
-                                <a href="#" class="btn btn-gradient flex-column half">
+                                <a href="{{ url ('/login') }}" class="btn btn-gradient flex-column half">
                                 <i class="fa fa-truck-loading fa-2x"></i>
-                                <span>SERVICE PROVIDER</span>
+                                <span>TRANSPORTER</span>
                                 </a>
                                 </div>
                             </div>

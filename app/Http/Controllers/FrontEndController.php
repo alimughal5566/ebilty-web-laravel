@@ -26,6 +26,10 @@ class FrontEndController extends Controller
         return view ('terms_conditions');
     }
 
+    public function carrier () {
+        return view ('carrier');
+    }
+
     public function sendMail(Request $request) {
         //dd($request->all());
 

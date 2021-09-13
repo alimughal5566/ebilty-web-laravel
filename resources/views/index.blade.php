@@ -312,12 +312,12 @@
             <div class="col-md-6">
               <div class="section_title">
                 <div class="section_title_heaf">
-                  <h1>CARRIERS</h1>
+                  <h1>TRANSPORTERS</h1>
                 </div>
                 <div class="section_content">
-                  <h2>Call your own shots, <br>
-                      chart your own route.</h2>
-                      <h3>Pick the best loads for you.</h3>
+                  <h2> Get online ,  <br>
+                      maximize your profits.</h2>
+                      <h3>Pick up loads efficiently.</h3>
                       <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
                 </div>
               </div>
@@ -342,12 +342,12 @@
             <div class="col-md-6 order-1 order-lg-2">
               <div class="section_title">
                 <div class="section_title_heaf">
-                  <h1>CARRIERS</h1>
+                  <h1>CUSTOMER</h1>
                 </div>
                 <div class="section_content">
-                  <h2>Call your own shots, <br>
-                      chart your own route.</h2>
-                      <h3>Pick the best loads for you.</h3>
+                  <h2>Get best rates, <br>
+                      Simplify your movements</h2>
+                      <h3>Save time & money</h3>
                       <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
                 </div>
               </div>
