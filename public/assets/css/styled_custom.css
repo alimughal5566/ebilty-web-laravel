@@ -219,10 +219,11 @@ body.sticky-header #header {
 
 .btn-gradient-blue {
     margin-left: 50px !important;
-    background-color: #63BFEB;
+    background: #0d539b;
+/*    background-color: #63BFEB;
     background-image: -webkit-gradient(linear, left top, right top, from(#0D539B), to(#63BFEB));
     background-image: -o-linear-gradient(left, #0D539B, #63BFEB);
-    background-image: linear-gradient(to right, #0D539B, #63BFEB);
+    background-image: linear-gradient(to right, #0D539B, #63BFEB);*/
 }
 
 .th-google_map, .contact-section .img-col {

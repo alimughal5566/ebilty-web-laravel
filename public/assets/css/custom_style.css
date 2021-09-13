@@ -118,6 +118,23 @@ body {
 
 .custom-grid {
     background: #EE8335 url('../img/truck_bg.jpg') no-repeat center /cover !important;
+    position: relative;
+    z-index: 99;
+}
+
+div#kt_login {
+    margin-bottom: 3rem;
+}
+
+.custom-grid::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    content: '';
+    background: #ee873242;
+    z-index: -1;
 }
 
 .btn-gradient {
@@ -203,11 +220,13 @@ body {
 }
 
 .btn-gradient-orange {
-    border-color: #EE8335;
+/*    border-color: #EE8335;
     background-color: #EE8335;
     background-image: -o-linear-gradient(top, #EE8335, #FDC90E);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#EE8335), to(#FDC90E));
-    background-image: linear-gradient(to bottom, #EE8335, #FDC90E);
+    background-image: linear-gradient(to bottom, #EE8335, #FDC90E);*/
+    background: #f0aa1d;
+    border: none;
 }
 
 .btn-gradient-orange:hover, .btn-gradient-orange:focus, .btn-gradient-orange:active {
@@ -219,11 +238,13 @@ body {
 }
 
 .btn-gradient-blue {
-    border-color: #0D539B;
+/*    border-color: #0D539B;
     background-color: #0D539B;
     background-image: -o-linear-gradient(top, #0D539B, #63BFEB);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#0D539B), to(#63BFEB));
-    background-image: linear-gradient(to bottom, #0D539B, #63BFEB);
+    background-image: linear-gradient(to bottom, #0D539B, #63BFEB);*/
+        background: #0d539b;
+    border: none;
 }
 
 .btn-gradient-blue:hover, .btn-gradient-blue:focus, .btn-gradient-blue:active {
@@ -261,11 +282,12 @@ body {
 
 .login-item-type a.btn.half {
     width: 45%;
-    border-color: #0073AC;
+    /*border-color: #0073AC;*/
     background-color: #0073AC;
-    background-image: -o-linear-gradient(left, #0073AC, #6EF3E5);
-    background-image: -webkit-gradient(linear, left top, right top, from(#0073AC), to(#6EF3E5));
-    background-image: linear-gradient(to right, #0073AC, #6EF3E5);
+    border: none;
+    /*background-image: -o-linear-gradient(left, #0073AC, #6EF3E5);*/
+    /*background-image: -webkit-gradient(linear, left top, right top, from(#0073AC), to(#6EF3E5));*/
+    /*background-image: linear-gradient(to right, #0073AC, #6EF3E5);*/
 }
 
 .login-item-type a.btn.half:hover, .login-item-type a.btn.half:focus, .login-item-type a.btn.half:active {
@@ -335,10 +357,10 @@ body {
 .section_separator:after {
     right: 0;
 }
-
+/*
 .kt-login .kt-login__header {
     background: rgba(0, 0, 0, 0.1);
-}
+}*/
 
 .kt-login .kt-login__wrapper {
     background: transparent !important;

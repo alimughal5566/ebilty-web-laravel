@@ -153,16 +153,16 @@
 
 .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__title {
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: 3rem;
 	font-weight: 500;
-	color: #595d6e;
+	color: #fff;
 }
 
 .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__desc {
 	margin-top: 0.75rem;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-weight: 400;
-	color: #74788d;
+	color: #fff;
 }
 
 .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__form {
@@ -179,7 +179,7 @@
 	border-radius: 0;
 	border: none;
 	border-bottom: 0.07rem solid #ebecf1 !important;
-	padding: 1rem 0;
+	padding: 1rem 1rem;
 	margin-top: 0.1rem;
 }
 
@@ -644,4 +644,8 @@ body {
 	.kt-login.kt-login--v5 .kt-login__wrapper .kt-login__signin .kt-login__form .kt-login__options>a:not(:first-child):not(:last-child) {
 		margin: 0 0.8rem;
 	}
+}
+.forgot_main_title {
+	font-size: 3rem !important;
+    font-weight: 600 !important;
 }

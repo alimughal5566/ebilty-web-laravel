@@ -124,7 +124,7 @@
                                     <!--  <a href="javascript:;" id="kt_login_forgot" class="kt-link kt-hidden">Forget Password ?</a> -->
                                 </div>
                                 </div>
-                                <a href="javascript:void(0);" id="kt_login_forgot" class="kt-link mt-3 ml-auto text-right d-block color-secondary font-weight-bold">Forget Password ?</a>
+                                <a href="javascript:void(0);" id="kt_login_forgot" class="kt-link mt-3 ml-auto text-right d-block  font-weight-bold" style="color: #fff !important;">Forget Password ?</a>
                                 <div class="kt-login__actions kt-margin-t-10 flex-column">
                                 <span class="kt-login__account-msg d-block w-100 text-white font-weight-bold">
                                 Don't have an account yet? No need to worry
@@ -288,13 +288,15 @@
                     </div>
                     <div class="kt-login__forgot">
                         <div class="kt-login__head">
-                            <h3 class="kt-login__title">Forgotten Password ?</h3>
+                            <h3 class="kt-margin-t-30 forgot_main_title"><span class="color-secondary">Forgotten</span> <span class="text-white">Password ?</span></h3>
                             <div class="kt-login__desc">Enter your email to reset your password:</div>
                         </div>
                         <div class="kt-login__form">
                             <form class="kt-form" data-request="::onRestorePassword" data-request-update="'::reset': '#partialUserResetForm'">
                                 <div class="form-group">
-                                <input class="form-control" type="email" placeholder="Email" name="email" id="userRestoreEmail" autocomplete="off">
+                                    <label for="userSigninLogin" class="sr-only"></label>
+                                    <input class="form-control" type="email" placeholder="Email" name="email" id="userRestoreEmail" autocomplete="off">
+                                    <i class="fa fa-envelope field-icon"></i>
                                 </div>
                                 <div class="kt-login__actions">
                                 <button id="kt_login_forgot_submit" class="btn btn-brand btn-pill btn-elevate">Request</button>
