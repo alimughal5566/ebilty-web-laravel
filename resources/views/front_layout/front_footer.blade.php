@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <div class="mt-30 footer-about-wrap">
-                            <p class="mb-0">An online technology company connecting transporters with customers having a broader vision of changing the way how things have been working conventionally and providing end to end solutions.</p>
+                            <p class="mb-0 text-justify">An online technology company connecting transporters with customers having a broader vision of changing the way how things have been working conventionally and providing end to end solutions.</p>
                         </div>
                     </div>
                 </div>
@@ -28,11 +28,17 @@
                         <a href="{{ url ('/') }}"  class="footer-links">
                             <span>Home</span>
                         </a>
+                        <a href="#faq"  class="footer-links">
+                            <span>About us</span>
+                        </a>
                         <a href="{{ url ('/terms-conditions') }}"  class="footer-links">
                             <span>Terms & Conditions</span>
                         </a>
                         <a href="{{ url('/') }}#faq"  class="footer-links">
                             <span>F.A.Q</span>
+                        </a>
+                        <a href="{{ url ('/career') }}" class="footer-links">
+                            <span>Careers</span>
                         </a>
                         <a href=" {{ url ('/') }}#contact "  class="footer-links">
                             <span>Contact Us</span>

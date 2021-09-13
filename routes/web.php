@@ -24,7 +24,7 @@ Route::get('test', function () {
     return "Event has been sent!";
 });
 Route::get('/terms-conditions', 'FrontEndController@termcondition')->name('termcondition');
-Route::get('/carrier', 'FrontEndController@carrier')->name('carrier');
+Route::get('/career', 'FrontEndController@carrier')->name('career');
 
 Route::get('show/tracking/{id}' ,'HomeController@showTracking')->name('tracking');
 Route::get('send/noti' , 'HomeController@sendNotification');

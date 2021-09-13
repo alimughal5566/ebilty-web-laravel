@@ -462,7 +462,7 @@ body.sticky-header #header {
 }
 
 .download-app-wrap .app-wrap img {
-    max-width: 200px;
+    max-width: 150px;
 }
 
 #totop::before {
@@ -740,5 +740,8 @@ video.main_video_contact {
     .section_image {
         margin-top: 2rem;
         text-align: center !important; 
+    }
+    .main_btn_sm_sign {
+        text-align: center;
     }
 }

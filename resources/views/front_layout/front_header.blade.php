@@ -145,17 +145,14 @@
                                         <li class="{{ (request()->is('/')) ? 'active' : '' }}">
                                             <a href="{{ url ('/') }}">Home</a>
                                         </li>
-                                        <li class="{{ (request()->is('terms-conditions')) ? 'active' : '' }}">
-                                            <a href="{{ url ('/terms-conditions') }}">Terms & Conditions</a>
-                                        </li>
                                         <li class="">
-                                            <a href="{{ url('/') }}#faq" >F.A.Q.</a>
+                                            <a href="#faq">About Us</a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="{{ url ('/career') }}">Careers</a>
                                         </li>
                                         <li class=" ">
                                             <a href="{{ url ('/') }}#contact">Contact us</a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url ('/carrier') }}">Carriers</a>
                                         </li>
                                     </ul>
                                 </div>

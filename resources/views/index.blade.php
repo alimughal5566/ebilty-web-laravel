@@ -315,10 +315,12 @@
                   <h1>TRANSPORTERS</h1>
                 </div>
                 <div class="section_content">
-                  <h2> Get online ,  <br>
-                      maximize your profits.</h2>
+                  <h2> Get online,  <br>
+                      Maximize your profits.</h2>
                       <h3>Pick up loads efficiently.</h3>
-                      <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                      <div class="main_btn_sm_sign">
+                        <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                      </div>
                 </div>
               </div>
             </div>
@@ -342,13 +344,15 @@
             <div class="col-md-6 order-1 order-lg-2">
               <div class="section_title">
                 <div class="section_title_heaf">
-                  <h1>CUSTOMER</h1>
+                  <h1>CUSTOMERS</h1>
                 </div>
                 <div class="section_content">
                   <h2>Get best rates, <br>
-                      Simplify your movements</h2>
+                      Simplify your movements.</h2>
                       <h3>Save time & money</h3>
-                      <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                      <div class="main_btn_sm_sign">
+                        <a href="{{ url ('/login') }}" class="btn btn-primary">Sign Up</a>
+                      </div>
                 </div>
               </div>
             </div>
@@ -507,7 +511,7 @@
       <div class="row">
       <div class="col-12 col-lg-6 order-last order-lg-first form-col">
       <div class="row">
-      <div class="col-12 col-lg-7 offset-lg-5">
+      <div class="col-12 col-lg-7 offset-lg-2">
       <div class="pt-100 pb-100">
       <div class="kl-title-block text-center text-white text-lg-left tbk-symbol--line">
       <!-- Sub-title with custom color -->
@@ -535,7 +539,9 @@
       <label for="userMessage">Message</label>
       <textarea class="form-control" required="" id="userMessage" name="message" placeholder="Write message" rows="5"></textarea>
       </div>
-      <button type="submit" class="btn btn-gradient btn-gradient-orange text-center ">Submit</button>
+      <div class="main_contact_us_btn text-center">
+        <button type="submit" class="btn btn-gradient btn-gradient-orange text-center ">Submit</button>
+      </div>
       </form>
       </div>
       </div>

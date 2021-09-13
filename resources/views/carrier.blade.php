@@ -9,10 +9,10 @@
 				<div class="col-md-7">
 					<div class="main_titles_car">
 						<div class="head_car">
-							<h1>Carry with Trella</h1>
+							<h1>Join Us</h1>
 						</div>
 						<div class="subhead_car">
-							 <h2>Trella provides carriers with easy access to loads with the areas, times, and commodities they prefer.</h2>
+							 <h2>Be a part of eBilty's team to enhance this journey and provide the  best to our customer</h2>
 						</div>
 						<div class="listing_car">
 							<ul>
