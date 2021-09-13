@@ -10,7 +10,7 @@
                     <div class="footer-detail-wrap mt-0">
                         <div class="footer-logo-wrap">
                             <a href="http://ebilty.com">
-                                <img src="{{ asset ('uploads/logos/company-logo.png') }}">
+                                <img src="{{ asset ('assets/img/ebiltylogo.png') }}">
                             </a>
                         </div>
                         <div class="mt-30 footer-about-wrap">
