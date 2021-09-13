@@ -6868,12 +6868,14 @@ transform: rotateX(180deg) translate3d(0,0,100px) scale(0.85,0.85);}
     font-weight: lighter;
     margin-right: 13px;
 }
-.signup_btn_car button {
+.signup_btn_car {
+	margin-top: 2rem;
+}
+.signup_btn_car a {
     border: 2px solid #fff;
     padding: 8px 30px;
     border-radius: 300px;
     color: #fff !important;
-    margin-top: 2rem;
     font-size: 16px;
     font-weight: 600;
 }

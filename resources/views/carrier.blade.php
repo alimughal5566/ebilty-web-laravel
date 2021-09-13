@@ -28,7 +28,7 @@
 							</ul>
 						</div>
 						<div class="signup_btn_car">
-							<button type="button" class="btn">Sign Up</button>
+							<a href="{{ url ('/login') }}">Sign Up</a>
 						</div>
 					</div>
 				</div>
