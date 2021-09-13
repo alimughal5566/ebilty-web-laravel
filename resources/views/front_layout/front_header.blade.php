@@ -154,6 +154,9 @@
                                         <li class=" ">
                                             <a href="{{ url ('/') }}#contact">Contact us</a>
                                         </li>
+                                        <li class=" ">
+                                            <a href="{{ url ('/carrier') }}">Carriers</a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <!--/ Main menu -->
