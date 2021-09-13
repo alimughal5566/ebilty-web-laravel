@@ -44,20 +44,18 @@
 
 <section class="fields_car">
 	<div class="container">
-		<div class="main_title">
-			<h3>Independent Operator Form</h3>
-		</div>
 		<div class="listing_fields contact-section">
 			<div class="titkles_fields">
 				<h4>This form is for carriers with only one truck.</h4>
 			</div>
-			<form class="contact-form ">
+			<form class="contact-form" action="{{route('save.carrier.form')}}" enctype="multipart/form-data" method="POST">
+                @csrf
 				<div class="row">
 					<div class="col-md-6">
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="name">Full Name</label>
-						      <input type="text" class="form-control" required="" id="name"  placeholder="Full Name">
+						      <input type="text" class="form-control" required="" id="name" name="name"  placeholder="Full Name">
 					      	</div>
 						</div>
 					</div>
@@ -65,7 +63,7 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="userEmail">Email</label>
-						      <input type="email" class="form-control" required="" id="userEmail"  placeholder="Email Address">
+						      <input type="email" class="form-control" required="" id="userEmail" name="email"  placeholder="Email Address">
 					      	</div>
 						</div>
 					</div>
@@ -73,7 +71,7 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="phone">Phone</label>
-						      <input type="number" class="form-control" required="" id="phone"  placeholder="Phone">
+						      <input type="number" class="form-control" required="" id="phone" name="phone" placeholder="Phone">
 					      	</div>
 						</div>
 					</div>
@@ -81,19 +79,35 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="userEmail">CV</label>
-						      <input type="file" class="form-control" required="" id="userEmail"  placeholder="">
+						      <input type="file" class="form-control" accept="application/pdf" required="" id="file" name="cv"  placeholder="">
+                                <span id="error" class="text-danger"></span>
 					      	</div>
 						</div>
 					</div>
 				</div>
 				<div class="submti_car_btn">
-					<button class="btn"> Submit </button>
+					<button class="btn" id="submit_button" disabled> Submit </button>
 				</div>
 			</form>
-			
+
 		</div>
 	</div>
 </section>
+ <script>
+     $('#file').change(function(e){
+         var file = $(this).val();
+         var ext = file.split('.').pop();
+         console.log(ext)
+         if(ext != "pdf"){
+             console.log('not pdf')
+             $('#submit_button').prop('disabled', true);
+             $('#error').text('Please select pdf format file only')
+         }else{
+             console.log('pdf')
+             $('#submit_button').attr("disabled", false);
+         }
+     });
+ </script>
 
 
 @include('front_layout.front_footer')
