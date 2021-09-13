@@ -23,6 +23,7 @@ Route::get('test', function () {
    sendnote(2 , 1,'dadasdasdasdadasdasdasasd' );
     return "Event has been sent!";
 });
+Route::post('/save-carrier-form', 'FrontendController@saveCarrierForm')->name('save.carrier.form');
 Route::get('/terms-conditions', 'FrontEndController@termcondition')->name('termcondition');
 Route::get('/carrier', 'FrontEndController@carrier')->name('carrier');
 
