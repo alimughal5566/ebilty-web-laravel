@@ -391,10 +391,14 @@ class HomeController extends Controller
     }
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('vehicle','sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
-//        dd($shipment);
+
+        $shipmentAmount=ShipmentBids::where('shipment_id',$id)
+            ->where('user_id',$shipment['assigned_to'])
+            ->first();
         return response()->json([
             'success' =>'All shipments',
             'shipment' =>$shipment,
+            'shipmentAmount' =>$shipmentAmount,
 
             ], 200);
     }
@@ -523,5 +527,6 @@ class HomeController extends Controller
         ->first();
         return response()->json($shipment);
     }
+
 
 }
