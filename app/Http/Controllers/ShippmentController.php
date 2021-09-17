@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserVehicle;
+use App\ShipmentBids;
 use App\Shippment;
 use App\ShippmentPackage;
 use App\User;
@@ -137,8 +138,10 @@ class ShippmentController extends Controller
     }
     public function show($id){
         $shipment= Shippment::where('id',$id)->with('sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();
-//        dd($shipment);
-        return view('user.shipment.show', compact('shipment'));
+        $shipmentAmount=ShipmentBids::where('shipment_id',$id)
+            ->where('user_id',$shipment['assigned_to'])
+            ->first();
+        return view('user.shipment.show', compact('shipment','shipmentAmount'));
     }
     public function shipmentDetails($id){
         $shipment= Shippment::where('id',$id)->with('vehicle','sender.user','receiver.user','status','user','sender.city','sender.state','receiver.city','receiver.state','bids','package.category')->first();

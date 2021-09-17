@@ -102,7 +102,7 @@ class AuthController extends Controller
             }elseif ($user->hasRole('company')){
                 $role = 3;
             }
-//            event(new Registered($user));
+            event(new Registered($user));
             return response()->json([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',

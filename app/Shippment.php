@@ -39,7 +39,8 @@ class Shippment extends Model
     public function vehicle(){
        return $this->hasOne('App\Models\Admin\Setting\Vehicle','id','vehicle_id');
     }
-    public function assignedto(){
+    public function assignedto()
+    {
         return $this->hasOne('App\User','id','assigned_to');    }
 
 
@@ -48,6 +49,9 @@ class Shippment extends Model
     }
     public function allStatuses(){
         return $this->hasMany('App\StatusChangeFile','shipment_id','id');
+    }
+    public function shipmentAmount($id){
+        return $this->hasOne('App\ShipmentBids','shipment_id','id')->where('user_id',$id);
     }
 //
 protected $guarded=[''];

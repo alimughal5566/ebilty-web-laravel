@@ -339,9 +339,14 @@
                                         <span class="kt-widget12__desc">Departure Time</span>
                                         <span class="kt-widget12__value">{{$shipment->ship_date}} | {{date('h:i A', strtotime($shipment->ship_time))}}</span>
                                     </div>
+
+{{--                                    <div class="kt-widget12__info">--}}
+{{--                                        <span class="kt-widget12__desc">Insurance </span>--}}
+{{--                                        <span class="kt-widget12__value">{{ $shipment->is_insured == 1 ? "Yes (Rs. ".$shipment->package_cost.")" : "No" }}</span>--}}
+{{--                                    </div>--}}
                                     <div class="kt-widget12__info">
-                                        <span class="kt-widget12__desc">Insurance </span>
-                                        <span class="kt-widget12__value">{{ $shipment->is_insured == 1 ? "Yes (Rs. ".$shipment->package_cost.")" : "No" }}</span>
+                                        <span class="kt-widget12__desc">Shipping Cost</span>
+                                        <span class="kt-widget12__value">{{@$shipmentAmount->revise_amount_shipper?@$shipmentAmount->revise_amount_shipper:@$shipmentAmount->bid_amount}}</span>
                                     </div>
                                 </div>
                                 {{--                                <div class="kt-widget12__item">--}}
@@ -403,6 +408,7 @@
                                         <span class="kt-widget12__desc">Package description</span>
                                         <span class="kt-widget12__value">{{@$shipment->package->description}}</span>
                                     </div>
+
                                 </div>
 
                             </div>
