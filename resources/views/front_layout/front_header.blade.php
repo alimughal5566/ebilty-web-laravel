@@ -187,7 +187,7 @@
                                 <div class="topnav login--panel topnav-account-login topnav-login align-self-center">
                                     <a class="topnav-item " href="{{route('login')}}">
                                         <i class="login-icon fas fa-sign-in-alt visible-xs xs-icon"></i>
-                                        <span class="topnav-item--text">LOGIN</span>
+                                        <span class="topnav-item--text">Sign In</span>
                                     </a>
                                 </div>
                             @else

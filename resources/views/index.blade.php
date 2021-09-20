@@ -55,7 +55,7 @@
                   <!-- Link more button -->
 
                   <div class="button_more text-center">
-                          <a href="{{ url ('/login') }}" class="more btn-gradient btn-gradient-blue"> Join US </a>
+                          <a href="{{ url ('/login') }}" class="more btn-gradient btn-gradient-blue"> Join Us </a>
 
                       </div>
 
@@ -414,7 +414,7 @@
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 22.svg') }}" alt="" title="">
                  <div class="multi_slider_captions">
-                   <h4>Shazoor</h4>
+                   <h4>Shehzore</h4>
                  </div>
                </div>
                <div class="item">
@@ -426,7 +426,7 @@
                <div class="item">
                  <img src="{{ asset ('assets/img/asset 24.svg') }}" alt="" title="">
                  <div class="multi_slider_captions">
-                   <h4>Shazoor close body</h4>
+                   <h4>Shehzore close body</h4>
                  </div>
                </div>
             </div> --}}
@@ -476,7 +476,7 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 22.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                         <h4>Shazoor</h4>
+                         <h4>Shehzore</h4>
                        </div>
                     </div>
                  </div>
@@ -492,7 +492,7 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 24.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                         <h4>Shazoor close body</h4>
+                         <h4>Shehzore close body</h4>
                        </div>
                     </div>
                  </div>
@@ -591,7 +591,7 @@
       .swiper-container {
         width: 100%;
         height: 225px;
-        padding: 20px auto;
+        padding-top: 1rem !important;
     }
 .swiper-slide-container {
   text-align: center;
@@ -623,7 +623,7 @@
 }
 .swiper-slide.swiper-slide-active img {
     filter: drop-shadow(2px 4px 6px black);
-    transform: scale(1.2);
+    transform: scale(1.26);
 }
 .swiper-slide.swiper-slide-active .multi_slider_captions {
   display: block;

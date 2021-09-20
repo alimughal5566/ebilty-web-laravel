@@ -120,6 +120,7 @@ body {
     background: #EE8335 url('../img/truck_bg.jpg') no-repeat center /cover !important;
     position: relative;
     z-index: 99;
+    padding-bottom: 1rem;
 }
 
 div#kt_login {
@@ -133,7 +134,7 @@ div#kt_login {
     right: 0;
     left: 0;
     content: '';
-    background: #ee873242;
+    background: #ee8732c9;
     z-index: -1;
 }
 
@@ -227,6 +228,7 @@ div#kt_login {
     background-image: linear-gradient(to bottom, #EE8335, #FDC90E);*/
     background: #f0aa1d;
     border: none;
+    border-radius: 300px;
 }
 
 .btn-gradient-orange:hover, .btn-gradient-orange:focus, .btn-gradient-orange:active {
@@ -245,6 +247,7 @@ div#kt_login {
     background-image: linear-gradient(to bottom, #0D539B, #63BFEB);*/
         background: #0d539b;
     border: none;
+    border-radius: 300px;
 }
 
 .btn-gradient-blue:hover, .btn-gradient-blue:focus, .btn-gradient-blue:active {
@@ -253,6 +256,7 @@ div#kt_login {
     background-image: -o-linear-gradient(top, #63BFEB, #0D539B);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#63BFEB), to(#0D539B));
     background-image: linear-gradient(to bottom, #63BFEB, #0D539B);
+    border-radius: 300px;
 }
 
 .login-item-type a.btn {
@@ -372,9 +376,10 @@ div#kt_login {
 
 .kt-login .kt-login__wrapper .kt-form .input-group .field-icon,
 .kt-login .kt-login__wrapper .kt-form .form-group .field-icon {
-    color: #0D539B;
+    color: #555a64;
     position: absolute;
     right: 20px;
+
 }
 
 .kt-login .kt-login__wrapper .kt-form .form-group .field-icon {
@@ -425,6 +430,8 @@ div#kt_login {
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
+    color: #555a64; 
+    opacity: 1 ;
     align-items: center;
 }
 

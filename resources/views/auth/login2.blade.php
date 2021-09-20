@@ -141,7 +141,7 @@
                                 </div> --}}
                             </form>
                         </div>
-                        <div class="kt-login__actionsCustom">
+                        {{-- <div class="kt-login__actionsCustom">
                             <div class="section_separator">
                                 <span class="text-white font-weight-bold">OR</span>
                             </div>
@@ -160,7 +160,7 @@
                                 </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="kt-login__signup">
                         <div class="kt-login__head mb-5">
@@ -281,9 +281,9 @@
                                 <button id="kt_login_signup_cancel" class="btn btn-gradient btn-gradient-default kt-login__btn-secondary mx-0">Cancel</button>
                                 <button id="sbet" type="submit" class="btn btn-gradient btn-gradient-blue mx-0">Sign Up!</button>
                             </div>
-                            <div class="kt-login__actions kt-margin-t-10 flex-column">
+                            {{-- <div class="kt-login__actions kt-margin-t-10 flex-column">
                                 <span class="kt-login__account-msg d-block w-100 text-white font-weight-bold">Already have an account? <a href="javascript:void(0);" id="kt_login_signin" class="kt-login__account-link ">Login</a> to your account</span>
-                            </div>
+                            </div> --}}
                         </form>
                     </div>
                     <div class="kt-login__forgot">
