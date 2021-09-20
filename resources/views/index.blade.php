@@ -436,8 +436,8 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 17.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                          <h4>20ft close container</h4>
-                       </div>
+                          <h4>20ft close <br> container </h4>
+                       </div >
                     </div>
                  </div>
                  <div class="swiper-slide">
@@ -468,7 +468,7 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 21.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                          <h4>Mazda open top</h4>
+                          <h4>Mazda open <br> top </h4>
                        </div>
                     </div>
                  </div>
@@ -484,7 +484,7 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 23.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                         <h4>40ft close container</h4>
+                         <h4>40ft close <br> container </h4>
                        </div>
                     </div>
                  </div>
@@ -492,7 +492,7 @@
                     <div class="swiper-slide-container">
                        <img src="{{ asset ('assets/img/asset 24.svg') }}" alt="" title="">
                        <div class="multi_slider_captions">
-                         <h4>Shehzore close body</h4>
+                         <h4>Shehzore close <br> body </h4>
                        </div>
                     </div>
                  </div>
@@ -529,15 +529,15 @@
       <form class="contact-form" id="contact-form" action="{{ route('get-in-touch') }}" method=""POST">
       <div class="form-group">
       <label for="userName">Name</label>
-      <input type="text" class="form-control" required="" id="userName" name="name" placeholder="Your Name">
+      <input type="text" class="form-control" required="" id="userName" name="name">
       </div>
       <div class="form-group">
       <label for="userEmail">Email</label>
-      <input type="email" class="form-control" required="" id="userEmail" name="email" placeholder="Email Address">
+      <input type="email" class="form-control" required="" id="userEmail" name="email">
       </div>
       <div class="form-group">
       <label for="userMessage">Message</label>
-      <textarea class="form-control" required="" id="userMessage" name="message" placeholder="Write message" rows="5"></textarea>
+      <textarea class="form-control" required="" id="userMessage" name="message" rows="5"></textarea>
       </div>
       <div class="main_contact_us_btn text-center">
         <button type="submit" class="btn btn-gradient btn-gradient-orange text-center ">Submit</button>

@@ -394,7 +394,7 @@ div#kt_login {
 .btn-gradient-default, .upload-btn-wrapper .upload-wrap,
 .kt-login .kt-login__wrapper .kt-form .input-group .form-control,
 .kt-login .kt-login__wrapper .kt-form .form-group .form-control {
-    background: #E4F7E5 !important;
+    background: #fff !important;
 }
 
 .kt-login .kt-login__wrapper .kt-login__signin .kt-login__form .kt-form .form-group .form-control:hover,
@@ -418,10 +418,10 @@ div#kt_login {
     height: 100%;
     color: #0D539B;
     margin-right: 0;
-    font-weight: bold;
+    font-weight: 300;
     padding-left: 1rem;
     padding-right: 1rem;
-    background: #E4F7E5 !important;
+    background: #fff !important;
 }
 
 .kt-login .kt-login__wrapper .kt-form .input-group .bootstrap-select .btn.dropdown-toggle .filter-option {
@@ -735,6 +735,12 @@ div#kt_login {
     .main_img_banner_DB {
         width: 100%;
         height: auto;
+    }
+    .main_logo img {
+            width: 228px;
+    }
+    .kt-login__header.mx-auto.text-center.d-block.w-100 {
+        display: none !important;
     }
 }
 

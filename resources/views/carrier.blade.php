@@ -55,7 +55,7 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="name">Full Name</label>
-						      <input type="text" class="form-control" required="" id="name" name="name"  placeholder="Full Name">
+						      <input type="text" class="form-control" required="" id="name" name="name" >
 					      	</div>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="userEmail">Email</label>
-						      <input type="email" class="form-control" required="" id="userEmail" name="email"  placeholder="Email Address">
+						      <input type="email" class="form-control" required="" id="userEmail" name="email">
 					      	</div>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 						<div class="field_car">
 							<div class="form-group">
 						      <label for="phone">Phone</label>
-						      <input type="number" class="form-control" required="" id="phone" name="phone" placeholder="Phone">
+						      <input type="number" class="form-control" required="" id="phone" name="phone">
 					      	</div>
 						</div>
 					</div>

@@ -72,11 +72,24 @@
             .option_min_add .fa {
                 cursor: pointer;
             }
+            .main_logo {
+                margin-top: 2rem;
+                text-align: center;
+            }
+            .main_logo img {
+                    width: 220px;
+            }
         </style>
         <!-- begin:: Page -->
         <div class="kt-grid kt-grid--ver kt-grid--root kt-page custom-grid">
+
+            
+
 {{--            @dd(@$form)--}}
         <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v5 {{($errors->has('form'))?'kt-login--signup ':'kt-login--signin'}}" id="kt_login">
+            <div class="main_logo">
+                <img src="{{ url ('assets/img/ebiltylogo.png') }}" class="img-fluid">
+            </div>
             <div class="kt-login__header mx-auto text-center d-block w-100">
                 <a class="kt-login__logo d-inline-block py-4" href="#">
                     <!-- <img style="max-height:90px;max-width:80%;" class="h-auto w-auto" alt="" src="http://127.0.0.1:8000/storage/app/uploads/public/605/adf/deb/605adfdeb172d020773592.png"> -->

@@ -31,9 +31,7 @@
                         <a href="#faq"  class="footer-links">
                             <span>About us</span>
                         </a>
-                        <a href="{{ url ('/terms-conditions') }}"  class="footer-links">
-                            <span>Terms & Conditions</span>
-                        </a>
+                        
                         <a href="{{ url('/') }}#faq"  class="footer-links">
                             <span>F.A.Q</span>
                         </a>
@@ -117,14 +115,19 @@
         <div class="row">
             <div class="col-sm-12 footer-area--bottom"></div>
             <!-- Left side Copyright -->
-            <div class="col-sm-12 col-md-6 col-lg-6 d-flex justify-content-start">
+            <div class="col-sm-12 col-md-4 col-lg-4 d-flex justify-content-start">
                 <div class="d-flex">
                     <p class="mb-0">© 2021 <span class="font-weight-bold brand_title">eBilty</span> All rights reserved.</p>
                 </div>
             </div>
+            <div class="col-sm-12 col-md-4 col-lg-4 text-center d-flex align-items-center justify-content-center">
+                <a href="{{ url ('/terms-conditions') }}"  class="footer-links" style="font-size: 12px;">
+                            <span>Terms & Conditions</span>
+                        </a>
+            </div>
             <!--/ Left side Copyright -->
             <!-- Right side -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-4 col-lg-4">
                 <div class="d-block text-right">Powered By &nbsp;<a href="https://ivylabtech.com"  class="font-weight-bold refer_title">IvyLab Technologies</a>.
                     <!--                                Developed By &nbsp;<a href="https://ivylabtech.com" >Spotlayer</a>.--></div>
             </div>
