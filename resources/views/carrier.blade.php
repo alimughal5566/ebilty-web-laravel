@@ -46,7 +46,7 @@
 	<div class="container">
 		<div class="listing_fields contact-section">
 			<div class="titkles_fields">
-				<h4>This form is for carriers with only one truck.</h4>
+				<h4>Please submit below details to reach us</h4>
 			</div>
 			<form class="contact-form" action="{{route('save.carrier.form')}}" enctype="multipart/form-data" method="POST">
                 @csrf
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<div class="submti_car_btn">
-					<button class="btn" id="submit_button" disabled> Submit </button>
+					<button class="btn" id="submit_button"> Submit </button>
 				</div>
 			</form>
 

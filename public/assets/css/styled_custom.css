@@ -111,7 +111,7 @@ body.sticky-header #header {
 
 .contact-section .contact-form .form-group .form-control:hover, .contact-section .contact-form .form-group .form-control:focus,
 .contact-section .contact-form .form-group .form-control:active {
-    border-color: #FDC90E;
+    border: 1px solid #FDC90E !important;
 }
 
 .topnav.topnav--lang .languages.drop .topnav-item span {
