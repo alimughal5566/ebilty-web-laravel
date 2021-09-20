@@ -28,7 +28,7 @@
 							</ul>
 						</div> --}}
 						<div class="signup_btn_car">
-							<a href="{{ url ('/login') }}">Sign Up</a>
+							<a href="#uploadCV">Upload CV</a>
 						</div>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 	</div>
 </section>
 
-<section class="fields_car">
+<section class="fields_car" id="uploadCV">
 	<div class="container">
 		<div class="listing_fields contact-section">
 			<div class="titkles_fields">
