@@ -14,7 +14,7 @@
 						<div class="subhead_car">
 							 <h2>Be a part of eBilty's team to enhance this journey and provide the  best to our customer</h2>
 						</div>
-						<div class="listing_car">
+						{{-- <div class="listing_car">
 							<ul>
 								<li>
 									<p><i class="fa fa-check"></i> Load marketplace.</p>
@@ -26,7 +26,7 @@
 									<p><i class="fa fa-check"></i> Driver management and tracking.</p>
 								</li>
 							</ul>
-						</div>
+						</div> --}}
 						<div class="signup_btn_car">
 							<a href="{{ url ('/login') }}">Sign Up</a>
 						</div>
