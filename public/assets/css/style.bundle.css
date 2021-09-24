@@ -55,6 +55,30 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+table td , table th {
+	vertical-align: middle !important;
+}
+
+.table-fluid .progress {
+    width: 64px !important;
+    height: 64px !important; 
+    background: none !important;
+    position: relative !important; 
+}
+
+
+.table-fluid .progress .progress-value .h2.font-weight-bold {
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+}
+
+.table-fluid .progress .progress-value .h2.font-weight-bold sup {
+	    margin-top: 10px !important;
+    font-size: 12px !important;  
+}
+
 a {
 	color: $primary;
 	&:hover {
@@ -2008,6 +2032,8 @@ pre code {
 .table-bordered th,
 .table-bordered td {
 	border: 1px solid #ebedf2;
+	font-weight: 500;
+    font-size: 14px;
 }
 
 .table-bordered thead th,
@@ -37558,7 +37584,7 @@ body.swal2-height-auto {
 	flex-grow: 1;
 	font-size: 1.2rem;
 	color: #595d6e;
-	font-weight: 800;
+	/*font-weight: 800;*/
 }
 
 .kt-nav .kt-nav__item>.kt-nav__link .kt-nav__link-icon {
@@ -48297,6 +48323,7 @@ body.swal2-height-auto {
 
 body {
 	background: #f2f3f8;
+	    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 .kt-subheader.kt-subheader--clear {
@@ -51270,7 +51297,7 @@ body {
 
 .kt-aside-menu .kt-menu__nav>.kt-menu__item>.kt-menu__heading .kt-menu__link-text,
 .kt-aside-menu .kt-menu__nav>.kt-menu__item>.kt-menu__link .kt-menu__link-text {
-	font-weight: 800;
+	/*font-weight: 800;*/
 	font-size: 1.2rem;
 	text-transform: initial;
 }
@@ -52330,6 +52357,7 @@ body {
 #kt_aside_menu .kt-widget__footer a.btn {
 	max-height: 56px;
 	overflow: hidden;
+	font-size: 14px;
 }
 
 #kt_aside_menu .kt-widget__footer a.btn span {

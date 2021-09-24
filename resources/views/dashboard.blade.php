@@ -442,7 +442,7 @@
                 <th scope="col">#</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
-                <th scope="col">Total Weight</th>
+                <th scope="col" class="text-center">Total Weight</th>
                 <th scope="col">Shipment Time</th>
                 <th scope="col">Status</th>
                 <th scope="col">%|Completion</th>
@@ -465,7 +465,7 @@
                     @endif
                     <td>{{@$shipment->sender->address}}<small> ({{@$shipment->sender->user_name}})</small></td>
                     <td>{{@$shipment->receiver->address}}<small> ({{@$shipment->receiver->user_name}})</small></td>
-                    <td>{{@$shipment->package->weight}}</td>
+                    <td class="text-center">{{@$shipment->package->weight}}</td>
                     <td>{{@$shipment->ship_date}}<br>{{@$shipment->ship_time}}</td>
                     <td>{{@$shipment->stat->name}}</td>
                     <td>
