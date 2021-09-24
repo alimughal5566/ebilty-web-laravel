@@ -83,7 +83,7 @@
         <!-- begin:: Page -->
         <div class="kt-grid kt-grid--ver kt-grid--root kt-page custom-grid">
 
-            
+
 
 {{--            @dd(@$form)--}}
         <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v5 {{($errors->has('form'))?'kt-login--signup ':'kt-login--signin'}}" id="kt_login">
@@ -215,9 +215,9 @@
                                 <input class="form-control" type="text" value="{{old('phone')}}" placeholder="Mobile Number"  min="5" name="phone" id="mobile" autocomplete="off" required="">
                                 <i class="fa fa-mobile-alt field-icon"></i>
                             </div>
-                             <a href="#" class="verify" style="text-decoration: underline;display: none" onclick="verify()">Send verification code</a>
-                             <a  class="text-danger mobile-error" style="display: none" ></a>
-                             <a  class="text-success mobile-success" style="display: none" ></a>
+{{--                             <a href="#" class="verify" style="text-decoration: underline;display: none" onclick="verify()">Send verification code</a>--}}
+{{--                             <a  class="text-danger mobile-error" style="display: none" ></a>--}}
+{{--                             <a  class="text-success mobile-success" style="display: none" ></a>--}}
 {{--                            <div class="input-group upload-btn-wrapper">--}}
 {{--                                <label for="cnic" class="sr-only"></label>--}}
 {{--                                <span class="upload-wrap px-3 w-100 d-flex align-items-center justify-content-between">--}}
@@ -362,16 +362,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
         <script>
-    $("#mobile").on("keyup", function(e) {
-        var number=$("#mobile").val();
-            if(number.length<9){
-            $('.mobile-error').css('display','block');
-            $('.mobile-error').text('Minimum 10characters required')
-            $('.verify').css('display','none');
-            $('#mobile').addClass('mb-0');
-            $('#sbet').attr('disabled','true');
-            return;
-        }
+    // $("#mobile").on("keyup", function(e) {
+    //     var number=$("#mobile").val();
+    //         if(number.length<9){
+    //         $('.mobile-error').css('display','block');
+    //         $('.mobile-error').text('Minimum 10characters required')
+    //         $('.verify').css('display','none');
+    //         $('#mobile').addClass('mb-0');
+    //         $('#sbet').attr('disabled','true');
+    //         return;
+    //     }
         if(telephoneCheck(number)){
             $('#sbet').removeAttr('disabled');
             $('.verify').css('display','block');
@@ -398,8 +398,8 @@
                     toastr.success('Verification code sends successfully to your number');
                     $('#vrificationModal').modal('show')
                 }else{
-                    // alert(result.data);
-                    toastr.error('Phone number is incorrect');
+                    alert(result.data);
+                    toastr.error(result.data);
                 }
             }
         })

@@ -385,11 +385,12 @@ class HomeController extends Controller
 //            );
 //
             $code = mt_rand(1000, 9999);
-            $client = new Client(env('TWILIO_P_ID'),env('TWILIO_S_ID'));
+            $client = new Client('AC25aa6c35234d18323a30c7d5d07a21e7','7b56df24938361791fa5f499007162f6');
             $client->messages->create(
                 $request->number,
                 [
-                    'from' =>env('TWILIO_From_NUMBER'),
+//                    'from' =>env('TWILIO_From_NUMBER'),
+                    'from' =>923228860000,
                     'body' =>'Thankyou for signing up in ebilty. Your verification code is: '.$code,
                 ]
             );
