@@ -373,7 +373,7 @@ class HomeController extends Controller
         return response()->json(['success' =>'Status updated  successfully'], 200);
     }
     public function sendMessage(Request $request){
-        try{
+//        try{
 //            $code = mt_rand(1000, 9999);
 //            $client = new Client(env('TWILIO_P_ID'),env('TWILIO_s_ID'));
 //            $client->messages->create(
@@ -402,9 +402,9 @@ class HomeController extends Controller
             $phone->is_verified=0;
             $phone->save();
             return response()->json(['success' =>'true'], 200);
-        } catch (\Exception $e){
-            return response()->json(['success' =>'false','data'=> $e->getMessage()], 200);
-        }
+//        } catch (\Exception $e){
+//            return response()->json(['success' =>'false','data'=> $e->getMessage()], 200);
+//        }
     }
     public function otpVerifcationCheck(Request $request){
             $phone= phoneVerification::where('number',$request->number)->first();
