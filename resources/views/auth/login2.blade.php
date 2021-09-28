@@ -212,7 +212,7 @@
                             </div>
                             <div class="input-group">
                                 <label for="mobile" class="sr-only"></label>
-                                <input class="form-control" type="text" value="{{old('phone')}}" placeholder="Mobile Number"  min="5" name="phone" id="mobile" autocomplete="off" required="">
+                                <input class="form-control" type="text" value="{{old('phone')}}" placeholder="Mobile Number"  min="5" name="phone"  autocomplete="off" required="">
                                 <i class="fa fa-mobile-alt field-icon"></i>
                             </div>
 {{--                             <a href="#" class="verify" style="text-decoration: underline;display: none" onclick="verify()">Send verification code</a>--}}
