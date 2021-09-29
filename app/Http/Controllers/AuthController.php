@@ -61,10 +61,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 200);
         }
-        $user = User::where('otp',$request->otp)->where('email',$request->email)->first();
+        $user = User::where('forgot_otp',$request->otp)->where('email',$request->email)->first();
         if ($user){
-            $user->forgot_otp = null;
-            $user->update();
             return response()->json('The OTP has been verified.');
         }else{
             return  response()->json('Wrong OTP entered');
@@ -80,7 +78,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 200);
         }
-        $user = User::where('otp',$request->otp)->where('email',$request->email)->first();
+        $user = User::where('forgot_otp',$request->otp)->where('email',$request->email)->first();
         if ($user){
             $user->password = bcrypt($request->password);
             $user->forgot_otp = null;
