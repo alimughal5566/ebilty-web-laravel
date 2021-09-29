@@ -12,6 +12,9 @@ use App\Http\Controllers\ApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/send-forgot-password-otp','AuthController@sendForgotPasswordOtp');
+Route::post('/verify-forgot-password-otp','AuthController@verifyForgotPasswordOtp');
+Route::post('/change-password','AuthController@changePassword');
 Route::post('set/cordination' , 'Api\HomeController@setCordinates');
 Route::get('get/trackingpoints/{id}' , 'Api\HomeController@getTrackingPoints');
 

@@ -8,6 +8,7 @@ use App\Models\UserVehicle;
 use App\Patient;
 use App\State;
 use App\UserAddress;
+use http\Env\Response;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,60 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
+    public function sendForgotPasswordOtp(Request $request){
+        $user = User::where('email', $request->email)->first();
+        if ($user){
+            $email = $user->email;
+            $otp = rand(1000, 9999);
+            \Mail::send('forgot_email', ['name' => $user->name,'image'=>$user->profile_image, 'otp' => $otp], function ($message) use($email)  {
+                $message->to($email)->subject('Forgot Password OTP');
+                $message->from('info@ebilty.com');
+            });
+            $user->forgot_otp = $otp;
+            $user->update();
+            return response()->json('The OTP has been sent to your email.');
+        }else{
+            return response()->json('The email does not exist');
+        }
+    }
+    public function verifyForgotPasswordOtp(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => ['required'],
+            'otp' => ['required']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 200);
+        }
+        $user = User::where('otp',$request->otp)->where('email',$request->email)->first();
+        if ($user){
+            $user->forgot_otp = null;
+            $user->update();
+            return response()->json('The OTP has been verified.');
+        }else{
+            return  response()->json('Wrong OTP entered');
+        }
+    }
+    public function changePassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => ['required'],
+            'password' => ['required'],
+            'otp' => ['required']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 200);
+        }
+        $user = User::where('otp',$request->otp)->where('email',$request->email)->first();
+        if ($user){
+            $user->password = bcrypt($request->password);
+            $user->forgot_otp = null;
+            $user->update();
+            return response()->json('The password has been changed. Kindly login!');
+        }else{
+            return  response()->json('Something error occurred!');
+        }
+    }
     public function mobileSignup(Request $request){
         $validator = Validator::make($request->all(), [
             'full_name' => ['required', 'min:3'],
