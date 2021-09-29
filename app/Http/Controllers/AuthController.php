@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
@@ -30,13 +31,19 @@ class AuthController extends Controller
      * @return [string] message
      */
     public function sendForgotPasswordOtp(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 200);
+        }
         $user = User::where('email', $request->email)->first();
         if ($user){
             $email = $user->email;
             $otp = rand(1000, 9999);
             \Mail::send('forgot_email', ['name' => $user->name,'image'=>$user->profile_image, 'otp' => $otp], function ($message) use($email)  {
                 $message->to($email)->subject('Forgot Password OTP');
-                $message->from('info@ebilty.com');
+                $message->from(config('mail.mailers.smtp.username'));
             });
             $user->forgot_otp = $otp;
             $user->update();

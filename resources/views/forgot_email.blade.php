@@ -58,7 +58,7 @@
                 <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
                     <tr>
                         <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold; background-color: white">
-                            <a href="http://ebilty.com/" style="text-decoration:none;"><img src="{{asset('uploads/logos/company-logo.png')}}" width="165" alt="Logo" style="width:80%;max-width:165px;height:auto;border:none;text-decoration:none;color:#ffffff;"></a>
+                            <a href="http://ebilty.com/" style="text-decoration:none;"><img src="https://ebilty.com/uploads/logos/company-logo.png" width="165" alt="Logo" style="width:80%;max-width:165px;height:auto;border:none;text-decoration:none;color:#ffffff;"></a>
                             <hr>
                         </td>
                     </tr>
@@ -78,8 +78,8 @@
                             <![endif]-->
                             <div class="col-lge" style="display:inline-block;width:100%;max-width:395px;vertical-align:top;padding-bottom:20px;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
                                 <h2>Dear {{$name}},</h2>
-                                <p>You requested for forgot password OTP. Kindly enter it to change your password.</p>
-                                <p>OTP: <b>{{$otp}}</b></p>
+                                <p align="justify">You requested for forgot password OTP. Kindly enter it to change your password.</p>
+                                <p>Your OTP is: <b>{{$otp}}</b></p>
                             </div>
                             </td>
                             </tr>

@@ -42,11 +42,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => 'smtp.gmail.com',
+            'port' => '587',
+            'encryption' => 'tls',
+            'username' => 'ebilty.co@gmail.com',
+            'password' => 'ebilty786',
             'timeout' => null,
             'auth_mode' => null,
         ],
